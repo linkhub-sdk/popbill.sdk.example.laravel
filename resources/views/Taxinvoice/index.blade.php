@@ -4,11 +4,11 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" type="text/css" href="css/example.css" media="screen"/>
 
-    <title>팝빌 SDK PHP 5.X Example.</title>
+    <title>팝빌 SDK PHP Laravel Example.</title>
 </head>
 <body>
 <div id="content">
-    <p class="heading1">팝빌 세금계산서 SDK PHP Laravel Example.</p>
+    <p class="heading1">팝빌 전자세금계산서 SDK PHP Laravel Example.</p>
     <br/>
     <fieldset class="fieldset1">
         <legend>정방행/역발행/위수탁발행</legend>
@@ -19,10 +19,6 @@
             <li><a href="Taxinvoice/Update">Update</a> (수정)</li>
             <li><a href="Taxinvoice/Issue">Issue</a> (발행)</li>
             <li><a href="Taxinvoice/CancelIssue">CancelIssue</a> (발행취소)</li>
-            <li><a href="Taxinvoice/Send">Send</a> ([발행예정])</li>
-            <li><a href="Taxinvoice/CancelSend">CancelSend</a> ([발행예정] 취소)</li>
-            <li><a href="Taxinvoice/Accept">Accept</a> ([발행예정] 승인)</li>
-            <li><a href="Taxinvoice/Deny">Deny</a> ([발행예정] 거부)</li>
             <li><a href="Taxinvoice/Delete">Delete</a> (삭제)</li>
             <li><a href="Taxinvoice/RegistRequest">RegistRequest</a> ([역발행] 즉시 요청)</li>
             <li><a href="Taxinvoice/Request">Request</a> (역발행요청)</li>

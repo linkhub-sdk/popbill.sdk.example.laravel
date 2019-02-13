@@ -15,6 +15,9 @@ Route::get('/', function () {
     return view('index');
 });
 
+
+// 전자세금계산서 Route Mapping
+
 Route::get('/Taxinvoice', function () {
     return view('Taxinvoice/index');
 });
@@ -87,71 +90,127 @@ Route::get('/Taxinvoice/GetUnitCost','TaxinvoiceController@GetUnitCost');
 Route::get('/Taxinvoice/GetChargeInfo','TaxinvoiceController@GetChargeInfo');
 
 
+// 현금영수증 Route Mapping
+
 Route::get('/Cashbill', function () {
     return view('Cashbill/index');
 });
 
-Route::get('/Cashbill/{FileName}', function ($FileName) {
-    return view('Cashbill/'.$FileName);
-});
+Route::get('/Cashbill/CheckIsMember','CashbillController@CheckIsMember');
+Route::get('/Cashbill/CheckID','CashbillController@CheckID');
+Route::get('/Cashbill/JoinMember','CashbillController@JoinMember');
+Route::get('/Cashbill/GetCorpInfo','CashbillController@GetCorpInfo');
+Route::get('/Cashbill/UpdateCorpInfo','CashbillController@UpdateCorpInfo');
+Route::get('/Cashbill/RegistContact','CashbillController@RegistContact');
+Route::get('/Cashbill/ListContact','CashbillController@ListContact');
+Route::get('/Cashbill/UpdateContact','CashbillController@UpdateContact');
+
+
+// 전자명세서 Route Mapping
 
 Route::get('/Statement', function () {
     return view('Statement/index');
 });
 
-Route::get('/Statement/{FileName}', function ($FileName) {
-    return view('Statement/'.$FileName);
-});
+Route::get('/Statement/CheckIsMember','StatementController@CheckIsMember');
+Route::get('/Statement/CheckID','StatementController@CheckID');
+Route::get('/Statement/JoinMember','StatementController@JoinMember');
+Route::get('/Statement/GetCorpInfo','StatementController@GetCorpInfo');
+Route::get('/Statement/UpdateCorpInfo','StatementController@UpdateCorpInfo');
+Route::get('/Statement/RegistContact','StatementController@RegistContact');
+Route::get('/Statement/ListContact','StatementController@ListContact');
+Route::get('/Statement/UpdateContact','StatementController@UpdateContact');
 
+// 팩스 Route Mapping
 
 Route::get('/Fax', function () {
     return view('Fax/index');
 });
 
-Route::get('/Fax/{FileName}', function ($FileName) {
-    return view('Fax/'.$FileName);
-});
+Route::get('/Fax/CheckIsMember','FaxController@CheckIsMember');
+Route::get('/Fax/CheckID','FaxController@CheckID');
+Route::get('/Fax/JoinMember','FaxController@JoinMember');
+Route::get('/Fax/GetCorpInfo','FaxController@GetCorpInfo');
+Route::get('/Fax/UpdateCorpInfo','FaxController@UpdateCorpInfo');
+Route::get('/Fax/RegistContact','FaxController@RegistContact');
+Route::get('/Fax/ListContact','FaxController@ListContact');
+Route::get('/Fax/UpdateContact','FaxController@UpdateContact');
+
+// 문자 Route Mapping
 
 Route::get('/Message', function () {
     return view('Message/index');
 });
 
-Route::get('/Message/{FileName}', function ($FileName) {
-    return view('Message/'.$FileName);
-});
+Route::get('/Message/CheckIsMember','MessageController@CheckIsMember');
+Route::get('/Message/CheckID','MessageController@CheckID');
+Route::get('/Message/JoinMember','MessageController@JoinMember');
+Route::get('/Message/GetCorpInfo','MessageController@GetCorpInfo');
+Route::get('/Message/UpdateCorpInfo','MessageController@UpdateCorpInfo');
+Route::get('/Message/RegistContact','MessageController@RegistContact');
+Route::get('/Message/ListContact','MessageController@ListContact');
+Route::get('/Message/UpdateContact','MessageController@UpdateContact');
 
+// 카카오톡 Route Mapping
 
 Route::get('/KakaoTalk', function () {
     return view('KakaoTalk/index');
 });
 
-Route::get('/KakaoTalk/{FileName}', function ($FileName) {
-    return view('KakaoTalk/'.$FileName);
-});
+Route::get('/KakaoTalk/CheckIsMember','KakaoTalkController@CheckIsMember');
+Route::get('/KakaoTalk/CheckID','KakaoTalkController@CheckID');
+Route::get('/KakaoTalk/JoinMember','KakaoTalkController@JoinMember');
+Route::get('/KakaoTalk/GetCorpInfo','KakaoTalkController@GetCorpInfo');
+Route::get('/KakaoTalk/UpdateCorpInfo','KakaoTalkController@UpdateCorpInfo');
+Route::get('/KakaoTalk/RegistContact','KakaoTalkController@RegistContact');
+Route::get('/KakaoTalk/ListContact','KakaoTalkController@ListContact');
+Route::get('/KakaoTalk/UpdateContact','KakaoTalkController@UpdateContact');
 
+
+// 휴폐업조회 Route Mapping
 
 Route::get('/CloseDown', function () {
     return view('CloseDown/index');
 });
 
-Route::get('/CloseDown/{FileName}', function ($FileName) {
-    return view('CloseDown/'.$FileName);
-});
+Route::get('/CloseDown/CheckIsMember','ClosedownController@CheckIsMember');
+Route::get('/CloseDown/CheckID','ClosedownController@CheckID');
+Route::get('/CloseDown/JoinMember','ClosedownController@JoinMember');
+Route::get('/CloseDown/GetCorpInfo','ClosedownController@GetCorpInfo');
+Route::get('/CloseDown/UpdateCorpInfo','ClosedownController@UpdateCorpInfo');
+Route::get('/CloseDown/RegistContact','ClosedownController@RegistContact');
+Route::get('/CloseDown/ListContact','ClosedownController@ListContact');
+Route::get('/CloseDown/UpdateContact','ClosedownController@UpdateContact');
 
+
+// 홈택스 전자세금계산서 Route Mapping
 
 Route::get('/HTTaxinvoice', function () {
     return view('HTTaxinvoice/index');
 });
 
-Route::get('/HTTaxinvoice/{FileName}', function ($FileName) {
-    return view('HTTaxinvoice/'.$FileName);
-});
+Route::get('/HTTaxinvoice/CheckIsMember','HTTaxinvoiceController@CheckIsMember');
+Route::get('/HTTaxinvoice/CheckID','HTTaxinvoiceController@CheckID');
+Route::get('/HTTaxinvoice/JoinMember','HTTaxinvoiceController@JoinMember');
+Route::get('/HTTaxinvoice/GetCorpInfo','HTTaxinvoiceController@GetCorpInfo');
+Route::get('/HTTaxinvoice/UpdateCorpInfo','HTTaxinvoiceController@UpdateCorpInfo');
+Route::get('/HTTaxinvoice/RegistContact','HTTaxinvoiceController@RegistContact');
+Route::get('/HTTaxinvoice/ListContact','HTTaxinvoiceController@ListContact');
+Route::get('/HTTaxinvoice/UpdateContact','HTTaxinvoiceController@UpdateContact');
 
+
+
+// 홈택스 현금영수증 Route Mapping
 
 Route::get('/HTCashbill', function () {
     return view('HTCashbill/index');
 });
 
-Route::get('/HTCashbill/{FileName}', function ($FileName) {
-    return view('HTCashbill/'.$FileName);
-});
+Route::get('/HTCashbill/CheckIsMember','HTCashbillController@CheckIsMember');
+Route::get('/HTCashbill/CheckID','HTCashbillController@CheckID');
+Route::get('/HTCashbill/JoinMember','HTCashbillController@JoinMember');
+Route::get('/HTCashbill/GetCorpInfo','HTCashbillController@GetCorpInfo');
+Route::get('/HTCashbill/UpdateCorpInfo','HTCashbillController@UpdateCorpInfo');
+Route::get('/HTCashbill/RegistContact','HTCashbillController@RegistContact');
+Route::get('/HTCashbill/ListContact','HTCashbillController@ListContact');
+Route::get('/HTCashbill/UpdateContact','HTCashbillController@UpdateContact');

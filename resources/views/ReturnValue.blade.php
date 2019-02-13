@@ -11,8 +11,7 @@
     <fieldset class="fieldset1">
         <legend>{{\Request::fullUrl()}}</legend>
         <ul>
-            <li>code (응답코드) : {{ $code }}</li>
-            <li>message (응답메시지) : {{ $message }}</li>
+            <li>{{ $filedName }} :  {{ $value }}</li>
         </ul>
     </fieldset>
 </div>

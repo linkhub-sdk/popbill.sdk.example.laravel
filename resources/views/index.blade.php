@@ -19,7 +19,7 @@
             <li><a href="KakaoTalk">KakaoService</a> - 카카오톡 API</li>
             <li><a href="HTTaxinvoice">HTTaxinvoiceExample</a> - 홈택스연동 (전자세금계산서) API</li>
             <li><a href="HTCashbill">HTCashbillExample</a> - 홈택스연동 (현금영수증) API</li>
-            <li><a href="Closedown">ClosedownService</a> - 휴폐업조회 API</li>
+            <li><a href="CloseDown">CloseDownService</a> - 휴폐업조회 API</li>
         </ul>
     </fieldset>
 </div>

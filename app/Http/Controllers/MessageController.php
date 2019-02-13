@@ -10,9 +10,9 @@ use Linkhub\Popbill\ContactInfo;
 use Linkhub\Popbill\ChargeInfo;
 use Linkhub\Popbill\PopbillException;
 
-use Linkhub\Popbill\PopbillStatement;
+use Linkhub\Popbill\PopbillMessaging;
 
-class StatementController extends Controller
+class MessageController extends Controller
 {
   public function __construct() {
 
@@ -21,10 +21,10 @@ class StatementController extends Controller
     $this->LinkID = config('popbill.LinkID');
     $this->SecretKey = config('popbill.SecretKey');
 
-    $this->PopbillStatement = new PopbillStatement($this->LinkID, $this->SecretKey);
+    $this->PopbillMessaging = new PopbillMessaging($this->LinkID, $this->SecretKey);
 
     // 연동환경 설정값, 개발용(true), 상업용(false)
-    $this->PopbillStatement->IsTest(config('popbill.IsTest'));
+    $this->PopbillMessaging->IsTest(config('popbill.IsTest'));
   }
 
   /**
@@ -37,7 +37,7 @@ class StatementController extends Controller
     $testCorpNum = '1234567890';
 
     try	{
-      $result = $this->PopbillStatement->CheckIsMember($testCorpNum, $this->LinkID);
+      $result = $this->PopbillMessaging->CheckIsMember($testCorpNum, $this->LinkID);
       $code = $result->code;
       $message = $result->message;
     }
@@ -58,7 +58,7 @@ class StatementController extends Controller
     $testUserID = 'testkorea';
 
     try	{
-      $result = $this->PopbillStatement->CheckID($testUserID);
+      $result = $this->PopbillMessaging->CheckID($testUserID);
       $code = $result->code;
       $message = $result->message;
     }
@@ -114,7 +114,7 @@ class StatementController extends Controller
     $joinForm->PWD = 'thisispassword';
 
     try	{
-      $result = $this->PopbillStatement->JoinMember($joinForm);
+      $result = $this->PopbillMessaging->JoinMember($joinForm);
       $code = $result->code;
       $message = $result->message;
     }
@@ -135,7 +135,7 @@ class StatementController extends Controller
     $testCorpNum = '1234567890';
 
     try {
-      $CorpInfo = $this->PopbillStatement->GetCorpInfo($testCorpNum);
+      $CorpInfo = $this->PopbillMessaging->GetCorpInfo($testCorpNum);
     }
     catch(PopbillException $pe) {
       $code = $pe->getCode();
@@ -173,7 +173,7 @@ class StatementController extends Controller
     $CorpInfo->bizClass = '종목';
 
     try {
-        $result =  $this->PopbillStatement->UpdateCorpInfo($testCorpNum, $CorpInfo);
+        $result =  $this->PopbillMessaging->UpdateCorpInfo($testCorpNum, $CorpInfo);
         $code = $result->code;
         $message = $result->message;
     }
@@ -224,7 +224,7 @@ class StatementController extends Controller
     $ContactInfo->mgrYN = false;
 
     try {
-        $result = $this->PopbillStatement->RegistContact($testCorpNum, $ContactInfo);
+        $result = $this->PopbillMessaging->RegistContact($testCorpNum, $ContactInfo);
         $code = $result->code;
         $message = $result->message;
     }
@@ -245,7 +245,7 @@ class StatementController extends Controller
     $testCorpNum = '1234567890';
 
     try {
-      $ContactList = $this->PopbillStatement->ListContact($testCorpNum);
+      $ContactList = $this->PopbillMessaging->ListContact($testCorpNum);
     }
     catch(PopbillException $pe) {
         $code = $pe->getCode();
@@ -292,7 +292,7 @@ class StatementController extends Controller
     $ContactInfo->searchAllAllowYN = true;
 
     try {
-        $result = $this->PopbillStatement->UpdateContact($testCorpNum, $ContactInfo, $testUserID);
+        $result = $this->PopbillMessaging->UpdateContact($testCorpNum, $ContactInfo, $testUserID);
         $code = $result->code;
         $message = $result->message;
     }
