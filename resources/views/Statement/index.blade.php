@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" type="text/css" href="/css/example.css" media="screen"/>
 
-    <title>팝빌 SDK PHP 5.X Example.</title>
+    <title>팝빌 SDK PHP Laravel Example.</title>
 </head>
 <body>
 <div id="content">

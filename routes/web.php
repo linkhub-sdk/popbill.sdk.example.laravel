@@ -90,6 +90,63 @@ Route::get('/Taxinvoice/GetUnitCost','TaxinvoiceController@GetUnitCost');
 Route::get('/Taxinvoice/GetChargeInfo','TaxinvoiceController@GetChargeInfo');
 
 
+
+// 전자명세서 Route Mapping
+
+Route::get('/Statement', function () {
+    return view('Statement/index');
+});
+
+Route::get('/Statement/CheckMgtKeyInUse','StatementController@CheckMgtKeyInUse');
+Route::get('/Statement/RegistIssue','StatementController@RegistIssue');
+Route::get('/Statement/Register','StatementController@Register');
+Route::get('/Statement/Update','StatementController@Update');
+Route::get('/Statement/Issue','StatementController@Issue');
+Route::get('/Statement/CancelIssue','StatementController@CancelIssue');
+Route::get('/Statement/Delete','StatementController@Delete');
+Route::get('/Statement/GetPopUpURL','StatementController@GetPopUpURL');
+Route::get('/Statement/GetPrintURL','StatementController@GetPrintURL');
+Route::get('/Statement/GetEPrintURL','StatementController@GetEPrintURL');
+Route::get('/Statement/GetMassPrintURL','StatementController@GetMassPrintURL');
+Route::get('/Statement/GetMailURL','StatementController@GetMailURL');
+
+Route::get('/Statement/GetInfo','StatementController@GetInfo');
+Route::get('/Statement/GetInfos','StatementController@GetInfos');
+Route::get('/Statement/GetDetailInfo','StatementController@GetDetailInfo');
+Route::get('/Statement/Search','StatementController@Search');
+Route::get('/Statement/GetLogs','StatementController@GetLogs');
+Route::get('/Statement/GetURL','StatementController@GetURL');
+
+Route::get('/Statement/GetAccessURL','StatementController@GetAccessURL');
+Route::get('/Statement/AttachFile','StatementController@AttachFile');
+Route::get('/Statement/DeleteFile','StatementController@DeleteFile');
+Route::get('/Statement/GetFiles','StatementController@GetFiles');
+Route::get('/Statement/SendEmail','StatementController@SendEmail');
+Route::get('/Statement/SendSMS','StatementController@SendSMS');
+Route::get('/Statement/SendFAX','StatementController@SendFAX');
+Route::get('/Statement/FAXSend','StatementController@FAXSend');
+Route::get('/Statement/AttachStatement','StatementController@AttachStatement');
+Route::get('/Statement/DetachStatement','StatementController@DetachStatement');
+Route::get('/Statement/ListEmailConfig','StatementController@ListEmailConfig');
+Route::get('/Statement/UpdateEmailConfig','StatementController@UpdateEmailConfig');
+
+Route::get('/Statement/GetBalance','StatementController@GetBalance');
+Route::get('/Statement/GetChargeURL','StatementController@GetChargeURL');
+Route::get('/Statement/GetPartnerBalance','StatementController@GetPartnerBalance');
+Route::get('/Statement/GetPartnerURL','StatementController@GetPartnerURL');
+Route::get('/Statement/GetUnitCost','StatementController@GetUnitCost');
+Route::get('/Statement/GetChargeInfo','StatementController@GetChargeInfo');
+
+Route::get('/Statement/CheckIsMember','StatementController@CheckIsMember');
+Route::get('/Statement/CheckID','StatementController@CheckID');
+Route::get('/Statement/JoinMember','StatementController@JoinMember');
+Route::get('/Statement/GetCorpInfo','StatementController@GetCorpInfo');
+Route::get('/Statement/UpdateCorpInfo','StatementController@UpdateCorpInfo');
+Route::get('/Statement/RegistContact','StatementController@RegistContact');
+Route::get('/Statement/ListContact','StatementController@ListContact');
+Route::get('/Statement/UpdateContact','StatementController@UpdateContact');
+
+
 // 현금영수증 Route Mapping
 
 Route::get('/Cashbill', function () {
@@ -106,20 +163,7 @@ Route::get('/Cashbill/ListContact','CashbillController@ListContact');
 Route::get('/Cashbill/UpdateContact','CashbillController@UpdateContact');
 
 
-// 전자명세서 Route Mapping
 
-Route::get('/Statement', function () {
-    return view('Statement/index');
-});
-
-Route::get('/Statement/CheckIsMember','StatementController@CheckIsMember');
-Route::get('/Statement/CheckID','StatementController@CheckID');
-Route::get('/Statement/JoinMember','StatementController@JoinMember');
-Route::get('/Statement/GetCorpInfo','StatementController@GetCorpInfo');
-Route::get('/Statement/UpdateCorpInfo','StatementController@UpdateCorpInfo');
-Route::get('/Statement/RegistContact','StatementController@RegistContact');
-Route::get('/Statement/ListContact','StatementController@ListContact');
-Route::get('/Statement/UpdateContact','StatementController@UpdateContact');
 
 // 팩스 Route Mapping
 

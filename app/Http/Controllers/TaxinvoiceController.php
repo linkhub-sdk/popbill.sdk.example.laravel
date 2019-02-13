@@ -12,13 +12,11 @@ use Linkhub\Popbill\ChargeInfo;
 use Linkhub\Popbill\PopbillException;
 
 use Linkhub\Popbill\PopbillTaxinvoice;
+use Linkhub\Popbill\TIENumMgtKeyType;
+use Linkhub\Popbill\Taxinvoice;
 use Linkhub\Popbill\TaxinvoiceDetail;
 use Linkhub\Popbill\TaxinvoiceAddContact;
-use Linkhub\Popbill\Taxinvoice;
-use Linkhub\Popbill\TISearchResult;
-use Linkhub\Popbill\TaxinvoiceInfo;
-use Linkhub\Popbill\TaxinvoiceLog;
-use Linkhub\Popbill\TIENumMgtKeyType;
+
 
 class TaxinvoiceController extends Controller
 {
@@ -2019,7 +2017,7 @@ class TaxinvoiceController extends Controller
         return view('PResponse', ['code' => $code, 'message' => $message]);
     }
 
-    return view('ListEmailConfig', ['Result' => $result] );
+    return view('Taxinvoice/ListEmailConfig', ['Result' => $result] );
   }
 
   /**
