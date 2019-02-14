@@ -18,26 +18,32 @@ class FaxController extends Controller
 
     define('LINKHUB_COMM_MODE', config('popbill.LINKHUB_COMM_MODE'));
 
-    $this->LinkID = config('popbill.LinkID');
-    $this->SecretKey = config('popbill.SecretKey');
-
-    $this->PopbillFax = new PopbillFax($this->LinkID, $this->SecretKey);
+    $this->PopbillFax = new PopbillFax(config('popbill.LinkID'), config('popbill.SecretKey'));
 
     // 연동환경 설정값, 개발용(true), 상업용(false)
     $this->PopbillFax->IsTest(config('popbill.IsTest'));
   }
 
+  // Get Request Route 처리 함수
+  public function RouteHandelerFunc(Request $request){
+    $APIName = $request->route('APIName');
+    return $this->$APIName();
+  }
+  
   /**
    * 해당 사업자의 파트너 연동회원 가입여부를 확인합니다.
-   * - LinkID는 common.php 파일에 선언되어 있는 인증정보 입니다.
    */
   public function CheckIsMember(){
 
     // 사업자번호, "-"제외 10자리
     $testCorpNum = '1234567890';
 
+    // 파트너 링크아이디
+    // ./config/popbill.php에 선언된 파트너 링크아이디
+    $LinkID = config('popbill.LinkID');
+
     try	{
-      $result = $this->PopbillFax->CheckIsMember($testCorpNum, $this->LinkID);
+      $result = $this->PopbillFax->CheckIsMember($testCorpNum, $LinkID);
       $code = $result->code;
       $message = $result->message;
     }
@@ -78,7 +84,7 @@ class FaxController extends Controller
     $joinForm = new JoinForm();
 
     // 링크아이디
-    $joinForm->LinkID = $this->LinkID;
+    $joinForm->LinkID = config('popbill.LinkID');
 
     // 사업자번호, "-"제외 10자리
     $joinForm->CorpNum = '1234567890';

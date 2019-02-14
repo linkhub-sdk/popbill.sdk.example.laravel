@@ -24,10 +24,10 @@
     <fieldset class="fieldset1">
         <legend>취소현금영수증 발행</legend>
         <ul>
-            <li><a href="Cashbill/RevokeRegistIssue">RevokeRegistIssue</a> (즉시발행)</li>
-            <li><a href="Cashbill/RevokeRegistIssue_part">RevokeRegistIssue_part</a> (부분 - 즉시발행)</li>
-            <li><a href="Cashbill/RevokeRegister">RevokeRegister</a> (임시저장)</li>
-            <li><a href="Cashbill/RevokeRegister_part">RevokeRegister_part</a> (부분 - 임시저장)</li>
+            <li><a href="Cashbill/RevokeRegistIssue">RevokeRegistIssue</a> (즉시발행 - 전체금액)</li>
+            <li><a href="Cashbill/RevokeRegistIssue_part">RevokeRegistIssue_part</a> (즉시발행 - 부분금액)</li>
+            <li><a href="Cashbill/RevokeRegister">RevokeRegister</a> (임시저장 - 전체금액)</li>
+            <li><a href="Cashbill/RevokeRegister_part">RevokeRegister_part</a> (임시저장 - 부분금액)</li>
         </ul>
     </fieldset>
     <fieldset class="fieldset1">

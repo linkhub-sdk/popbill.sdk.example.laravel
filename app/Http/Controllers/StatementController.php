@@ -22,19 +22,19 @@ class StatementController extends Controller
     // 통신방식 설정
     define('LINKHUB_COMM_MODE', config('popbill.LINKHUB_COMM_MODE'));
 
-    // 파트너 신청시 발급받은 링크아이디
-    $this->LinkID = config('popbill.LinkID');
-
-    // 파트너 신청시 발급받은 비밀키
-    $this->SecretKey = config('popbill.SecretKey');
-
     // 전자명세서 서비스 클래스 초기화
-    $this->PopbillStatement = new PopbillStatement($this->LinkID, $this->SecretKey);
+    $this->PopbillStatement = new PopbillStatement(config('popbill.LinkID'), config('popbill.SecretKey'));
 
     // 연동환경 설정값, 개발용(true), 상업용(false)
     $this->PopbillStatement->IsTest(config('popbill.IsTest'));
   }
 
+  // Get Request Route 처리 함수
+  public function RouteHandelerFunc(Request $request){
+    $APIName = $request->route('APIName');
+    return $this->$APIName();
+  }
+  
   /**
    * 전자명세서 관리번호 중복여부를 확인합니다.
    * - 관리번호는 1~24자리로 숫자, 영문 '-', '_' 조합하여 사업자별로 중복되지 않도록 구성해야합니다.
@@ -1560,15 +1560,18 @@ class StatementController extends Controller
 
   /**
    * 해당 사업자의 파트너 연동회원 가입여부를 확인합니다.
-   * - LinkID는 common.php 파일에 선언되어 있는 인증정보 입니다.
    */
   public function CheckIsMember(){
 
     // 사업자번호, "-"제외 10자리
     $testCorpNum = '1234567890';
 
+    // 파트너 링크아이디
+    // /config/popbill.php 선언된 파트너 링크아이디
+    $LinkID = config('popbill.LinkID');
+
     try	{
-      $result = $this->PopbillStatement->CheckIsMember($testCorpNum, $this->LinkID);
+      $result = $this->PopbillStatement->CheckIsMember($testCorpNum, $LinkID);
       $code = $result->code;
       $message = $result->message;
     }
@@ -1609,7 +1612,7 @@ class StatementController extends Controller
     $joinForm = new JoinForm();
 
     // 링크아이디
-    $joinForm->LinkID = $this->LinkID;
+    $joinForm->LinkID = config('popbill.LinkID');
 
     // 사업자번호, "-"제외 10자리
     $joinForm->CorpNum = '1234567890';

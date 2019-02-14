@@ -25,17 +25,18 @@ class TaxinvoiceController extends Controller
     // 통신방식 설정
     define('LINKHUB_COMM_MODE', config('popbill.LINKHUB_COMM_MODE'));
 
-    // 파트너 신청시 발급받은 링크아이디
-    $this->LinkID = config('popbill.LinkID');
-
-    // 파트너 신청시 발급받은 비밀키
-    $this->SecretKey = config('popbill.SecretKey');
 
     // 세금계산서 서비스 클래스 초기화
-    $this->PopbillTaxinvoice = new PopbillTaxinvoice($this->LinkID, $this->SecretKey);
+    $this->PopbillTaxinvoice = new PopbillTaxinvoice(config('popbill.LinkID'), config('popbill.SecretKey'));
 
     // 연동환경 설정값, 개발용(true), 상업용(false)
     $this->PopbillTaxinvoice->IsTest(config('popbill.IsTest'));
+  }
+
+  // Get Request Route 처리 함수
+  public function RouteHandelerFunc(Request $request){
+    $APIName = $request->route('APIName');
+    return $this->$APIName();
   }
 
   /**
@@ -2286,15 +2287,18 @@ class TaxinvoiceController extends Controller
 
   /**
    * 해당 사업자의 파트너 연동회원 가입여부를 확인합니다.
-   * - LinkID는 common.php 파일에 선언되어 있는 인증정보 입니다.
+   * - LinkID는 config/popbill.php 파일에 선언되어 있는 인증정보 입니다.
    */
   public function CheckIsMember(){
 
     // 사업자번호, "-"제외 10자리
     $testCorpNum = '1234567890';
 
+    // 파트너 링크아이디
+    $LinkID = config('popbill.LinkID');
+
     try	{
-      $result = $this->PopbillTaxinvoice->CheckIsMember($testCorpNum, $this->LinkID);
+      $result = $this->PopbillTaxinvoice->CheckIsMember($testCorpNum, $LinkID);
       $code = $result->code;
       $message = $result->message;
     }
@@ -2335,7 +2339,7 @@ class TaxinvoiceController extends Controller
     $joinForm = new JoinForm();
 
     // 링크아이디
-    $joinForm->LinkID = $this->LinkID;
+    $joinForm->LinkID = config('popbill.LinkID');
 
     // 사업자번호, "-"제외 10자리
     $joinForm->CorpNum = '1234567890';
