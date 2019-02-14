@@ -1193,9 +1193,26 @@ class CashbillController extends Controller
     return view('ReturnValue', ['filedName' => "현금영수증 발행단가" , 'value' => $unitCost]);
   }
 
+  /**
+   * 현금영수증 API 서비스 과금정보를 확인합니다.
+   */
   public function GetChargeInfo(){
 
-    return view('PResponse', ['code' => $code, 'message' => $message]);
+    // 팝빌회원 사업자번호, '-'제외 10자리
+    $testCorpNum = '1234567890';
+
+    // 팝빌회원 아이디
+    $testUserID = 'testkorea';
+
+    try {
+        $result = $this->PopbillCashbill->GetChargeInfo($testCorpNum, $testUserID);
+    }
+    catch(PopbillException | LinkhubException $pe) {
+        $code = $pe->getCode();
+        $message = $pe->getMessage();
+        return view('PResponse', ['code' => $code, 'message' => $message]);
+    }
+    return view('GetChargeInfo', ['Result' => $result]);
   }
 
 
