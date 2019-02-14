@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Linkhub\LinkhubException;
 use Linkhub\Popbill\JoinForm;
 use Linkhub\Popbill\CorpInfo;
 use Linkhub\Popbill\ContactInfo;

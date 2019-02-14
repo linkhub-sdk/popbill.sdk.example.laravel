@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Linkhub\LinkhubException;
 use Linkhub\Popbill\JoinForm;
 use Linkhub\Popbill\CorpInfo;
 use Linkhub\Popbill\ContactInfo;
@@ -737,7 +738,7 @@ class MessageController extends Controller
   		$message = $pe->getMessage();
       return view('PResponse', ['code' => $code, 'message' => $message]);
   	}
-    return view('ReturnValue', ['filedName' => "문자메시지(".ENumMessageType::SMS.") 발행단가", 'value' => $unitCost]);
+    return view('ReturnValue', ['filedName' => "문자메시지(".ENumMessageType::SMS.") 전송단가", 'value' => $unitCost]);
   }
 
   /**

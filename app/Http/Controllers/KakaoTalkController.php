@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Linkhub\LinkhubException;
 use Linkhub\Popbill\JoinForm;
 use Linkhub\Popbill\CorpInfo;
 use Linkhub\Popbill\ContactInfo;
@@ -62,7 +63,7 @@ class KakaoTalkController extends Controller
   public function ListPlusFriendID(){
 
     // 팝빌회원 사업자번호, '-'제외 10자리
-    $testCorpNum = '1234567890';
+    $testCorpNum = '123456780';
 
     try {
         $result = $this->PopbillKakao->ListPlusFriendID($testCorpNum);
@@ -1053,7 +1054,7 @@ class KakaoTalkController extends Controller
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
     }
-    return view('ReturnValue', ['filedName' => "카카오톡(".$kakaoType.") 발행단가 " , 'value' => $unitCost]);
+    return view('ReturnValue', ['filedName' => "카카오톡(".$kakaoType.") 전송단가 " , 'value' => $unitCost]);
   }
 
   /**

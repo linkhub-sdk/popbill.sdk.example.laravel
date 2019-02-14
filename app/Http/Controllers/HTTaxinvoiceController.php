@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Linkhub\LinkhubException;
 use Linkhub\Popbill\JoinForm;
 use Linkhub\Popbill\CorpInfo;
 use Linkhub\Popbill\ContactInfo;
@@ -17,7 +18,7 @@ class HTTaxinvoiceController extends Controller
   public function __construct() {
 
     define('LINKHUB_COMM_MODE', config('popbill.LINKHUB_COMM_MODE'));
-    
+
     $this->PopbillHTTaxinvoice = new PopbillHTTaxinvoice(config('popbill.LinkID'), config('popbill.SecretKey'));
 
     // 연동환경 설정값, 개발용(true), 상업용(false)
