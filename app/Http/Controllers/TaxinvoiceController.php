@@ -25,7 +25,6 @@ class TaxinvoiceController extends Controller
     // 통신방식 설정
     define('LINKHUB_COMM_MODE', config('popbill.LINKHUB_COMM_MODE'));
 
-
     // 세금계산서 서비스 클래스 초기화
     $this->PopbillTaxinvoice = new PopbillTaxinvoice(config('popbill.LinkID'), config('popbill.SecretKey'));
 
@@ -1965,6 +1964,7 @@ class TaxinvoiceController extends Controller
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
     }
+    
     return view('Taxinvoice/GetEmailPublicKeys', ['Result' => $emailList] );
 
   }
@@ -2564,7 +2564,4 @@ class TaxinvoiceController extends Controller
 
     return view('PResponse', ['code' => $code, 'message' => $message]);
   }
-
-
-
 }
