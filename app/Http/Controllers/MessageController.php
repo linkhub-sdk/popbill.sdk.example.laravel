@@ -27,7 +27,7 @@ class MessageController extends Controller
     $this->PopbillMessaging->IsTest(config('popbill.IsTest'));
   }
 
-  // Get Request Route 처리 함수
+  // HTTP Get Request URI -> 함수 라우팅 처리 함수
   public function RouteHandelerFunc(Request $request){
     $APIName = $request->route('APIName');
     return $this->$APIName();

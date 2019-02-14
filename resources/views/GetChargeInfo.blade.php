@@ -11,7 +11,7 @@
 			<fieldset class="fieldset1">
 				<legend>{{\Request::fullUrl()}}</legend>
 				<ul>
-            <li>unitCost (발행단가) : {{ $Result->unitCost }}</li>
+            <li>unitCost (단가) : {{ $Result->unitCost }}</li>
 						<li>chargeMethod (과금유형) : {{ $Result->chargeMethod }}</li>
 						<li>rateSystem (과금제도) : {{ $Result->rateSystem }}</li>
 			</fieldset>

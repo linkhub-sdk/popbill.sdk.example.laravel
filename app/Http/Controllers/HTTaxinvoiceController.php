@@ -17,19 +17,19 @@ class HTTaxinvoiceController extends Controller
   public function __construct() {
 
     define('LINKHUB_COMM_MODE', config('popbill.LINKHUB_COMM_MODE'));
-
+    
     $this->PopbillHTTaxinvoice = new PopbillHTTaxinvoice(config('popbill.LinkID'), config('popbill.SecretKey'));
 
     // 연동환경 설정값, 개발용(true), 상업용(false)
     $this->PopbillHTTaxinvoice->IsTest(config('popbill.IsTest'));
   }
 
-  // Get Request Route 처리 함수
+  // HTTP Get Request URI -> 함수 라우팅 처리 함수
   public function RouteHandelerFunc(Request $request){
     $APIName = $request->route('APIName');
     return $this->$APIName();
   }
-  
+
   /**
    * 해당 사업자의 파트너 연동회원 가입여부를 확인합니다.
    */

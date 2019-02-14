@@ -12,9 +12,9 @@
 				<legend>{{\Request::fullUrl()}}</legend>
           @foreach ($Result as $index => $object)
           <fieldset class="fieldset2">
-            <legend>080 수신거부 목록 [{{$index+1}}]</legend>
+            <legend>플러스친구 계정정보 [{{$index+1}}]</legend>
     				<ul>
-                <li> number (수신번호) : {{ $object->number }} </li>
+                <li> plusFriendID (플러스친구 아이디) : {{ $object->plusFriendID }} </li>
                 <li> regDT (등록일시) : {{ $object->regDT }} </li>
             </ul>
           </fieldset>

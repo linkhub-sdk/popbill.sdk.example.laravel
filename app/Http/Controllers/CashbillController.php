@@ -18,15 +18,17 @@ class CashbillController extends Controller
 {
   public function __construct() {
 
+    // 통신방식 설정
     define('LINKHUB_COMM_MODE', config('popbill.LINKHUB_COMM_MODE'));
 
+    // 현금영수증 서비스 클래스 초기화
     $this->PopbillCashbill = new PopbillCashbill(config('popbill.LinkID'), config('popbill.SecretKey'));
 
     // 연동환경 설정값, 개발용(true), 상업용(false)
     $this->PopbillCashbill->IsTest(config('popbill.IsTest'));
   }
 
-  // Get Request Route 처리 함수
+  // HTTP Get Request URI -> 함수 라우팅 처리 함수
   public function RouteHandelerFunc(Request $request){
     $APIName = $request->route('APIName');
     return $this->$APIName();

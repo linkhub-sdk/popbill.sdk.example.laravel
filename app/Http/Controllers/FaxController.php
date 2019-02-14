@@ -24,12 +24,12 @@ class FaxController extends Controller
     $this->PopbillFax->IsTest(config('popbill.IsTest'));
   }
 
-  // Get Request Route 처리 함수
+  // HTTP Get Request URI -> 함수 라우팅 처리 함수
   public function RouteHandelerFunc(Request $request){
     $APIName = $request->route('APIName');
     return $this->$APIName();
   }
-  
+
   /**
    * 해당 사업자의 파트너 연동회원 가입여부를 확인합니다.
    */

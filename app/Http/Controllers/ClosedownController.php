@@ -16,20 +16,22 @@ class ClosedownController extends Controller
 {
   public function __construct() {
 
+    // 통신방식 설정
     define('LINKHUB_COMM_MODE', config('popbill.LINKHUB_COMM_MODE'));
 
+    // 휴폐업조회 서비스 클래스 초기화
     $this->PopbillClosedown = new PopbillClosedown(config('popbill.LinkID'), config('popbill.SecretKey'));
 
     // 연동환경 설정값, 개발용(true), 상업용(false)
     $this->PopbillClosedown->IsTest(config('popbill.IsTest'));
   }
 
-  // Get Request Route 처리 함수
+  // HTTP Get Request URI -> 함수 라우팅 처리 함수
   public function RouteHandelerFunc(Request $request){
     $APIName = $request->route('APIName');
     return $this->$APIName();
   }
-  
+
   /**
    * 해당 사업자의 파트너 연동회원 가입여부를 확인합니다.
    */

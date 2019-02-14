@@ -29,12 +29,12 @@ class StatementController extends Controller
     $this->PopbillStatement->IsTest(config('popbill.IsTest'));
   }
 
-  // Get Request Route 처리 함수
+  // HTTP Get Request URI -> 함수 라우팅 처리 함수
   public function RouteHandelerFunc(Request $request){
     $APIName = $request->route('APIName');
     return $this->$APIName();
   }
-  
+
   /**
    * 전자명세서 관리번호 중복여부를 확인합니다.
    * - 관리번호는 1~24자리로 숫자, 영문 '-', '_' 조합하여 사업자별로 중복되지 않도록 구성해야합니다.
