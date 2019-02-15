@@ -63,7 +63,7 @@ class KakaoTalkController extends Controller
   public function ListPlusFriendID(){
 
     // 팝빌회원 사업자번호, '-'제외 10자리
-    $testCorpNum = '123456780';
+    $testCorpNum = '1234567890';
 
     try {
         $result = $this->PopbillKakao->ListPlusFriendID($testCorpNum);
