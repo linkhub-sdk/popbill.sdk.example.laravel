@@ -12,13 +12,16 @@ use Linkhub\Popbill\ChargeInfo;
 use Linkhub\Popbill\PopbillException;
 
 use Linkhub\Popbill\PopbillHTCashbill;
+use Linkhub\Popbill\HTCBKeyType;
 
 class HTCashbillController extends Controller
 {
   public function __construct() {
 
+    // 통신방식 설정
     define('LINKHUB_COMM_MODE', config('popbill.LINKHUB_COMM_MODE'));
 
+    // 홈택스 현금영수증 서비스 클래스 초기화
     $this->PopbillHTCashbill = new PopbillHTCashbill(config('popbill.LinkID'), config('popbill.SecretKey'));
 
     // 연동환경 설정값, 개발용(true), 상업용(false)
@@ -31,13 +34,466 @@ class HTCashbillController extends Controller
     return $this->$APIName();
   }
 
+  /*
+   * 현금영수증 매출/매입 내역 수집을 요청합니다
+   * - 홈택스연동 프로세스는 "[홈택스연동(현금영수증) API 연동매뉴얼] >
+   *   1.1. 홈택스연동(현금영수증) API 구성" 을 참고하시기 바랍니다.
+   * - 수집 요청후 반환받은 작업아이디(JobID)의 유효시간은 1시간 입니다.
+   */
+  public function RequestJob(){
+
+    // 팝빌회원 사업자번호, '-'제외 10자리
+    $testCorpNum = '6798700433';
+
+    // 현금영수증, SELL-매출, BUY-매입
+    $CBType = HTCBKeyType::BUY;
+
+    // 시작일자, 형식(yyyyMMdd)
+    $SDate = '20180101';
+
+    // 종료일자, 형식(yyyyMMdd)
+    $EDate = '20180501';
+
+    try {
+        $jobID = $this->PopbillHTCashbill->RequestJob( $testCorpNum, $CBType, $SDate, $EDate);
+    }
+    catch (PopbillException $pe) {
+        $code = $pe->getCode();
+        $message = $pe->getMessage();
+        return view('PResponse', ['code' => $code, 'message' => $message]);
+    }
+
+    return view('ReturnValue', ['filedName' => "작업아이디(jobID)" , 'value' => $jobID]);
+  }
+
+  /*
+   * 수집 요청 상태를 확인합니다.
+   * - 응답항목 관한 정보는 "[홈택스연동 (현금영수증) API 연동매뉴얼] >
+   *   3.1.2. GetJobState(수집 상태 확인)" 을 참고하시기 바랍니다.
+   */
+  public function GetJobState(){
+
+    // 팝빌회원 사업자번호, '-'제외 10자리
+    $testCorpNum = '6798700433';
+
+    // 수집요청시 발급받은 작업아이디
+    $jobID = '019021510000000016';
+
+    try {
+        $result = $this->PopbillHTCashbill->GetJobState( $testCorpNum, $jobID);
+    }
+    catch (PopbillException $pe) {
+        $code = $pe->getCode();
+        $message = $pe->getMessage();
+        return view('PResponse', ['code' => $code, 'message' => $message]);
+    }
+    return view('JobState', ['Result' => [$result] ] );
+  }
+
+  /*
+   * 수집 요청건들에 대한 상태 목록을 확인합니다.
+   * - 수집 요청 작업아이디(JobID)의 유효시간은 1시간 입니다.
+   * - 응답항목에 관한 정보는 "[홈택스연동 (현금영수증) API 연동매뉴얼] >
+   *   3.1.3. ListActiveJob(수집 상태 목록 확인)" 을 참고하시기 바랍니다.
+   */
+  public function ListActiveJob(){
+
+    // 팝빌회원 사업자번호, '-'제외 10자리
+    $testCorpNum = '6798700433';
+
+    try {
+        $result = $this->PopbillHTCashbill->ListActiveJob($testCorpNum);
+    }
+    catch (PopbillException $pe) {
+        $code = $pe->getCode();
+        $message = $pe->getMessage();
+        return view('PResponse', ['code' => $code, 'message' => $message]);
+    }
+    return view('JobState', ['Result' => $result ] );
+  }
+
+  /**
+   * 현금영수증 매입/매출 내역의 수집 결과를 조회합니다.
+   * - 응답항목에 관한 정보는 "[홈택스연동 (현금영수증) API 연동매뉴얼] >
+   *   3.2.1. Search(수집 결과 조회)" 을 참고하시기 바랍니다.
+   */
+  public function Search(){
+
+    // 팝빌회원 사업자번호, '-'제외 10자리
+    $testCorpNum = '6798700433';
+
+    // 수집 요청(RequestJob) 호출시 반환받은 작업아이디
+    $JobID = '019021510000000018';
+
+    // 현금영수증 종류 배열, N-일반 현금영수증, C-취소 현금영수증
+    $TradeType = array(
+        'N',
+        'C'
+    );
+
+    // 거래용도 배열, P-소득공제용, C-지출증빙용
+    $TradeUsage = array(
+        'P',
+        'C'
+    );
+
+    // 페이지 번호
+    $Page = 1;
+
+    // 페이지당 목록개수
+    $PerPage = 10;
+
+    // 정렬방향, D-내림차순, A-오름차순
+    $Order = "D";
+
+    try {
+        $result = $this->PopbillHTCashbill->Search($testCorpNum, $JobID, $TradeType, $TradeUsage, $Page, $PerPage, $Order);
+    } catch (PopbillException $pe) {
+        $code = $pe->getCode();
+        $message = $pe->getMessage();
+        return view('PResponse', ['code' => $code, 'message' => $message]);
+    }
+    return view('HTCashbill/Search', ['Result' => $result] );
+  }
+
+  /**
+   * 현금영수증 매입/매출 내역의 수집 결과 요약정보를 조회합니다.
+   * - 응답항목에 관한 정보는 "[홈택스연동 (현금영수증) API 연동매뉴얼] >
+   *   3.2.2. Summary(수집 결과 요약정보 조회)" 을 참고하시기 바랍니다.
+   */
+  public function Summary(){
+
+    // 팝빌회원 사업자번호, '-'제외 10자리
+    $testCorpNum = '6798700433';
+
+    // 수집 요청(RequestJob) 호출시 반환받은 작업아이디
+    $JobID = '019021510000000018';
+
+    // 현금영수증 종류 배열, N-일반 현금영수증, C-취소 현금영수증
+    $TradeType = array (
+        'N',
+        'C'
+    );
+
+    // 거래용도 배열, P-소득공제용, C-지출증빙용
+    $TradeUsage = array (
+        'P',
+        'C'
+    );
+    try {
+        $result = $this->PopbillHTCashbill->Summary($testCorpNum, $JobID, $TradeType, $TradeUsage);
+    }
+    catch (PopbillException $pe) {
+        $code = $pe->getCode();
+        $message = $pe->getMessage();
+        return view('PResponse', ['code' => $code, 'message' => $message]);
+    }
+    return view('HTCashbill/Summary', ['Result' => $result] );
+  }
+  /**
+   * 홈택스연동 인증관리를 위한 URL을 반환합니다.
+   * 인증방식에는 부서사용자/공인인증서 인증 방식이 있습니다.
+   * - 반환된 URL은 보안정책에 따라 30초의 유효시간을 갖습니다.
+   */
+  public function GetCertificatePopUpURL(){
+
+    // 팝빌 회원 사업자 번호, "-"제외 10자리
+    $testCorpNum = '6798700433';
+
+    try {
+        $url = $this->PopbillHTCashbill->GetCertificatePopUpURL($testCorpNum);
+    }
+    catch (PopbillException | LinkhubException $pe) {
+        $code = $pe->getCode();
+        $message = $pe->getMessage();
+        return view('PResponse', ['code' => $code, 'message' => $message]);
+    }
+    return view('ReturnValue', ['filedName' => "홈택스 인증관리 팝업 URL" , 'value' => $url]);
+  }
+
+  /**
+   * 팝빌에 등록된 홈택스 공인인증서의 만료일자를 반환합니다.
+   */
+  public function GetCertificateExpireDate(){
+
+    // 팝빌 회원 사업자 번호, "-"제외 10자리
+    $testCorpNum = '6798700433';
+
+    try {
+        $ExpireDate = $this->PopbillHTCashbill->GetCertificateExpireDate($testCorpNum);
+    }
+    catch (PopbillException | LinkhubException $pe) {
+        $code = $pe->getCode();
+        $message = $pe->getMessage();
+        return view('PResponse', ['code' => $code, 'message' => $message]);
+    }
+    return view('ReturnValue', ['filedName' => "공인인증서 만료일시" , 'value' => $ExpireDate]);
+  }
+
+  /**
+   * 팝빌에 등록된 공인인증서의 홈택스 로그인을 테스트합니다.
+   */
+  public function CheckCertValidation(){
+
+    // 사업자번호, "-"제외 10자리
+    $testCorpNum = '6798700433';
+
+    try	{
+        $result = $this->PopbillHTCashbill->CheckCertValidation($testCorpNum);
+        $code = $result->code;
+        $message = $result->message;
+    }
+    catch (PopbillException | LinkhubException $pe) {
+        $code = $pe->getCode();
+        $message = $pe->getMessage();
+    }
+
+    return view('PResponse', ['code' => $code, 'message' => $message]);
+  }
+
+  /**
+   *  홈택스 현금영수증 부서사용자 계정을 등록한다.
+   */
+  public function RegistDeptUser(){
+
+    // 사업자번호, "-"제외 10자리
+    $testCorpNum = '6798700433';
+
+    // 홈택스에서 생성한 현금영수증 부서사용자 아이디
+    $deptUserID = 'userid_test';
+
+    // 홈택스에서 생성한 현금영수증 부서사용자 비밀번호
+    $deptUserPWD = 'passwd_test';
+
+    try	{
+        $result = $this->PopbillHTCashbill->RegistDeptUser($testCorpNum, $deptUserID, $deptUserPWD);
+        $code = $result->code;
+        $message = $result->message;
+    }
+    catch (PopbillException | LinkhubException $pe) {
+        $code = $pe->getCode();
+        $message = $pe->getMessage();
+    }
+    return view('PResponse', ['code' => $code, 'message' => $message]);
+  }
+
+  /**
+   * 팝빌에 등록된 현금영수증 부서사용자 아이디를 확인합니다.
+   */
+  public function CheckDeptUser(){
+
+    // 사업자번호, "-"제외 10자리
+    $testCorpNum = '6798700433';
+
+    try	{
+        $result = $this->PopbillHTCashbill->CheckDeptUser($testCorpNum);
+        $code = $result->code;
+        $message = $result->message;
+    }
+    catch (PopbillException | LinkhubException $pe) {
+        $code = $pe->getCode();
+        $message = $pe->getMessage();
+    }
+
+    return view('PResponse', ['code' => $code, 'message' => $message]);
+  }
+
+  /**
+   * 팝빌에 등록된 현금영수증 부서사용자 계정정보를 이용하여 홈택스 로그인을 테스트합니다.
+   */
+  public function CheckLoginDeptUser(){
+
+    // 사업자번호, "-"제외 10자리
+    $testCorpNum = '6798700433';
+
+    try	{
+        $result = $this->PopbillHTCashbill->CheckLoginDeptUser($testCorpNum);
+        $code = $result->code;
+        $message = $result->message;
+    }
+    catch (PopbillException | LinkhubException $pe) {
+        $code = $pe->getCode();
+        $message = $pe->getMessage();
+    }
+
+    return view('PResponse', ['code' => $code, 'message' => $message]);
+  }
+
+  /**
+   * 팝빌에 등록된 현금영수증 부서사용자 계정정보를 삭제합니다.
+   */
+  public function DeleteDeptUser(){
+
+    // 사업자번호, "-"제외 10자리
+    $testCorpNum = '6798700433';
+
+    try	{
+        $result = $this->PopbillHTCashbill->DeleteDeptUser($testCorpNum);
+        $code = $result->code;
+        $message = $result->message;
+    }
+    catch (PopbillException | LinkhubException $pe) {
+        $code = $pe->getCode();
+        $message = $pe->getMessage();
+    }
+
+    return view('PResponse', ['code' => $code, 'message' => $message]);
+  }
+
+  /**
+   * 연동회원의 잔여포인트를 확인합니다.
+   * - 과금방식이 파트너과금인 경우 파트너 잔여포인트(GetPartnerBalance API) 를 통해 확인하시기 바랍니다.
+   */
+  public function GetBalance(){
+
+    // 팝빌회원 사업자번호
+    $testCorpNum = '6798700433';
+
+    try {
+        $remainPoint = $this->PopbillHTCashbill->GetBalance($testCorpNum);
+    }
+    catch (PopbillException | LinkhubException $pe) {
+        $code = $pe->getCode();
+        $message = $pe->getMessage();
+        return view('PResponse', ['code' => $code, 'message' => $message]);
+    }
+    return view('ReturnValue', ['filedName' => "연동회원 잔여포인트" , 'value' => $remainPoint]);
+  }
+
+  /**
+   * 팝빌 연동회원의 포인트충전 팝업 URL을 반환합니다.
+   * - 반환된 URL은 보안정책에 따라 30초의 유효시간을 갖습니다.
+   */
+  public function GetChargeURL(){
+
+    // 팝빌 회원 사업자 번호, "-"제외 10자리
+    $testCorpNum = '6798700433';
+
+    // 팝빌 회원 아이디
+    $testUserID = '';
+
+    try {
+        $url = $this->PopbillHTCashbill->GetChargeURL($testCorpNum, $testUserID);
+    } catch (PopbillException | LinkhubException $pe) {
+        $code = $pe->getCode();
+        $message = $pe->getMessage();
+        return view('PResponse', ['code' => $code, 'message' => $message]);
+    }
+    return view('ReturnValue', ['filedName' => "연동회원 포인트 충전 팝업 URL" , 'value' => $url]);
+  }
+
+  /**
+   * 파트너의 잔여포인트를 확인합니다.
+   * - 과금방식이 연동과금인 경우 연동회원 잔여포인트(GetBalance API)를 이용하시기 바랍니다.
+   */
+  public function GetPartnerBalance(){
+
+    // 팝빌회원 사업자번호
+    $testCorpNum = '6798700433';
+
+    try {
+        $remainPoint = $this->PopbillHTCashbill->GetPartnerBalance($testCorpNum);
+    }
+    catch (PopbillException | LinkhubException $pe) {
+        $code = $pe->getCode();
+        $message = $pe->getMessage();
+        return view('PResponse', ['code' => $code, 'message' => $message]);
+    }
+    return view('ReturnValue', ['filedName' => "파트너 잔여포인트" , 'value' => $remainPoint]);
+  }
+
+  /**
+   * 파트너 포인트 충전 팝업 URL을 반환합니다.
+   * - 반환된 URL은 보안정책에 따라 30초의 유효시간을 갖습니다.
+   */
+  public function GetPartnerURL(){
+
+    // 팝빌 회원 사업자 번호, "-"제외 10자리
+    $testCorpNum = '6798700433';
+
+    // [CHRG] : 포인트충전 URL
+    $TOGO = 'CHRG';
+
+    try {
+        $url = $this->PopbillHTCashbill->GetPartnerURL($testCorpNum, $TOGO);
+    }
+    catch(PopbillException | LinkhubException $pe) {
+        $code = $pe->getCode();
+        $message = $pe->getMessage();
+        return view('PResponse', ['code' => $code, 'message' => $message]);
+    }
+    return view('ReturnValue', ['filedName' => "파트너 포인트 충전 팝업 URL" , 'value' => $url]);
+  }
+
+  /**
+   * 홈택스연동 API 서비스 과금정보를 확인합니다.
+   */
+
+  public function GetChargeInfo(){
+
+    // 팝빌회원 사업자번호, '-'제외 10자리
+    $testCorpNum = '6798700433';
+
+    // 팝빌회원 아이디
+    $testUserID = '';
+
+    try {
+        $result = $this->PopbillHTCashbill->GetChargeInfo($testCorpNum,$testUserID);
+    }
+    catch (PopbillException | LinkhubException $pe) {
+        $code = $pe->getCode();
+        $message = $pe->getMessage();
+        return view('PResponse', ['code' => $code, 'message' => $message]);
+    }
+    return view('GetChargeInfo', ['Result' => $result]);
+  }
+
+  /**
+   * 정액제 서비스 신청 URL을 반환합니다.
+   * - 반환된 URL은 보안정책에 따라 30초의 유효시간을 갖습니다.
+   */
+  public function GetFlatRatePopUpURL(){
+
+    // 팝빌 회원 사업자 번호, "-"제외 10자리
+    $testCorpNum = '6798700433';
+
+    try {
+        $url = $this->PopbillHTCashbill->GetFlatRatePopUpURL($testCorpNum);
+    }
+    catch(PopbillException | LinkhubException $pe) {
+        $code = $pe->getCode();
+        $message = $pe->getMessage();
+        return view('PResponse', ['code' => $code, 'message' => $message]);
+    }
+    return view('ReturnValue', ['filedName' => "정액제 서비스 신청 팝업 URL" , 'value' => $url]);
+  }
+
+  /**
+   * 연동회원의 정액제 서비스 이용상태를 확인합니다.
+   */
+  public function GetFlatRateState(){
+
+    // 팝빌회원 사업자번호, '-'제외 10자리
+    $testCorpNum = '6798700433';
+
+    try {
+        $result = $this->PopbillHTCashbill->GetFlatRateState($testCorpNum);
+    }
+    catch (PopbillException | LinkhubException $pe) {
+        $code = $pe->getCode();
+        $message = $pe->getMessage();
+        return view('PResponse', ['code' => $code, 'message' => $message]);
+    }
+    return view('FlatRateState', ['Result' => $result]);
+  }
+
   /**
    * 해당 사업자의 파트너 연동회원 가입여부를 확인합니다.
    */
   public function CheckIsMember(){
 
     // 사업자번호, "-"제외 10자리
-    $testCorpNum = '1234567890';
+    $testCorpNum = '6798700433';
 
     // 파트너 링크아이디
     // ./config/popbill.php에 선언된 파트너 링크아이디
@@ -62,7 +518,7 @@ class HTCashbillController extends Controller
   public function CheckID(){
 
     // 조회할 아이디
-    $testUserID = 'testkorea';
+    $testUserID = '';
 
     try	{
       $result = $this->PopbillHTCashbill->CheckID($testUserID);
@@ -88,7 +544,7 @@ class HTCashbillController extends Controller
     $joinForm->LinkID = config('popbill.LinkID');
 
     // 사업자번호, "-"제외 10자리
-    $joinForm->CorpNum = '1234567890';
+    $joinForm->CorpNum = '6798700433';
 
     // 대표자성명
     $joinForm->CEOName = '대표자성명';
@@ -134,12 +590,35 @@ class HTCashbillController extends Controller
   }
 
   /**
+   * 팝빌에 로그인 상태로 접근할 수 있는 팝업 URL을 반환합니다.
+   * 반환된 URL의 유지시간은 30초이며, 제한된 시간 이후에는 정상적으로 처리되지 않습니다.
+   */
+  public function GetAccessURL(){
+
+    // 팝빌 회원 사업자 번호, "-"제외 10자리
+    $testCorpNum = '6798700433';
+
+    // 팝빌 회원 아이디
+    $testUserID = '';
+
+    try {
+        $url = $this->PopbillHTCashbill->GetAccessURL($testCorpNum, $testUserID);
+    } catch (PopbillException | LinkhubException $pe) {
+        $code = $pe->getCode();
+        $message = $pe->getMessage();
+        return view('PResponse', ['code' => $code, 'message' => $message]);
+    }
+    return view('ReturnValue', ['filedName' => "팝빌 로그인 URL" , 'value' => $url]);
+
+  }
+
+  /**
    * 연동회원의 회사정보를 확인합니다.
    */
   public function GetCorpInfo(){
 
     // 팝빌회원 사업자번호, '-'제외 10자리
-    $testCorpNum = '1234567890';
+    $testCorpNum = '6798700433';
 
     try {
       $CorpInfo = $this->PopbillHTCashbill->GetCorpInfo($testCorpNum);
@@ -159,7 +638,7 @@ class HTCashbillController extends Controller
   public function UpdateCorpInfo(){
 
     // 팝빌회원 사업자번호, '-' 제외 10자리
-    $testCorpNum = '1234567890';
+    $testCorpNum = '6798700433';
 
     // 회사정보 클래스 생성
     $CorpInfo = new CorpInfo();
@@ -198,16 +677,16 @@ class HTCashbillController extends Controller
   public function RegistContact(){
 
     // 팝빌회원 사업자번호, '-' 제외 10자리
-    $testCorpNum = '1234567890';
+    $testCorpNum = '6798700433';
 
     // 담당자 정보 객체 생성
     $ContactInfo = new ContactInfo();
 
     // 담당자 아이디
-    $ContactInfo->id = 'testkorea001';
+    $ContactInfo->id = '001';
 
     // 담당자 패스워드
-    $ContactInfo->pwd = 'testkorea!@#$/';
+    $ContactInfo->pwd = '!@#$/';
 
     // 담당자명
     $ContactInfo->personName = '담당자_수정';
@@ -249,7 +728,7 @@ class HTCashbillController extends Controller
   public function ListContact(){
 
     // 팝빌회원 사업자번호, '-'제외 10자리
-    $testCorpNum = '1234567890';
+    $testCorpNum = '6798700433';
 
     try {
       $ContactList = $this->PopbillHTCashbill->ListContact($testCorpNum);
@@ -269,10 +748,10 @@ class HTCashbillController extends Controller
   public function UpdateContact(){
 
     // 팝빌회원 사업자번호, '-' 제외 10자리
-    $testCorpNum = '1234567890';
+    $testCorpNum = '6798700433';
 
     // 팝빌회원 아이디
-    $testUserID = 'testkorea';
+    $testUserID = '';
 
     // 담당자 정보 객체 생성
     $ContactInfo = new ContactInfo();
@@ -281,7 +760,7 @@ class HTCashbillController extends Controller
     $ContactInfo->personName = '담당자_수정';
 
     // 담당자 아이디
-    $ContactInfo->id = 'testkorea';
+    $ContactInfo->id = '';
 
     // 담당자 연락처
     $ContactInfo->tel = '070-4304-2991';

@@ -20,7 +20,7 @@
           </ul>
           @foreach ($Result->list as $indexKey => $tiInfo)
           <fieldset class="fieldset2">
-            <legend>세금계산서 상태/요약정보 [{{ $indexKey+1 }}]</legend>
+            <legend>세금계산서 정보 [{{ $indexKey+1 }}]</legend>
     				<ul>
               <li>ntsconfirmNum (국세청승인번호) : {{ $tiInfo->ntsconfirmNum }}</li>
                <li>writeDate (작성일자) : {{ $tiInfo->writeDate }}</li>

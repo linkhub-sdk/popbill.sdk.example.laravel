@@ -91,7 +91,7 @@ class HTTaxinvoiceController extends Controller
         return view('PResponse', ['code' => $code, 'message' => $message]);
     }
 
-    return view('HTTaxinvoice/JobState', ['Result' => [$result] ] );
+    return view('JobState', ['Result' => [$result] ] );
 
   }
 
@@ -114,7 +114,7 @@ class HTTaxinvoiceController extends Controller
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
     }
-    return view('HTTaxinvoice/JobState', ['Result' => $result ] );
+    return view('JobState', ['Result' => $result ] );
   }
 
   /**
