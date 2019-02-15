@@ -34,6 +34,180 @@ class ClosedownController extends Controller
   }
 
   /**
+   * 사업자에 대한 휴폐업여부를 조회합니다. (단건)
+   */
+  public function CheckCorpNum(){
+
+    // 팝빌회원 사업자번호
+    $MemberCorpNum = "1234567890";
+
+    // 조회 사업자번호
+    $CheckCorpNum = "6799800433";
+
+    try {
+        $result = $this->PopbillClosedown->checkCorpNum($MemberCorpNum, $CheckCorpNum);
+    }
+    catch (PopbillException $pe) {
+        $code = $pe->getCode();
+        $message = $pe->getMessage();
+        return view('PResponse', ['code' => $code, 'message' => $message]);
+    }
+    return view('CloseDown/CheckCorpNum', ['Result' => [$result] ] );
+  }
+
+  /**
+   * 사업자에 대한 휴폐업여부를 조회합니다. (대량 - 호출당 최대 1000건)
+   */
+  public function CheckCorpNums(){
+
+    //팝빌회원 사업자번호
+    $MemberCorpNum = "1234567890";
+
+    // 조회할 사업자번호 배열, 최대 1000건
+    $CorpNumList = array(
+        "1234567890",
+        "6798700433",
+        "401-03-94930",
+    );
+
+    try {
+        $result = $this->PopbillClosedown->checkCorpNums($MemberCorpNum, $CorpNumList);
+    } catch (PopbillException $pe) {
+        $code = $pe->getCode();
+        $message = $pe->getMessage();
+        return view('PResponse', ['code' => $code, 'message' => $message]);
+    }
+    return view('CloseDown/CheckCorpNum', ['Result' => $result ] );
+  }
+
+    /**
+     * 연동회원의 잔여포인트를 확인합니다.
+     * - 과금방식이 파트너과금인 경우 파트너 잔여포인트(GetPartnerBalance API) 를 통해 확인하시기 바랍니다.
+     */
+    public function GetBalance(){
+
+      // 팝빌회원 사업자번호
+      $testCorpNum = '6798700433';
+
+      try {
+          $remainPoint = $this->PopbillClosedown->GetBalance($testCorpNum);
+      }
+      catch (PopbillException | LinkhubException $pe) {
+          $code = $pe->getCode();
+          $message = $pe->getMessage();
+          return view('PResponse', ['code' => $code, 'message' => $message]);
+      }
+      return view('ReturnValue', ['filedName' => "연동회원 잔여포인트" , 'value' => $remainPoint]);
+    }
+
+    /**
+     * 팝빌 연동회원의 포인트충전 팝업 URL을 반환합니다.
+     * - 반환된 URL은 보안정책에 따라 30초의 유효시간을 갖습니다.
+     */
+    public function GetChargeURL(){
+
+      // 팝빌 회원 사업자 번호, "-"제외 10자리
+      $testCorpNum = '6798700433';
+
+      // 팝빌 회원 아이디
+      $testUserID = '';
+
+      try {
+          $url = $this->PopbillClosedown->GetChargeURL($testCorpNum, $testUserID);
+      } catch (PopbillException | LinkhubException $pe) {
+          $code = $pe->getCode();
+          $message = $pe->getMessage();
+          return view('PResponse', ['code' => $code, 'message' => $message]);
+      }
+      return view('ReturnValue', ['filedName' => "연동회원 포인트 충전 팝업 URL" , 'value' => $url]);
+    }
+
+    /**
+     * 휴폐업조회 단가를 확인합니다.
+     */
+    public function GetUnitCost(){
+
+      // 팝빌 회원 사업자 번호, "-"제외 10자리
+      $testCorpNum = '1234567890';
+
+      try {
+          $unitCost = $this->PopbillClosedown->GetUnitCost($testCorpNum);
+      }
+      catch(PopbillException | LinkhubException $pe) {
+          $code = $pe->getCode();
+          $message = $pe->getMessage();
+          return view('PResponse', ['code' => $code, 'message' => $message]);
+      }
+      return view('ReturnValue', ['filedName' => "휴폐업조회 단가" , 'value' => $unitCost]);
+    }
+
+    /**
+     * 파트너의 잔여포인트를 확인합니다.
+     * - 과금방식이 연동과금인 경우 연동회원 잔여포인트(GetBalance API)를 이용하시기 바랍니다.
+     */
+    public function GetPartnerBalance(){
+
+      // 팝빌회원 사업자번호
+      $testCorpNum = '6798700433';
+
+      try {
+          $remainPoint = $this->PopbillClosedown->GetPartnerBalance($testCorpNum);
+      }
+      catch (PopbillException | LinkhubException $pe) {
+          $code = $pe->getCode();
+          $message = $pe->getMessage();
+          return view('PResponse', ['code' => $code, 'message' => $message]);
+      }
+      return view('ReturnValue', ['filedName' => "파트너 잔여포인트" , 'value' => $remainPoint]);
+    }
+
+    /**
+     * 파트너 포인트 충전 팝업 URL을 반환합니다.
+     * - 반환된 URL은 보안정책에 따라 30초의 유효시간을 갖습니다.
+     */
+    public function GetPartnerURL(){
+
+      // 팝빌 회원 사업자 번호, "-"제외 10자리
+      $testCorpNum = '6798700433';
+
+      // [CHRG] : 포인트충전 URL
+      $TOGO = 'CHRG';
+
+      try {
+          $url = $this->PopbillClosedown->GetPartnerURL($testCorpNum, $TOGO);
+      }
+      catch(PopbillException | LinkhubException $pe) {
+          $code = $pe->getCode();
+          $message = $pe->getMessage();
+          return view('PResponse', ['code' => $code, 'message' => $message]);
+      }
+      return view('ReturnValue', ['filedName' => "파트너 포인트 충전 팝업 URL" , 'value' => $url]);
+    }
+
+    /**
+     * 휴폐업조회 API 서비스 과금정보를 확인합니다.
+     */
+
+    public function GetChargeInfo(){
+
+      // 팝빌회원 사업자번호, '-'제외 10자리
+      $testCorpNum = '6798700433';
+
+      // 팝빌회원 아이디
+      $testUserID = '';
+
+      try {
+          $result = $this->PopbillClosedown->GetChargeInfo($testCorpNum,$testUserID);
+      }
+      catch (PopbillException | LinkhubException $pe) {
+          $code = $pe->getCode();
+          $message = $pe->getMessage();
+          return view('PResponse', ['code' => $code, 'message' => $message]);
+      }
+      return view('GetChargeInfo', ['Result' => $result]);
+    }
+
+  /**
    * 해당 사업자의 파트너 연동회원 가입여부를 확인합니다.
    */
   public function CheckIsMember(){
@@ -311,5 +485,28 @@ class ClosedownController extends Controller
     }
 
     return view('PResponse', ['code' => $code, 'message' => $message]);
+  }
+
+  /**
+   * 팝빌에 로그인 상태로 접근할 수 있는 팝업 URL을 반환합니다.
+   * 반환된 URL의 유지시간은 30초이며, 제한된 시간 이후에는 정상적으로 처리되지 않습니다.
+   */
+  public function GetAccessURL(){
+
+    // 팝빌 회원 사업자 번호, "-"제외 10자리
+    $testCorpNum = '1234567890';
+
+    // 팝빌 회원 아이디
+    $testUserID = 'testkorea';
+
+    try {
+        $url = $this->PopbillClosedown->GetAccessURL($testCorpNum, $testUserID);
+    } catch (PopbillException $pe) {
+        $code = $pe->getCode();
+        $message = $pe->getMessage();
+        return view('PResponse', ['code' => $code, 'message' => $message]);
+    }
+    return view('ReturnValue', ['filedName' => "팝빌 로그인 URL" , 'value' => $url]);
+
   }
 }
