@@ -66,7 +66,7 @@ class ClosedownController extends Controller
     // 조회할 사업자번호 배열, 최대 1000건
     $CorpNumList = array(
         "1234567890",
-        "6798700433",
+        "1234567890",
         "401-03-94930",
     );
 
@@ -87,7 +87,7 @@ class ClosedownController extends Controller
     public function GetBalance(){
 
       // 팝빌회원 사업자번호
-      $testCorpNum = '6798700433';
+      $testCorpNum = '1234567890';
 
       try {
           $remainPoint = $this->PopbillClosedown->GetBalance($testCorpNum);
@@ -107,7 +107,7 @@ class ClosedownController extends Controller
     public function GetChargeURL(){
 
       // 팝빌 회원 사업자 번호, "-"제외 10자리
-      $testCorpNum = '6798700433';
+      $testCorpNum = '1234567890';
 
       // 팝빌 회원 아이디
       $testUserID = '';
@@ -148,7 +148,7 @@ class ClosedownController extends Controller
     public function GetPartnerBalance(){
 
       // 팝빌회원 사업자번호
-      $testCorpNum = '6798700433';
+      $testCorpNum = '1234567890';
 
       try {
           $remainPoint = $this->PopbillClosedown->GetPartnerBalance($testCorpNum);
@@ -168,7 +168,7 @@ class ClosedownController extends Controller
     public function GetPartnerURL(){
 
       // 팝빌 회원 사업자 번호, "-"제외 10자리
-      $testCorpNum = '6798700433';
+      $testCorpNum = '1234567890';
 
       // [CHRG] : 포인트충전 URL
       $TOGO = 'CHRG';
@@ -191,7 +191,7 @@ class ClosedownController extends Controller
     public function GetChargeInfo(){
 
       // 팝빌회원 사업자번호, '-'제외 10자리
-      $testCorpNum = '6798700433';
+      $testCorpNum = '1234567890';
 
       // 팝빌회원 아이디
       $testUserID = '';

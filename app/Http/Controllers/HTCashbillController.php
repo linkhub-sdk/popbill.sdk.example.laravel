@@ -43,7 +43,7 @@ class HTCashbillController extends Controller
   public function RequestJob(){
 
     // 팝빌회원 사업자번호, '-'제외 10자리
-    $testCorpNum = '6798700433';
+    $testCorpNum = '1234567890';
 
     // 현금영수증, SELL-매출, BUY-매입
     $CBType = HTCBKeyType::BUY;
@@ -74,7 +74,7 @@ class HTCashbillController extends Controller
   public function GetJobState(){
 
     // 팝빌회원 사업자번호, '-'제외 10자리
-    $testCorpNum = '6798700433';
+    $testCorpNum = '1234567890';
 
     // 수집요청시 발급받은 작업아이디
     $jobID = '019021510000000016';
@@ -99,7 +99,7 @@ class HTCashbillController extends Controller
   public function ListActiveJob(){
 
     // 팝빌회원 사업자번호, '-'제외 10자리
-    $testCorpNum = '6798700433';
+    $testCorpNum = '1234567890';
 
     try {
         $result = $this->PopbillHTCashbill->ListActiveJob($testCorpNum);
@@ -120,7 +120,7 @@ class HTCashbillController extends Controller
   public function Search(){
 
     // 팝빌회원 사업자번호, '-'제외 10자리
-    $testCorpNum = '6798700433';
+    $testCorpNum = '1234567890';
 
     // 수집 요청(RequestJob) 호출시 반환받은 작업아이디
     $JobID = '019021510000000018';
@@ -164,7 +164,7 @@ class HTCashbillController extends Controller
   public function Summary(){
 
     // 팝빌회원 사업자번호, '-'제외 10자리
-    $testCorpNum = '6798700433';
+    $testCorpNum = '1234567890';
 
     // 수집 요청(RequestJob) 호출시 반환받은 작업아이디
     $JobID = '019021510000000018';
@@ -198,7 +198,7 @@ class HTCashbillController extends Controller
   public function GetCertificatePopUpURL(){
 
     // 팝빌 회원 사업자 번호, "-"제외 10자리
-    $testCorpNum = '6798700433';
+    $testCorpNum = '1234567890';
 
     try {
         $url = $this->PopbillHTCashbill->GetCertificatePopUpURL($testCorpNum);
@@ -217,7 +217,7 @@ class HTCashbillController extends Controller
   public function GetCertificateExpireDate(){
 
     // 팝빌 회원 사업자 번호, "-"제외 10자리
-    $testCorpNum = '6798700433';
+    $testCorpNum = '1234567890';
 
     try {
         $ExpireDate = $this->PopbillHTCashbill->GetCertificateExpireDate($testCorpNum);
@@ -236,7 +236,7 @@ class HTCashbillController extends Controller
   public function CheckCertValidation(){
 
     // 사업자번호, "-"제외 10자리
-    $testCorpNum = '6798700433';
+    $testCorpNum = '1234567890';
 
     try	{
         $result = $this->PopbillHTCashbill->CheckCertValidation($testCorpNum);
@@ -257,7 +257,7 @@ class HTCashbillController extends Controller
   public function RegistDeptUser(){
 
     // 사업자번호, "-"제외 10자리
-    $testCorpNum = '6798700433';
+    $testCorpNum = '1234567890';
 
     // 홈택스에서 생성한 현금영수증 부서사용자 아이디
     $deptUserID = 'userid_test';
@@ -283,7 +283,7 @@ class HTCashbillController extends Controller
   public function CheckDeptUser(){
 
     // 사업자번호, "-"제외 10자리
-    $testCorpNum = '6798700433';
+    $testCorpNum = '1234567890';
 
     try	{
         $result = $this->PopbillHTCashbill->CheckDeptUser($testCorpNum);
@@ -304,7 +304,7 @@ class HTCashbillController extends Controller
   public function CheckLoginDeptUser(){
 
     // 사업자번호, "-"제외 10자리
-    $testCorpNum = '6798700433';
+    $testCorpNum = '1234567890';
 
     try	{
         $result = $this->PopbillHTCashbill->CheckLoginDeptUser($testCorpNum);
@@ -325,7 +325,7 @@ class HTCashbillController extends Controller
   public function DeleteDeptUser(){
 
     // 사업자번호, "-"제외 10자리
-    $testCorpNum = '6798700433';
+    $testCorpNum = '1234567890';
 
     try	{
         $result = $this->PopbillHTCashbill->DeleteDeptUser($testCorpNum);
@@ -347,7 +347,7 @@ class HTCashbillController extends Controller
   public function GetBalance(){
 
     // 팝빌회원 사업자번호
-    $testCorpNum = '6798700433';
+    $testCorpNum = '1234567890';
 
     try {
         $remainPoint = $this->PopbillHTCashbill->GetBalance($testCorpNum);
@@ -367,10 +367,10 @@ class HTCashbillController extends Controller
   public function GetChargeURL(){
 
     // 팝빌 회원 사업자 번호, "-"제외 10자리
-    $testCorpNum = '6798700433';
+    $testCorpNum = '1234567890';
 
     // 팝빌 회원 아이디
-    $testUserID = '';
+    $testUserID = 'testkorea';
 
     try {
         $url = $this->PopbillHTCashbill->GetChargeURL($testCorpNum, $testUserID);
@@ -389,7 +389,7 @@ class HTCashbillController extends Controller
   public function GetPartnerBalance(){
 
     // 팝빌회원 사업자번호
-    $testCorpNum = '6798700433';
+    $testCorpNum = '1234567890';
 
     try {
         $remainPoint = $this->PopbillHTCashbill->GetPartnerBalance($testCorpNum);
@@ -409,7 +409,7 @@ class HTCashbillController extends Controller
   public function GetPartnerURL(){
 
     // 팝빌 회원 사업자 번호, "-"제외 10자리
-    $testCorpNum = '6798700433';
+    $testCorpNum = '1234567890';
 
     // [CHRG] : 포인트충전 URL
     $TOGO = 'CHRG';
@@ -432,10 +432,10 @@ class HTCashbillController extends Controller
   public function GetChargeInfo(){
 
     // 팝빌회원 사업자번호, '-'제외 10자리
-    $testCorpNum = '6798700433';
+    $testCorpNum = '1234567890';
 
     // 팝빌회원 아이디
-    $testUserID = '';
+    $testUserID = 'testkorea';
 
     try {
         $result = $this->PopbillHTCashbill->GetChargeInfo($testCorpNum,$testUserID);
@@ -455,7 +455,7 @@ class HTCashbillController extends Controller
   public function GetFlatRatePopUpURL(){
 
     // 팝빌 회원 사업자 번호, "-"제외 10자리
-    $testCorpNum = '6798700433';
+    $testCorpNum = '1234567890';
 
     try {
         $url = $this->PopbillHTCashbill->GetFlatRatePopUpURL($testCorpNum);
@@ -474,7 +474,7 @@ class HTCashbillController extends Controller
   public function GetFlatRateState(){
 
     // 팝빌회원 사업자번호, '-'제외 10자리
-    $testCorpNum = '6798700433';
+    $testCorpNum = '1234567890';
 
     try {
         $result = $this->PopbillHTCashbill->GetFlatRateState($testCorpNum);
@@ -493,7 +493,7 @@ class HTCashbillController extends Controller
   public function CheckIsMember(){
 
     // 사업자번호, "-"제외 10자리
-    $testCorpNum = '6798700433';
+    $testCorpNum = '1234567890';
 
     // 파트너 링크아이디
     // ./config/popbill.php에 선언된 파트너 링크아이디
@@ -518,7 +518,7 @@ class HTCashbillController extends Controller
   public function CheckID(){
 
     // 조회할 아이디
-    $testUserID = '';
+    $testUserID = 'testkorea';
 
     try	{
       $result = $this->PopbillHTCashbill->CheckID($testUserID);
@@ -544,7 +544,7 @@ class HTCashbillController extends Controller
     $joinForm->LinkID = config('popbill.LinkID');
 
     // 사업자번호, "-"제외 10자리
-    $joinForm->CorpNum = '6798700433';
+    $joinForm->CorpNum = '1234567890';
 
     // 대표자성명
     $joinForm->CEOName = '대표자성명';
@@ -596,10 +596,10 @@ class HTCashbillController extends Controller
   public function GetAccessURL(){
 
     // 팝빌 회원 사업자 번호, "-"제외 10자리
-    $testCorpNum = '6798700433';
+    $testCorpNum = '1234567890';
 
     // 팝빌 회원 아이디
-    $testUserID = '';
+    $testUserID = 'testkorea';
 
     try {
         $url = $this->PopbillHTCashbill->GetAccessURL($testCorpNum, $testUserID);
@@ -618,7 +618,7 @@ class HTCashbillController extends Controller
   public function GetCorpInfo(){
 
     // 팝빌회원 사업자번호, '-'제외 10자리
-    $testCorpNum = '6798700433';
+    $testCorpNum = '1234567890';
 
     try {
       $CorpInfo = $this->PopbillHTCashbill->GetCorpInfo($testCorpNum);
@@ -638,7 +638,7 @@ class HTCashbillController extends Controller
   public function UpdateCorpInfo(){
 
     // 팝빌회원 사업자번호, '-' 제외 10자리
-    $testCorpNum = '6798700433';
+    $testCorpNum = '1234567890';
 
     // 회사정보 클래스 생성
     $CorpInfo = new CorpInfo();
@@ -677,7 +677,7 @@ class HTCashbillController extends Controller
   public function RegistContact(){
 
     // 팝빌회원 사업자번호, '-' 제외 10자리
-    $testCorpNum = '6798700433';
+    $testCorpNum = '1234567890';
 
     // 담당자 정보 객체 생성
     $ContactInfo = new ContactInfo();
@@ -728,7 +728,7 @@ class HTCashbillController extends Controller
   public function ListContact(){
 
     // 팝빌회원 사업자번호, '-'제외 10자리
-    $testCorpNum = '6798700433';
+    $testCorpNum = '1234567890';
 
     try {
       $ContactList = $this->PopbillHTCashbill->ListContact($testCorpNum);
@@ -748,10 +748,10 @@ class HTCashbillController extends Controller
   public function UpdateContact(){
 
     // 팝빌회원 사업자번호, '-' 제외 10자리
-    $testCorpNum = '6798700433';
+    $testCorpNum = '1234567890';
 
     // 팝빌회원 아이디
-    $testUserID = '';
+    $testUserID = 'testkorea';
 
     // 담당자 정보 객체 생성
     $ContactInfo = new ContactInfo();
