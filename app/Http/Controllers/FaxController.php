@@ -17,8 +17,10 @@ class FaxController extends Controller
 {
   public function __construct() {
 
+    // 통신방식 설정
     define('LINKHUB_COMM_MODE', config('popbill.LINKHUB_COMM_MODE'));
 
+    // 팩스 서비스 클래스 초기화
     $this->PopbillFax = new PopbillFax(config('popbill.LinkID'), config('popbill.SecretKey'));
 
     // 연동환경 설정값, 개발용(true), 상업용(false)
@@ -814,7 +816,7 @@ class FaxController extends Controller
 
     try {
         $url = $this->PopbillFax->GetAccessURL($testCorpNum, $testUserID);
-    } catch (PopbillException $pe) {
+    } catch (PopbillException | LinkhubException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);

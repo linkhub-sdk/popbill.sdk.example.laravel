@@ -47,7 +47,7 @@ class ClosedownController extends Controller
     try {
         $result = $this->PopbillClosedown->checkCorpNum($MemberCorpNum, $CheckCorpNum);
     }
-    catch (PopbillException $pe) {
+    catch (PopbillException | LinkhubException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -72,7 +72,7 @@ class ClosedownController extends Controller
 
     try {
         $result = $this->PopbillClosedown->checkCorpNums($MemberCorpNum, $CorpNumList);
-    } catch (PopbillException $pe) {
+    } catch (PopbillException | LinkhubException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -224,7 +224,7 @@ class ClosedownController extends Controller
       $code = $result->code;
       $message = $result->message;
     }
-    catch(PopbillException $pe) {
+    catch(PopbillException | LinkhubException $pe) {
       $code = $pe->getCode();
       $message = $pe->getMessage();
     }
@@ -245,7 +245,7 @@ class ClosedownController extends Controller
       $code = $result->code;
       $message = $result->message;
     }
-    catch(PopbillException $pe) {
+    catch(PopbillException | LinkhubException $pe) {
       $code = $pe->getCode();
       $message = $pe->getMessage();
     }
@@ -301,7 +301,7 @@ class ClosedownController extends Controller
       $code = $result->code;
       $message = $result->message;
     }
-    catch(PopbillException $pe) {
+    catch(PopbillException | LinkhubException $pe) {
       $code = $pe->getCode();
       $message = $pe->getMessage();
     }
@@ -320,7 +320,7 @@ class ClosedownController extends Controller
     try {
       $CorpInfo = $this->PopbillClosedown->GetCorpInfo($testCorpNum);
     }
-    catch(PopbillException $pe) {
+    catch(PopbillException | LinkhubException $pe) {
       $code = $pe->getCode();
       $message = $pe->getMessage();
       return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -360,7 +360,7 @@ class ClosedownController extends Controller
         $code = $result->code;
         $message = $result->message;
     }
-    catch ( PopbillException $pe ) {
+    catch ( PopbillException | LinkhubException $pe ) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
     }
@@ -411,7 +411,7 @@ class ClosedownController extends Controller
         $code = $result->code;
         $message = $result->message;
     }
-    catch(PopbillException $pe) {
+    catch(PopbillException | LinkhubException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
     }
@@ -430,7 +430,7 @@ class ClosedownController extends Controller
     try {
       $ContactList = $this->PopbillClosedown->ListContact($testCorpNum);
     }
-    catch(PopbillException $pe) {
+    catch(PopbillException | LinkhubException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -479,7 +479,7 @@ class ClosedownController extends Controller
         $code = $result->code;
         $message = $result->message;
     }
-    catch ( PopbillException $pe ) {
+    catch ( PopbillException | LinkhubException $pe ) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
     }
@@ -501,7 +501,7 @@ class ClosedownController extends Controller
 
     try {
         $url = $this->PopbillClosedown->GetAccessURL($testCorpNum, $testUserID);
-    } catch (PopbillException $pe) {
+    } catch (PopbillException | LinkhubException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);

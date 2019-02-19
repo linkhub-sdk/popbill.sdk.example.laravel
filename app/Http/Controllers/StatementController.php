@@ -1548,7 +1548,7 @@ class StatementController extends Controller
     try {
         $result = $this->PopbillStatement->GetChargeInfo( $testCorpNum, $itemCode, $testUserID );
     }
-    catch(PopbillException $pe) {
+    catch(PopbillException | LinkhubException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);

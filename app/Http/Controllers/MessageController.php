@@ -48,7 +48,7 @@ class MessageController extends Controller
 
     try {
         $url = $this->PopbillMessaging->GetSenderNumberMgtURL($testCorpNum, $testUserID);
-    } catch (PopbillException $pe) {
+    } catch (PopbillException | LinkhubException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -68,7 +68,7 @@ class MessageController extends Controller
     try {
         $result = $this->PopbillMessaging->GetSenderNumberList($testCorpNum);
     }
-    catch (PopbillException $pe) {
+    catch (PopbillException | LinkhubException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -885,7 +885,7 @@ class MessageController extends Controller
 
     try {
         $url = $this->PopbillMessaging->GetAccessURL($testCorpNum, $testUserID);
-    } catch (PopbillException $pe) {
+    } catch (PopbillException | LinkhubException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);

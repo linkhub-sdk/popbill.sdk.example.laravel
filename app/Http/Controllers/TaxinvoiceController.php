@@ -888,7 +888,7 @@ class TaxinvoiceController extends Controller
         $code = $result->code;
         $message = $result->message;
     }
-    catch (PopbillException $pe) {
+    catch (PopbillException | LinkhubException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
     }
@@ -1149,7 +1149,7 @@ class TaxinvoiceController extends Controller
         $result = $this->PopbillTaxinvoice->RegistRequest($testCorpNum, $Taxinvoice, $memo, $testUserID);
         $code = $result->code;
         $message = $result->message;
-    } catch (PopbillException $pe) {
+    } catch (PopbillException | LinkhubException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
     }
@@ -1444,7 +1444,7 @@ class TaxinvoiceController extends Controller
             $EDate, $State, $Type, $TaxType, $LateOnly, $Page, $PerPage, $Order,
             $TaxRegIDType, $TaxRegIDYN, $TaxRegID, $QString, $InterOPYN, $testUserID, $IssueType);
     }
-    catch (PopbillException $pe) {
+    catch (PopbillException | LinkhubException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -1526,7 +1526,7 @@ class TaxinvoiceController extends Controller
     try {
         $url = $this->PopbillTaxinvoice->GetPopUpURL($testCorpNum, $mgtKeyType, $mgtKey);
     }
-    catch ( PopbillException $pe ) {
+    catch ( PopbillException | LinkhubException $pe ) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -1657,7 +1657,7 @@ class TaxinvoiceController extends Controller
 
     try {
         $url = $this->PopbillTaxinvoice->GetAccessURL($testCorpNum, $testUserID);
-    } catch (PopbillException $pe) {
+    } catch (PopbillException | LinkhubException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -1680,7 +1680,7 @@ class TaxinvoiceController extends Controller
 
     try {
         $url = $this->PopbillTaxinvoice->GetSealURL($testCorpNum, $testUserID);
-    } catch (PopbillException $pe) {
+    } catch (PopbillException | LinkhubException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -1712,7 +1712,7 @@ class TaxinvoiceController extends Controller
         $code = $result->code;
         $message = $result->message;
     }
-    catch (PopbillException $pe) {
+    catch (PopbillException | LinkhubException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
     }
@@ -1959,7 +1959,7 @@ class TaxinvoiceController extends Controller
     try {
         $emailList = $this->PopbillTaxinvoice->GetEmailPublicKeys($testCorpNum);
     }
-    catch ( PopbillException $pe ) {
+    catch ( PopbillException | LinkhubException $pe ) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -2105,7 +2105,7 @@ class TaxinvoiceController extends Controller
 
     try {
         $url = $this->PopbillTaxinvoice->GetTaxCertURL($testCorpNum, $testUserID);
-    } catch (PopbillException $pe) {
+    } catch (PopbillException | LinkhubException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -2192,7 +2192,7 @@ class TaxinvoiceController extends Controller
 
     try {
       $url = $this->PopbillTaxinvoice->GetChargeURL($testCorpNum, $testUserID);
-    } catch (PopbillException $pe) {
+    } catch (PopbillException | LinkhubException $pe) {
       $code = $pe->getCode();
       $message = $pe->getMessage();
       return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -2438,7 +2438,7 @@ class TaxinvoiceController extends Controller
         $code = $result->code;
         $message = $result->message;
     }
-    catch ( PopbillException $pe ) {
+    catch ( PopbillException | LinkhubException $pe ) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
     }
@@ -2557,7 +2557,7 @@ class TaxinvoiceController extends Controller
         $code = $result->code;
         $message = $result->message;
     }
-    catch ( PopbillException $pe ) {
+    catch ( PopbillException | LinkhubException $pe ) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
     }

@@ -1142,7 +1142,7 @@ class KakaoTalkController extends Controller
 
     try {
         $url = $this->PopbillKakao->GetAccessURL($testCorpNum, $testUserID);
-    } catch (PopbillException $pe) {
+    } catch (PopbillException | LinkhubException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
