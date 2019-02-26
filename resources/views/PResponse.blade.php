@@ -13,6 +13,9 @@
         <ul>
             <li>code (응답코드) : {{ $code }}</li>
             <li>message (응답메시지) : {{ $message }}</li>
+            @isset($ntsConfirmNum)
+            <li>ntsConfirmNum (국세청 승인번호) : {{ $ntsConfirmNum }}</li>
+            @endisset
         </ul>
     </fieldset>
 </div>
