@@ -25,6 +25,9 @@ class ClosedownController extends Controller
 
     // 연동환경 설정값, 개발용(true), 상업용(false)
     $this->PopbillClosedown->IsTest(config('popbill.IsTest'));
+
+    // 인증토큰의 IP제한기능 사용여부, 권장(true)
+    $this->PopbillClosedown->IPRestrictOnOff(config('popbill.IPRestrictOnOff'));
   }
 
   // HTTP Get Request URI -> 함수 라우팅 처리 함수

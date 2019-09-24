@@ -26,6 +26,9 @@ class HTTaxinvoiceController extends Controller
 
     // 연동환경 설정값, 개발용(true), 상업용(false)
     $this->PopbillHTTaxinvoice->IsTest(config('popbill.IsTest'));
+
+    // 인증토큰의 IP제한기능 사용여부, 권장(true)
+    $this->PopbillHTTaxinvoice->IPRestrictOnOff(config('popbill.IPRestrictOnOff'));
   }
 
   // HTTP Get Request URI -> 함수 라우팅 처리 함수
@@ -43,19 +46,19 @@ class HTTaxinvoiceController extends Controller
   public function RequestJob(){
 
     // 팝빌회원 사업자번호, '-'제외 10자리
-    $testCorpNum = '1234567980';
+    $testCorpNum = '1234567890';
 
     // 전자세금계산서 유형, SELL-매출, BUY-매입, TRUSTEE-위수탁
     $TIKeyType = HTTIKeyType::SELL;
 
-    // 수집일자유형, W-작성일자, R-등록일자, I-발행일자
-    $DType = 'W';
+    // 수집일자유형, W-작성일자, I-발행일자, S-전송일자
+    $DType = 'S';
 
     // 시작일자, 형식(yyyyMMdd)
-    $SDate = '20190101';
+    $SDate = '20190901';
 
     // 종료일자, 형식(yyyyMMdd)
-    $EDate = '20190131';
+    $EDate = '20191231';
 
     try {
         $jobID = $this->PopbillHTTaxinvoice->RequestJob($testCorpNum, $TIKeyType, $DType, $SDate, $EDate);
@@ -77,7 +80,7 @@ class HTTaxinvoiceController extends Controller
   public function GetJobState(){
 
     // 팝빌회원 사업자번호, '-'제외 10자리
-    $testCorpNum = '1234567980';
+    $testCorpNum = '1234567890';
 
     // 수집 요청시 반환받은 작업아이디
     $jobID = '019021509000000001';
@@ -104,7 +107,7 @@ class HTTaxinvoiceController extends Controller
   public function ListActiveJob(){
 
     // 팝빌회원 사업자번호, '-'제외 10자리
-    $testCorpNum = '1234567980';
+    $testCorpNum = '1234567890';
 
     try {
         $result = $this->PopbillHTTaxinvoice->ListActiveJob($testCorpNum);
@@ -125,7 +128,7 @@ class HTTaxinvoiceController extends Controller
   public function Search(){
 
     // 팝빌회원 사업자번호, '-'제외 10자리
-    $testCorpNum = '1234567980';
+    $testCorpNum = '1234567890';
 
     // 수집 요청(RequestJob) 호출시 반환받은 작업아이디
     $JobID = '019021509000000002';
@@ -190,7 +193,7 @@ class HTTaxinvoiceController extends Controller
   public function Summary(){
 
     // 팝빌회원 사업자번호, '-'제외 10자리
-    $testCorpNum = '1234567980';
+    $testCorpNum = '1234567890';
 
     // 수집 요청(RequestJob) 호출시 반환받은 작업아이디
     $JobID = '019021509000000002';
@@ -244,7 +247,7 @@ class HTTaxinvoiceController extends Controller
   public function GetTaxinvoice(){
 
     // 팝빌회원 사업자번호, '-'제외 10자리
-    $testCorpNum = '1234567980';
+    $testCorpNum = '1234567890';
 
     //국세청 승인번호
     $NTSConfirmNum = '201812264100020300002e07';
@@ -268,7 +271,7 @@ class HTTaxinvoiceController extends Controller
   public function GetXML(){
 
     // 팝빌회원 사업자번호, '-'제외 10자리
-    $testCorpNum = '1234567980';
+    $testCorpNum = '1234567890';
 
     //국세청 승인번호
     $NTSConfirmNum = '201812264100020300002e07';
@@ -291,7 +294,7 @@ class HTTaxinvoiceController extends Controller
   public function GetPopUpURL(){
 
     // 팝빌 회원 사업자 번호, "-"제외 10자리
-    $testCorpNum = '1234567980';
+    $testCorpNum = '1234567890';
 
     // 국세청 승인번호
     $NTSConfirmNum = "201812264100020300002e07";
