@@ -39,8 +39,8 @@ class StatementController extends Controller
   }
 
   /**
-   * 전자명세서 관리번호 중복여부를 확인합니다.
-   * - 관리번호는 1~24자리로 숫자, 영문 '-', '_' 조합하여 사업자별로 중복되지 않도록 구성해야합니다.
+   * 전자명세서 문서번호 중복여부를 확인합니다.
+   * - 문서번호는 1~24자리로 숫자, 영문 '-', '_' 조합하여 사업자별로 중복되지 않도록 구성해야합니다.
    */
   public function CheckMgtKeyInUse(){
 
@@ -50,7 +50,7 @@ class StatementController extends Controller
     // 명세서 종류코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
     $itemCode = '121';
 
-    // 문서관리번호, 1~24자리
+    // 문서번호, 1~24자리
     $mgtKey = '20190101-001';
 
     try {
@@ -62,7 +62,7 @@ class StatementController extends Controller
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
     }
-    return view('ReturnValue', ['filedName' => "문서관리번호 사용여부 =>".$mgtKey."", 'value' => $result]);
+    return view('ReturnValue', ['filedName' => "문서번호 사용여부 =>".$mgtKey."", 'value' => $result]);
   }
 
   /**
@@ -73,15 +73,21 @@ class StatementController extends Controller
     // 팝빌 회원 사업자번호, '-' 제외 10자리
     $testCorpNum = '1234567890';
 
-    // 전자명세서 문서관리번호
+    // 팝빌 회원 아이디
+    $testUserID = 'testkorea';
+
+    // 전자명세서 문서번호
     // 1~24자리 숫자, 영문, '-', '_' 조합으로 사업자별로 중복되지 않도록 구성
-    $mgtKey = '20190213-001';
+    $mgtKey = '20191024-002';
 
     // 명세서 종류코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
     $itemCode = '121';
 
     // 메모
     $memo = '즉시발행 메모';
+
+    // 안내 메일 제목, 공백 입력시 기본양식으로 전송
+    $emailSubject = '';
 
     // 전자명세서 객체 생성
     $Statement = new Statement();
@@ -91,7 +97,7 @@ class StatementController extends Controller
      ************************************************************/
 
     // [필수] 기재상 작성일자
-    $Statement->writeDate = '20190213';
+    $Statement->writeDate = '20191024';
 
     // [필수] (영수, 청구) 중 기재
     $Statement->purposeType = '영수';
@@ -105,7 +111,7 @@ class StatementController extends Controller
     // 명세서 종류 코드
     $Statement->itemCode = $itemCode;
 
-    // 전자명세서 문서관리번호
+    // 전자명세서 문서번호
     $Statement->mgtKey = $mgtKey;
 
     /************************************************************
@@ -202,7 +208,7 @@ class StatementController extends Controller
     );
 
     try {
-        $result = $this->PopbillStatement->RegistIssue($testCorpNum, $Statement, $memo);
+        $result = $this->PopbillStatement->RegistIssue($testCorpNum, $Statement, $memo, $testUserID, $emailSubject);
         $code = $result->code;
         $message = $result->message;
     }
@@ -222,7 +228,7 @@ class StatementController extends Controller
     // 팝빌 회원 사업자번호, '-' 제외 10자리
     $testCorpNum = '1234567890';
 
-    // 문서관리번호, 발행자별 고유번호 할당, 1~24자리 영문,숫자 조합으로 중복없이 구성
+    // 문서번호, 발행자별 고유번호 할당, 1~24자리 영문,숫자 조합으로 중복없이 구성
     $mgtKey = '20190213-003';
 
     // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
@@ -250,7 +256,7 @@ class StatementController extends Controller
     // 명세서 종류 코드
     $Statement->itemCode = $itemCode;
 
-    // 전자명세서 문서관리번호
+    // 전자명세서 문서번호
     $Statement->mgtKey = $mgtKey;
 
     /************************************************************
@@ -368,7 +374,7 @@ class StatementController extends Controller
     // 팝빌 회원 사업자번호, '-' 제외 10자리
     $testCorpNum = '1234567890';
 
-    // 전자명세서 문서관리번호
+    // 전자명세서 문서번호
     // 1~24자리로 영문, 숫자 '-', '_' 조합으로 사업자별로 중복되지 않도록 구성
     $mgtKey = '20190213-003';
 
@@ -397,7 +403,7 @@ class StatementController extends Controller
     // 명세서 종류 코드
     $Statement->itemCode = $itemCode;
 
-    // 전자명세서 문서관리번호
+    // 전자명세서 문서번호
     $Statement->mgtKey = $mgtKey;
 
     /************************************************************
@@ -517,7 +523,7 @@ class StatementController extends Controller
     // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
     $itemCode = '121';
 
-    // 전자명세서 문서관리번호
+    // 전자명세서 문서번호
     $MgtKey = '20190213-003';
 
     // 메모
@@ -547,7 +553,7 @@ class StatementController extends Controller
     // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
     $itemCode = '121';
 
-    // 문서관리번호
+    // 문서번호
     $MgtKey = '20190213-003';
 
     // 메모
@@ -568,7 +574,7 @@ class StatementController extends Controller
 
   /**
    * 1건의 전자명세서를 삭제합니다.
-   * - 전자명세서를 삭제하면 사용된 문서관리번호(mgtKey)를 재사용할 수 있습니다.
+   * - 전자명세서를 삭제하면 사용된 문서번호(mgtKey)를 재사용할 수 있습니다.
    * - 삭제가능한 문서 상태 : [임시저장], [발행취소]
    */
   public function Delete(){
@@ -579,7 +585,7 @@ class StatementController extends Controller
     // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
     $itemCode = '121';
 
-    // 문서관리번호
+    // 문서번호
     $MgtKey = '20190213-003';
 
     try	{
@@ -608,7 +614,7 @@ class StatementController extends Controller
     // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
     $itemCode = '121';
 
-    // 문서관리번호
+    // 문서번호
     $mgtKey = '20190101-001';
 
     try {
@@ -637,7 +643,7 @@ class StatementController extends Controller
     // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
     $itemCode = '121';
 
-    // 조회할 전자명세서 문서관리번호 배열, 최대 1000건
+    // 조회할 전자명세서 문서번호 배열, 최대 1000건
     $MgtKeyList = array(
         '20190101-001',
         '20190213-002',
@@ -670,7 +676,7 @@ class StatementController extends Controller
     // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
     $itemCode = '121';
 
-    // 문서관리번호
+    // 문서번호
     $mgtKey = '20190213-002';
 
     try {
@@ -757,7 +763,7 @@ class StatementController extends Controller
     // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
     $itemCode = '121';
 
-    // 문서관리번호
+    // 문서번호
     $mgtKey = '20190101-001';
 
     try {
@@ -809,7 +815,7 @@ class StatementController extends Controller
     // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
     $itemCode = '121';
 
-    // 전자명세서 문서관리번호
+    // 전자명세서 문서번호
     $mgtKey = '20190101-001';
 
     try {
@@ -835,7 +841,7 @@ class StatementController extends Controller
     // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
     $itemCode = '121';
 
-    // 전자명세서 문서관리번호
+    // 전자명세서 문서번호
     $mgtKey = '20190101-001';
 
     try {
@@ -861,7 +867,7 @@ class StatementController extends Controller
     // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
     $itemCode = '121';
 
-    // 문서관리번호
+    // 문서번호
     $mgtKey = '20190101-001';
 
     try {
@@ -888,7 +894,7 @@ class StatementController extends Controller
     // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
     $itemCode = '121';
 
-    // 문서관리번호 배열, 최대 100건
+    // 문서번호 배열, 최대 100건
     $mgtKeyList = array (
         '20190101-001',
         '20190213-002',
@@ -917,7 +923,7 @@ class StatementController extends Controller
     // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
     $itemCode = '121';
 
-    // 전자명세서 문서관리번호
+    // 전자명세서 문서번호
     $mgtKey = '20190101-001';
 
     try {
@@ -967,7 +973,7 @@ class StatementController extends Controller
     // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
     $itemCode= '121';
 
-    // 문서관리번호
+    // 문서번호
     $mgtKey = '20190213-003';
 
     // 첨부파일 경로, 해당 파일에 읽기 권한이 설정되어 있어야 합니다.
@@ -1000,7 +1006,7 @@ class StatementController extends Controller
     // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
     $itemCode = '121';
 
-    // 문서관리번호
+    // 문서번호
     $mgtKey = '20190213-003';
 
     try {
@@ -1028,7 +1034,7 @@ class StatementController extends Controller
     // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
     $itemCode = '121';
 
-    // 문서관리번호
+    // 문서번호
     $mgtKey = '20190213-003';
 
     // 첨부된 파일의 아이디, GetFiles API 응답항목중 AttachedFile 항목
@@ -1059,7 +1065,7 @@ class StatementController extends Controller
     // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
     $itemCode = '121';
 
-    // 문서관리번호
+    // 문서번호
     $mgtKey = '20190213-001';
 
     // 수신자 이메일주소
@@ -1091,7 +1097,7 @@ class StatementController extends Controller
     // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
     $itemCode = '121';
 
-    // 문서관리번호
+    // 문서번호
     $mgtKey = '20190101-001';
 
     // 발신번호
@@ -1130,7 +1136,7 @@ class StatementController extends Controller
     // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
     $itemCode = '121';
 
-    // 문서관리번호
+    // 문서번호
     $mgtKey = '20190101-001';
 
     // 발신번호
@@ -1155,7 +1161,7 @@ class StatementController extends Controller
   /**
    * 팝빌에 전자명세서를 등록하지 않고 공급받는자에게 팩스전송합니다.
    * - 팩스 전송 요청시 포인트가 차감됩니다. (전송실패시 환불처리)
-   * - 팩스 발행 요청시 작성한 문서관리번호는 팩스전송 파일명으로 사용됩니다.
+   * - 팩스 발행 요청시 작성한 문서번호는 팩스전송 파일명으로 사용됩니다.
    * - 전송내역 확인은 "팝빌 로그인" > [문자 팩스] > [팩스] > [전송내역] 메뉴에서 전송결과를 확인할 수 있습니다.
    * - 팩스 전송결과를 확인하기 위해서는 선팩스 전송 요청 시 반환받은 접수번호를 이용하여
    *   팩스 API의 전송결과 확인 (GetFaxDetail) API를 이용하면 됩니다.
@@ -1165,7 +1171,7 @@ class StatementController extends Controller
     // 팝빌 회원 사업자번호, '-' 제외 10자리
     $testCorpNum = '1234567890';
 
-    // 문서관리번호
+    // 문서번호
     $mgtKey = '20190213-005';
 
     // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
@@ -1198,7 +1204,7 @@ class StatementController extends Controller
     // 명세서 종류 코드
     $Statement->itemCode = $itemCode;
 
-    // 전자명세서 문서관리번호
+    // 전자명세서 문서번호
     $Statement->mgtKey = $mgtKey;
 
     /************************************************************
@@ -1317,13 +1323,13 @@ class StatementController extends Controller
     // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
     $itemCode = '121';
 
-    // 문서관리번호
+    // 문서번호
     $mgtKey = '20190213-001';
 
     // 첨부할 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
     $subItemCode = '121';
 
-    // 첨부할 명세서 관리번호
+    // 첨부할 명세서 문서번호
     $subMgtKey = '20190213-002';
 
     try {
@@ -1350,13 +1356,13 @@ class StatementController extends Controller
     // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
     $itemCode = '121';
 
-    // 문서관리번호
+    // 문서번호
     $mgtKey = '20190213-001';
 
     // 첨부해제할 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
     $subItemCode = '121';
 
-    // 첨부해제할 명세서 관리번호
+    // 첨부해제할 명세서 문서번호
     $subMgtKey = '20190213-002';
 
     try {

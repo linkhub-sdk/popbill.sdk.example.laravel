@@ -42,15 +42,15 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-   * 세금계산서 관리번호 중복여부를 확인합니다.
-   * - 관리번호는 1~24자리로 숫자, 영문 '-', '_' 조합으로 구성할 수 있습니다.
+   * 세금계산서 문서번호 중복여부를 확인합니다.
+   * - 문서번호는 1~24자리로 숫자, 영문 '-', '_' 조합으로 구성할 수 있습니다.
    */
   public function CheckMgtKeyInUse(){
 
     // 팝빌회원 사업자번호, '-'제외 10자리
     $testCorpNum = '1234567890';
 
-    // 세금계산서 관리번호, 연동회원 사업자번호 범위에서 중복되지 않는 관리번호 할당
+    // 세금계산서 문서번호, 연동회원 사업자번호 범위에서 중복되지 않는 문서번호 할당
     // 1~24자리 영문, 숫자, '_', '-' 조합하여 구성
     $mgtKey = '20190101-001';
 
@@ -67,7 +67,7 @@ class TaxinvoiceController extends Controller
         return view('PResponse', ['code' => $code, 'message' => $message]);
     }
 
-    return view('ReturnValue', ['filedName' => "문서관리번호 사용여부 =>".$mgtKey."", 'value' => $result]);
+    return view('ReturnValue', ['filedName' => "문서번호 사용여부 =>".$mgtKey."", 'value' => $result]);
   }
 
 
@@ -83,7 +83,7 @@ class TaxinvoiceController extends Controller
     // 팝빌회원 아이디
     $testUserID = 'testkorea';
 
-    // 세금계산서 문서관리번호
+    // 세금계산서 문서번호
     // - 최대 24자리 숫자, 영문, '-', '_' 조합으로 사업자별로 중복되지 않도록 구성
     $invoicerMgtKey = '20190226-023';
 
@@ -99,7 +99,7 @@ class TaxinvoiceController extends Controller
     // 거래명세서 동시작성 여부
     $writeSpecification = false;
 
-    // 거래명세서 동시작성시 명세서 관리번호
+    // 거래명세서 동시작성시 명세서 문서번호
     // - 최대 24자리 숫자, 영문, '-', '_' 조합으로 사업자별로 중복되지 않도록 구성
     $dealInvoiceMgtKey = '';
 
@@ -140,7 +140,7 @@ class TaxinvoiceController extends Controller
     // [필수] 공급자 상호
     $Taxinvoice->invoicerCorpName = '공급자상호';
 
-    // [필수] 공급자 문서관리번호, 최대 24자리 숫자, 영문, '-', '_' 조합으로 사업자별로 중복되지 않도록 구성
+    // [필수] 공급자 문서번호, 최대 24자리 숫자, 영문, '-', '_' 조합으로 사업자별로 중복되지 않도록 구성
     $Taxinvoice->invoicerMgtKey = $invoicerMgtKey;
 
     // [필수] 공급자 대표자성명
@@ -188,7 +188,7 @@ class TaxinvoiceController extends Controller
     // [필수] 공급자 상호
     $Taxinvoice->invoiceeCorpName = '공급받는자 상호';
 
-    // [역발행시 필수] 공급받는자 문서관리번호, 최대 24자리 숫자, 영문, '-', '_' 조합으로 사업자별로 중복되지 않도록 구성
+    // [역발행시 필수] 공급받는자 문서번호, 최대 24자리 숫자, 영문, '-', '_' 조합으로 사업자별로 중복되지 않도록 구성
     $Taxinvoice->invoiceeMgtKey = '';
 
     // [필수] 공급받는자 대표자성명
@@ -343,7 +343,7 @@ class TaxinvoiceController extends Controller
     // 팝빌회원 사업자번호, '-' 제외 10자리
     $testCorpNum = '1234567890';
 
-    // 세금계산서 문서관리번호
+    // 세금계산서 문서번호
     // - 최대 24자리 숫자, 영문, '-', '_' 조합으로 사업자별로 중복되지 않도록 구성
     $invoicerMgtKey = '20190226-024';
 
@@ -386,7 +386,7 @@ class TaxinvoiceController extends Controller
     // [필수] 공급자 상호
     $Taxinvoice->invoicerCorpName = '공급자상호';
 
-    // [필수] 공급자 문서관리번호, 최대 24자리 숫자, 영문, '-', '_' 조합으로 사업자별로 중복되지 않도록 구성
+    // [필수] 공급자 문서번호, 최대 24자리 숫자, 영문, '-', '_' 조합으로 사업자별로 중복되지 않도록 구성
     $Taxinvoice->invoicerMgtKey = $invoicerMgtKey;
 
     // [필수] 공급자 대표자성명
@@ -434,7 +434,7 @@ class TaxinvoiceController extends Controller
     // [필수] 공급자 상호
     $Taxinvoice->invoiceeCorpName = '공급받는자 상호';
 
-    // [역발행시 필수] 공급받는자 문서관리번호, 최대 24자리 숫자, 영문, '-', '_' 조합으로 사업자별로 중복되지 않도록 구성
+    // [역발행시 필수] 공급받는자 문서번호, 최대 24자리 숫자, 영문, '-', '_' 조합으로 사업자별로 중복되지 않도록 구성
     $Taxinvoice->invoiceeMgtKey = '';
 
     // [필수] 공급받는자 대표자성명
@@ -593,7 +593,7 @@ class TaxinvoiceController extends Controller
     // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
-    // 세금계산서 문서관리번호
+    // 세금계산서 문서번호
     $mgtKey = '20190213-002';
 
     /************************************************************
@@ -635,7 +635,7 @@ class TaxinvoiceController extends Controller
     // [필수] 공급자 상호
     $Taxinvoice->invoicerCorpName = '공급자상호_수정';
 
-    // [필수] 공급자 문서관리번호, 최대 24자리 숫자, 영문, '-', '_' 조합으로 사업자별로 중복되지 않도록 구성
+    // [필수] 공급자 문서번호, 최대 24자리 숫자, 영문, '-', '_' 조합으로 사업자별로 중복되지 않도록 구성
     $Taxinvoice->invoicerMgtKey = $mgtKey;
 
     // [필수] 공급자 대표자성명
@@ -683,7 +683,7 @@ class TaxinvoiceController extends Controller
     // [필수] 공급자 상호
     $Taxinvoice->invoiceeCorpName = '공급받는자 상호_수정';
 
-    // [역발행시 필수] 공급받는자 문서관리번호, 최대 24자리 숫자, 영문, '-', '_' 조합으로 사업자별로 중복되지 않도록 구성
+    // [역발행시 필수] 공급받는자 문서번호, 최대 24자리 숫자, 영문, '-', '_' 조합으로 사업자별로 중복되지 않도록 구성
     $Taxinvoice->invoiceeMgtKey = '';
 
     // [필수] 공급받는자 대표자성명
@@ -841,7 +841,7 @@ class TaxinvoiceController extends Controller
     // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
-    // 문서관리번호
+    // 문서번호
     $mgtKey = '20190226-024';
 
     // 메모
@@ -874,7 +874,7 @@ class TaxinvoiceController extends Controller
    * [발행완료] 상태의 세금계산서를 [공급자]가 [발행취소]합니다.
    * - [발행취소]는 국세청 전송전에만 가능합니다.
    * - 발행취소된 세금계산서는 국세청에 전송되지 않습니다.
-   * - 발행취소 세금계산서에 사용된 문서관리번호를 재사용 하기 위해서는 삭제(Delete API)를 호출하여 해당세금계산서를 삭제해야 합니다.
+   * - 발행취소 세금계산서에 사용된 문서번호를 재사용 하기 위해서는 삭제(Delete API)를 호출하여 해당세금계산서를 삭제해야 합니다.
    */
   public function CancelIssue(){
 
@@ -884,7 +884,7 @@ class TaxinvoiceController extends Controller
     // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
-    // 문서관리번호
+    // 문서번호
     $mgtKey = '20190213-002';
 
     // 메모
@@ -905,7 +905,7 @@ class TaxinvoiceController extends Controller
 
   /**
    * 1건의 전자세금계산서를 [삭제]합니다.
-   * - 세금계산서를 삭제해야만 문서관리번호(mgtKey)를 재사용할 수 있습니다.
+   * - 세금계산서를 삭제해야만 문서번호(mgtKey)를 재사용할 수 있습니다.
    * - 삭제가능한 문서 상태 : [임시저장], [발행취소], [발행예정 취소], [발행예정 거부]
    */
   public function Delete(){
@@ -913,7 +913,7 @@ class TaxinvoiceController extends Controller
     // 팝빌회원 사업자번호, '-' 제외 10자리
     $testCorpNum = '1234567890';
 
-    // 문서관리번호
+    // 문서번호
     $mgtKey = '20190213-002';
 
     // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
@@ -947,7 +947,7 @@ class TaxinvoiceController extends Controller
     // 팝빌회원 아이디
     $testUserID = 'testkorea';
 
-    // 공급받는자 문서관리번호
+    // 공급받는자 문서번호
     // - 최대 24자리 숫자, 영문, '-', '_' 조합으로 사업자별로 중복되지 않도록 구성
     $invoiceeMgtKey = '20190213-005';
 
@@ -990,7 +990,7 @@ class TaxinvoiceController extends Controller
     // [필수] 공급자 상호
     $Taxinvoice->invoicerCorpName = '공급자상호';
 
-    // 공급자 문서관리번호,
+    // 공급자 문서번호,
     // 최대 24자리 숫자, 영문, '-', '_' 조합으로 사업자별로 중복되지 않도록 구성
     $Taxinvoice->invoicerMgtKey = '';
 
@@ -1034,7 +1034,7 @@ class TaxinvoiceController extends Controller
     // [필수] 공급자 상호
     $Taxinvoice->invoiceeCorpName = '공급받는자 상호';
 
-    // [역발행시 필수] 공급받는자 문서관리번호,
+    // [역발행시 필수] 공급받는자 문서번호,
     // 최대 24자리 숫자, 영문, '-', '_' 조합으로 사업자별로 중복되지 않도록 구성
     $Taxinvoice->invoiceeMgtKey = $invoiceeMgtKey;
 
@@ -1177,7 +1177,7 @@ class TaxinvoiceController extends Controller
     // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
     $mgtKeyType = TIENumMgtKeyType::BUY;
 
-    // 문서관리번호
+    // 문서번호
     $mgtKey = '20190101-002';
 
     // 메모
@@ -1198,7 +1198,7 @@ class TaxinvoiceController extends Controller
 
   /**
    * [공급받는자]가 역)발행대기 상태의 세금계산서를 [취소]합니다.
-   * - [취소]한 세금계산서의 문서관리번호를 재사용하기 위해서는 삭제 (Delete API)를 호출해야 합니다.
+   * - [취소]한 세금계산서의 문서번호를 재사용하기 위해서는 삭제 (Delete API)를 호출해야 합니다.
    */
   public function CancelRequest(){
 
@@ -1208,7 +1208,7 @@ class TaxinvoiceController extends Controller
     // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
     $mgtKeyType = TIENumMgtKeyType::BUY;
 
-    // 문서관리번호
+    // 문서번호
     $mgtKey = '20190101-001';
 
     // 메모
@@ -1228,7 +1228,7 @@ class TaxinvoiceController extends Controller
   }
   /**
    * 공급받는자에게 요청받은 역발행 세금계산서를 [공급자]가 [거부]합니다.
-   * - 세금계산서의 문서관리번호를 재사용하기 위해서는 삭제 (Delete API)를 호출하여 [삭제] 처리해야 합니다.
+   * - 세금계산서의 문서번호를 재사용하기 위해서는 삭제 (Delete API)를 호출하여 [삭제] 처리해야 합니다.
    */
   public function Refuse(){
 
@@ -1238,7 +1238,7 @@ class TaxinvoiceController extends Controller
     // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
-    // 문서관리번호
+    // 문서번호
     $mgtKey = '20190213-002';
 
     // 메모
@@ -1270,7 +1270,7 @@ class TaxinvoiceController extends Controller
     // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
-    // 문서관리번호
+    // 문서번호
     $mgtKey = '20190213-005';
 
     try {
@@ -1299,7 +1299,7 @@ class TaxinvoiceController extends Controller
     // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
-    // 조회할 세금계산서 문서관리번호
+    // 조회할 세금계산서 문서번호
     $mgtKey = '20190101-001';
 
     try {
@@ -1326,7 +1326,7 @@ class TaxinvoiceController extends Controller
     // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
-    // 세금계산서 문서관리번호 배열, 최대 1000건
+    // 세금계산서 문서번호 배열, 최대 1000건
     $MgtKeyList = array();
     array_push($MgtKeyList, "20190101-001");
     array_push($MgtKeyList, '20190101-002');
@@ -1355,7 +1355,7 @@ class TaxinvoiceController extends Controller
     // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
-    // 세금계산서 문서관리번호
+    // 세금계산서 문서번호
     $mgtKey = '20190101-001';
 
     try {
@@ -1473,7 +1473,7 @@ class TaxinvoiceController extends Controller
     // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
-    // 세금계산서 문서관리번호
+    // 세금계산서 문서번호
     $mgtKey = '20190101-001';
 
     try {
@@ -1527,7 +1527,7 @@ class TaxinvoiceController extends Controller
     // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
-    // 문서관리번호
+    // 문서번호
     $mgtKey = '20190213-001';
 
     try {
@@ -1555,7 +1555,7 @@ class TaxinvoiceController extends Controller
     // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
-    // 문서관리번호
+    // 문서번호
     $mgtKey = '20190213-001';
 
     try {
@@ -1583,7 +1583,7 @@ class TaxinvoiceController extends Controller
     // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
-    // 문서관리번호
+    // 문서번호
     $mgtKey = '20190213-001';
 
     try {
@@ -1609,7 +1609,7 @@ class TaxinvoiceController extends Controller
     // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
-    // 문서관리번호
+    // 문서번호
     $mgtKey = '20190213-001';
 
     try {
@@ -1635,7 +1635,7 @@ class TaxinvoiceController extends Controller
     // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
-    // 문서관리번호 배열 최대 100건
+    // 문서번호 배열 최대 100건
     $MgtKeyList = array(
         '20190213-001',
         '20190101-001',
@@ -1664,7 +1664,7 @@ class TaxinvoiceController extends Controller
     // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
-    // 문서관리번호
+    // 문서번호
     $mgtKey = '20190213-001';
 
     try {
@@ -1736,7 +1736,7 @@ class TaxinvoiceController extends Controller
     // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
-    // 세금계산서 문서관리번호
+    // 세금계산서 문서번호
     $mgtKey = '20190213-004';
 
     // 첨부파일 경로, 해당 파일에 읽기 권한이 설정되어 있어야 합니다.
@@ -1767,7 +1767,7 @@ class TaxinvoiceController extends Controller
     // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
-    // 문서관리번호
+    // 문서번호
     $mgtKey = '20190213-004';
 
     // 삭제할 첨부파일 아이디, getFiles(첨부파일목록) API 응답항목중 attachedFile 변수값 참조
@@ -1799,7 +1799,7 @@ class TaxinvoiceController extends Controller
     // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
-    // 문서관리번호
+    // 문서번호
     $mgtKey = '20190213-004';
 
     try {
@@ -1825,7 +1825,7 @@ class TaxinvoiceController extends Controller
     // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
-    // 문서관리번호
+    // 문서번호
     $mgtKey = '20190213-004';
 
     // 수신이메일주소
@@ -1857,7 +1857,7 @@ class TaxinvoiceController extends Controller
     // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
-    // 세금계산서 문서관리번호
+    // 세금계산서 문서번호
     $mgtKey = '20190213-004';
 
     // 발신번호
@@ -1895,7 +1895,7 @@ class TaxinvoiceController extends Controller
     // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
-    // 세금계산서 문서관리번호
+    // 세금계산서 문서번호
     $mgtKey = '20190101-001';
 
     // 발신번호
@@ -1928,13 +1928,13 @@ class TaxinvoiceController extends Controller
     // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
-    // 세금계산서 문서관리번호
+    // 세금계산서 문서번호
     $mgtKey = '20190101-001';
 
     // 첨부할 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
     $subItemCode = 121;
 
-    // 첨부할 명세서 관리번호
+    // 첨부할 명세서 문서번호
     $subMgtKey = '20190101-001';
 
     try {
@@ -1961,13 +1961,13 @@ class TaxinvoiceController extends Controller
     // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
-    // 세금계산서 문서관리번호
+    // 세금계산서 문서번호
     $mgtKey = '20190101-001';
 
     // 첨부해제할 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
     $subItemCode = 121;
 
-    // 첨부해제할 명세서 관리번호
+    // 첨부해제할 명세서 문서번호
     $subMgtKey = '20190101-001';
 
     try {
@@ -2005,7 +2005,7 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-   * 팝빌사이트에서 작성된 세금계산서에 파트너 문서관리번호를 할당합니다.
+   * 팝빌사이트에서 작성된 세금계산서에 파트너 문서번호를 할당합니다.
    */
   public function AssignMgtKey(){
 
@@ -2018,7 +2018,7 @@ class TaxinvoiceController extends Controller
     // 세금계산서 아이템키, 문서 목록조회(Search) API의 반환항목중 ItemKey 참조
     $itemKey = '018123114240100001';
 
-    // 할당할 문서관리번호, 숫자, 영문 '-', '_' 조합으로 1~24자리까지
+    // 할당할 문서번호, 숫자, 영문 '-', '_' 조합으로 1~24자리까지
     // 사업자번호별 중복없는 고유번호 할당
     $mgtKey = '20190101-001';
 

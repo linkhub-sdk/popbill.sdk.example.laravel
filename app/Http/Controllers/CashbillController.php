@@ -38,15 +38,15 @@ class CashbillController extends Controller
   }
 
   /**
-   * 현금영수증 관리번호 중복여부를 확인합니다.
-   * - 관리번호는 1~24자리로 숫자, 영문 '-', '_' 조합으로 사업자별로 중복되지 않도록 구성해야합니다.
+   * 현금영수증 문서번호 중복여부를 확인합니다.
+   * - 문서번호는 1~24자리로 숫자, 영문 '-', '_' 조합으로 사업자별로 중복되지 않도록 구성해야합니다.
    */
   public function CheckMgtKeyInUse(){
 
     // 팝빌회원 사업자번호, "-"제외 10자리
     $testCorpNum = '1234567890';
 
-    // 문서관리번호, 1~24자리, 영문, 숫자, '-', '_' 조합으로 사업자별로 중복되지 않도록 구성
+    // 문서번호, 1~24자리, 영문, 숫자, '-', '_' 조합으로 사업자별로 중복되지 않도록 구성
     $mgtKey = '20190101-001';
 
     try {
@@ -59,7 +59,7 @@ class CashbillController extends Controller
         return view('PResponse', ['code' => $code, 'message' => $message]);
     }
 
-    return view('ReturnValue', ['filedName' => "문서관리번호 사용여부 =>".$mgtKey."", 'value' => $result]);
+    return view('ReturnValue', ['filedName' => "문서번호 사용여부 =>".$mgtKey."", 'value' => $result]);
 
   }
 
@@ -74,16 +74,22 @@ class CashbillController extends Controller
     // 팝빌 회원 사업자번호, '-' 제외 10자리
     $testCorpNum = '1234567890';
 
-    // 문서관리번호, 사업자별로 중복없이 1~24자리 영문, 숫자, '-', '_' 조합으로 구성
-    $mgtKey = '20190214-001';
+    // 팝빌회원 아이디
+    $testUserID = 'testkorea';
+
+    // 문서번호, 사업자별로 중복없이 1~24자리 영문, 숫자, '-', '_' 조합으로 구성
+    $mgtKey = '20191024-001';
 
     // 메모
     $memo = '현금영수증 즉시발행 메모';
 
+    // 안내메일 제목, 공백처리시 기본양식으로 전송
+    $emailSubject = '';
+
     // 현금영수증 객체 생성
     $Cashbill = new Cashbill();
 
-    // [필수] 현금영수증 문서관리번호,
+    // [필수] 현금영수증 문서번호,
     $Cashbill->mgtKey = $mgtKey;
 
     // [필수] 문서형태, (승인거래, 취소거래) 중 기재
@@ -149,7 +155,7 @@ class CashbillController extends Controller
     $Cashbill->smssendYN = false;
 
     try {
-        $result = $this->PopbillCashbill->RegistIssue($testCorpNum, $Cashbill, $memo);
+        $result = $this->PopbillCashbill->RegistIssue($testCorpNum, $Cashbill, $memo, $testUserID, $emailSubject);
         $code = $result->code;
         $message = $result->message;
     }
@@ -173,13 +179,13 @@ class CashbillController extends Controller
     // 팝빌 회원 사업자번호, '-' 제외 10자리
     $testCorpNum = '1234567890';
 
-    // 문서관리번호, 발행자별 중복없이 1~24자리 영문,숫자로 구성
+    // 문서번호, 발행자별 중복없이 1~24자리 영문,숫자로 구성
     $mgtKey = '20190214-002';
 
     // 현금영수증 객체 생성
     $Cashbill = new Cashbill();
 
-    // [필수] 현금영수증 문서관리번호,
+    // [필수] 현금영수증 문서번호,
     $Cashbill->mgtKey = $mgtKey;
 
     // [필수] 문서형태, (승인거래, 취소거래) 중 기재
@@ -268,13 +274,13 @@ class CashbillController extends Controller
     // 팝빌 회원 사업자번호, '-' 제외 10자리
     $testCorpNum = '1234567890';
 
-    // 문서관리번호
+    // 문서번호
     $mgtKey = '20190214-002';
 
     // 현금영수증 객체 생성
     $Cashbill = new Cashbill();
 
-    // [필수] 현금영수증 문서관리번호,
+    // [필수] 현금영수증 문서번호,
     $Cashbill->mgtKey = $mgtKey;
 
     // [필수] 문서형태, (승인거래, 취소거래) 중 기재
@@ -361,7 +367,7 @@ class CashbillController extends Controller
     // 팝빌 회원 사업자번호, '-' 제외 10자리
     $testCorpNum = '1234567890';
 
-    // 문서관리번호
+    // 문서번호
     $mgtKey = '20190214-002';
 
     // 메모
@@ -390,7 +396,7 @@ class CashbillController extends Controller
     // 팝빌 회원 사업자번호, '-' 제외 10자리
     $testCorpNum = '1234567890';
 
-    // 문서관리번호
+    // 문서번호
     $mgtKey = '20190214-002';
 
     // 메모
@@ -411,7 +417,7 @@ class CashbillController extends Controller
 
   /**
    * 1건의 현금영수증을 [삭제]합니다.
-   * - 현금영수증을 삭제하면 사용된 문서관리번호(mgtKey)를 재사용할 수 있습니다.
+   * - 현금영수증을 삭제하면 사용된 문서번호(mgtKey)를 재사용할 수 있습니다.
    * - 삭제가능한 문서 상태 : [임시저장], [발행취소]
    */
   public function Delete(){
@@ -419,7 +425,7 @@ class CashbillController extends Controller
     // 팝빌 회원 사업자번호, '-' 제외 10자리
     $testCorpNum = '1234567890';
 
-    // 문서관리번호
+    // 문서번호
     $mgtKey = '20190214-002';
 
     try {
@@ -446,7 +452,7 @@ class CashbillController extends Controller
     // 팝빌 회원 사업자번호, '-' 제외 10자리
     $testCorpNum = '1234567890';
 
-    // 문서관리번호, 사업자별로 중복없이 1~24자리 영문, 숫자, '-', '_' 조합으로 구성
+    // 문서번호, 사업자별로 중복없이 1~24자리 영문, 숫자, '-', '_' 조합으로 구성
     $mgtKey = '20190214-005';
 
     // 원본현금영수증 승인번호, 문서정보 확인(GetInfo API)을 통해 확인가능.
@@ -481,7 +487,7 @@ class CashbillController extends Controller
     // 팝빌회원 아이디
     $testUserID = 'testkorea';
 
-    // 문서관리번호, 사업자별로 중복없이 1~24자리 영문, 숫자, '-', '_' 조합으로 구성
+    // 문서번호, 사업자별로 중복없이 1~24자리 영문, 숫자, '-', '_' 조합으로 구성
     $mgtKey = '20190214-006';
 
     // 원본현금영수증 승인번호, 문서정보 확인(GetInfo API)을 통해 확인가능.
@@ -541,7 +547,7 @@ class CashbillController extends Controller
     // 팝빌 회원 사업자번호, '-' 제외 10자리
     $testCorpNum = '1234567890';
 
-    // 문서관리번호, 사업자별로 중복없이 1~24자리 영문, 숫자, '-', '_' 조합으로 구성
+    // 문서번호, 사업자별로 중복없이 1~24자리 영문, 숫자, '-', '_' 조합으로 구성
     $mgtKey = '20190214-007';
 
     // 원본현금영수증 승인번호, 문서정보 확인(GetInfo API)을 통해 확인가능.
@@ -576,7 +582,7 @@ class CashbillController extends Controller
     // 팝빌회원 아이디
     $testUserID = 'testkorea';
 
-    // 문서관리번호, 사업자별로 중복없이 1~24자리 영문, 숫자, '-', '_' 조합으로 구성
+    // 문서번호, 사업자별로 중복없이 1~24자리 영문, 숫자, '-', '_' 조합으로 구성
     $mgtKey = '20190214-009';
 
     // 원본현금영수증 승인번호, 문서정보 확인(GetInfo API)을 통해 확인가능.
@@ -629,7 +635,7 @@ class CashbillController extends Controller
     // 팝빌회원 사업자번호
     $testCorpNum = '1234567890';
 
-    // 문서관리번호
+    // 문서번호
     $mgtKey = '20190214-005';
 
     try {
@@ -653,7 +659,7 @@ class CashbillController extends Controller
     // 팝빌회원 사업자번호
     $testCorpNum = '1234567890';
 
-    // 문서관리번호 배열, 최대 1000건
+    // 문서번호 배열, 최대 1000건
     $MgtKeyList = array(
         '20190214-001',
         '20190214-005',
@@ -678,7 +684,7 @@ class CashbillController extends Controller
     // 팝빌회원 사업자번호, "-"제외 10자리
     $testCorpNum = '1234567890';
 
-    // 문서관리번호
+    // 문서번호
     $mgtKey = '20190214-005';
 
     try {
@@ -779,7 +785,7 @@ class CashbillController extends Controller
     // 팝빌회원, 사업자번호
     $testCorpNum = '1234567890';
 
-    // 문서관리번호
+    // 문서번호
     $mgtKey = '20190101-001';
 
     try {
@@ -832,7 +838,7 @@ class CashbillController extends Controller
     // 팝빌 회원 사업자 번호, "-"제외 10자리
     $testCorpNum = '1234567890';
 
-    // 문서관리번호
+    // 문서번호
     $mgtKey = '20190101-001';
 
     try {
@@ -855,7 +861,7 @@ class CashbillController extends Controller
     // 팝빌 회원 사업자 번호, "-"제외 10자리
     $testCorpNum = '1234567890';
 
-    // 문서관리번호
+    // 문서번호
     $mgtKey = '20190101-001';
 
     try {
@@ -879,7 +885,7 @@ class CashbillController extends Controller
     // 팝빌 회원 사업자 번호, "-"제외 10자리
     $testCorpNum = '1234567890';
 
-    // 문서관리번호 배열, 최대 100건
+    // 문서번호 배열, 최대 100건
     $mgtKeyList = array (
         '20190101-001',
         '20190101-002',
@@ -907,7 +913,7 @@ class CashbillController extends Controller
     // 팝빌 회원 사업자 번호, "-"제외 10자리
     $testCorpNum = '1234567890';
 
-    // 문서관리번호
+    // 문서번호
     $mgtKey = '20190101-001';
 
     try {
@@ -953,7 +959,7 @@ class CashbillController extends Controller
     // 팝빌 회원 사업자번호, "-" 제외 10자리
     $testCorpNum = '1234567890';
 
-    // 문서관리번호
+    // 문서번호
     $mgtKey = '20190101-001';
 
     // 수신메일 주소
@@ -982,7 +988,7 @@ class CashbillController extends Controller
     // 팝빌 회원 사업자번호, "-" 제외 10자리
     $testCorpNum = '1234567890';
 
-    // 문서관리번호
+    // 문서번호
     $mgtKey = '20190101-001';
 
     // 발신번호
@@ -1017,7 +1023,7 @@ class CashbillController extends Controller
     // 팝빌 회원 사업자번호, "-" 제외 10자리
     $testCorpNum = '1234567890';
 
-    // 문서관리번호
+    // 문서번호
     $mgtKey = '20190101-001';
 
     // 발신번호

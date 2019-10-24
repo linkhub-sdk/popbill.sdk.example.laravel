@@ -16,5 +16,5 @@ return [
     'IsTest' => true,
 
     // 인증토큰의 IP제한기능 사용여부, 권장(true)
-    'IPRestrictOnOff' => false,
+    'IPRestrictOnOff' => true,
 ];
