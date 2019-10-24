@@ -130,8 +130,11 @@ class HTTaxinvoiceController extends Controller
     // 팝빌회원 사업자번호, '-'제외 10자리
     $testCorpNum = '1234567890';
 
+    // 팝빌회원 아이디
+    $testUserID = '';
+
     // 수집 요청(RequestJob) 호출시 반환받은 작업아이디
-    $JobID = '019021509000000002';
+    $JobID = '019102414000000006';
 
     // 문서형태 배열, N-일반세금계산서, M-수정세금계산서
     $Type = array (
@@ -171,10 +174,13 @@ class HTTaxinvoiceController extends Controller
     // 정렬방향, D-내림차순, A-오름차순
     $Order = "D";
 
+    // 조회 검색어, 거래처 사업자번호 또는 거래처명 like 검색
+    $SearchString = "";
+
     try {
         $result = $this->PopbillHTTaxinvoice->Search ( $testCorpNum, $JobID, $Type,
           $TaxType, $PurposeType, $TaxRegIDYN, $TaxRegIDType, $TaxRegID,
-          $Page, $PerPage, $Order );
+          $Page, $PerPage, $Order, $testUserID, $SearchString);
     }
     catch(PopbillException | LinkhubException $pe) {
         $code = $pe->getCode();
@@ -195,8 +201,11 @@ class HTTaxinvoiceController extends Controller
     // 팝빌회원 사업자번호, '-'제외 10자리
     $testCorpNum = '1234567890';
 
+    // 팝빌회원 아이디
+    $testUserID = '';
+
     // 수집 요청(RequestJob) 호출시 반환받은 작업아이디
-    $JobID = '019021509000000002';
+    $JobID = '019102414000000006';
 
     // 문서형태 배열, N-일반세금계산서, M-수정세금계산서
     $Type = array (
@@ -227,9 +236,12 @@ class HTTaxinvoiceController extends Controller
     // 종사업장번호, 콤마(",")로 구분하여 구성 ex) "1234,0001";
     $TaxRegID = "";
 
+    // 조회 검색어, 거래처 사업자번호 또는 거래처명 like 검색
+    $SearchString = "";
+
     try {
         $result = $this->PopbillHTTaxinvoice->Summary($testCorpNum, $JobID, $Type, $TaxType,
-            $PurposeType, $TaxRegIDYN, $TaxRegIDType, $TaxRegID);
+            $PurposeType, $TaxRegIDYN, $TaxRegIDType, $TaxRegID, $testUserID, $SearchString);
     }
     catch(PopbillException | LinkhubException $pe) {
         $code = $pe->getCode();
@@ -317,7 +329,7 @@ class HTTaxinvoiceController extends Controller
   public function GetPrintURL(){
 
     // 팝빌 회원 사업자 번호, "-"제외 10자리
-    $testCorpNum = '6798700433';
+    $testCorpNum = '1234567890';
 
     // 국세청 승인번호
     $NTSConfirmNum = "201812264100020300002e07";
