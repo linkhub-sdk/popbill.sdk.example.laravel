@@ -330,7 +330,7 @@ class MessageController extends Controller
   /**
    * MMS(포토)를 전송합니다.
    *  - 메시지 내용이 2,000Byte 초과시 메시지 내용은 자동으로 제거됩니다.
-   *  - 이미지 파일의 크기는 최대 300Kbtye (JPEG), 가로/세로 1500px 이하 권장
+   *  - 이미지 파일의 크기는 최대 300Kbtye (JPEG), 가로/세로 1000px 이하 권장
    */
   public function SendMMS(){
 
@@ -375,7 +375,7 @@ class MessageController extends Controller
   /**
   * [대랑전송] MMS(포토)를 전송합니다.
   *  - 메시지 내용이 2,000Byte 초과시 메시지 내용은 자동으로 제거됩니다.
-  *  - 이미지 파일의 크기는 최대 300Kbtye (JPEG), 가로/세로 1500px 이하 권장
+  *  - 이미지 파일의 크기는 최대 300Kbtye (JPEG), 가로/세로 1000px 이하 권장
   */
   public function SendMMS_Multi(){
 

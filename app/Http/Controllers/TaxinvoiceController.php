@@ -85,7 +85,7 @@ class TaxinvoiceController extends Controller
 
     // 세금계산서 문서번호
     // - 최대 24자리 숫자, 영문, '-', '_' 조합으로 사업자별로 중복되지 않도록 구성
-    $invoicerMgtKey = '20190226-023';
+    $invoicerMgtKey = '20191024-023';
 
     // 지연발행 강제여부
     $forceIssue = false;
@@ -110,7 +110,7 @@ class TaxinvoiceController extends Controller
     $Taxinvoice = new Taxinvoice();
 
     // [필수] 작성일자, 형식(yyyyMMdd) 예)20150101
-    $Taxinvoice->writeDate = '20190226';
+    $Taxinvoice->writeDate = '20191024';
 
     // [필수] 발행형태, '정발행', '역발행', '위수탁' 중 기재
     $Taxinvoice->issueType = '정발행';
@@ -207,6 +207,8 @@ class TaxinvoiceController extends Controller
     $Taxinvoice->invoiceeContactName1 = '공급받는자 담당자성명';
 
     // 공급받는자 담당자 메일주소
+    // 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
+    // 실제 거래처의 메일주소가 기재되지 않도록 주의
     $Taxinvoice->invoiceeEmail1 = 'test@test.com';
 
     // 공급받는자 담당자 연락처
@@ -264,14 +266,14 @@ class TaxinvoiceController extends Controller
     /************************************************************
      *                     수정 세금계산서 기재정보
      * - 수정세금계산서 관련 정보는 연동매뉴얼 또는 개발가이드 링크 참조
-     * - [참고] 수정세금계산서 작성방법 안내 - http://blog.linkhub.co.kr/650
+     * - [참고] 수정세금계산서 작성방법 안내 - https://docs.popbill.com/taxinvoice/modify?lang=phplaravel
      ************************************************************/
 
     // [수정세금계산서 작성시 필수] 수정사유코드, 수정사유에 따라 1~6중 선택기재
-    //$Taxinvoice->modifyCode = '';
+    // $Taxinvoice->modifyCode = '';
 
-    // [수정세금계산서 작성시 필수] 원본세금계산서 ItemKey 기재, 문서확인 (GetInfo API)의 응답결과(ItemKey 항목) 확인
-    //$Taxinvoice->originalTaxinvoiceKey = '';
+    // [수정세금계산서 작성시 필수] 원본세금계산서 국세청 승인번호 기재
+    // $Taxinvoice->orgNTSConfirmNum = '';
 
     /************************************************************
      *                       상세항목(품목) 정보
@@ -453,6 +455,8 @@ class TaxinvoiceController extends Controller
     $Taxinvoice->invoiceeContactName1 = '공급받는자 담당자성명';
 
     // 공급받는자 담당자 메일주소
+    // 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
+    // 실제 거래처의 메일주소가 기재되지 않도록 주의
     $Taxinvoice->invoiceeEmail1 = 'tester@test.com';
 
     // 공급받는자 담당자 연락처
@@ -515,13 +519,14 @@ class TaxinvoiceController extends Controller
     /************************************************************
      *                     수정 세금계산서 기재정보
      * - 수정세금계산서 관련 정보는 연동매뉴얼 또는 개발가이드 링크 참조
-     * - [참고] 수정세금계산서 작성방법 안내 - http://blog.linkhub.co.kr/650
+     * - [참고] 수정세금계산서 작성방법 안내 - https://docs.popbill.com/taxinvoice/modify?lang=phplaravel
      ************************************************************/
 
     // 수정사유코드, 수정사유에 따라 1~6중 선택기재
     //$Taxinvoice->modifyCode = '';
-    // 원본세금계산서 ItemKey 기재, 문서확인 (GetInfo API)의 응답결과(ItemKey 항목) 확인
-    //$Taxinvoice->originalTaxinvoiceKey = '';
+
+    // [수정세금계산서 작성시 필수] 원본세금계산서 국세청 승인번호 기재
+    //$Taxinvoice->orgNTSConfirmNUm = '';
 
     /************************************************************
      *                       상세항목(품목) 정보
@@ -702,6 +707,8 @@ class TaxinvoiceController extends Controller
     $Taxinvoice->invoiceeContactName1 = '공급받는자 담당자성명';
 
     // 공급받는자 담당자 메일주소
+    // 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
+    // 실제 거래처의 메일주소가 기재되지 않도록 주의
     $Taxinvoice->invoiceeEmail1 = 'tester@test.com';
 
     // 공급받는자 담당자 연락처
@@ -765,13 +772,14 @@ class TaxinvoiceController extends Controller
     /************************************************************
      *                     수정 세금계산서 기재정보
      * - 수정세금계산서 관련 정보는 연동매뉴얼 또는 개발가이드 링크 참조
-     * - [참고] 수정세금계산서 작성방법 안내 - http://blog.linkhub.co.kr/650
+     * - [참고] 수정세금계산서 작성방법 안내 - https://docs.popbill.com/taxinvoice/modify?lang=phplaravel
      ************************************************************/
 
     // 수정사유코드, 수정사유에 따라 1~6중 선택기재
     //$Taxinvoice->modifyCode = '';
-    // 원본세금계산서 ItemKey 기재, 문서확인 (GetInfo API)의 응답결과(ItemKey 항목) 확인
-    //$Taxinvoice->originalTaxinvoiceKey = '';
+
+    // [수정세금계산서 작성시 필수] 원본세금계산서 국세청 승인번호 기재
+    //$Taxinvoice->orgNTSConfirmNUm = '';
 
     /************************************************************
      *                       상세항목(품목) 정보
@@ -1054,6 +1062,8 @@ class TaxinvoiceController extends Controller
     $Taxinvoice->invoiceeContactName1 = '공급받는자 담당자성명';
 
     // 공급받는자 담당자 메일주소
+    // 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
+    // 실제 거래처의 메일주소가 기재되지 않도록 주의
     $Taxinvoice->invoiceeEmail1 = 'test@test.com';
 
     // 공급받는자 담당자 연락처
@@ -1116,12 +1126,13 @@ class TaxinvoiceController extends Controller
     /************************************************************
      *                     수정 세금계산서 기재정보
      * - 수정세금계산서 관련 정보는 연동매뉴얼 또는 개발가이드 링크 참조
-     * - [참고] 수정세금계산서 작성방법 안내 - http://blog.linkhub.co.kr/650
+     * - [참고] 수정세금계산서 작성방법 안내 - https://docs.popbill.com/taxinvoice/modify?lang=phplaravel
      ************************************************************/
     // 수정사유코드, 수정사유에 따라 1~6중 선택기재
     //$Taxinvoice->modifyCode = '';
-    // 원본세금계산서 ItemKey 기재, 문서확인 (GetInfo API)의 응답결과(ItemKey 항목) 확인
-    //$Taxinvoice->originalTaxinvoiceKey = '';
+
+    // [수정세금계산서 작성시 필수] 원본세금계산서 국세청 승인번호 기재
+    //$Taxinvoice->orgNTSConfirmNUm = '';
 
     /************************************************************
      *                       상세항목(품목) 정보
@@ -1829,6 +1840,8 @@ class TaxinvoiceController extends Controller
     $mgtKey = '20190213-004';
 
     // 수신이메일주소
+    // 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
+    // 실제 거래처의 메일주소가 기재되지 않도록 주의
     $receiver = 'test@test.com';
 
     try {
