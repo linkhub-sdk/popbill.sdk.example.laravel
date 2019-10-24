@@ -311,6 +311,29 @@ class HTTaxinvoiceController extends Controller
   }
 
   /**
+   * 홈택스 전자세금계산서 인쇄 URL을 반환합니다.
+   * - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
+   */
+  public function GetPrintURL(){
+
+    // 팝빌 회원 사업자 번호, "-"제외 10자리
+    $testCorpNum = '6798700433';
+
+    // 국세청 승인번호
+    $NTSConfirmNum = "201812264100020300002e07";
+
+    try {
+        $url = $this->PopbillHTTaxinvoice->getPrintURL($testCorpNum, $NTSConfirmNum);
+    }
+    catch (PopbillException | LinkhubException $pe) {
+        $code = $pe->getCode();
+        $message = $pe->getMessage();
+        return view('PResponse', ['code' => $code, 'message' => $message]);
+    }
+    return view('ReturnValue', ['filedName' => "전자세금계산서 인쇄 URL" , 'value' => $url]);
+  }
+
+  /**
    * 홈택스연동 인증관리를 위한 URL을 반환합니다.
    * 인증방식에는 부서사용자/공인인증서 인증 방식이 있습니다.
    * - 반환된 URL은 보안정책에 따라 30초의 유효시간을 갖습니다.
