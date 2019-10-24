@@ -223,9 +223,9 @@ class KakaoTalkController extends Controller
     //     'n' => '템플릿 안내',
     //     // 버튼 유형, WL-웹링크, AL-앱링크, MD-메시지 전달, BK-봇키워드
     //     't' => 'WL',
-    //     // 링크1, [앱링크] Android, [웹링크] Mobile
+    //     // 링크1, [앱링크] iOS, [웹링크] Mobile
     //     'u1' => 'https://www.popbill.com',
-    //     // 링크2, [앱링크] IOS, [웹링크] PC URL
+    //     // 링크2, [앱링크] Android, [웹링크] PC URL
     //     'u2' => 'http://www.popbill.com',
     // );
 
@@ -299,9 +299,9 @@ class KakaoTalkController extends Controller
     //     'n' => '템플릿 안내',
     //     // 버튼 유형, WL-웹링크, AL-앱링크, MD-메시지 전달, BK-봇키워드
     //     't' => 'WL',
-    //     // 링크1, [앱링크] Android, [웹링크] Mobile
+    //     // 링크1, [앱링크] iOS, [웹링크] Mobile
     //     'u1' => 'https://www.popbill.com',
-    //     // 링크2, [앱링크] IOS, [웹링크] PC URL
+    //     // 링크2, [앱링크] Android, [웹링크] PC URL
     //     'u2' => 'http://www.popbill.com',
     // );
 
@@ -377,9 +377,9 @@ class KakaoTalkController extends Controller
     //     'n' => '템플릿 안내',
     //     // 버튼 유형, WL-웹링크, AL-앱링크, MD-메시지 전달, BK-봇키워드
     //     't' => 'WL',
-    //     // 링크1, [앱링크] Android, [웹링크] Mobile
+    //     // 링크1, [앱링크] iOS, [웹링크] Mobile
     //     'u1' => 'https://www.popbill.com',
-    //     // 링크2, [앱링크] IOS, [웹링크] PC URL
+    //     // 링크2, [앱링크] Android, [웹링크] PC URL
     //     'u2' => 'http://www.popbill.com',
     // );
 
@@ -443,9 +443,9 @@ class KakaoTalkController extends Controller
         'n' => '웹링크',
         // 버튼 유형, WL-웹링크, AL-앱링크, MD-메시지 전달, BK-봇키워드
         't' => 'WL',
-        // [앱링크] Android, [웹링크] Mobile
+        // [앱링크] iOS, [웹링크] Mobile
         'u1' => 'http://www.popbill.com',
-        // [앱링크] IOS, [웹링크] PC URL
+        // [앱링크] Android, [웹링크] PC URL
         'u2' => 'http://www.popbill.com',
     );
 
@@ -514,9 +514,9 @@ class KakaoTalkController extends Controller
         'n' => '웹링크',
         // 버튼 유형, WL-웹링크, AL-앱링크, MD-메시지 전달, BK-봇키워드
         't' => 'WL',
-        // [앱링크] Android, [웹링크] Mobile
+        // [앱링크] iOS, [웹링크] Mobile
         'u1' => 'http://www.popbill.com',
-        // [앱링크] IOS, [웹링크] PC URL
+        // [앱링크] Android, [웹링크] PC URL
         'u2' => 'http://www.popbill.com',
     );
 
@@ -583,9 +583,9 @@ class KakaoTalkController extends Controller
       'n' => '웹링크',
       // 버튼 유형, WL-웹링크, AL-앱링크, MD-메시지 전달, BK-봇키워드
       't' => 'WL',
-      // [앱링크] Android, [웹링크] Mobile
+      // [앱링크] iOS, [웹링크] Mobile
       'u1' => 'http://www.popbill.com',
-      // [앱링크] IOS, [웹링크] PC URL
+      // [앱링크] Android, [웹링크] PC URL
       'u2' => 'http://www.popbill.com',
     );
 
@@ -653,9 +653,9 @@ class KakaoTalkController extends Controller
         'n' => '웹링크',
         // 버튼 유형, WL-웹링크, AL-앱링크, MD-메시지 전달, BK-봇키워드
         't' => 'WL',
-        // [앱링크] Android, [웹링크] Mobile
+        // [앱링크] iOS, [웹링크] Mobile
         'u1' => 'http://www.popbill.com',
-        // [앱링크] IOS, [웹링크] PC URL
+        // [앱링크] Android, [웹링크] PC URL
         'u2' => 'http://www.popbill.com',
     );
 
@@ -735,9 +735,9 @@ class KakaoTalkController extends Controller
       'n' => '웹링크',
       // 버튼 유형, WL-웹링크, AL-앱링크, MD-메시지 전달, BK-봇키워드
       't' => 'WL',
-      // [앱링크] Android, [웹링크] Mobile
+      // [앱링크] iOS, [웹링크] Mobile
       'u1' => 'http://www.popbill.com',
-      // [앱링크] IOS, [웹링크] PC URL
+      // [앱링크] Android, [웹링크] PC URL
       'u2' => 'http://www.popbill.com',
     );
 
@@ -815,9 +815,9 @@ class KakaoTalkController extends Controller
         'n' => '웹링크',
         // 버튼 유형, WL-웹링크, AL-앱링크, MD-메시지 전달, BK-봇키워드
         't' => 'WL',
-        // [앱링크] Android, [웹링크] Mobile
+        // [앱링크] iOS, [웹링크] Mobile
         'u1' => 'http://www.popbill.com',
-        // [앱링크] IOS, [웹링크] PC URL
+        // [앱링크] Android, [웹링크] PC URL
         'u2' => 'http://www.popbill.com',
     );
 
