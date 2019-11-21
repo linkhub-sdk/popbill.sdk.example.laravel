@@ -2,10 +2,10 @@
 
 return [
 
-    // LinkID
+    // Partner's LinkID, in main recevied from Linkhub
     'LinkID' => 'TESTER',
 
-    // SecreKey
+    // Partner's SecreKey, in main recevied from Linkhub
     'SecretKey' => 'SwWxqU+0TErBXy/9TVjIPEnI0VTUMMSQZtJf3Ed8q3I=',
 
     // Linkhub SDK HTTP Connection Mode {'CURL' or 'STREAM'}
