@@ -12,7 +12,7 @@
 				<legend>{{\Request::fullUrl()}}</legend>
           @foreach ($Result as $index => $object)
           <fieldset class="fieldset2">
-            <legend>ASP 사업자 유통메일 목록 [{{$index+1}}]</legend>
+            <legend>ASP Mailing List [{{$index+1}}]</legend>
     				<ul>
                 @foreach ($object as $key => $value)
                 <li> {{ $key }} : {{ $value }} </li>
