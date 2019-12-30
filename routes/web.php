@@ -50,3 +50,8 @@ Route::get('/HTTaxinvoice/{APIName}','HTTaxinvoiceController@RouteHandelerFunc')
 // 홈택스 현금영수증 Route Mapping
 Route::get('/HTCashbill', function () { return view('HTCashbill/index'); });
 Route::get('/HTCashbill/{APIName}','HTCashbillController@RouteHandelerFunc');
+
+
+// 계좌조회 Route Mapping
+Route::get('/EasyFinBank', function () { return view('EasyFinBank/index'); });
+Route::get('/EasyFinBank/{APIName}','EasyFinBankController@RouteHandelerFunc');
