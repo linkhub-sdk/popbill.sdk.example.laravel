@@ -44,6 +44,7 @@ class TaxinvoiceController extends Controller
   /**
    * 세금계산서 문서번호 중복여부를 확인합니다.
    * - 문서번호는 1~24자리로 숫자, 영문 '-', '_' 조합으로 구성할 수 있습니다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#CheckMgtKeyInUse
    */
   public function CheckMgtKeyInUse(){
 
@@ -73,7 +74,7 @@ class TaxinvoiceController extends Controller
 
   /**
    * 1건의 정발행 세금계산서를 즉시발행 처리합니다.
-   * - 세금계산서 항목별 정보는 "[전자세금계산서 API 연동매뉴얼] > 4.1. (세금)계산서구성"을 참조하시기 바랍니다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#RegistIssue
    */
   public function RegistIssue(){
 
@@ -338,7 +339,7 @@ class TaxinvoiceController extends Controller
    * - 세금계산서 임시저장(Register API) 호출후에는 발행(Issue API)을 호출해야만 국세청으로 전송됩니다.
    * - 정발행시 임시저장(Register)과 발행(Issue)을 한번의 호출로 처리하는 즉시발행(RegistIssue API) 프로세스 연동을 권장합니다.
    * - 역발행시 임시저장(Register)과 역발행요청(Request)을 한번의 호출로 처리하는 즉시요청(RegistRequest API) 프로세스 연동을 권장합니다.
-   * - 세금계산서 항목별 정보는 "[전자세금계산서 API 연동매뉴얼] > 4.1. (세금)계산서구성"을 참조하시기 바랍니다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#Register
    */
   public function Register(){
 
@@ -588,7 +589,7 @@ class TaxinvoiceController extends Controller
 
   /**
    * [임시저장] 상태의 세금계산서의 항목을 수정합니다.
-   * - 세금계산서 항목별 정보는 "[전자세금계산서 API 연동매뉴얼] > 4.1. (세금)계산서구성"을 참조하시기 바랍니다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#Update
    */
   public function Update(){
 
@@ -839,7 +840,7 @@ class TaxinvoiceController extends Controller
 
   /**
    * [임시저장] 또는 [발행대기] 상태의 세금계산서를 [공급자]가 [발행]합니다.
-   * - 세금계산서 항목별 정보는 "[전자세금계산서 API 연동매뉴얼] > 4.1. (세금)계산서구성"을 참조하시기 바랍니다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#TIIssue
    */
   public function Issue(){
 
@@ -883,6 +884,7 @@ class TaxinvoiceController extends Controller
    * - [발행취소]는 국세청 전송전에만 가능합니다.
    * - 발행취소된 세금계산서는 국세청에 전송되지 않습니다.
    * - 발행취소 세금계산서에 사용된 문서번호를 재사용 하기 위해서는 삭제(Delete API)를 호출하여 해당세금계산서를 삭제해야 합니다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#CancelIssue
    */
   public function CancelIssue(){
 
@@ -915,6 +917,7 @@ class TaxinvoiceController extends Controller
    * 1건의 전자세금계산서를 [삭제]합니다.
    * - 세금계산서를 삭제해야만 문서번호(mgtKey)를 재사용할 수 있습니다.
    * - 삭제가능한 문서 상태 : [임시저장], [발행취소], [발행예정 취소], [발행예정 거부]
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#Delete
    */
   public function Delete(){
 
@@ -942,10 +945,10 @@ class TaxinvoiceController extends Controller
 
   /**
    * [공급받는자]가 공급자에게 1건의 역발행 세금계산서를 [즉시 요청]합니다.
-   * - 세금계산서 항목별 정보는 "[전자세금계산서 API 연동매뉴얼] > 4.1. (세금)계산서구성"을 참조하시기 바랍니다.
    * - 역발행 세금계산서 프로세스를 구현하기 위해서는 공급자/공급받는자가 모두 팝빌에 회원이여야 합니다.
    * - 역발행 즉시요청후 공급자가 [발행] 처리시 포인트가 차감되며 역발행 세금계산서 항목중 과금방향(ChargeDirection)에 기재한 값에 따라
    *   정과금(공급자과금) 또는 역과금(공급받는자과금) 처리됩니다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#RegistRequest
    */
   public function RegistRequest(){
 
@@ -1179,6 +1182,7 @@ class TaxinvoiceController extends Controller
    * - 역발행 세금계산서 프로세스를 구현하기 위해서는 공급자/공급받는자가 모두 팝빌에 회원이여야 합니다.
    * - 역발행 요청후 공급자가 [발행] 처리시 포인트가 차감되며 역발행 세금계산서 항목중 과금방향(ChargeDirection) 에 기재한 값에 따라
    *   정과금(공급자과금) 또는 역과금(공급받는자과금) 처리됩니다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#Request
    */
   public function Request(){
 
@@ -1210,6 +1214,7 @@ class TaxinvoiceController extends Controller
   /**
    * [공급받는자]가 역)발행대기 상태의 세금계산서를 [취소]합니다.
    * - [취소]한 세금계산서의 문서번호를 재사용하기 위해서는 삭제 (Delete API)를 호출해야 합니다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#CancelRequest
    */
   public function CancelRequest(){
 
@@ -1239,7 +1244,7 @@ class TaxinvoiceController extends Controller
   }
   /**
    * 공급받는자에게 요청받은 역발행 세금계산서를 [공급자]가 [거부]합니다.
-   * - 세금계산서의 문서번호를 재사용하기 위해서는 삭제 (Delete API)를 호출하여 [삭제] 처리해야 합니다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#Refuse
    */
   public function Refuse(){
 
@@ -1271,7 +1276,7 @@ class TaxinvoiceController extends Controller
    * [발행완료] 상태의 세금계산서를 국세청으로 즉시전송합니다.
    * - 국세청 즉시전송을 호출하지 않은 세금계산서는 발행일 기준 익일 오후 3시에 팝빌 시스템에서 일괄적으로 국세청으로 전송합니다.
    * - 익일전송시 전송일이 법정공휴일인 경우 다음 영업일에 전송됩니다.
-   * - 국세청 전송에 관한 사항은 "[전자세금계산서 API 연동매뉴얼] > 1.3 국세청 전송 정책" 을 참조하시기 바랍니다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#SendToNTS
    */
   public function SendToNTS(){
 
@@ -1299,8 +1304,7 @@ class TaxinvoiceController extends Controller
 
   /**
    * 1건의 세금계산서 상태/요약 정보를 확인합니다.
-   * - 세금계산서 상태정보(GetInfo API) 응답항목에 대한 자세한 정보는
-   *   "[전자세금계산서 API 연동매뉴얼] > 4.2. (세금)계산서 상태정보 구성" 을 참조하시기 바랍니다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetInfo
    */
   public function GetInfo(){
 
@@ -1327,13 +1331,13 @@ class TaxinvoiceController extends Controller
 
   /**
    * 대량의 세금계산서 상태/요약 정보를 확인합니다. (최대 1000건)
-   * - 세금계산서 상태정보(GetInfos API) 응답항목에 대한 자세한 정보는 "[전자세금계산서 API 연동매뉴얼]
-   * > 4.2. (세금)계산서 상태정보 구성" 을 참조하시기 바랍니다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetInfos
    */
   public function GetInfos(){
 
     // 팝빌회원 사업자번호, '-'제외 10자리
     $testCorpNum = '1234567890';
+
     // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
@@ -1356,7 +1360,7 @@ class TaxinvoiceController extends Controller
 
   /**
    * 1건의 세금계산서 상세정보를 확인합니다.
-   * - 응답항목에 대한 자세한 사항은 "[전자세금계산서 API 연동매뉴얼] > 4.1 (세금)계산서 구성" 을 참조하시기 바랍니다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetDetailInfo
    */
   public function GetDetailInfo(){
 
@@ -1382,7 +1386,7 @@ class TaxinvoiceController extends Controller
 
   /**
    * 검색조건을 사용하여 세금계산서 목록을 조회합니다.
-   * - 응답항목에 대한 자세한 사항은 "[전자세금계산서 API 연동매뉴얼] > 4.2. (세금)계산서 상태정보 구성" 을 참조하시기 바랍니다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#Search
    */
   public function Search(){
 
@@ -1399,10 +1403,10 @@ class TaxinvoiceController extends Controller
     $DType = 'W';
 
     // [필수] 시작일자
-    $SDate = '20181201';
+    $SDate = '20200101';
 
     // [필수] 종료일자
-    $EDate = '20190101';
+    $EDate = '20200131';
 
     // 전송상태값 배열, 문서상태 값 3자리 배열, 2,3번째 자리 와일드카드 사용가능, 미기재시 전체조회
     $State = array (
@@ -1473,8 +1477,7 @@ class TaxinvoiceController extends Controller
 
   /**
    * 세금계산서 상태 변경이력을 확인합니다.
-   * - 상태 변경이력 확인(GetLogs API) 응답항목에 대한 자세한 정보는
-   *   "[전자세금계산서 API 연동매뉴얼] > 3.5.5 상태 변경이력 확인" 을 참조하시기 바랍니다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetLogs
    */
   public function GetLogs(){
 
@@ -1500,8 +1503,9 @@ class TaxinvoiceController extends Controller
 
   /**
    * 팝빌 전자세금계산서 문서함 팝업 URL을 반환합니다.
-   * TOGO - TBOX(임시문서함), SBOX(매출문서함), PBOX(매입문서함), WRITE(매출문서작성)
-   * 반환된 URL은 보안정책에 따라 30초의 유효시간을 갖습니다.
+   * - TOGO - TBOX(임시문서함), SBOX(매출문서함), PBOX(매입문서함), WRITE(매출문서작성)
+   * - 반환된 URL은 보안정책에 따라 30초의 유효시간을 갖습니다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetURL
    */
   public function GetURL(){
 
@@ -1529,6 +1533,7 @@ class TaxinvoiceController extends Controller
   /**
    * 1건의 전자세금계산서 보기 팝업 URL을 반환합니다.
    * - 반환된 URL은 보안정책으로 인해 30초의 유효시간을 갖습니다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetPopUpURL
    */
   public function GetPopUpURL(){
 
@@ -1557,6 +1562,7 @@ class TaxinvoiceController extends Controller
   /**
    * 1건의 전자세금계산서 보기 팝업 URL을 반환합니다. (메뉴/버튼 제외)
    * - 반환된 URL은 보안정책으로 인해 30초의 유효시간을 갖습니다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetViewURL
    */
   public function GetViewURL(){
 
@@ -1585,6 +1591,7 @@ class TaxinvoiceController extends Controller
   /**
    * 1건의 전자세금계산서 인쇄팝업 URL을 반환합니다.
    * - 반환된 URL은 보안정책으로 인해 30초의 유효시간을 갖습니다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetPrintURL
    */
   public function GetPrintURL(){
 
@@ -1611,6 +1618,7 @@ class TaxinvoiceController extends Controller
   /**
   * 세금계산서 인쇄(공급받는자) 팝업 URL을 반환합니다.
   * - URL 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
+  * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetEPrintURL
   */
   public function GetEPrintURL(){
 
@@ -1637,6 +1645,7 @@ class TaxinvoiceController extends Controller
   /**
    * 대량의 세금계산서 인쇄팝업 URL을 반환합니다. (최대 100건)
    * - 보안정책으로 인해 반환된 URL의 유효시간은 30초입니다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetMassPrintURL
    */
   public function GetMassPrintURL(){
 
@@ -1666,6 +1675,7 @@ class TaxinvoiceController extends Controller
   /**
    * 공급받는자 메일링크 URL을 반환합니다.
    * - 메일링크 URL은 유효시간이 존재하지 않습니다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetMailURL
    */
   public function GetMailURL(){
 
@@ -1691,7 +1701,8 @@ class TaxinvoiceController extends Controller
 
   /**
    * 팝빌에 로그인 상태로 접근할 수 있는 팝업 URL을 반환합니다.
-   * 반환된 URL의 유지시간은 30초이며, 제한된 시간 이후에는 정상적으로 처리되지 않습니다.
+   * - 반환된 URL의 유지시간은 30초이며, 제한된 시간 이후에는 정상적으로 처리되지 않습니다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetAccessURL
    */
   public function GetAccessURL(){
 
@@ -1714,7 +1725,8 @@ class TaxinvoiceController extends Controller
 
   /**
    * 인감 및 첨부문서 등록 팝업 URL을 반환합니다.
-   * 반환된 URL의 유지시간은 30초이며, 제한된 시간 이후에는 정상적으로 처리되지 않습니다.
+   * - 반환된 URL의 유지시간은 30초이며, 제한된 시간 이후에는 정상적으로 처리되지 않습니다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetSealURL
    */
   public function GetSealURL(){
 
@@ -1738,6 +1750,7 @@ class TaxinvoiceController extends Controller
   * 세금계산서에 첨부파일을 등록합니다.
   * - [임시저장] 상태의 세금계산서만 파일을 첨부할수 있습니다.
   * - 첨부파일은 최대 5개까지 등록할 수 있습니다.
+  * - https://docs.popbill.com/taxinvoice/phplaravel/api#AttachFile
   */
   public function AttachFile(){
 
@@ -1769,6 +1782,7 @@ class TaxinvoiceController extends Controller
   /**
    * 세금계산서에 첨부된 파일을 삭제합니다.
    * - 파일을 식별하는 파일아이디는 첨부파일 목록(GetFiles API) 의 응답항목 중 파일아이디(AttachedFile) 값을 통해 확인할 수 있습니다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#DeleteFile
    */
   public function DeleteFile(){
 
@@ -1799,8 +1813,8 @@ class TaxinvoiceController extends Controller
 
   /**
    * 세금계산서 첨부파일 목록을 확인합니다.
-   * - 응답항목 중 파일아이디(AttachedFile) 항목은 파일삭제(DeleteFile API)
-   *   호출시 이용할 수 있습니다.
+   * - 응답항목 중 파일아이디(AttachedFile) 항목은 파일삭제(DeleteFile API) 호출시 이용할 수 있습니다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetFiles
    */
   public function GetFiles(){
 
@@ -1827,6 +1841,7 @@ class TaxinvoiceController extends Controller
 
   /**
    * 세금계산서 안내 메일을 재전송합니다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#SendEmail
    */
   public function SendEmail(){
 
@@ -1861,6 +1876,7 @@ class TaxinvoiceController extends Controller
    * 안내문자를 전송합니다. (단문/SMS- 한글 최대 45자)
    * - 문자 전송시 포인트가 차감됩니다. (전송실패시 환불처리)
    * - 전송내역 확인은 "팝빌 로그인" > [문자 팩스] > [문자] > [전송내역] 메뉴에서 전송결과를 확인할 수 있습니다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#SendSMS
    */
   public function SendSMS(){
 
@@ -1899,6 +1915,7 @@ class TaxinvoiceController extends Controller
    * 전자세금계산서를 팩스전송합니다.
    * - 팩스 전송 요청시 포인트가 차감됩니다. (전송실패시 환불처리)
    * - 전송내역 확인은 "팝빌 로그인" > [문자 팩스] > [팩스] > [전송내역] 메뉴에서 전송결과를 확인할 수 있습니다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#SendFAX
    */
   public function SendFAX(){
 
@@ -1932,6 +1949,7 @@ class TaxinvoiceController extends Controller
 
   /**
    * 세금계산서에 1건의 전자명세서를 첨부합니다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#AttachStatement
    */
   public function AttachStatement(){
 
@@ -1965,6 +1983,7 @@ class TaxinvoiceController extends Controller
 
   /**
    * 세금계산서에 첨부된 전자명세서를 첨부해제합니다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#DetachStatement
    */
   public function DetachStatement(){
 
@@ -1998,6 +2017,7 @@ class TaxinvoiceController extends Controller
 
   /**
    * 대용량 연계사업자 유통메일주소 목록을 반환합니다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetEmailPublicKeys
    */
   public function GetEmailPublicKeys(){
 
@@ -2018,7 +2038,8 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-   * 팝빌사이트에서 작성된 세금계산서에 파트너 문서번호를 할당합니다.
+   * 팝빌 사이트에서 작성된 세금계산서에 파트너 문서번호를 할당합니다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#AssignMgtKey
    */
   public function AssignMgtKey(){
 
@@ -2051,6 +2072,7 @@ class TaxinvoiceController extends Controller
 
   /**
    * 전자세금계산서 관련 메일전송 항목에 대한 전송여부를 목록으로 반환한다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#ListEmailConfig
    */
   public function ListEmailConfig(){
 
@@ -2071,6 +2093,7 @@ class TaxinvoiceController extends Controller
 
   /**
    * 전자세금계산서 관련 메일전송 항목에 대한 전송여부를 수정한다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#UpdateEmailConfig
    *
    * 메일전송유형
    * [정발행]
@@ -2139,9 +2162,10 @@ class TaxinvoiceController extends Controller
 
   /**
    * 팝빌 회원의 공인인증서를 등록하는 팝업 URL을 반환합니다.
-   * 반환된 URL의 유지시간은 30초이며, 제한된 시간 이후에는 정상적으로 처리되지 않습니다.
-   * -팝빌에 등록된 공인인증서가 유효하지 않은 경우 (비밀번호 변경, 인증서 재발급/갱신, 만료일 경과)
+   * - 반환된 URL의 유지시간은 30초이며, 제한된 시간 이후에는 정상적으로 처리되지 않습니다.
+   * - 팝빌에 등록된 공인인증서가 유효하지 않은 경우 (비밀번호 변경, 인증서 재발급/갱신, 만료일 경과)
    *  인증서를 재등록해야 정상적으로 전자세금계산서 발행이 가능합니다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetTaxCertURL
    */
   public function GetTaxCertURL(){
 
@@ -2166,6 +2190,7 @@ class TaxinvoiceController extends Controller
    * 팝빌에 등록되어 있는 공인인증서의 만료일자를 확인합니다.
    * - 공인인증서가 갱신/재발급/비밀번호 변경이 되는 경우 해당 인증서를
    *   재등록 하셔야 정상적으로 세금계산서를 발행할 수 있습니다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetCertificateExpireDate
    */
   public function GetCertificateExpireDate(){
 
@@ -2186,6 +2211,7 @@ class TaxinvoiceController extends Controller
 
   /**
    * 팝빌에 등록된 공인인증서의 유효성을 확인합니다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#CheckCertValidation
    */
   public function CheckCertValidation(){
 
@@ -2208,6 +2234,7 @@ class TaxinvoiceController extends Controller
   /**
    * 연동회원의 잔여포인트를 확인합니다.
    * - 과금방식이 파트너과금인 경우 파트너 잔여포인트(GetPartnerBalance API) 함수를 통해 확인하시기 바랍니다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetBalance
    */
   public function GetBalance(){
 
@@ -2229,6 +2256,7 @@ class TaxinvoiceController extends Controller
   /**
    * 팝빌 연동회원의 포인트충전 팝업 URL을 반환합니다.
    * 반환된 URL의 유지시간은 30초이며, 제한된 시간 이후에는 정상적으로 처리되지 않습니다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetChargeURL
    */
   public function GetChargeURL(){
 
@@ -2253,6 +2281,7 @@ class TaxinvoiceController extends Controller
   /**
    * 파트너의 잔여포인트를 확인합니다.
    * - 과금방식이 연동과금인 경우 연동회원 잔여포인트(GetBalance API)를 이용하시기 바랍니다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetPartnerBalance
    */
   public function GetPartnerBalance(){
 
@@ -2274,6 +2303,7 @@ class TaxinvoiceController extends Controller
   /**
    * 파트너 포인트 충전 팝업 URL을 반환합니다.
    * - 반환된 URL은 보안정책에 따라 30초의 유효시간을 갖습니다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetPartnerURL
    */
   public function GetPartnerURL(){
 
@@ -2297,6 +2327,7 @@ class TaxinvoiceController extends Controller
 
   /**
    * 전자세금계산서 발행단가를 확인합니다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetUnitCost
    */
   public function GetUnitCost(){
 
@@ -2316,6 +2347,7 @@ class TaxinvoiceController extends Controller
 
   /**
    * 전자세금계산서 API 서비스 과금정보를 확인합니다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetChargeInfo
    */
   public function GetChargeInfo(){
 
@@ -2336,6 +2368,7 @@ class TaxinvoiceController extends Controller
   /**
    * 해당 사업자의 파트너 연동회원 가입여부를 확인합니다.
    * - LinkID는 config/popbill.php 파일에 선언되어 있는 인증정보 입니다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#CheckIsMember
    */
   public function CheckIsMember(){
 
@@ -2360,6 +2393,7 @@ class TaxinvoiceController extends Controller
 
   /**
    * 팝빌 회원아이디 중복여부를 확인합니다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#CheckID
    */
   public function CheckID(){
 
@@ -2381,6 +2415,7 @@ class TaxinvoiceController extends Controller
 
   /**
    * 파트너의 연동회원으로 회원가입을 요청합니다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#JoinMember
    */
   public function JoinMember(){
 
@@ -2437,6 +2472,7 @@ class TaxinvoiceController extends Controller
 
   /**
    * 연동회원의 회사정보를 확인합니다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetCorpInfo
    */
   public function GetCorpInfo(){
 
@@ -2457,6 +2493,7 @@ class TaxinvoiceController extends Controller
 
   /**
    * 연동회원의 회사정보를 수정합니다
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#UpdateCorpInfo
    */
   public function UpdateCorpInfo(){
 
@@ -2496,6 +2533,7 @@ class TaxinvoiceController extends Controller
 
   /**
    * 연동회원의 담당자를 신규로 등록합니다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#RegistContact
    */
   public function RegistContact(){
 
@@ -2547,6 +2585,7 @@ class TaxinvoiceController extends Controller
 
   /**
    * 연동회원의 담당자 목록을 확인합니다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#ListContact
    */
   public function ListContact(){
 
@@ -2567,6 +2606,7 @@ class TaxinvoiceController extends Controller
 
   /**
    * 연동회원의 담당자 정보를 수정합니다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#UpdateContact
    */
   public function UpdateContact(){
 

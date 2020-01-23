@@ -40,6 +40,7 @@ class CashbillController extends Controller
   /**
    * 현금영수증 문서번호 중복여부를 확인합니다.
    * - 문서번호는 1~24자리로 숫자, 영문 '-', '_' 조합으로 사업자별로 중복되지 않도록 구성해야합니다.
+   * - https://docs.popbill.com/cashbill/phplaravel/api#CheckMgtKeyInUse
    */
   public function CheckMgtKeyInUse(){
 
@@ -66,8 +67,7 @@ class CashbillController extends Controller
   /**
    * 1건의 현금영수증을 [즉시발행]합니다.
    * - 발행일 기준 오후 5시 이전에 발행된 현금영수증은 다음날 오후 2시에 국세청 전송결과를 확인할 수 있습니다.
-   * - 현금영수증 국세청 전송 정책에 대한 정보는 "[현금영수증 API 연동매뉴얼] > 1.3. 국세청 전송정책"을 참조하시기 바랍니다.
-   * - 취소현금영수증 작성방법 안내 - http://blog.linkhub.co.kr/702
+   * - https://docs.popbill.com/cashbill/phplaravel/api#RegistIssue
    */
   public function RegistIssue(){
 
@@ -172,9 +172,7 @@ class CashbillController extends Controller
   /**
    * 1건의 현금영수증을 [임시저장]합니다.
    * - [임시저장] 상태의 현금영수증은 발행(Issue API)을 호출해야만 국세청에 전송됩니다.
-   * - 발행일 기준 오후 5시 이전에 발행된 현금영수증은 다음날 오후 2시에 국세청 전송결과를 확인할 수 있습니다.
-   * - 현금영수증 국세청 전송 정책에 대한 정보는 "[현금영수증 API 연동매뉴얼] > 1.3. 국세청 전송정책"을 참조하시기 바랍니다.
-   * - 취소현금영수증 작성방법 안내 - http://blog.linkhub.co.kr/702
+   * - https://docs.popbill.com/cashbill/phplaravel/api#Register
    */
   public function Register(){
 
@@ -270,8 +268,7 @@ class CashbillController extends Controller
   /**
    * 1건의 현금영수증을 [수정]합니다.
    * - [임시저장] 상태의 현금영수증만 수정할 수 있습니다.
-   * - 국세청에 신고된 현금영수증은 수정할 수 없으며, 취소 현금영수증을 발행하여 취소처리 할 수 있습니다.
-   * - 취소현금영수증 작성방법 안내 - http://blog.linkhub.co.kr/702
+   * - https://docs.popbill.com/cashbill/phplaravel/api#Update
    */
   public function Update(){
 
@@ -366,7 +363,7 @@ class CashbillController extends Controller
   /**
    * 1건의 [임시저장] 현금영수증을 [발행]합니다.
    * - 발행일 기준 오후 5시 이전에 발행된 현금영수증은 다음날 오후 2시에 국세청 전송결과를 확인할 수 있습니다.
-   * - 현금영수증 국세청 전송 정책에 대한 정보는 "[현금영수증 API 연동매뉴얼] > 1.3. 국세청 전송정책"을 참조하시기 바랍니다.
+   * - https://docs.popbill.com/cashbill/phplaravel/api#CBIssue
    */
   public function Issue(){
 
@@ -395,7 +392,7 @@ class CashbillController extends Controller
   /**
    * [발행완료] 상태의 현금영수증을 [발행취소]합니다.
    * - 발행취소는 국세청 전송전에만 가능합니다.
-   * - 발행취소된 형금영수증은 국세청에 전송되지 않습니다.
+   * - https://docs.popbill.com/cashbill/phplaravel/api#CancelIssue
    */
   public function CancelIssue(){
 
@@ -425,6 +422,7 @@ class CashbillController extends Controller
    * 1건의 현금영수증을 [삭제]합니다.
    * - 현금영수증을 삭제하면 사용된 문서번호(mgtKey)를 재사용할 수 있습니다.
    * - 삭제가능한 문서 상태 : [임시저장], [발행취소]
+   * - https://docs.popbill.com/cashbill/phplaravel/api#Delete
    */
   public function Delete(){
 
@@ -450,8 +448,7 @@ class CashbillController extends Controller
   /**
    * 1건의 취소현금영수증을 [즉시발행]합니다.
    * - 발행일 기준 오후 5시 이전에 발행된 현금영수증은 다음날 오후 2시에 국세청 전송결과를 확인할 수 있습니다.
-   * - 현금영수증 국세청 전송 정책에 대한 정보는 "[현금영수증 API 연동매뉴얼] > 1.3. 국세청 전송정책"을 참조하시기 바랍니다.
-   * - 취소현금영수증 작성방법 안내 - http://blog.linkhub.co.kr/702
+   * - https://docs.popbill.com/cashbill/phplaravel/api#RevokeRegistIssue
    */
   public function RevokeRegistIssue(){
 
@@ -483,7 +480,7 @@ class CashbillController extends Controller
   /**
    * 1건의 (부분)취소현금영수증을 [즉시발행]합니다.
    * - 발행일 기준 오후 5시 이전에 발행된 현금영수증은 다음날 오후 2시에 국세청 전송결과를 확인할 수 있습니다.
-   * - 현금영수증 국세청 전송 정책에 대한 정보는 "[현금영수증 API 연동매뉴얼] > 1.3. 국세청 전송정책"을 참조하시기 바랍니다.
+   * - https://docs.popbill.com/cashbill/phplaravel/api#RevokeRegistIssue
    */
   public function RevokeRegistIssue_part(){
 
@@ -544,9 +541,7 @@ class CashbillController extends Controller
   /**
    * 1건의 취소현금영수증을 [임시저장]합니다.
    * - [임시저장] 상태의 현금영수증은 발행(Issue API)을 호출해야만 국세청에 전송됩니다.
-   * - 발행일 기준 오후 5시 이전에 발행된 현금영수증은 다음날 오후 2시에 국세청 전송결과를 확인할 수 있습니다.
-   * - 현금영수증 국세청 전송 정책에 대한 정보는 "[현금영수증 API 연동매뉴얼] > 1.3. 국세청 전송정책"을 참조하시기 바랍니다.
-   * - 취소현금영수증 작성방법 안내 - http://blog.linkhub.co.kr/702
+   * - https://docs.popbill.com/cashbill/phplaravel/api#RevokeRegister
    */
   public function RevokeRegister(){
 
@@ -577,8 +572,7 @@ class CashbillController extends Controller
   /**
    * 1건의 (부분)취소현금영수증을 [임시저장]합니다.
    * - [임시저장] 상태의 현금영수증은 발행(Issue API)을 호출해야만 국세청에 전송됩니다.
-   * - 발행일 기준 오후 5시 이전에 발행된 현금영수증은 다음날 오후 2시에 국세청 전송결과를 확인할 수 있습니다.
-   * - 현금영수증 국세청 전송 정책에 대한 정보는 "[현금영수증 API 연동매뉴얼] > 1.3. 국세청 전송정책"을 참조하시기 바랍니다.
+   * - https://docs.popbill.com/cashbill/phplaravel/api#RevokeRegister
    */
   public function RevokeRegister_part(){
 
@@ -634,7 +628,7 @@ class CashbillController extends Controller
 
   /**
    * 1건의 현금영수증 상태/요약 정보를 확인합니다.
-   * - 응답항목에 대한 자세한 정보는 "[현금영수증 API 연동매뉴얼] > 4.2. 현금영수증 상태정보 구성"을 참조하시기 바랍니다.
+   * - https://docs.popbill.com/cashbill/phplaravel/api#GetInfo
    */
   public function GetInfo(){
 
@@ -658,7 +652,7 @@ class CashbillController extends Controller
 
   /**
    * 대량의 현금영수증 상태/요약 정보를 확인합니다. (최대 1000건)
-   * - 응답항목에 대한 자세한 정보는 "[현금영수증 API 연동매뉴얼] > 4.2. 현금영수증 상태정보 구성"을 참조하시기 바랍니다.
+   * - https://docs.popbill.com/cashbill/phplaravel/api#GetInfos
    */
   public function GetInfos(){
 
@@ -684,7 +678,7 @@ class CashbillController extends Controller
 
   /**
    * 현금영수증 1건의 상세정보를 조회합니다.
-   * - 응답항목에 대한 자세한 사항은 "[현금영수증 API 연동매뉴얼] > 4.1. 현금영수증 구성" 을 참조하시기 바랍니다.
+   * - https://docs.popbill.com/cashbill/phplaravel/api#GetDetailInfo
    */
   public function GetDetailInfo(){
     // 팝빌회원 사업자번호, "-"제외 10자리
@@ -707,7 +701,7 @@ class CashbillController extends Controller
 
   /**
    * 검색조건을 사용하여 현금영수증 목록을 조회합니다.
-   * - 응답항목에 대한 자세한 사항은 "[현금영수증 API 연동매뉴얼] > 4.2. 현금영수증 상태정보 구성" 을 참조하시기 바랍니다.
+   * - https://docs.popbill.com/cashbill/phplaravel/api#Search
    */
   public function Search(){
 
@@ -783,8 +777,7 @@ class CashbillController extends Controller
 
   /**
    * 현금영수증 상태 변경이력을 확인합니다.
-   * - 상태 변경이력 확인(GetLogs API) 응답항목에 대한 자세한 정보는
-   *   "[현금영수증 API 연동매뉴얼] > 3.3.5 상태 변경이력 확인" 을 참조하시기 바랍니다.
+   * - https://docs.popbill.com/cashbill/phplaravel/api#GetLogs
    */
   public function GetLogs(){
 
@@ -809,7 +802,7 @@ class CashbillController extends Controller
 
   /**
    * 팝빌 현금영수증 문서함 팝업 URL을 반환합니다.
-   * - 보안정책으로 인해 반환된 URL의 유효시간은 30초입니다.
+   * - https://docs.popbill.com/cashbill/phplaravel/api#GetURL
    */
   public function GetURL(){
 
@@ -838,6 +831,7 @@ class CashbillController extends Controller
   /**
    * 1건의 현금영수증 보기 팝업 URL을 반환합니다.
    * - 보안정책으로 인해 반환된 URL의 유효시간은 30초입니다.
+   * - https://docs.popbill.com/cashbill/phplaravel/api#GetPopUpURL
    */
   public function GetPopUpURL(){
 
@@ -861,6 +855,7 @@ class CashbillController extends Controller
   /**
    * 1건의 현금영수증 인쇄팝업 URL을 반환합니다.
    * - 보안정책으로 인해 반환된 URL의 유효시간은 30초입니다.
+   * - https://docs.popbill.com/cashbill/phplaravel/api#GetPrintURL
    */
   public function GetPrintURL(){
 
@@ -884,7 +879,8 @@ class CashbillController extends Controller
 
   /**
    * 대량의 현금영수증 인쇄팝업 URL을 반환합니다. (최대 100건)
-   * 보안정책으로 인해 반환된 URL의 유효시간은 30초입니다.
+   * - 보안정책으로 인해 반환된 URL의 유효시간은 30초입니다.
+   * - https://docs.popbill.com/cashbill/phplaravel/api#GetMassPrintURL
    */
   public function GetMassPrintURL(){
 
@@ -913,6 +909,7 @@ class CashbillController extends Controller
   /**
    * 공급받는자 메일링크 URL을 반환합니다.
    * - 메일링크 URL은 유효시간이 존재하지 않습니다.
+   * - https://docs.popbill.com/cashbill/phplaravel/api#GetMailURL
    */
   public function GetMailURL(){
 
@@ -936,7 +933,8 @@ class CashbillController extends Controller
 
   /**
    * 팝빌에 로그인 상태로 접근할 수 있는 팝업 URL을 반환합니다.
-   * 반환된 URL의 유지시간은 30초이며, 제한된 시간 이후에는 정상적으로 처리되지 않습니다.
+   * - 반환된 URL의 유지시간은 30초이며, 제한된 시간 이후에는 정상적으로 처리되지 않습니다.
+   * - https://docs.popbill.com/cashbill/phplaravel/api#GetAccessURL
    */
   public function GetAccessURL(){
 
@@ -959,6 +957,7 @@ class CashbillController extends Controller
 
   /**
    * 현금영수증 발행 안내메일을 재전송합니다.
+   * - https://docs.popbill.com/cashbill/phplaravel/api#SendEmail
    */
   public function SendEmail(){
 
@@ -988,6 +987,7 @@ class CashbillController extends Controller
    * 알림문자를 전송합니다. (단문/SMS- 한글 최대 45자)
    * - 알림문자 전송시 포인트가 차감됩니다. (전송실패시 환불처리)
    * - 전송내역 확인은 "팝빌 로그인" > [문자 팩스] > [문자] > [전송내역] 탭에서 전송결과를 확인할 수 있습니다.
+   * - https://docs.popbill.com/cashbill/phplaravel/api#SendSMS
    */
   public function SendSMS(){
 
@@ -1023,6 +1023,7 @@ class CashbillController extends Controller
    * 현금영수증을 팩스전송합니다.
    * - 팩스 전송 요청시 포인트가 차감됩니다. (전송실패시 환불처리)
    * - 전송내역 확인은 "팝빌 로그인" > [문자 팩스] > [팩스] > [전송내역] 메뉴에서 전송결과를 확인할 수 있습니다.
+   * - https://docs.popbill.com/cashbill/phplaravel/api#SendFAX
    */
   public function SendFAX(){
 
@@ -1052,6 +1053,7 @@ class CashbillController extends Controller
 
   /**
    * 현금영수증 관련 메일전송 항목에 대한 전송여부를 목록을 반환한다.
+   * - https://docs.popbill.com/cashbill/phplaravel/api#ListEmailConfig
    */
   public function ListEmailConfig(){
 
@@ -1073,6 +1075,7 @@ class CashbillController extends Controller
 
   /**
    * 현금영수증 관련 메일전송 항목에 대한 전송여부를 수정합니다.
+   * - https://docs.popbill.com/cashbill/phplaravel/api#UpdateEmailConfig
    *
    * 메일전송유형
    * CSH_ISSUE : 고객에게 현금영수증이 발행 되었음을 알려주는 메일 입니다.
@@ -1104,6 +1107,7 @@ class CashbillController extends Controller
   /**
    * 연동회원의 잔여포인트를 확인합니다.
    * - 과금방식이 파트너과금인 경우 파트너 잔여포인트(GetPartnerBalance API)를 통해 확인하시기 바랍니다.
+   * - https://docs.popbill.com/cashbill/phplaravel/api#GetBalance
    */
   public function GetBalance(){
 
@@ -1125,7 +1129,8 @@ class CashbillController extends Controller
 
   /**
    * 팝빌 연동회원의 포인트충전 팝업 URL을 반환합니다.
-   * 반환된 URL의 유지시간은 30초이며, 제한된 시간 이후에는 정상적으로 처리되지 않습니다.
+   * - 반환된 URL의 유지시간은 30초이며, 제한된 시간 이후에는 정상적으로 처리되지 않습니다.
+   * - https://docs.popbill.com/cashbill/phplaravel/api#GetChargeURL
    */
   public function GetChargeURL(){
 
@@ -1149,6 +1154,7 @@ class CashbillController extends Controller
   /**
    * 파트너의 잔여포인트를 확인합니다.
    * - 과금방식이 연동과금인 경우 연동회원 잔여포인트(GetBalance API)를 이용하시기 바랍니다.
+   * - https://docs.popbill.com/cashbill/phplaravel/api#GetPartnerBalance
    */
   public function GetPartnerBalance(){
 
@@ -1170,6 +1176,7 @@ class CashbillController extends Controller
   /**
    * 파트너 포인트 충전 팝업 URL을 반환합니다.
    * - 반환된 URL은 보안정책에 따라 30초의 유효시간을 갖습니다.
+   * - https://docs.popbill.com/cashbill/phplaravel/api#GetPartnerURL
    */
   public function GetPartnerURL(){
 
@@ -1192,6 +1199,7 @@ class CashbillController extends Controller
 
   /**
    * 현금영수증 발행단가를 확인합니다.
+   * - https://docs.popbill.com/cashbill/phplaravel/api#GetUnitCost
    */
   public function GetUnitCost(){
 
@@ -1212,6 +1220,7 @@ class CashbillController extends Controller
 
   /**
    * 현금영수증 API 서비스 과금정보를 확인합니다.
+   * - https://docs.popbill.com/cashbill/phplaravel/api#GetChargeInfo
    */
   public function GetChargeInfo(){
 
@@ -1235,6 +1244,7 @@ class CashbillController extends Controller
 
   /**
    * 해당 사업자의 파트너 연동회원 가입여부를 확인합니다.
+   * - https://docs.popbill.com/cashbill/phplaravel/api#CheckIsMember
    */
   public function CheckIsMember(){
 
@@ -1259,6 +1269,7 @@ class CashbillController extends Controller
 
   /**
    * 팝빌 회원아이디 중복여부를 확인합니다.
+   * - https://docs.popbill.com/cashbill/phplaravel/api#CheckID
    */
   public function CheckID(){
 
@@ -1280,6 +1291,7 @@ class CashbillController extends Controller
 
   /**
    * 파트너의 연동회원으로 회원가입을 요청합니다.
+   * - https://docs.popbill.com/cashbill/phplaravel/api#JoinMember
    */
   public function JoinMember(){
 
@@ -1336,6 +1348,7 @@ class CashbillController extends Controller
 
   /**
    * 연동회원의 회사정보를 확인합니다.
+   * - https://docs.popbill.com/cashbill/phplaravel/api#GetCorpInfo
    */
   public function GetCorpInfo(){
 
@@ -1356,6 +1369,7 @@ class CashbillController extends Controller
 
   /**
    * 연동회원의 회사정보를 수정합니다
+   * - https://docs.popbill.com/cashbill/phplaravel/api#UpdateCorpInfo
    */
   public function UpdateCorpInfo(){
 
@@ -1395,6 +1409,7 @@ class CashbillController extends Controller
 
   /**
    * 연동회원의 담당자를 신규로 등록합니다.
+   * - https://docs.popbill.com/cashbill/phplaravel/api#RegistContact
    */
   public function RegistContact(){
 
@@ -1448,6 +1463,7 @@ class CashbillController extends Controller
 
   /**
    * 연동회원의 담당자 목록을 확인합니다.
+   * - https://docs.popbill.com/cashbill/phplaravel/api#ListContact
    */
   public function ListContact(){
 
@@ -1468,6 +1484,7 @@ class CashbillController extends Controller
 
   /**
    * 연동회원의 담당자 정보를 수정합니다.
+   * - https://docs.popbill.com/cashbill/phplaravel/api#UpdateContact
    */
   public function UpdateContact(){
 

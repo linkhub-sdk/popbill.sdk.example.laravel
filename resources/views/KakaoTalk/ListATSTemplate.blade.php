@@ -14,7 +14,7 @@
           <fieldset class="fieldset2">
             <legend>알림톡 템플릿 정보 [{{$index+1}}]</legend>
     				<ul>
-                <li> plusFriendID (플러스친구 아이디) : {{ $object->plusFriendID }} </li>
+                <li> plusFriendID (카카오톡채널 아이디) : {{ $object->plusFriendID }} </li>
                 <li> templateCode (템플릿 코드) : {{ $object->templateCode }} </li>
                 <li> templateName (템플릿 제목) : {{ $object->templateName }} </li>
                 <li> template (템플릿 내용) : {{ $object->template }} </li>

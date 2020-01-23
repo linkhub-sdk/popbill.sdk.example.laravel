@@ -39,9 +39,8 @@ class HTTaxinvoiceController extends Controller
 
   /**
    * 전자세금계산서 매출/매입 내역 수집을 요청합니다
-   * - 홈택스연동 프로세스는 "[홈택스연동(전자세금계산서계산서) API 연동매뉴얼] >
-   *   1.1. 홈택스연동(전자세금계산서) API 구성" 을 참고하시기 바랍니다.
    * - 수집 요청후 반환받은 작업아이디(JobID)의 유효시간은 1시간 입니다.
+   * - https://docs.popbill.com/httaxinvoice/phplaravel/api#RequestJob
    */
   public function RequestJob(){
 
@@ -55,10 +54,10 @@ class HTTaxinvoiceController extends Controller
     $DType = 'S';
 
     // 시작일자, 형식(yyyyMMdd)
-    $SDate = '20190901';
+    $SDate = '20200101';
 
     // 종료일자, 형식(yyyyMMdd)
-    $EDate = '20191231';
+    $EDate = '20200131';
 
     try {
         $jobID = $this->PopbillHTTaxinvoice->RequestJob($testCorpNum, $TIKeyType, $DType, $SDate, $EDate);
@@ -74,8 +73,7 @@ class HTTaxinvoiceController extends Controller
 
   /**
    * 수집 요청 상태를 확인합니다.
-   * - 응답항목 관한 정보는 "[홈택스연동 (전자세금계산서계산서) API 연동매뉴얼] >
-   *   3.1.2. GetJobState(수집 상태 확인)" 을 참고하시기 바랍니다.
+   * - https://docs.popbill.com/httaxinvoice/phplaravel/api#GetJobState
    */
   public function GetJobState(){
 
@@ -101,8 +99,7 @@ class HTTaxinvoiceController extends Controller
   /**
    * 수집 요청건들에 대한 상태 목록을 확인합니다.
    * - 수집 요청 작업아이디(JobID)의 유효시간은 1시간 입니다.
-   * - 응답항목에 관한 정보는 "[홈택스 전자(세금)계산서 연계 API 연동매뉴얼]
-   *   > 3.2.3. ListActiveJob (수집 상태 목록 확인)" 을 참고하시기 바랍니다.
+   * - https://docs.popbill.com/httaxinvoice/phplaravel/api#ListActiveJob
    */
   public function ListActiveJob(){
 
@@ -122,8 +119,7 @@ class HTTaxinvoiceController extends Controller
 
   /**
    * 전자세금계산서 매입/매출 내역의 수집 결과를 조회합니다.
-   * - 응답항목에 관한 정보는 "[홈택스연동 (전자세금계산서계산서) API 연동매뉴얼] >
-   *   3.2.1. Search(수집 결과 조회)" 을 참고하시기 바랍니다.
+   * - https://docs.popbill.com/httaxinvoice/phplaravel/api#Search
    */
   public function Search(){
 
@@ -193,8 +189,7 @@ class HTTaxinvoiceController extends Controller
 
   /**
    * 전자세금계산서 매입/매출 내역의 수집 결과 요약정보를 조회합니다.
-   * - 응답항목에 관한 정보는 "[홈택스연동 (전자세금계산서계산서) API 연동매뉴얼] >
-   *   3.2.2. Summary(수집 결과 요약정보 조회)" 을 참고하시기 바랍니다.
+   * - https://docs.popbill.com/httaxinvoice/phplaravel/api#Summary
    */
   public function Summary(){
 
@@ -253,8 +248,7 @@ class HTTaxinvoiceController extends Controller
 
   /**
    * 전자세금계산서 1건의 상세정보를 확인합니다.
-   * - 응답항목에 관한 정보는 "[홈택스연동 (전자세금계산서계산서) API 연동매뉴얼] >
-   *   4.1.2. GetTaxinvoice 응답전문 구성" 을 참고하시기 바랍니다.
+   * - https://docs.popbill.com/httaxinvoice/phplaravel/api#GetTaxinvoice
    */
   public function GetTaxinvoice(){
 
@@ -277,8 +271,7 @@ class HTTaxinvoiceController extends Controller
 
   /**
    * XML 형식의 전자세금계산서 상세정보를 확인합니다.
-   * - 응답항목에 관한 정보는 "[홈택스연동 (전자세금계산서계산서) API 연동매뉴얼] >
-   *   3.2.4. GetXML(상세정보 확인 - XML)" 을 참고하시기 바랍니다.
+   * - https://docs.popbill.com/httaxinvoice/phplaravel/api#GetXML
    */
   public function GetXML(){
 
@@ -301,7 +294,7 @@ class HTTaxinvoiceController extends Controller
 
   /**
    * 홈택스 전자세금계산서 팝업 URL을 반환합니다.
-   * - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
+   * - https://docs.popbill.com/httaxinvoice/phplaravel/api#GetPopUpURL
    */
   public function GetPopUpURL(){
 
@@ -325,6 +318,7 @@ class HTTaxinvoiceController extends Controller
   /**
    * 홈택스 전자세금계산서 인쇄 URL을 반환합니다.
    * - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
+   * - https://docs.popbill.com/httaxinvoice/phplaravel/api#GetPrintURL
    */
   public function GetPrintURL(){
 
@@ -347,8 +341,9 @@ class HTTaxinvoiceController extends Controller
 
   /**
    * 홈택스연동 인증관리를 위한 URL을 반환합니다.
-   * 인증방식에는 부서사용자/공인인증서 인증 방식이 있습니다.
+   * - 인증방식에는 부서사용자/공인인증서 인증 방식이 있습니다.
    * - 반환된 URL은 보안정책에 따라 30초의 유효시간을 갖습니다.
+   * - https://docs.popbill.com/httaxinvoice/phplaravel/api#GetCertificatePopUpURL
    */
   public function GetCertificatePopUpURL(){
 
@@ -368,6 +363,7 @@ class HTTaxinvoiceController extends Controller
 
   /**
    * 팝빌에 등록된 홈택스 공인인증서의 만료일자를 반환합니다.
+   * - https://docs.popbill.com/httaxinvoice/phplaravel/api#GetCertificateExpireDate
    */
   public function GetCertificateExpireDate(){
 
@@ -387,6 +383,7 @@ class HTTaxinvoiceController extends Controller
 
   /**
    * 팝빌에 등록된 공인인증서의 홈택스 로그인을 테스트합니다.
+   * - https://docs.popbill.com/httaxinvoice/phplaravel/api#CheckCertValidation
    */
   public function CheckCertValidation(){
 
@@ -407,7 +404,8 @@ class HTTaxinvoiceController extends Controller
   }
 
   /**
-   *  홈택스 전자세금계산서 부서사용자 계정을 등록한다.
+   * 홈택스 전자세금계산서 부서사용자 계정을 등록한다.
+   * - https://docs.popbill.com/httaxinvoice/phplaravel/api#RegistDeptUser
    */
   public function RegistDeptUser(){
 
@@ -434,6 +432,7 @@ class HTTaxinvoiceController extends Controller
 
   /**
    * 팝빌에 등록된 전자세금계산서 부서사용자 아이디를 확인합니다.
+   * - https://docs.popbill.com/httaxinvoice/phplaravel/api#CheckDeptUser
    */
   public function CheckDeptUser(){
 
@@ -455,6 +454,7 @@ class HTTaxinvoiceController extends Controller
 
   /**
    * 팝빌에 등록된 전자세금계산서 부서사용자 계정정보를 이용하여 홈택스 로그인을 테스트합니다.
+   * - https://docs.popbill.com/httaxinvoice/phplaravel/api#CheckLoginDeptUser
    */
   public function CheckLoginDeptUser(){
 
@@ -476,6 +476,7 @@ class HTTaxinvoiceController extends Controller
 
   /**
    * 팝빌에 등록된 전자세금계산서 부서사용자 계정정보를 삭제합니다.
+   * - https://docs.popbill.com/httaxinvoice/phplaravel/api#DeleteDeptUser
    */
   public function DeleteDeptUser(){
 
@@ -498,6 +499,7 @@ class HTTaxinvoiceController extends Controller
   /**
    * 연동회원의 잔여포인트를 확인합니다.
    * - 과금방식이 파트너과금인 경우 파트너 잔여포인트(GetPartnerBalance API) 를 통해 확인하시기 바랍니다.
+   * - https://docs.popbill.com/httaxinvoice/phplaravel/api#GetBalance
    */
   public function GetBalance(){
 
@@ -518,6 +520,7 @@ class HTTaxinvoiceController extends Controller
   /**
    * 팝빌 연동회원의 포인트충전 팝업 URL을 반환합니다.
    * - 반환된 URL은 보안정책에 따라 30초의 유효시간을 갖습니다.
+   * - https://docs.popbill.com/httaxinvoice/phplaravel/api#GetChargeURL
    */
   public function GetChargeURL(){
 
@@ -540,6 +543,7 @@ class HTTaxinvoiceController extends Controller
   /**
    * 파트너의 잔여포인트를 확인합니다.
    * - 과금방식이 연동과금인 경우 연동회원 잔여포인트(GetBalance API)를 이용하시기 바랍니다.
+   * - https://docs.popbill.com/httaxinvoice/phplaravel/api#GetPartnerBalance
    */
   public function GetPartnerBalance(){
 
@@ -560,6 +564,7 @@ class HTTaxinvoiceController extends Controller
   /**
    * 파트너 포인트 충전 팝업 URL을 반환합니다.
    * - 반환된 URL은 보안정책에 따라 30초의 유효시간을 갖습니다.
+   * - https://docs.popbill.com/httaxinvoice/phplaravel/api#GetPartnerURL
    */
   public function GetPartnerURL(){
 
@@ -582,6 +587,7 @@ class HTTaxinvoiceController extends Controller
 
   /**
    * 홈택스연동 API 서비스 과금정보를 확인합니다.
+   * - https://docs.popbill.com/httaxinvoice/phplaravel/api#GetChargeInfo
    */
 
   public function GetChargeInfo(){
@@ -606,6 +612,7 @@ class HTTaxinvoiceController extends Controller
   /**
    * 정액제 서비스 신청 URL을 반환합니다.
    * - 반환된 URL은 보안정책에 따라 30초의 유효시간을 갖습니다.
+   * - https://docs.popbill.com/httaxinvoice/phplaravel/api#GetFlatRatePopUpURL
    */
   public function GetFlatRatePopUpURL(){
 
@@ -625,6 +632,7 @@ class HTTaxinvoiceController extends Controller
 
   /**
    * 연동회원의 정액제 서비스 이용상태를 확인합니다.
+   * - https://docs.popbill.com/httaxinvoice/phplaravel/api#GetFlatRateState
    */
   public function GetFlatRateState(){
 
@@ -644,6 +652,7 @@ class HTTaxinvoiceController extends Controller
 
   /**
    * 해당 사업자의 파트너 연동회원 가입여부를 확인합니다.
+   * - https://docs.popbill.com/httaxinvoice/phplaravel/api#CheckIsMember
    */
   public function CheckIsMember(){
 
@@ -669,6 +678,7 @@ class HTTaxinvoiceController extends Controller
 
   /**
    * 팝빌 회원아이디 중복여부를 확인합니다.
+   * - https://docs.popbill.com/httaxinvoice/phplaravel/api#CheckID
    */
   public function CheckID(){
 
@@ -690,6 +700,7 @@ class HTTaxinvoiceController extends Controller
 
   /**
    * 파트너의 연동회원으로 회원가입을 요청합니다.
+   * - https://docs.popbill.com/httaxinvoice/phplaravel/api#JoinMember
    */
   public function JoinMember(){
 
@@ -746,7 +757,8 @@ class HTTaxinvoiceController extends Controller
 
   /**
    * 팝빌에 로그인 상태로 접근할 수 있는 팝업 URL을 반환합니다.
-   * 반환된 URL의 유지시간은 30초이며, 제한된 시간 이후에는 정상적으로 처리되지 않습니다.
+   * - 반환된 URL의 유지시간은 30초이며, 제한된 시간 이후에는 정상적으로 처리되지 않습니다.
+   * - https://docs.popbill.com/httaxinvoice/phplaravel/api#GetAccessURL
    */
   public function GetAccessURL(){
 
@@ -768,6 +780,7 @@ class HTTaxinvoiceController extends Controller
   }
   /**
    * 연동회원의 회사정보를 확인합니다.
+   * - https://docs.popbill.com/httaxinvoice/phplaravel/api#GetCorpInfo
    */
   public function GetCorpInfo(){
 
@@ -788,6 +801,7 @@ class HTTaxinvoiceController extends Controller
 
   /**
    * 연동회원의 회사정보를 수정합니다
+   * - https://docs.popbill.com/httaxinvoice/phplaravel/api#UpdateCorpInfo
    */
   public function UpdateCorpInfo(){
 
@@ -827,6 +841,7 @@ class HTTaxinvoiceController extends Controller
 
   /**
    * 연동회원의 담당자를 신규로 등록합니다.
+   * - https://docs.popbill.com/httaxinvoice/phplaravel/api#RegistContact
    */
   public function RegistContact(){
 
@@ -878,6 +893,7 @@ class HTTaxinvoiceController extends Controller
 
   /**
    * 연동회원의 담당자 목록을 확인합니다.
+   * - https://docs.popbill.com/httaxinvoice/phplaravel/api#ListContact
    */
   public function ListContact(){
 
@@ -898,6 +914,7 @@ class HTTaxinvoiceController extends Controller
 
   /**
    * 연동회원의 담당자 정보를 수정합니다.
+   * - https://docs.popbill.com/httaxinvoice/phplaravel/api#UpdateContact
    */
   public function UpdateContact(){
 

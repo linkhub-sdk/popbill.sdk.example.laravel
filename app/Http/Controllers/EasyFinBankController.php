@@ -20,7 +20,7 @@ class EasyFinBankController extends Controller
     // 통신방식 설정
     define('LINKHUB_COMM_MODE', config('popbill.LINKHUB_COMM_MODE'));
 
-    // 홈택스 전자세금계산서 서비스 클래스 초기화
+    // 계좌조회 서비스 클래스 초기화
     $this->PopbillEasyFinBank = new PopbillEasyFinBank(config('popbill.LinkID'), config('popbill.SecretKey'));
 
     // 연동환경 설정값, 개발용(true), 상업용(false)
@@ -39,6 +39,7 @@ class EasyFinBankController extends Controller
   /*
    * 은행 계좌 관리 팝업 URL을 반환한다.
    * - 반환된 URL은 보안정책에 따라 30초의 유효시간을 갖습니다.
+   * - https://docs.popbill.com/easyfinbank/phplaravel/api#GetBankAccountMgtURL
    */
   public function GetBankAccountMgtURL(){
 
@@ -58,6 +59,7 @@ class EasyFinBankController extends Controller
 
   /**
    * 은행 계좌목록을 확인합니다.
+   * - https://docs.popbill.com/easyfinbank/phplaravel/api#ListBankAccount
    */
   public function ListBankAccount(){
 
@@ -78,6 +80,7 @@ class EasyFinBankController extends Controller
   /*
    * 계좌 거래내역 수집을 요청한다.
    * - 검색기간은 현재일 기준 90일 이내로만 요청할 수 있다.
+   * - https://docs.popbill.com/easyfinbank/phplaravel/api#RequestJob
    */
   public function RequestJob(){
 
@@ -109,8 +112,7 @@ class EasyFinBankController extends Controller
 
   /**
    * 수집 요청 상태를 확인합니다.
-   * - 응답항목 관한 정보는 "[홈택스연동 (전자세금계산서계산서) API 연동매뉴얼] >
-   *   3.1.2. GetJobState(수집 상태 확인)" 을 참고하시기 바랍니다.
+   * - https://docs.popbill.com/easyfinbank/phplaravel/api#GetJobState
    */
   public function GetJobState(){
 
@@ -135,6 +137,7 @@ class EasyFinBankController extends Controller
   /**
    * 수집 요청건들에 대한 상태 목록을 확인합니다.
    * - 수집 요청 작업아이디(JobID)의 유효시간은 1시간 입니다.
+   * - https://docs.popbill.com/easyfinbank/phplaravel/api#ListActiveJob
    */
   public function ListActiveJob(){
 
@@ -155,6 +158,7 @@ class EasyFinBankController extends Controller
 
   /*
   * 수집이 완료된 계좌 거래내역을 조회한다.
+  * - https://docs.popbill.com/easyfinbank/phplaravel/api#Search
   */
   public function Search(){
 
@@ -193,6 +197,7 @@ class EasyFinBankController extends Controller
 
   /*
   * 수집이 완료된 계좌 거래내역 요약정보를 조회한다.
+  * - https://docs.popbill.com/easyfinbank/phplaravel/api#Summary
   */
   public function Summary(){
 
@@ -221,6 +226,7 @@ class EasyFinBankController extends Controller
 
   /**
    * 거래내역의 메모를 저장합니다.
+   * - https://docs.popbill.com/easyfinbank/phplaravel/api#SaveMemo
    */
   public function SaveMemo(){
 
@@ -248,6 +254,7 @@ class EasyFinBankController extends Controller
 
   /**
    * 계좌조회 API 서비스 과금정보를 확인합니다.
+   * - https://docs.popbill.com/easyfinbank/phplaravel/api#GetChargeInfo
    */
 
   public function GetChargeInfo(){
@@ -272,6 +279,7 @@ class EasyFinBankController extends Controller
   /**
    * 정액제 서비스 신청 URL을 반환합니다.
    * - 반환된 URL은 보안정책에 따라 30초의 유효시간을 갖습니다.
+   * - https://docs.popbill.com/easyfinbank/phplaravel/api#GetFlatRatePopUpURL
    */
   public function GetFlatRatePopUpURL(){
 
@@ -291,6 +299,7 @@ class EasyFinBankController extends Controller
 
   /**
    * 연동회원의 정액제 서비스 이용상태를 확인합니다.
+   * - https://docs.popbill.com/easyfinbank/phplaravel/api#GetFlatRateState
    */
   public function GetFlatRateState(){
 
@@ -317,6 +326,7 @@ class EasyFinBankController extends Controller
   /**
    * 연동회원의 잔여포인트를 확인합니다.
    * - 과금방식이 파트너과금인 경우 파트너 잔여포인트(GetPartnerBalance API) 를 통해 확인하시기 바랍니다.
+   * - https://docs.popbill.com/easyfinbank/phplaravel/api#GetBalance
    */
   public function GetBalance(){
 
@@ -337,6 +347,7 @@ class EasyFinBankController extends Controller
   /**
    * 팝빌 연동회원의 포인트충전 팝업 URL을 반환합니다.
    * - 반환된 URL은 보안정책에 따라 30초의 유효시간을 갖습니다.
+   * - https://docs.popbill.com/easyfinbank/phplaravel/api#GetChargeURL
    */
   public function GetChargeURL(){
 
@@ -359,6 +370,7 @@ class EasyFinBankController extends Controller
   /**
    * 파트너의 잔여포인트를 확인합니다.
    * - 과금방식이 연동과금인 경우 연동회원 잔여포인트(GetBalance API)를 이용하시기 바랍니다.
+   * - https://docs.popbill.com/easyfinbank/phplaravel/api#GetPartnerBalance
    */
   public function GetPartnerBalance(){
 
@@ -379,6 +391,7 @@ class EasyFinBankController extends Controller
   /**
    * 파트너 포인트 충전 팝업 URL을 반환합니다.
    * - 반환된 URL은 보안정책에 따라 30초의 유효시간을 갖습니다.
+   * - https://docs.popbill.com/easyfinbank/phplaravel/api#GetPartnerURL
    */
   public function GetPartnerURL(){
 
@@ -401,6 +414,7 @@ class EasyFinBankController extends Controller
 
   /**
    * 해당 사업자의 파트너 연동회원 가입여부를 확인합니다.
+   * - https://docs.popbill.com/easyfinbank/phplaravel/api#CheckIsMember
    */
   public function CheckIsMember(){
 
@@ -426,6 +440,7 @@ class EasyFinBankController extends Controller
 
   /**
    * 팝빌 회원아이디 중복여부를 확인합니다.
+   * - https://docs.popbill.com/easyfinbank/phplaravel/api#CheckID
    */
   public function CheckID(){
 
@@ -447,6 +462,7 @@ class EasyFinBankController extends Controller
 
   /**
    * 파트너의 연동회원으로 회원가입을 요청합니다.
+   * - https://docs.popbill.com/easyfinbank/phplaravel/api#JoinMember
    */
   public function JoinMember(){
 
@@ -503,7 +519,8 @@ class EasyFinBankController extends Controller
 
   /**
    * 팝빌에 로그인 상태로 접근할 수 있는 팝업 URL을 반환합니다.
-   * 반환된 URL의 유지시간은 30초이며, 제한된 시간 이후에는 정상적으로 처리되지 않습니다.
+   * - 반환된 URL의 유지시간은 30초이며, 제한된 시간 이후에는 정상적으로 처리되지 않습니다.
+   * - https://docs.popbill.com/easyfinbank/phplaravel/api#GetAccessURL
    */
   public function GetAccessURL(){
 
@@ -525,6 +542,7 @@ class EasyFinBankController extends Controller
   }
   /**
    * 연동회원의 회사정보를 확인합니다.
+   * - https://docs.popbill.com/easyfinbank/phplaravel/api#GetCorpInfo
    */
   public function GetCorpInfo(){
 
@@ -545,6 +563,7 @@ class EasyFinBankController extends Controller
 
   /**
    * 연동회원의 회사정보를 수정합니다
+   * - https://docs.popbill.com/easyfinbank/phplaravel/api#UpdateCorpInfo
    */
   public function UpdateCorpInfo(){
 
@@ -584,6 +603,7 @@ class EasyFinBankController extends Controller
 
   /**
    * 연동회원의 담당자를 신규로 등록합니다.
+   * - https://docs.popbill.com/easyfinbank/phplaravel/api#RegistContact
    */
   public function RegistContact(){
 
@@ -635,6 +655,7 @@ class EasyFinBankController extends Controller
 
   /**
    * 연동회원의 담당자 목록을 확인합니다.
+   * - https://docs.popbill.com/easyfinbank/phplaravel/api#ListContact
    */
   public function ListContact(){
 
@@ -655,6 +676,7 @@ class EasyFinBankController extends Controller
 
   /**
    * 연동회원의 담당자 정보를 수정합니다.
+   * - https://docs.popbill.com/easyfinbank/phplaravel/api#UpdateContact
    */
   public function UpdateContact(){
 

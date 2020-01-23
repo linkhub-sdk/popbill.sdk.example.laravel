@@ -38,7 +38,8 @@ class FaxController extends Controller
 
   /**
    * 팩스 발신번호 관리 팝업 URL을 반합니다.
-   * 반환된 URL의 유지시간은 30초이며, 제한된 시간 이후에는 정상적으로 처리되지 않습니다.
+   * - 반환된 URL의 유지시간은 30초이며, 제한된 시간 이후에는 정상적으로 처리되지 않습니다.
+   * - https://docs.popbill.com/fax/phplaravel/api#GetSenderNumberMgtURL
    */
   public function GetSenderNumberMgtURL(){
 
@@ -60,6 +61,7 @@ class FaxController extends Controller
 
   /**
    * 팩스 발신번호 목록을 반환합니다.
+   * - https://docs.popbill.com/fax/phplaravel/api#GetSenderNumberList
    */
   public function GetSenderNumberList(){
 
@@ -80,7 +82,7 @@ class FaxController extends Controller
 
   /**
    * 팩스를 전송합니다. (전송할 파일 개수는 최대 20개까지 가능)
-   * - 팩스전송 문서 파일포맷 안내 : http://blog.linkhub.co.kr/2561
+   * - https://docs.popbill.com/fax/phplaravel/api#SendFAX
    */
   public function SendFAX(){
 
@@ -135,7 +137,7 @@ class FaxController extends Controller
 
   /**
   * [대량전송] 팩스를 전송합니다. (전송할 파일 개수는 최대 20개까지 가능)
-  * - 팩스전송 문서 파일포맷 안내 : http://blog.linkhub.co.kr/2561
+  * - https://docs.popbill.com/fax/phplaravel/api#SendFAX
   */
   public function SendFAX_Multi(){
 
@@ -200,6 +202,7 @@ class FaxController extends Controller
    * 팩스를 재전송합니다.
    * - 접수일로부터 60일이 경과된 경우 재전송할 수 없습니다.
    * - 팩스 재전송 요청시 포인트가 차감됩니다. (전송실패시 환불처리)
+   * - https://docs.popbill.com/fax/phplaravel/api#ResendFAX
    */
   public function ResendFAX(){
 
@@ -258,6 +261,7 @@ class FaxController extends Controller
    * 전송요청번호(requestNum)을 할당한 팩스를 재전송합니다.
    * - 접수일로부터 60일이 경과된 경우 재전송할 수 없습니다.
    * - 팩스 재전송 요청시 포인트가 차감됩니다. (전송실패시 환불처리)
+   * - https://docs.popbill.com/fax/phplaravel/api#ResendFAXRN
    */
   public function ResendFAXRN(){
 
@@ -317,6 +321,7 @@ class FaxController extends Controller
    * [대량전송] 전송요청번호(requestNum)을 할당한 팩스를 재전송합니다.
    * - 접수일로부터 60일이 경과된 경우 재전송할 수 없습니다.
    * - 팩스 재전송 요청시 포인트가 차감됩니다. (전송실패시 환불처리)
+   * - https://docs.popbill.com/fax/phplaravel/api#ResendFAX
    */
   public function ResendFAX_Multi(){
 
@@ -380,6 +385,7 @@ class FaxController extends Controller
    * [대량전송] 전송요청번호(requestNum)을 할당한 팩스를 재전송합니다.
    * - 접수일로부터 60일이 경과된 경우 재전송할 수 없습니다.
    * - 팩스 재전송 요청시 포인트가 차감됩니다. (전송실패시 환불처리)
+   * - https://docs.popbill.com/fax/phplaravel/api#ResendFAXRN
    */
   public function ResendFAXRN_Multi(){
 
@@ -441,6 +447,7 @@ class FaxController extends Controller
   /**
    * 팩스전송요청시 발급받은 접수번호(receiptNum)로 팩스 예약전송건을 취소합니다.
    * - 예약전송 취소는 예약전송시간 10분전까지 가능하며, 팩스변환 이후 가능합니다.
+   * - https://docs.popbill.com/fax/phplaravel/api#CancelReserve
    */
   public function CancelReserve(){
 
@@ -466,6 +473,7 @@ class FaxController extends Controller
   /**
    * 팩스전송요청시 할당한 전송요청번호(requestNum)로 팩스 예약전송건을 취소합니다.
    * - 예약전송 취소는 예약전송시간 10분전까지 가능하며, 팩스변환 이후 가능합니다.
+   * - https://docs.popbill.com/fax/phplaravel/api#CancelReserveRN
    */
   public function CancelReserveRN(){
 
@@ -489,7 +497,7 @@ class FaxController extends Controller
 
   /**
    * 팩스전송요청시 발급받은 접수번호(receiptNum)로 전송결과를 확인합니다
-   * - 응답항목에 대한 자세한 사항은 "[팩스 API 연동매뉴얼] >  3.3.1 GetFaxDetail (전송내역 및 전송상태 확인)을 참조하시기 바랍니다.
+   * - https://docs.popbill.com/fax/phplaravel/api#GetFaxDetail
    */
   public function GetFaxDetail(){
 
@@ -512,7 +520,7 @@ class FaxController extends Controller
 
   /**
    * 팩스전송요청시 할당한 전송요청번호(requestNum)으로 전송결과를 확인합니다
-   * - 응답항목에 대한 자세한 사항은 "[팩스 API 연동매뉴얼] >  3.3.2 GetFaxDetailRN (전송내역 및 전송상태 확인 - 요청번호 할당)을 참조하시기 바랍니다.
+   * - https://docs.popbill.com/fax/phplaravel/api#GetFaxDetailRN
    */
   public function GetFaxDetailRN(){
 
@@ -536,6 +544,7 @@ class FaxController extends Controller
   /**
    * 검색조건을 사용하여 팩스전송 내역을 조회합니다.
    * - 최대 검색기간 : 6개월 이내
+   * - https://docs.popbill.com/fax/phplaravel/api#Search
    */
   public function Search(){
 
@@ -543,10 +552,10 @@ class FaxController extends Controller
     $testCorpNum = '1234567890';
 
     // 검색시작일자
-    $SDate = '20181201';
+    $SDate = '20200101';
 
     // 검색종료일자
-    $EDate = '20190101';
+    $EDate = '20200131';
 
     // 전송상태값 배열, 1-대기, 2-성공, 3-실패, 4-취소
     $State = array(1, 2, 3, 4);
@@ -583,7 +592,8 @@ class FaxController extends Controller
 
   /**
    * 팩스 전송내역 팝업 URL을 반환합니다.
-   * 반환된 URL의 유지시간은 30초이며, 제한된 시간 이후에는 정상적으로 처리되지 않습니다.
+   * - 반환된 URL의 유지시간은 30초이며, 제한된 시간 이후에는 정상적으로 처리되지 않습니다.
+   * - https://docs.popbill.com/fax/phplaravel/api#GetSentListURL
    */
   public function GetSentListURL(){
 
@@ -606,6 +616,7 @@ class FaxController extends Controller
   /**
    * 접수한 팩스 전송건에 대한 미리보기 팝업 URL을 반환합니다.
    * - 반환된 URL은 보안정책에 따라 30초의 유효시간을 갖습니다.
+   * - https://docs.popbill.com/fax/phplaravel/api#GetPreviewURL
    */
   public function GetPreviewURL(){
 
@@ -631,8 +642,8 @@ class FaxController extends Controller
 
   /**
    * 연동회원의 잔여포인트를 확인합니다.
-   * - 과금방식이 파트너과금인 경우 파트너 잔여포인트(GetPartnerBalance API)
-   *   를 통해 확인하시기 바랍니다.
+   * - 과금방식이 파트너과금인 경우 파트너 잔여포인트(GetPartnerBalance API)를 통해 확인하시기 바랍니다.
+   * - https://docs.popbill.com/fax/phplaravel/api#GetBalance
    */
   public function GetBalance(){
 
@@ -652,6 +663,7 @@ class FaxController extends Controller
   /**
    * 팝빌 연동회원의 포인트충전 팝업 URL을 반환합니다.
    * 반환된 URL의 유지시간은 30초이며, 제한된 시간 이후에는 정상적으로 처리되지 않습니다.
+   * - https://docs.popbill.com/fax/phplaravel/api#GetChargeURL
    */
   public function GetChargeURL(){
 
@@ -674,8 +686,8 @@ class FaxController extends Controller
 
   /**
    * 파트너의 잔여포인트를 확인합니다.
-   * - 과금방식이 연동과금인 경우 연동회원 잔여포인트(GetBalance API)를
-   *   이용하시기 바랍니다.
+   * - 과금방식이 연동과금인 경우 연동회원 잔여포인트(GetBalance API)를 이용하시기 바랍니다.
+   * - https://docs.popbill.com/fax/phplaravel/api#GetPartnerBalance
    */
   public function GetPartnerBalance(){
 
@@ -696,6 +708,7 @@ class FaxController extends Controller
   /**
    * 파트너 포인트 충전 팝업 URL을 반환합니다.
    * - 반환된 URL은 보안정책에 따라 30초의 유효시간을 갖습니다.
+   * - https://docs.popbill.com/fax/phplaravel/api#GetPartnerURL
    */
   public function GetPartnerURL(){
 
@@ -718,6 +731,7 @@ class FaxController extends Controller
 
   /**
    * 팩스 전송단가를 확인합니다.
+   * - https://docs.popbill.com/fax/phplaravel/api#GetUnitCost
    */
   public function GetUnitCost(){
 
@@ -738,6 +752,7 @@ class FaxController extends Controller
 
   /**
    * 연동회원의 팩스 API 서비스 과금정보를 확인합니다.
+   * - https://docs.popbill.com/fax/phplaravel/api#GetChargeInfo
    */
   public function GetChargeInfo(){
 
@@ -761,6 +776,7 @@ class FaxController extends Controller
 
   /**
    * 해당 사업자의 파트너 연동회원 가입여부를 확인합니다.
+   * - https://docs.popbill.com/fax/phplaravel/api#CheckIsMember
    */
   public function CheckIsMember(){
 
@@ -786,6 +802,7 @@ class FaxController extends Controller
 
   /**
    * 팝빌 회원아이디 중복여부를 확인합니다.
+   * - https://docs.popbill.com/fax/phplaravel/api#CheckID
    */
   public function CheckID(){
 
@@ -807,7 +824,8 @@ class FaxController extends Controller
 
   /**
    * 팝빌에 로그인 상태로 접근할 수 있는 팝업 URL을 반환합니다.
-   * 반환된 URL의 유지시간은 30초이며, 제한된 시간 이후에는 정상적으로 처리되지 않습니다.
+   * - 반환된 URL의 유지시간은 30초이며, 제한된 시간 이후에는 정상적으로 처리되지 않습니다.
+   * - https://docs.popbill.com/fax/phplaravel/api#GetAccessURL
    */
   public function GetAccessURL(){
 
@@ -830,6 +848,7 @@ class FaxController extends Controller
 
   /**
    * 파트너의 연동회원으로 회원가입을 요청합니다.
+   * - https://docs.popbill.com/fax/phplaravel/api#JoinMember
    */
   public function JoinMember(){
 
@@ -886,6 +905,7 @@ class FaxController extends Controller
 
   /**
    * 연동회원의 회사정보를 확인합니다.
+   * - https://docs.popbill.com/fax/phplaravel/api#GetCorpInfo
    */
   public function GetCorpInfo(){
 
@@ -905,7 +925,8 @@ class FaxController extends Controller
   }
 
   /**
-   * 연동회원의 회사정보를 수정합니다
+   * 연동회원의 회사정보를 수정합니다.
+   * - https://docs.popbill.com/fax/phplaravel/api#UpdateCorpInfo
    */
   public function UpdateCorpInfo(){
 
@@ -945,6 +966,7 @@ class FaxController extends Controller
 
   /**
    * 연동회원의 담당자를 신규로 등록합니다.
+   * - https://docs.popbill.com/fax/phplaravel/api#RegistContact
    */
   public function RegistContact(){
 
@@ -996,6 +1018,7 @@ class FaxController extends Controller
 
   /**
    * 연동회원의 담당자 목록을 확인합니다.
+   * - https://docs.popbill.com/fax/phplaravel/api#ListContact
    */
   public function ListContact(){
 
@@ -1016,6 +1039,7 @@ class FaxController extends Controller
 
   /**
    * 연동회원의 담당자 정보를 수정합니다.
+   * - https://docs.popbill.com/fax/phplaravel/api#UpdateContact
    */
   public function UpdateContact(){
 

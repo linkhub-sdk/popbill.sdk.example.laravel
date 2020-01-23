@@ -12,9 +12,9 @@
 				<legend>{{\Request::fullUrl()}}</legend>
           @foreach ($Result as $index => $object)
           <fieldset class="fieldset2">
-            <legend>플러스친구 계정정보 [{{$index+1}}]</legend>
+            <legend>카카오톡채널 계정정보 [{{$index+1}}]</legend>
     				<ul>
-                <li> plusFriendID (플러스친구 아이디) : {{ $object->plusFriendID }} </li>
+                <li> plusFriendID (카카오톡채널 아이디) : {{ $object->plusFriendID }} </li>
                 <li> regDT (등록일시) : {{ $object->regDT }} </li>
             </ul>
           </fieldset>
