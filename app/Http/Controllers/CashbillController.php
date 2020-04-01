@@ -1532,4 +1532,59 @@ class CashbillController extends Controller
 
     return view('PResponse', ['code' => $code, 'message' => $message]);
   }
+
+  /**
+   * 현금영수증 PDF 다운로드 URL을 반환합니다.
+   * - 보안정책으로 인해 반환된 URL의 유효시간은 30초입니다.
+   * - https://docs.popbill.com/cashbill/phplaravel/api#GetPDFURL
+   */
+  public function GetPDFURL(){
+
+    // 팝빌 회원 사업자 번호, "-"제외 10자리
+    $testCorpNum = '1234567890';
+
+    // 문서번호
+    $mgtKey = '20190101-001';
+
+    try {
+        $url = $this->PopbillCashbill->GetPDFURL($testCorpNum, $mgtKey);
+    }
+    catch(PopbillException | LinkhubException $pe) {
+        $code = $pe->getCode();
+        $message = $pe->getMessage();
+        return view('PResponse', ['code' => $code, 'message' => $message]);
+    }
+    return view('ReturnValue', ['filedName' => "현금영수증 PDF 다운로드 URL" , 'value' => $url]);
+  }
+
+  /**
+   * 현금영수증 PDF byte array를 파일로 저장합니다.
+   * - https://docs.popbill.com/cashbill/phplaravel/api#GetPDF
+   */
+  public function GetPDF(){
+
+    // 팝빌 회원 사업자 번호, '-'제외 10자리
+    $testCorpNum = '1234567890';
+
+    // 문서번호
+    $mgtKey = '20190101-001';
+
+    // PDF 파일경로, PDF 파일을 저장할 폴더에 777 권한 필요.
+    $pdfFilePath = '/Users/John/Desktop/'.$mgtKey.'.pdf';
+
+    try {
+        $bytes = $this->PopbillCashbill->GetPDF($testCorpNum, $mgtKey);
+    }
+    catch ( PopbillException | LinkhubException $pe ) {
+        $code = $pe->getCode();
+        $message = $pe->getMessage();
+    }
+
+    if(file_put_contents( $pdfFilePath, $bytes )){
+      $code = 1;
+      $message = $pdfFilePath;
+    };
+
+    return view('PResponse', ['code' => $code, 'message' => $message]);
+  }
 }

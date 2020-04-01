@@ -2652,4 +2652,67 @@ class TaxinvoiceController extends Controller
 
     return view('PResponse', ['code' => $code, 'message' => $message]);
   }
+
+  /**
+   * 전자세금계산서 PDF 다운로드 URL을 반환합니다.
+   * - 반환된 URL은 보안정책으로 인해 30초의 유효시간을 갖습니다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetPDFURL
+   */
+  public function GetPDFURL(){
+
+    // 팝빌 회원 사업자 번호, '-'제외 10자리
+    $testCorpNum = '1234567890';
+
+    // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
+    $mgtKeyType = TIENumMgtKeyType::SELL;
+
+    // 문서번호
+    $mgtKey = '20200401-01';
+
+    try {
+        $url = $this->PopbillTaxinvoice->GetPDFURL($testCorpNum, $mgtKeyType, $mgtKey);
+    }
+    catch ( PopbillException | LinkhubException $pe ) {
+        $code = $pe->getCode();
+        $message = $pe->getMessage();
+        return view('PResponse', ['code' => $code, 'message' => $message]);
+    }
+
+    return view('ReturnValue', ['filedName' => "세금계산서 PDF 다운로드 URL" , 'value' => $url]);
+
+  }
+
+  /**
+   * 전자세금계산서 PDF byte array를 파일로 저장합니다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetPDF
+   */
+  public function GetPDF(){
+
+    // 팝빌 회원 사업자 번호, '-'제외 10자리
+    $testCorpNum = '1234567890';
+
+    // 발행유형, ENumMgtKeyType::SELL:매출, ENumMgtKeyType::BUY:매입, ENumMgtKeyType::TRUSTEE:위수탁
+    $mgtKeyType = TIENumMgtKeyType::SELL;
+
+    // 문서번호
+    $mgtKey = '20200401-01';
+
+    // PDF 파일경로, PDF 파일을 저장할 폴더에 777 권한 필요.
+    $pdfFilePath = '/Users/John/Desktop/'.$mgtKey.'.pdf';
+
+    try {
+        $bytes = $this->PopbillTaxinvoice->GetPDF($testCorpNum, $mgtKeyType, $mgtKey);
+    }
+    catch ( PopbillException | LinkhubException $pe ) {
+        $code = $pe->getCode();
+        $message = $pe->getMessage();
+    }
+
+    if(file_put_contents( $pdfFilePath, $bytes )){
+      $code = 1;
+      $message = $pdfFilePath;
+    };
+
+    return view('PResponse', ['code' => $code, 'message' => $message]);
+  }
 }
