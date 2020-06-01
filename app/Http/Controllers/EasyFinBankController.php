@@ -11,7 +11,10 @@ use Linkhub\Popbill\ContactInfo;
 use Linkhub\Popbill\ChargeInfo;
 use Linkhub\Popbill\PopbillException;
 
+
 use Linkhub\Popbill\PopbillEasyFinBank;
+use Linkhub\Popbill\EasyFinBankAccountForm;
+use Linkhub\Popbill\UpdateEasyFinBankAccountForm;
 
 class EasyFinBankController extends Controller
 {
@@ -36,6 +39,187 @@ class EasyFinBankController extends Controller
     return $this->$APIName();
   }
 
+
+  /**
+   * 계좌를 등록합니다.
+   */
+  public function RegistBankAccount(){
+
+    // 팝빌회원 사업자번호, '-' 제외 10자리
+    $testCorpNum = '1234567890';
+
+    // 계좌정보 클래스 생성
+    $BankAccountInfo = new EasyFinBankAccountForm();
+
+    // [필수] 은행코드
+    // 산업은행-0002 / 기업은행-0003 / 국민은행-0004 /수협은행-0007 / 농협은행-0011 / 우리은행-0020
+    // SC은행-0023 / 대구은행-0031 / 부산은행-0032 / 광주은행-0034 / 제주은행-0035 / 전북은행-0037
+    // 경남은행-0039 / 새마을금고-0045 / 신협은행-0048 / 우체국-0071 / KEB하나은행-0081 / 신한은행-0088 /씨티은행-0027
+    $BankAccountInfo->BankCode = '0039';
+
+    // [필수] 계좌번호 하이픈('-') 제외
+    $BankAccountInfo->AccountNumber = '';
+
+    // [필수] 계좌비밀번호
+    $BankAccountInfo->AccountPWD = '';
+
+    // [필수] 계좌유형, "법인" 또는 "개인" 입력
+    $BankAccountInfo->AccountType = '';
+
+    // [필수] 예금주 식별정보 (‘-‘ 제외)
+    // 계좌유형이 “법인”인 경우 : 사업자번호(10자리)
+    // 계좌유형이 “개인”인 경우 : 예금주 생년월일 (6자리-YYMMDD)
+    $BankAccountInfo->IdentityNumber = '';
+
+    // 계좌 별칭
+    $BankAccountInfo->AccountName = '';
+
+    // 인터넷뱅킹 아이디 (국민은행 필수)
+    $BankAccountInfo->BankID = '';
+
+    // 조회전용 계정 아이디 (대구은행, 신협, 신한은행 필수)
+    $BankAccountInfo->FastID = '';
+
+    // 조회전용 계정 비밀번호 (대구은행, 신협, 신한은행 필수
+    $BankAccountInfo->FastPWD = '';
+
+    // 결제기간(개월), 1~12 입력가능, 미기재시 기본값(1) 처리
+    // - 파트너 과금방식의 경우 입력값에 관계없이 1개월 처리
+    $BankAccountInfo->UsePeriod = '';
+
+    // 메모
+    $BankAccountInfo->Memo = '';
+
+    try {
+        $result =  $this->PopbillEasyFinBank->RegistBankAccount($testCorpNum, $BankAccountInfo);
+        $code = $result->code;
+        $message = $result->message;
+    }
+    catch ( PopbillException | LinkhubException $pe ) {
+        $code = $pe->getCode();
+        $message = $pe->getMessage();
+    }
+
+    return view('PResponse', ['code' => $code, 'message' => $message]);
+  }
+
+  /**
+   * 팝빌에 등록된 은행계좌의 정액제 해지를 요청한다.
+   */
+  public function CloseBankAccount(){
+
+    // 팝빌회원 사업자번호, '-' 제외 10자리
+    $testCorpNum = '1234567890';
+
+    // 은행코드
+    // 산업은행-0002 / 기업은행-0003 / 국민은행-0004 /수협은행-0007 / 농협은행-0011 / 우리은행-0020
+    // SC은행-0023 / 대구은행-0031 / 부산은행-0032 / 광주은행-0034 / 제주은행-0035 / 전북은행-0037
+    // 경남은행-0039 / 새마을금고-0045 / 신협은행-0048 / 우체국-0071 / KEB하나은행-0081 / 신한은행-0088 /씨티은행-0027
+    $bankCode = '';
+
+    // 계좌번호
+    $accountNumber = '';
+
+    // 해지유형, “일반”, “중도” 중 선택 기재
+    // 일반해지 – 이용중인 정액제 사용기간까지 이용후 정지
+    // 중도해지 – 요청일 기준으로 정지, 정액제 잔여기간은 일할로 계산되어 포인트 환불 (무료 이용기간 중 중도해지 시 전액 환불)
+    $closeType = '';
+
+    try {
+        $result =  $this->PopbillEasyFinBank->CloseBankAccount($testCorpNum, $bankCode, $accountNumber, $closeType);
+        $code = $result->code;
+        $message = $result->message;
+    }
+    catch ( PopbillException | LinkhubException $pe ) {
+        $code = $pe->getCode();
+        $message = $pe->getMessage();
+    }
+
+    return view('PResponse', ['code' => $code, 'message' => $message]);
+  }
+
+  /**
+   * 은행계좌의 정액제 해지요청을 취소한다.
+   */
+  public function RevokeCloseBankAccount(){
+
+    // 팝빌회원 사업자번호, '-' 제외 10자리
+    $testCorpNum = '1234567890';
+
+    // 은행코드
+    // 산업은행-0002 / 기업은행-0003 / 국민은행-0004 /수협은행-0007 / 농협은행-0011 / 우리은행-0020
+    // SC은행-0023 / 대구은행-0031 / 부산은행-0032 / 광주은행-0034 / 제주은행-0035 / 전북은행-0037
+    // 경남은행-0039 / 새마을금고-0045 / 신협은행-0048 / 우체국-0071 / KEB하나은행-0081 / 신한은행-0088 /씨티은행-0027
+    $bankCode = '';
+
+    // 계좌번호
+    $accountNumber = '';
+
+    try {
+        $result =  $this->PopbillEasyFinBank->RevokeCloseBankAccount($testCorpNum, $bankCode, $accountNumber);
+        $code = $result->code;
+        $message = $result->message;
+    }
+    catch ( PopbillException | LinkhubException $pe ) {
+        $code = $pe->getCode();
+        $message = $pe->getMessage();
+    }
+
+    return view('PResponse', ['code' => $code, 'message' => $message]);
+  }
+
+  /**
+   * 계좌정보를 수정합니다.
+   */
+  public function UpdateBankAccount(){
+
+    // 팝빌회원 사업자번호, '-' 제외 10자리
+    $testCorpNum = '1234567890';
+
+    // [필수] 은행코드
+    // 산업은행-0002 / 기업은행-0003 / 국민은행-0004 /수협은행-0007 / 농협은행-0011 / 우리은행-0020
+    // SC은행-0023 / 대구은행-0031 / 부산은행-0032 / 광주은행-0034 / 제주은행-0035 / 전북은행-0037
+    // 경남은행-0039 / 새마을금고-0045 / 신협은행-0048 / 우체국-0071 / KEB하나은행-0081 / 신한은행-0088 /씨티은행-0027
+    $BankCode = '';
+
+    // [필수]계좌번호
+    $AccountNumber = '';
+
+    // 계좌정보 클래스 생성
+    $UpdateInfo = new UpdateEasyFinBankAccountForm();
+
+    // [필수] 계좌비밀번호
+    $UpdateInfo->AccountPWD = '';
+
+    // 계좌 별칭
+    $UpdateInfo->AccountName = '';
+
+    // 인터넷뱅킹 아이디 (국민은행 필수)
+    $UpdateInfo->BankID = '';
+
+    // 조회전용 계정 아이디 (대구은행, 신협, 신한은행 필수)
+    $UpdateInfo->FastID = '';
+
+    // 조회전용 계정 비밀번호 (대구은행, 신협, 신한은행 필수
+    $UpdateInfo->FastPWD = '';
+
+    // 메모
+    $UpdateInfo->Memo = '';
+
+    try {
+        $result =  $this->PopbillEasyFinBank->UpdateBankAccount($testCorpNum, $BankCode, $AccountNumber, $UpdateInfo);
+        $code = $result->code;
+        $message = $result->message;
+    }
+    catch ( PopbillException | LinkhubException $pe ) {
+        $code = $pe->getCode();
+        $message = $pe->getMessage();
+    }
+
+    return view('PResponse', ['code' => $code, 'message' => $message]);
+  }
+
+
   /*
    * 은행 계좌 관리 팝업 URL을 반환한다.
    * - 반환된 URL은 보안정책에 따라 30초의 유효시간을 갖습니다.
@@ -55,6 +239,35 @@ class EasyFinBankController extends Controller
         return view('PResponse', ['code' => $code, 'message' => $message]);
     }
     return view('ReturnValue', ['filedName' => "계좌 관리 팝업 URL" , 'value' => $url]);
+  }
+
+
+  /**
+   * 팝빌에 등록된 계좌의 상세정보를 확인합니다.
+   */
+  public function GetBankAccountInfo(){
+
+    // 팝빌회원 사업자번호, '-'제외 10자리
+    $testCorpNum = '1234567890';
+
+    // 은행코드
+    // 산업은행-0002 / 기업은행-0003 / 국민은행-0004 /수협은행-0007 / 농협은행-0011 / 우리은행-0020
+    // SC은행-0023 / 대구은행-0031 / 부산은행-0032 / 광주은행-0034 / 제주은행-0035 / 전북은행-0037
+    // 경남은행-0039 / 새마을금고-0045 / 신협은행-0048 / 우체국-0071 / KEB하나은행-0081 / 신한은행-0088 /씨티은행-0027
+    $bankCode = '';
+
+    // 계좌번호, 하이픈('-') 제외
+    $accountNumber = '';
+
+    try {
+        $result = $this->PopbillEasyFinBank->GetBankAccountInfo($testCorpNum, $bankCode, $accountNumber);
+    }
+    catch (PopbillException | LinkhubException $pe) {
+        $code = $pe->getCode();
+        $message = $pe->getMessage();
+        return view('PResponse', ['code' => $code, 'message' => $message]);
+    }
+    return view('EasyFinBank/GetBankAccountInfo', ['bankAccountInfo' => $result ] );
   }
 
   /**
