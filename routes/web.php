@@ -55,3 +55,7 @@ Route::get('/HTCashbill/{APIName}','HTCashbillController@RouteHandelerFunc');
 // 계좌조회 Route Mapping
 Route::get('/EasyFinBank', function () { return view('EasyFinBank/index'); });
 Route::get('/EasyFinBank/{APIName}','EasyFinBankController@RouteHandelerFunc');
+
+// 예금주조회 Route Mapping
+Route::get('/AccountCheck', function () { return view('AccountCheck/index'); });
+Route::get('/AccountCheck/{APIName}','AccountCheckController@RouteHandelerFunc');
