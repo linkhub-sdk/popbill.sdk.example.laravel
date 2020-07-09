@@ -1051,6 +1051,30 @@ class CashbillController extends Controller
     return view('PResponse', ['code' => $code, 'message' => $message]);
   }
 
+  public function AssignMgtKey(){
+
+    // 팝빌 회원 사업자번호, '-' 제외 10자리
+    $testCorpNum = '1234567890';
+
+    // 현금영수증 아이템키
+    $itemKey = '020061910184000001';
+
+    // 부여할 파트너 문서번호
+    $mgtKey = '20200709-002';
+
+    try {
+        $result = $this->PopbillCashbill->AssignMgtKey($testCorpNum, $itemKey, $mgtKey);
+        $code = $result->code;
+        $message = $result->message;
+    }
+    catch(PopbillException | LinkhubException $pe) {
+        $code = $pe->getCode();
+        $message = $pe->getMessage();
+    }
+
+    return view('PResponse', ['code' => $code, 'message' => $message]);
+  }
+
   /**
    * 현금영수증 관련 메일전송 항목에 대한 전송여부를 목록을 반환한다.
    * - https://docs.popbill.com/cashbill/phplaravel/api#ListEmailConfig

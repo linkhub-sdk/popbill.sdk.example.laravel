@@ -59,6 +59,7 @@
             <li><a href="Cashbill/SendEmail">SendEmail</a> (메일 전송)</li>
             <li><a href="Cashbill/SendSMS">SendSMS</a> (문자 전송)</li>
             <li><a href="Cashbill/SendFAX">SendFAX</a> (팩스 전송)</li>
+            <li><a href="Cashbill/AssignMgtKey">AssignMgtKey</a> (문서번호 할당)</li>
             <li><a href="Cashbill/ListEmailConfig">ListEmailConfig</a> (현금영수증 알림메일 전송목록 조회)</li>
             <li><a href="Cashbill/UpdateEmailConfig">UpdateEmailConfig</a> (현금영수증 알림메일 전송설정 수정)</li>
         </ul>
