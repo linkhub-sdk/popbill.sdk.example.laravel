@@ -57,7 +57,7 @@ class CashbillController extends Controller
         $result = $this->PopbillCashbill->CheckMgtKeyInUse($testCorpNum, $mgtKey);
         $result ? $result = '사용중' : $result = '미사용중';
     }
-    catch(PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -164,7 +164,7 @@ class CashbillController extends Controller
         $code = $result->code;
         $message = $result->message;
     }
-    catch(PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
     }
@@ -260,7 +260,7 @@ class CashbillController extends Controller
         $code = $result->code;
         $message = $result->message;
     }
-    catch(PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
     }
@@ -356,7 +356,7 @@ class CashbillController extends Controller
         $code = $result->code;
         $message = $result->message;
     }
-    catch(PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
 	  }
@@ -384,7 +384,7 @@ class CashbillController extends Controller
         $code = $result->code;
         $message = $result->message;
     }
-    catch(PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
     }
@@ -413,7 +413,7 @@ class CashbillController extends Controller
         $code = $result->code;
         $message = $result->message;
     }
-    catch ( PopbillException | LinkhubException $pe ) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
     }
@@ -440,7 +440,7 @@ class CashbillController extends Controller
         $code = $result->code;
         $message = $result->message;
     }
-    catch (PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
     }
@@ -472,7 +472,7 @@ class CashbillController extends Controller
         $code = $result->code;
         $message = $result->message;
     }
-    catch(PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
     }
@@ -534,7 +534,7 @@ class CashbillController extends Controller
         $code = $result->code;
         $message = $result->message;
     }
-    catch(PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
     }
@@ -565,7 +565,7 @@ class CashbillController extends Controller
         $code = $result->code;
         $message = $result->message;
     }
-    catch(PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
     }
@@ -621,7 +621,7 @@ class CashbillController extends Controller
         $code = $result->code;
         $message = $result->message;
     }
-    catch(PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
     }
@@ -644,7 +644,7 @@ class CashbillController extends Controller
     try {
       $result = $this->PopbillCashbill->GetInfo($testCorpNum, $mgtKey);
     }
-    catch(PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
       $code = $pe->getCode();
       $message = $pe->getMessage();
       return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -671,7 +671,7 @@ class CashbillController extends Controller
     try {
         $result = $this->PopbillCashbill->GetInfos($testCorpNum, $MgtKeyList);
     }
-    catch(PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -693,7 +693,7 @@ class CashbillController extends Controller
     try {
         $result = $this->PopbillCashbill->GetDetailInfo($testCorpNum, $mgtKey);
     }
-    catch (PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -769,7 +769,7 @@ class CashbillController extends Controller
         $result = $this->PopbillCashbill->Search( $testCorpNum, $DType, $SDate,
           $EDate, $State, $TradeType, $TradeUsage, $TaxationType, $Page, $PerPage,
           $Order, $QString, $TradeOpt);
-    }	catch(PopbillException | LinkhubException $pe) {
+    }	catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -793,7 +793,7 @@ class CashbillController extends Controller
     try {
         $result = $this->PopbillCashbill->GetLogs($testCorpNum, $mgtKey);
     }
-    catch (PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -821,7 +821,7 @@ class CashbillController extends Controller
     try {
         $url = $this->PopbillCashbill->GetURL($testCorpNum, $testUserID, $TOGO);
     }
-    catch(PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -847,7 +847,7 @@ class CashbillController extends Controller
     try {
         $url = $this->PopbillCashbill->GetPopUpURL($testCorpNum, $mgtKey);
     }
-    catch(PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -871,7 +871,7 @@ class CashbillController extends Controller
     try {
         $url = $this->PopbillCashbill->GetPrintURL($testCorpNum, $mgtKey);
     }
-    catch (PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -901,7 +901,7 @@ class CashbillController extends Controller
     try {
         $url = $this->PopbillCashbill->GetMassPrintURL($testCorpNum, $mgtKeyList);
     }
-    catch (PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -925,7 +925,7 @@ class CashbillController extends Controller
     try {
         $url = $this->PopbillCashbill->GetMailURL($testCorpNum, $mgtKey);
     }
-    catch(PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -949,7 +949,7 @@ class CashbillController extends Controller
 
     try {
       $url = $this->PopbillCashbill->GetAccessURL($testCorpNum, $testUserID);
-    } catch (PopbillException | LinkhubException $pe) {
+    } catch(PopbillException $pe) {
       $code = $pe->getCode();
       $message = $pe->getMessage();
       return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -978,7 +978,7 @@ class CashbillController extends Controller
         $code = $result->code;
         $message = $result->message;
     }
-    catch(PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
     }
@@ -1014,7 +1014,7 @@ class CashbillController extends Controller
         $code = $result->code;
         $message = $result->message;
     }
-    catch(PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
     }
@@ -1047,7 +1047,7 @@ class CashbillController extends Controller
         $code = $result->code;
         $message = $result->message;
     }
-    catch(PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
     }
@@ -1070,7 +1070,7 @@ class CashbillController extends Controller
         $code = $result->code;
         $message = $result->message;
     }
-    catch(PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
     }
@@ -1090,7 +1090,7 @@ class CashbillController extends Controller
     try {
         $result = $this->PopbillCashbill->ListEmailConfig($testCorpNum);
     }
-    catch(PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -1124,7 +1124,7 @@ class CashbillController extends Controller
         $code = $result->code;
         $message = $result->message;
     }
-    catch(PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
     }
@@ -1144,7 +1144,7 @@ class CashbillController extends Controller
     try {
         $remainPoint = $this->PopbillCashbill->GetBalance($testCorpNum);
     }
-    catch(PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -1169,7 +1169,7 @@ class CashbillController extends Controller
 
     try {
       $url = $this->PopbillCashbill->GetChargeURL($testCorpNum, $testUserID);
-    } catch (PopbillException | LinkhubException $pe) {
+    } catch(PopbillException $pe) {
       $code = $pe->getCode();
       $message = $pe->getMessage();
       return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -1191,7 +1191,7 @@ class CashbillController extends Controller
     try {
         $remainPoint = $this->PopbillCashbill->GetPartnerBalance($testCorpNum);
     }
-    catch(PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -1216,7 +1216,7 @@ class CashbillController extends Controller
     try {
         $url = $this->PopbillCashbill->GetPartnerURL($testCorpNum, $TOGO);
     }
-    catch(PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -1236,7 +1236,7 @@ class CashbillController extends Controller
     try {
         $unitCost = $this->PopbillCashbill->GetUnitCost($testCorpNum);
     }
-    catch(PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -1260,7 +1260,7 @@ class CashbillController extends Controller
     try {
         $result = $this->PopbillCashbill->GetChargeInfo($testCorpNum, $testUserID);
     }
-    catch(PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -1286,7 +1286,7 @@ class CashbillController extends Controller
       $code = $result->code;
       $message = $result->message;
     }
-    catch(PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
       $code = $pe->getCode();
       $message = $pe->getMessage();
     }
@@ -1308,7 +1308,7 @@ class CashbillController extends Controller
       $code = $result->code;
       $message = $result->message;
     }
-    catch(PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
       $code = $pe->getCode();
       $message = $pe->getMessage();
     }
@@ -1365,7 +1365,7 @@ class CashbillController extends Controller
       $code = $result->code;
       $message = $result->message;
     }
-    catch(PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
       $code = $pe->getCode();
       $message = $pe->getMessage();
     }
@@ -1385,7 +1385,7 @@ class CashbillController extends Controller
     try {
       $CorpInfo = $this->PopbillCashbill->GetCorpInfo($testCorpNum);
     }
-    catch(PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
       $code = $pe->getCode();
       $message = $pe->getMessage();
       return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -1426,7 +1426,7 @@ class CashbillController extends Controller
         $code = $result->code;
         $message = $result->message;
     }
-    catch ( PopbillException | LinkhubException $pe ) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
     }
@@ -1480,7 +1480,7 @@ class CashbillController extends Controller
         $code = $result->code;
         $message = $result->message;
     }
-    catch(PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
     }
@@ -1500,7 +1500,7 @@ class CashbillController extends Controller
     try {
       $ContactList = $this->PopbillCashbill->ListContact($testCorpNum);
     }
-    catch(PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -1552,7 +1552,7 @@ class CashbillController extends Controller
         $code = $result->code;
         $message = $result->message;
     }
-    catch ( PopbillException | LinkhubException $pe ) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
     }
@@ -1576,7 +1576,7 @@ class CashbillController extends Controller
     try {
         $url = $this->PopbillCashbill->GetPDFURL($testCorpNum, $mgtKey);
     }
-    catch(PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -1602,7 +1602,7 @@ class CashbillController extends Controller
     try {
         $bytes = $this->PopbillCashbill->GetPDF($testCorpNum, $mgtKey);
     }
-    catch ( PopbillException | LinkhubException $pe ) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
     }

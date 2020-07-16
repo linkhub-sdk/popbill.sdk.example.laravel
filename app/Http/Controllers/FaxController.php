@@ -54,7 +54,7 @@ class FaxController extends Controller
 
     try {
         $url = $this->PopbillFax->GetSenderNumberMgtURL($testCorpNum, $testUserID);
-    } catch (PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -74,7 +74,7 @@ class FaxController extends Controller
     try {
         $result = $this->PopbillFax->GetSenderNumberList($testCorpNum);
     }
-    catch (PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -130,7 +130,7 @@ class FaxController extends Controller
         $receiptNum = $this->PopbillFax->SendFAX($testCorpNum, $Sender, $Receivers, $Files,
             $reserveDT, $testUserID, $SenderName, $adsYN, $title, $requestNum);
     }
-    catch (PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -192,7 +192,7 @@ class FaxController extends Controller
         $receiptNum = $this->PopbillFax->SendFAX($testCorpNum, $Sender, $Receivers, $Files,
             $reserveDT, $testUserID, $SenderName, $adsYN, $title, $requestNum);
     }
-    catch (PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -252,7 +252,7 @@ class FaxController extends Controller
     try {
         $receiptNum = $this->PopbillFax->ResendFAX($testCorpNum, $ReceiptNum, $Sender,
             $SenderName, $Receivers, $reserveDT, $testUserID, $title, $requestNum);
-    } catch (PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -311,7 +311,7 @@ class FaxController extends Controller
     try {
         $receiptNum = $this->PopbillFax->ResendFAXRN($testCorpNum, $requestNum, $Sender,
             $SenderName, $Receivers, $originalFAXrequestNum, $reserveDT, $testUserID, $title);
-    } catch (PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -375,7 +375,7 @@ class FaxController extends Controller
     try {
         $receiptNum = $this->PopbillFax->ResendFAXRN($testCorpNum, $requestNum, $Sender,
             $SenderName, $Receivers, $originalFAXrequestNum, $reserveDT, $testUserID, $title, $requestNum);
-    } catch (PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -439,7 +439,7 @@ class FaxController extends Controller
     try {
         $receiptNum = $this->PopbillFax->ResendFAXRN($testCorpNum, $requestNum, $Sender,
             $SenderName, $Receivers, $originalFAXrequestNum, $reserveDT, $testUserID, $title, $requestNum);
-    } catch (PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -465,7 +465,7 @@ class FaxController extends Controller
         $code = $result->code;
         $message = $result->message;
     }
-    catch (PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
     }
@@ -491,7 +491,7 @@ class FaxController extends Controller
         $code = $result->code;
         $message = $result->message;
     }
-    catch (PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
     }
@@ -512,7 +512,7 @@ class FaxController extends Controller
 
     try {
         $result = $this->PopbillFax->GetFaxDetail($testCorpNum, $ReceiptNum);
-    } catch (PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -535,7 +535,7 @@ class FaxController extends Controller
 
     try {
         $result = $this->PopbillFax->GetFaxDetailRN($testCorpNum, $requestNum);
-    } catch (PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -585,7 +585,7 @@ class FaxController extends Controller
 
     try {
         $result = $this->PopbillFax->Search($testCorpNum, $SDate, $EDate, $State, $ReserveYN, $SenderOnly, $Page, $PerPage, $Order, '', $QString);
-    } catch (PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -608,7 +608,7 @@ class FaxController extends Controller
 
     try {
         $url = $this->PopbillFax->GetSentListURL($testCorpNum, $testUserID);
-    } catch (PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -634,7 +634,7 @@ class FaxController extends Controller
 
     try {
         $url = $this->PopbillFax->GetPreviewURL($testCorpNum,$ReceiptNum,$testUserID);
-    } catch (PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -655,7 +655,7 @@ class FaxController extends Controller
 
     try {
         $remainPoint = $this->PopbillFax->GetBalance($testCorpNum);
-    } catch(PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -678,7 +678,7 @@ class FaxController extends Controller
 
     try {
         $url = $this->PopbillFax->GetChargeURL($testCorpNum, $testUserID);
-    } catch (PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -700,7 +700,7 @@ class FaxController extends Controller
     try {
         $remainPoint = $this->PopbillFax->GetPartnerBalance($testCorpNum);
     }
-    catch(PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -724,7 +724,7 @@ class FaxController extends Controller
     try {
         $url = $this->PopbillFax->GetPartnerURL($testCorpNum, $TOGO);
     }
-    catch(PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -744,7 +744,7 @@ class FaxController extends Controller
     try {
         $unitCost= $this->PopbillFax->GetUnitCost($testCorpNum);
     }
-    catch (PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -768,7 +768,7 @@ class FaxController extends Controller
     try {
         $result = $this->PopbillFax->GetChargeInfo($testCorpNum, $testUserID);
     }
-    catch (PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -795,7 +795,7 @@ class FaxController extends Controller
       $code = $result->code;
       $message = $result->message;
     }
-    catch(PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
       $code = $pe->getCode();
       $message = $pe->getMessage();
     }
@@ -817,7 +817,7 @@ class FaxController extends Controller
       $code = $result->code;
       $message = $result->message;
     }
-    catch(PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
       $code = $pe->getCode();
       $message = $pe->getMessage();
     }
@@ -840,7 +840,7 @@ class FaxController extends Controller
 
     try {
         $url = $this->PopbillFax->GetAccessURL($testCorpNum, $testUserID);
-    } catch (PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -898,7 +898,7 @@ class FaxController extends Controller
       $code = $result->code;
       $message = $result->message;
     }
-    catch(PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
       $code = $pe->getCode();
       $message = $pe->getMessage();
     }
@@ -918,7 +918,7 @@ class FaxController extends Controller
     try {
       $CorpInfo = $this->PopbillFax->GetCorpInfo($testCorpNum);
     }
-    catch(PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
       $code = $pe->getCode();
       $message = $pe->getMessage();
       return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -959,7 +959,7 @@ class FaxController extends Controller
         $code = $result->code;
         $message = $result->message;
     }
-    catch ( PopbillException | LinkhubException $pe ) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
     }
@@ -1011,7 +1011,7 @@ class FaxController extends Controller
         $code = $result->code;
         $message = $result->message;
     }
-    catch(PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
     }
@@ -1031,7 +1031,7 @@ class FaxController extends Controller
     try {
       $ContactList = $this->PopbillFax->ListContact($testCorpNum);
     }
-    catch(PopbillException | LinkhubException $pe) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -1081,7 +1081,7 @@ class FaxController extends Controller
         $code = $result->code;
         $message = $result->message;
     }
-    catch ( PopbillException | LinkhubException $pe ) {
+    catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
     }
