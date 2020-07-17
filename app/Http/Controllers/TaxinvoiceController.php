@@ -10,7 +10,6 @@ use Linkhub\Popbill\CorpInfo;
 use Linkhub\Popbill\ContactInfo;
 use Linkhub\Popbill\ChargeInfo;
 use Linkhub\Popbill\PopbillException;
-
 use Linkhub\Popbill\PopbillTaxinvoice;
 use Linkhub\Popbill\TIENumMgtKeyType;
 use Linkhub\Popbill\Taxinvoice;
@@ -129,8 +128,6 @@ class TaxinvoiceController extends Controller
     // [필수] 과세형태, '과세', '영세', '면세' 중 기재
     $Taxinvoice->taxType = '과세';
 
-    // [필수] 발행시점
-    $Taxinvoice->issueTiming = '직접발행';
 
     /************************************************************
      *                         공급자 정보
@@ -375,9 +372,6 @@ class TaxinvoiceController extends Controller
 
     // [필수] 과세형태, '과세', '영세', '면세' 중 기재
     $Taxinvoice->taxType = '과세';
-
-    // [필수] 발행시점
-    $Taxinvoice->issueTiming = '직접발행';
 
     /************************************************************
      *                         공급자 정보
@@ -627,9 +621,6 @@ class TaxinvoiceController extends Controller
 
     // [필수] 과세형태, '과세', '영세', '면세' 중 기재
     $Taxinvoice->taxType = '과세';
-
-    // [필수] 발행시점
-    $Taxinvoice->issueTiming = '직접발행';
 
     /************************************************************
      *                         공급자 정보
@@ -987,9 +978,6 @@ class TaxinvoiceController extends Controller
 
     // [필수] 과세형태, '과세', '영세', '면세' 중 기재
     $Taxinvoice->taxType = '과세';
-
-    // [필수] 발행시점
-    $Taxinvoice->issueTiming = '직접발행';
 
     /************************************************************
      *                         공급자 정보

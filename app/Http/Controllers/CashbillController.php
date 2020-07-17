@@ -10,7 +10,6 @@ use Linkhub\Popbill\CorpInfo;
 use Linkhub\Popbill\ContactInfo;
 use Linkhub\Popbill\ChargeInfo;
 use Linkhub\Popbill\PopbillException;
-
 use Linkhub\Popbill\PopbillCashbill;
 use Linkhub\Popbill\Cashbill;
 

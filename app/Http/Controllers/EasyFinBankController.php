@@ -10,8 +10,6 @@ use Linkhub\Popbill\CorpInfo;
 use Linkhub\Popbill\ContactInfo;
 use Linkhub\Popbill\ChargeInfo;
 use Linkhub\Popbill\PopbillException;
-
-
 use Linkhub\Popbill\PopbillEasyFinBank;
 use Linkhub\Popbill\EasyFinBankAccountForm;
 use Linkhub\Popbill\UpdateEasyFinBankAccountForm;
