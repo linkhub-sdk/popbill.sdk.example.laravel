@@ -267,7 +267,7 @@ class KakaoTalkController extends Controller
     $templateCode = '019020000163';
 
     // 팝빌에 사전 등록된 발신번호
-    $sender = '07043042991';
+    $sender = '01043245117';
 
     // 알림톡 내용, 최대 1000자
     $content = '[ 팝빌 ]'.PHP_EOL;
@@ -296,7 +296,9 @@ class KakaoTalkController extends Controller
         // 수신번호
         'rcv' => '010111222',
         // 수신자명
-        'rcvnm' => '수신자명'
+        'rcvnm' => '수신자명',
+        // 파트너 지정키, 대량전송시 수신자 구분용 메모
+        'interOPRefKey' => '20200729-'.$i
       );
     }
 
@@ -352,7 +354,7 @@ class KakaoTalkController extends Controller
     $content .= 'support@linkhub.co.kr'.PHP_EOL;
 
     // 팝빌에 사전 등록된 발신번호
-    $sender = '07043042991';
+    $sender = '01043245117';
 
     // 대체문자 전송유형 공백-미전송, A-대체문자내용 전송, C-알림톡내용 전송
     $altSendType = 'A';
@@ -376,6 +378,8 @@ class KakaoTalkController extends Controller
             'msg' => $content,
             // 대체문자 내용
             'altmsg' => '대체문자 내용'.$i,
+            // 파트너 지정키, 대량전송시 수신자 구분용 메모
+            'interOPRefKey' => '20200729-'.$i
         );
     }
 
@@ -922,7 +926,7 @@ class KakaoTalkController extends Controller
     $testCorpNum = '1234567890';
 
     // 카카오톡 전송 요청 시 발급받은 접수번호(receiptNum)
-    $ReceiptNum = '019021416132900001';
+    $ReceiptNum = '020072916335000001';
 
     try {
         $result = $this->PopbillKakao->GetMessages($testCorpNum, $ReceiptNum);

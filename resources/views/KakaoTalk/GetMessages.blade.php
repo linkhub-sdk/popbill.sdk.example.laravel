@@ -59,6 +59,7 @@
             <li> altResultDT (대체문자 전송결과 수신일시) : {{ $msgInfo->altResultDT }} </li>
             <li> receiptNum (접수번호) : {{ $msgInfo->receiptNum }} </li>
             <li> requestNum (요청번호) : {{ $msgInfo->requestNum }} </li>
+            <li> interOPRefKey (파트너 지정키) : {{ $msgInfo->interOPRefKey }} </li>
   				</ul>
         </fieldset>
         @endforeach
