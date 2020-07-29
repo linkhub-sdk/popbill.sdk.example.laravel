@@ -54,7 +54,7 @@ class KakaoTalkController extends Controller
 
     try {
         $url = $this->PopbillKakao->GetPlusFriendMgtURL($testCorpNum, $testUserID);
-    catch(PopbillException $pe) {
+    } catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -99,7 +99,7 @@ class KakaoTalkController extends Controller
 
     try {
         $url = $this->PopbillKakao->GetSenderNumberMgtURL($testCorpNum, $testUserID);
-    catch(PopbillException $pe) {
+    } catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -119,7 +119,7 @@ class KakaoTalkController extends Controller
 
     try {
         $result = $this->PopbillKakao->GetSenderNumberList($testCorpNum);
-    catch(PopbillException $pe) {
+    } catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -143,7 +143,7 @@ class KakaoTalkController extends Controller
 
     try {
         $url = $this->PopbillKakao->GetATSTemplateMgtURL($testCorpNum, $testUserID);
-    catch(PopbillException $pe) {
+    } catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -241,7 +241,7 @@ class KakaoTalkController extends Controller
     try {
         $receiptNum = $this->PopbillKakao->SendATS($testCorpNum, $templateCode, $sender, $content,
           $altContent, $altSendType, $receivers, $reserveDT, $testUserID, $requestNum, $buttons);
-    catch(PopbillException $pe) {
+    } catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -318,7 +318,7 @@ class KakaoTalkController extends Controller
     try {
         $receiptNum = $this->PopbillKakao->SendATS($testCorpNum, $templateCode, $sender,
           $content, $altContent, $altSendType, $receivers, $reserveDT, $testUserID, $requestNum, $buttons);
-    catch(PopbillException $pe) {
+    } catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -397,7 +397,7 @@ class KakaoTalkController extends Controller
     try {
         $receiptNum = $this->PopbillKakao->SendATS($testCorpNum, $templateCode,
           $sender, '', '', $altSendType, $receivers, $reserveDT, $testUserID, $requestNum, $buttons);
-    catch(PopbillException $pe) {
+    } catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -466,7 +466,7 @@ class KakaoTalkController extends Controller
 
     try {
         $receiptNum = $this->PopbillKakao->SendFTS($testCorpNum, $plusFriendID, $sender, $content, $altContent, $altSendType, $adsYN, $receivers, $buttons, $reserveDT, $testUserID, $requestNum);
-    catch(PopbillException $pe) {
+    } catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -538,7 +538,7 @@ class KakaoTalkController extends Controller
 
     try {
         $receiptNum = $this->PopbillKakao->SendFTS($testCorpNum, $plusFriendID, $sender, $content, $altContent, $altSendType, $adsYN, $receivers, $buttons, $reserveDT, $testUserID, $requestNum);
-    catch(PopbillException $pe) {
+    } catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -608,7 +608,7 @@ class KakaoTalkController extends Controller
 
     try {
         $receiptNum = $this->PopbillKakao->SendFTS($testCorpNum, $plusFriendID, $sender, '', '', $altSendType, $adsYN, $receivers, $buttons, $reserveDT, $testUserID, $requestNum);
-    catch(PopbillException $pe) {
+    } catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -689,7 +689,7 @@ class KakaoTalkController extends Controller
     try {
         $receiptNum = $this->PopbillKakao->SendFMS($testCorpNum, $plusFriendID, $sender,
             $content, $altContent, $altSendType, $adsYN, $receivers, $buttons, $reserveDT, $files, $imageURL, $testUserID, $requestNum);
-    catch(PopbillException $pe) {
+    } catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -772,7 +772,7 @@ class KakaoTalkController extends Controller
     try {
         $receiptNum = $this->PopbillKakao->SendFMS($testCorpNum, $plusFriendID, $sender,
             $content, $altContent, $altSendType, $adsYN, $receivers, $buttons, $reserveDT, $files, $imageURL, $testUserID, $requestNum);
-    catch(PopbillException $pe) {
+    } catch(PopbillException $pe) {
       $code = $pe->getCode();
       $message = $pe->getMessage();
       return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -853,7 +853,7 @@ class KakaoTalkController extends Controller
     try {
         $receiptNum = $this->PopbillKakao->SendFMS($testCorpNum, $plusFriendID, $sender,
             '', '', $altSendType, $adsYN, $receivers, $buttons, $reserveDT, $files, $imageURL, $testUserID, $requestNum);
-    catch(PopbillException $pe) {
+    } catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -1026,7 +1026,7 @@ class KakaoTalkController extends Controller
 
     try {
         $url = $this->PopbillKakao->GetSentListURL($testCorpNum, $testUserID);
-    catch(PopbillException $pe) {
+    } catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -1070,7 +1070,7 @@ class KakaoTalkController extends Controller
 
     try {
         $url = $this->PopbillKakao->GetChargeURL($testCorpNum, $testUserID);
-    catch(PopbillException $pe) {
+    } catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -1239,7 +1239,7 @@ class KakaoTalkController extends Controller
 
     try {
         $url = $this->PopbillKakao->GetAccessURL($testCorpNum, $testUserID);
-    catch(PopbillException $pe) {
+    } catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);

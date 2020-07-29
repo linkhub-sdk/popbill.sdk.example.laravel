@@ -21,6 +21,8 @@
                     <li> {{ $key }} (등록상태) : {{ $value }}</li>
                   @elseif ($key == 'representYN')
                     <li> {{ $key }} (대표번호 지정여부) : {{ $value ? 'true' : 'false' }}</li>
+                  @elseif ($key == 'memo')
+                    <li> {{ $key }} (메모) : {{ $value }}</li>
                   @endif
                 @endforeach
             </ul>

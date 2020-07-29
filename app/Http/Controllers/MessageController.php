@@ -54,7 +54,7 @@ class MessageController extends Controller
 
     try {
         $url = $this->PopbillMessaging->GetSenderNumberMgtURL($testCorpNum, $testUserID);
-    catch(PopbillException $pe) {
+    } catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -74,8 +74,7 @@ class MessageController extends Controller
 
     try {
         $result = $this->PopbillMessaging->GetSenderNumberList($testCorpNum);
-    }
-    catch(PopbillException $pe) {
+    } catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -239,8 +238,7 @@ class MessageController extends Controller
     }
     try {
         $receiptNum = $this->PopbillMessaging->SendLMS($testCorpNum, '', '', '', $Messages, $reserveDT, $adsYN, '', '', '', $requestNum);
-    }
-    catch(PopbillException $pe) {
+    } catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -280,8 +278,7 @@ class MessageController extends Controller
 
     try {
         $receiptNum = $this->PopbillMessaging->SendXMS($testCorpNum, '', '', '', $Messages, $reserveDT, $adsYN, '', '', '', $requestNum);
-    }
-    catch(PopbillException $pe) {
+    } catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -326,8 +323,7 @@ class MessageController extends Controller
 
     try {
         $receiptNum = $this->PopbillMessaging->SendXMS($testCorpNum, '', '', '', $Messages, $reserveDT, $adsYN, '', '', '', $requestNum);
-    }
-    catch(PopbillException $pe) {
+    } catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -370,8 +366,7 @@ class MessageController extends Controller
 
     try {
         $receiptNum = $this->PopbillMessaging->SendMMS($testCorpNum,'','','',$Messages, $Files, $reserveDT, $adsYN, '', '', '', $requestNum);
-    }
-    catch(PopbillException $pe) {
+    } catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -420,8 +415,7 @@ class MessageController extends Controller
 
     try {
         $receiptNum = $this->PopbillMessaging->SendMMS($testCorpNum, '', '', '', $Messages, $Files, $reserveDT, $adsYN, '', '', '', $requestNum);
-    }
-    catch(PopbillException $pe) {
+    } catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -446,8 +440,7 @@ class MessageController extends Controller
         $result = $this->PopbillMessaging->CancelReserve($testCorpNum ,$ReceiptNum);
         $code = $result->code;
         $message = $result->message;
-    }
-    catch(PopbillException $pe) {
+    } catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
     }
@@ -470,8 +463,7 @@ class MessageController extends Controller
         $result = $this->PopbillMessaging->CancelReserveRN($testCorpNum ,$requestNum);
         $code = $result->code;
         $message = $result->message;
-    }
-    catch(PopbillException $pe) {
+    } catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
     }
@@ -619,7 +611,7 @@ class MessageController extends Controller
 
     try {
         $url = $this->PopbillMessaging->GetSentListURL($testCorpNum, $testUserID);
-    catch(PopbillException $pe) {
+    } catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -686,7 +678,7 @@ class MessageController extends Controller
 
     try {
         $url = $this->PopbillMessaging->GetChargeURL($testCorpNum, $testUserID);
-    catch(PopbillException $pe) {
+    } catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -911,7 +903,7 @@ class MessageController extends Controller
 
     try {
         $url = $this->PopbillMessaging->GetAccessURL($testCorpNum, $testUserID);
-    catch(PopbillException $pe) {
+    } catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -931,8 +923,7 @@ class MessageController extends Controller
 
     try {
       $CorpInfo = $this->PopbillMessaging->GetCorpInfo($testCorpNum);
-    }
-    catch(PopbillException $pe) {
+    } catch(PopbillException $pe) {
       $code = $pe->getCode();
       $message = $pe->getMessage();
       return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -972,8 +963,7 @@ class MessageController extends Controller
         $result =  $this->PopbillMessaging->UpdateCorpInfo($testCorpNum, $CorpInfo);
         $code = $result->code;
         $message = $result->message;
-    }
-    catch(PopbillException $pe) {
+    } catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
     }
@@ -1024,8 +1014,7 @@ class MessageController extends Controller
         $result = $this->PopbillMessaging->RegistContact($testCorpNum, $ContactInfo);
         $code = $result->code;
         $message = $result->message;
-    }
-    catch(PopbillException $pe) {
+    } catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
     }
@@ -1044,8 +1033,7 @@ class MessageController extends Controller
 
     try {
       $ContactList = $this->PopbillMessaging->ListContact($testCorpNum);
-    }
-    catch(PopbillException $pe) {
+    } catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -1094,8 +1082,7 @@ class MessageController extends Controller
         $result = $this->PopbillMessaging->UpdateContact($testCorpNum, $ContactInfo, $testUserID);
         $code = $result->code;
         $message = $result->message;
-    }
-    catch(PopbillException $pe) {
+    } catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
     }
