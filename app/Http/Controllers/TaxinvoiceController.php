@@ -1394,10 +1394,10 @@ class TaxinvoiceController extends Controller
     $DType = 'W';
 
     // [필수] 시작일자
-    $SDate = '20200101';
+    $SDate = '20200701';
 
     // [필수] 종료일자
-    $EDate = '20200131';
+    $EDate = '20200731';
 
     // 전송상태값 배열, 문서상태 값 3자리 배열, 2,3번째 자리 와일드카드 사용가능, 미기재시 전체조회
     $State = array (
@@ -1425,6 +1425,21 @@ class TaxinvoiceController extends Controller
         'T'
     );
 
+    // 공급받는자 휴폐업상태 배열, N-미확인, 0-미등록, 1-사업중, 2-폐업, 3-휴업
+    $CloseDownState = array (
+        'N',
+        '0',
+        '1',
+        '2',
+        '3'
+    );
+
+    // 등록유형 배열, P-팝빌, H-홈택스 또는 외부ASP
+    $RegType = array (
+        'P',
+        'H'
+    );
+
     // 지연발행여부, 0-정상발행분만 조회, 1-지연발행분만 조회, 미기재시 전체조회
     $LateOnly = 0;
 
@@ -1449,13 +1464,17 @@ class TaxinvoiceController extends Controller
     // 거래처 조회, 거래처 상호 또는 거래처 사업자등록번호 기재하여 조회, 미기재시 전체조회
     $QString = '';
 
+    // 문서번호 또는 국세청승인번호 조회
+    $MgtKey = '';
+
     // 연동문서 조회여부, 공백-전체조회, 0-일반문서 조회, 1-연동문서 조회
     $InterOPYN = '';
 
     try {
         $result = $this->PopbillTaxinvoice->Search($testCorpNum, $mgtKeyType, $DType, $SDate,
             $EDate, $State, $Type, $TaxType, $LateOnly, $Page, $PerPage, $Order,
-            $TaxRegIDType, $TaxRegIDYN, $TaxRegID, $QString, $InterOPYN, $testUserID, $IssueType);
+            $TaxRegIDType, $TaxRegIDYN, $TaxRegID, $QString, $InterOPYN, $testUserID, $IssueType,
+            $CloseDownState, $MgtKey, $RegType);
     }
     catch(PopbillException $pe) {
         $code = $pe->getCode();
