@@ -302,16 +302,16 @@ class EasyFinBankController extends Controller
     $testCorpNum = '1234567890';
 
     // 은행코드
-    $BankCode = '0048';
+    $BankCode = '0039';
 
     // 계좌번호
-    $AccountNumber = '131020538645';
+    $AccountNumber = '2070064402404';
 
     // 시작일자, 형식(yyyyMMdd)
-    $SDate = '20191001';
+    $SDate = '20200701';
 
     // 종료일자, 형식(yyyyMMdd)
-    $EDate = '20191230';
+    $EDate = '20200729';
 
     try {
         $jobID = $this->PopbillEasyFinBank->RequestJob($testCorpNum, $BankCode, $AccountNumber, $SDate, $EDate);
@@ -380,7 +380,7 @@ class EasyFinBankController extends Controller
     $testCorpNum = '1234567890';
 
     // 수집 요청(RequestJob) 호출시 반환받은 작업아이디
-    $JobID = '019123015000000004';
+    $JobID = '020072916000000001';
 
     // 거래유형 배열, I-입금, O-출금
     $TradeType = array ('I', 'O' );

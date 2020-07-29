@@ -17,6 +17,7 @@
             <li>pageNum (페이지 번호) : {{ $Result->pageNum }} </li>
             <li>perPage (페이지당 목록개수) : {{ $Result->perPage }} </li>
             <li>pageCount (페이지 개수) : {{ $Result->pageCount }} </li>
+            <li>lastScrapDT (최종 조회일시) : {{ $Result->lastScrapDT }} </li>
           </ul>
           @foreach ($Result->list as $indexKey => $tradeInfo)
           <fieldset class="fieldset2">
