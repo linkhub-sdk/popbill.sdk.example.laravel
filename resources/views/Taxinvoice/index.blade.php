@@ -49,6 +49,7 @@
             <li><a href="Taxinvoice/GetPopUpURL">GetPopUpURL</a> (세금계산서 보기 URL)</li>
             <li><a href="Taxinvoice/GetViewURL">GetViewURL</a> (세금계산서 보기 URL - 메뉴/버튼 제외)</li>
             <li><a href="Taxinvoice/GetPrintURL">GetPrintURL</a> (세금계산서 인쇄 [공급자/공급받는자] URL)</li>
+            <li><a href="Taxinvoice/GetOldPrintURL">GetOldPrintURL</a> (구)(세금계산서 인쇄 [공급자/공급받는자] URL)</li>
             <li><a href="Taxinvoice/GetEPrintURL">GetEPrintURL</a> (세금계산서 인쇄 [공급받는자용] URL)</li>
             <li><a href="Taxinvoice/GetMassPrintURL">GetMassPrintURL</a> (세금계산서 대량 인쇄 URL)</li>
             <li><a href="Taxinvoice/GetMailURL">GetMailURL</a> (세금계산서 메일링크 URL)</li>

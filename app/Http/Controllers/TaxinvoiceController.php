@@ -35,6 +35,9 @@ class TaxinvoiceController extends Controller
 
     // 팝빌 API 서비스 고정 IP 사용여부(GA), true-사용, false-미사용, 기본값(false)
     $this->PopbillTaxinvoice->UseStaticIP(config('popbill.UseStaticIP'));
+
+    // 로컬서버 시간 사용 여부 true(기본값) - 사용, false(미사용)
+    $this->PopbillTaxinvoice->UseLocalTimeYN(config('popbill.UseLocalTimeYN'));
   }
 
   // HTTP Get Request URI -> 함수 라우팅 처리 함수
@@ -1623,6 +1626,33 @@ class TaxinvoiceController extends Controller
         return view('PResponse', ['code' => $code, 'message' => $message]);
     }
     return view('ReturnValue', ['filedName' => "세금계산서 인쇄 팝업 URL" , 'value' => $url]);
+  }
+
+  /**
+   * 1건의 전자세금계산서 구버전 양식 인쇄팝업 URL을 반환합니다.
+   * - 반환된 URL은 보안정책으로 인해 30초의 유효시간을 갖습니다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetOldPrintURL
+   */
+  public function GetOldPrintURL(){
+
+    // 팝빌 회원 사업자 번호, "-"제외 10자리
+    $testCorpNum = '1234567890';
+
+    // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
+    $mgtKeyType = TIENumMgtKeyType::SELL;
+
+    // 문서번호
+    $mgtKey = '20190213-001';
+
+    try {
+        $url = $this->PopbillTaxinvoice->GetOldPrintURL($testCorpNum, $mgtKeyType, $mgtKey);
+    }
+    catch(PopbillException $pe) {
+        $code = $pe->getCode();
+        $message = $pe->getMessage();
+        return view('PResponse', ['code' => $code, 'message' => $message]);
+    }
+    return view('ReturnValue', ['filedName' => "세금계산서 (구)인쇄 팝업 URL" , 'value' => $url]);
   }
 
   /**
