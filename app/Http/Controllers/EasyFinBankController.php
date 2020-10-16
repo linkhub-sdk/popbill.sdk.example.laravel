@@ -32,6 +32,9 @@ class EasyFinBankController extends Controller
 
     // 팝빌 API 서비스 고정 IP 사용여부(GA), true-사용, false-미사용, 기본값(false)
     $this->PopbillEasyFinBank->UseStaticIP(config('popbill.UseStaticIP'));
+
+    // 로컬서버 시간 사용 여부 true(기본값) - 사용, false(미사용)
+    $this->PopbillEasyFinBank->UseLocalTimeYN(config('popbill.UseLocalTimeYN'));
   }
 
   // HTTP Get Request URI -> 함수 라우팅 처리 함수
