@@ -19,8 +19,10 @@
     <fieldset class="fieldset1">
         <legend>팩스 전송</legend>
         <ul>
-            <li><a href="Fax/SendFAX">SendFAX</a> (팩스 전송. 1파일 1건 전송)</li>
-            <li><a href="Fax/SendFAX_Multi">SendFAX_Multi</a> (팩스 전송. 1파일 동보 전송(수신번호 최대 1000개))</li>
+            <li><a href="Fax/SendFAX">SendFAX</a> (팩스 전송. 파일(최대 20개) 1건 전송)</li>
+            <li><a href="Fax/SendFAX_Multi">SendFAX_Multi</a> (팩스 전송. 파일(최대 20개) 동보 전송(수신번호 최대 1000개))</li>
+            <li><a href="Fax/SendFAXBinary">SendFAXBinary</a> (팩스 전송. 바이너리 데이터(최대 20개) 1건 전송)</li>
+            <li><a href="Fax/SendFAXBinary_Multi">SendFAXBinary_Multi</a> (팩스 전송. 바이너리 데이터(최대 20개) 동보 전송(수신번호 최대 1000개))</li>
             <li><a href="Fax/ResendFAX">ResendFAX</a> (팩스 재전송)</li>
             <li><a href="Fax/ResendFAXRN">ResendFAXRN</a> (팩스 재전송 - 요청번호할당)</li>
             <li><a href="Fax/ResendFAX_Multi">ResendFAX_Multi</a> (팩스 동보 재전송)</li>

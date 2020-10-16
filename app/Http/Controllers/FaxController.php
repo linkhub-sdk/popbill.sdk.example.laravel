@@ -30,6 +30,9 @@ class FaxController extends Controller
 
     // 팝빌 API 서비스 고정 IP 사용여부(GA), true-사용, false-미사용, 기본값(false)
     $this->PopbillFax->UseStaticIP(config('popbill.UseStaticIP'));
+
+    // 로컬서버 시간 사용 여부 true(기본값) - 사용, false(미사용)
+    $this->PopbillFax->UseLocalTimeYN(config('popbill.UseLocalTimeYN'));
   }
 
   // HTTP Get Request URI -> 함수 라우팅 처리 함수
@@ -198,6 +201,148 @@ class FaxController extends Controller
     }
 
     return view('ReturnValue', ['filedName' => '팩스 대량전송 접수번호(receiptNum)', 'value' => $receiptNum]);
+  }
+
+  /**
+   * 바이너리 데이터를 팩스 전송합니다. (전송할 바이너리 데이터 개수는 최대 20개까지 가능)
+   * - https://docs.popbill.com/fax/phplaravel/api#SendFAXBInary
+   */
+  public function SendFAXBinary(){
+
+    // 팝빌 회원 사업자번호
+    $testCorpNum = '1234567890';
+
+    // 팝빌 회원 아이디
+    $testUserID = 'testkorea';
+
+    // 팩스전송 발신번호
+    $Sender = '07043042992';
+
+    // 팩스전송 발신자명
+    $SenderName = '발신자명';
+
+    // 팩스 수신정보 배열, 최대 1000건
+    $Receivers[] = array(
+        // 팩스 수신번호
+        'rcv' => '070111222',
+        // 수신자명
+        'rcvnm' => '팝빌담당자'
+    );
+
+    // 파일정보 배열, 최대 20개.
+    $FileDatas[] = array(
+        //파일명
+        'fileName' => 'test.pdf',
+        //fileData - BLOB 데이터 입력
+        'fileData' => file_get_contents('/home/php/Laravel_WorkSpace/test.pdf') //file_get_contenst-바이너리데이터 추출
+	);
+
+    $FileDatas[] = array(
+        //파일명
+        'fileName' => 'test2.PNG',
+        //fileData - BLOB 데이터 입력
+        'fileData' => file_get_contents('/home/php/Laravel_WorkSpace/test2.PNG') //file_get_contenst-바이너리데이터 추출
+    );
+
+    // 예약전송일시(yyyyMMddHHmmss) ex) 20151212230000, null인경우 즉시전송
+    $reserveDT = null;
+
+    // 광고팩스 전송여부
+    $adsYN = false;
+
+    // 팩스제목
+    $title = '팩스 단건전송 제목';
+
+    // 전송요청번호
+    // 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
+    // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
+    $requestNum = '';
+
+    try {
+        $receiptNum = $this->PopbillFax->SendFAXBinary($testCorpNum, $Sender, $Receivers, $FileDatas,
+            $reserveDT, $testUserID, $SenderName, $adsYN, $title, $requestNum);
+    }
+    catch(PopbillException $pe) {
+        $code = $pe->getCode();
+        $message = $pe->getMessage();
+        return view('PResponse', ['code' => $code, 'message' => $message]);
+    }
+    return view('ReturnValue', ['filedName' => '바이너리데이터 팩스 단건전송 접수번호(receiptNum)', 'value' => $receiptNum]);
+  }
+
+  /**
+  * [대량전송] 바이너리데이터를 팩스 전송합니다. (전송할 파일 개수는 최대 20개까지 가능)
+  * - https://docs.popbill.com/fax/phplaravel/api#SendFAXBinary
+  */
+  public function SendFAXBinary_Multi(){
+
+    // 팝빌 회원 사업자번호
+    $testCorpNum = '1234567890';
+
+    // 팝빌 회원 아이디
+    $testUserID = 'testkorea';
+
+    // 팩스전송 발신번호
+    $Sender = '07043042991';
+
+    // 팩스전송 발신자명
+    $SenderName = '발신자명';
+
+    // 팩스 수신정보 배열, 최대 1000건
+    $Receivers[] = array(
+        // 팩스 수신번호
+        'rcv' => '070111222',
+        // 팩스 수신자명
+        'rcvnm' => '팝빌담당자'
+    );
+
+    $Receivers[] = array(
+        // 팩스 수신번호
+        'rcv' => '070333444',
+        // 팩스 수신자명
+        'rcvnm' => '수신담당자'
+    );
+
+    // 파일정보 배열, 최대 20개.
+    $FileDatas[] = array(
+        //파일명
+        'fileName' => 'test.pdf',
+        //바이너리데이터
+        'fileData' => file_get_contents('/home/php/Laravel_WorkSpace/test.pdf') //file_get_contenst-바이너리데이터 추출
+	);
+
+    $FileDatas[] = array(
+        //파일명
+        'fileName' => 'test2.PNG',
+        //바이너리데이터
+        'fileData' => file_get_contents('/home/php/Laravel_WorkSpace/test2.PNG') //file_get_contenst-바이너리데이터 추출
+    );
+
+    // 예약전송일시(yyyyMMddHHmmss) ex)20151212230000, null인경우 즉시전송
+    $reserveDT = null;
+
+    // 광고팩스 전송여부
+    $adsYN = false;
+
+    // 팩스 제목
+    $title = '팩스 동보전송 제목';
+
+    // 전송요청번호
+    // 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
+    // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
+    $requestNum = '';
+
+    try {
+        $receiptNum = $this->PopbillFax->SendFAXBinary($testCorpNum, $Sender, $Receivers, $FileDatas,
+            $reserveDT, $testUserID, $SenderName, $adsYN, $title, $requestNum);
+    }
+    catch(PopbillException $pe) {
+        $code = $pe->getCode();
+        $message = $pe->getMessage();
+        return view('PResponse', ['code' => $code, 'message' => $message]);
+    }
+
+    return view('ReturnValue', ['filedName' => '바이너리데이터 팩스 대량전송 접수번호(receiptNum)', 'value' => $receiptNum]);
   }
 
   /**
