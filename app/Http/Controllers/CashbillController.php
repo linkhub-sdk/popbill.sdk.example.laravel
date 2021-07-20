@@ -71,7 +71,7 @@ class CashbillController extends Controller
 
   /**
    * 1건의 현금영수증을 [즉시발행]합니다.
-   * - 발행일 기준 오후 5시 이전에 발행된 현금영수증은 다음날 오후 2시에 국세청 전송결과를 확인할 수 있습니다.
+   * - 현금영수증 국세청 전송 정책 : https://docs.popbill.com/cashbill/ntsSendPolicy?lang=phplaravel
    * - https://docs.popbill.com/cashbill/phplaravel/api#RegistIssue
    */
   public function RegistIssue(){
@@ -361,13 +361,13 @@ class CashbillController extends Controller
     catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
-	  }
+    }
     return view('PResponse', ['code' => $code, 'message' => $message]);
   }
 
   /**
    * 1건의 [임시저장] 현금영수증을 [발행]합니다.
-   * - 발행일 기준 오후 5시 이전에 발행된 현금영수증은 다음날 오후 2시에 국세청 전송결과를 확인할 수 있습니다.
+   * - 현금영수증 국세청 전송 정책 : https://docs.popbill.com/cashbill/ntsSendPolicy?lang=phplaravel
    * - https://docs.popbill.com/cashbill/phplaravel/api#CBIssue
    */
   public function Issue(){
@@ -452,7 +452,7 @@ class CashbillController extends Controller
 
   /**
    * 1건의 취소현금영수증을 [즉시발행]합니다.
-   * - 발행일 기준 오후 5시 이전에 발행된 현금영수증은 다음날 오후 2시에 국세청 전송결과를 확인할 수 있습니다.
+   * - 현금영수증 국세청 전송 정책 : https://docs.popbill.com/cashbill/ntsSendPolicy?lang=phplaravel
    * - https://docs.popbill.com/cashbill/phplaravel/api#RevokeRegistIssue
    */
   public function RevokeRegistIssue(){
@@ -484,7 +484,7 @@ class CashbillController extends Controller
 
   /**
    * 1건의 (부분)취소현금영수증을 [즉시발행]합니다.
-   * - 발행일 기준 오후 5시 이전에 발행된 현금영수증은 다음날 오후 2시에 국세청 전송결과를 확인할 수 있습니다.
+   * - 현금영수증 국세청 전송 정책 : https://docs.popbill.com/cashbill/ntsSendPolicy?lang=phplaravel
    * - https://docs.popbill.com/cashbill/phplaravel/api#RevokeRegistIssue
    */
   public function RevokeRegistIssue_part(){
