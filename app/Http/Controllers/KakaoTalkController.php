@@ -85,7 +85,7 @@ class KakaoTalkController extends Controller
         return view('PResponse', ['code' => $code, 'message' => $message]);
     }
 
-    return view('KakaoTalk/ListPlusfriendID', ['Result' => $result] );
+    return view('KakaoTalk/ListPlusFriendID', ['Result' => $result] );
   }
 
   /**
