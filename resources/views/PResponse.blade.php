@@ -16,6 +16,9 @@
             @isset($ntsConfirmNum)
             <li>ntsConfirmNum (국세청 승인번호) : {{ $ntsConfirmNum }}</li>
             @endisset
+            @isset($receiptID)
+            <li>$receiptID (접수 아이디) : {{ $receiptID }}</li>
+            @endisset
         </ul>
     </fieldset>
 </div>
