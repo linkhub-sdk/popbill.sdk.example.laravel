@@ -47,8 +47,8 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-   * 세금계산서 문서번호 중복여부를 확인합니다.
-   * - 문서번호는 1~24자리로 숫자, 영문 '-', '_' 조합으로 구성할 수 있습니다.
+   * 파트너가 세금계산서 관리 목적으로 할당하는 문서번호의 사용여부를 확인합니다.
+   * - 문서번호는 최대 24자리 영문 대소문자, 숫자, 특수문자('-','_')로 구성 합니다.
    * - https://docs.popbill.com/taxinvoice/phplaravel/api#CheckMgtKeyInUse
    */
   public function CheckMgtKeyInUse(){
@@ -57,8 +57,7 @@ class TaxinvoiceController extends Controller
     $testCorpNum = '1234567890';
 
     // 세금계산서 문서번호, 연동회원 사업자번호 범위에서 중복되지 않는 문서번호 할당
-    // 1~24자리 영문, 숫자, '_', '-' 조합하여 구성
-    $mgtKey = '20190101-001';
+    $mgtKey = '20210712-001';
 
     // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
     $mgtKeyType = TIENumMgtKeyType::SELL;
@@ -78,7 +77,8 @@ class TaxinvoiceController extends Controller
 
 
   /**
-   * 1건의 정발행 세금계산서를 즉시발행 처리합니다.
+   * 작성된 세금계산서 데이터를 팝빌에 저장과 동시에 발행(전자서명)하여 "발행완료" 상태로 처리합니다.
+   * - 세금계산서 국세청 전송 정책 : https://docs.popbill.com/taxinvoice/ntsSendPolicy?lang=phplaravel
    * - https://docs.popbill.com/taxinvoice/phplaravel/api#RegistIssue
    */
   public function RegistIssue(){
@@ -89,9 +89,8 @@ class TaxinvoiceController extends Controller
     // 팝빌회원 아이디
     $testUserID = 'testkorea';
 
-    // 세금계산서 문서번호
-    // - 최대 24자리 숫자, 영문, '-', '_' 조합으로 사업자별로 중복되지 않도록 구성
-    $invoicerMgtKey = '20191024-023';
+    // 문서번호, 최대 24자리 영문 대소문자, 숫자, 특수문자('-','_')만 이용 가능
+    $invoicerMgtKey = '20211024-023';
 
     // 지연발행 강제여부
     $forceIssue = false;
@@ -106,7 +105,7 @@ class TaxinvoiceController extends Controller
     $writeSpecification = false;
 
     // 거래명세서 동시작성시 명세서 문서번호
-    // - 최대 24자리 숫자, 영문, '-', '_' 조합으로 사업자별로 중복되지 않도록 구성
+    // 최대 24자리 영문 대소문자, 숫자, 특수문자('-','_')만 이용 가능
     $dealInvoiceMgtKey = '';
 
     /************************************************************
@@ -116,7 +115,7 @@ class TaxinvoiceController extends Controller
     $Taxinvoice = new Taxinvoice();
 
     // [필수] 작성일자, 형식(yyyyMMdd) 예)20150101
-    $Taxinvoice->writeDate = '20191024';
+    $Taxinvoice->writeDate = '20210701';
 
     // [필수] 발행형태, '정발행', '역발행', '위수탁' 중 기재
     $Taxinvoice->issueType = '정발행';
@@ -144,7 +143,7 @@ class TaxinvoiceController extends Controller
     // [필수] 공급자 상호
     $Taxinvoice->invoicerCorpName = '공급자상호';
 
-    // [필수] 공급자 문서번호, 최대 24자리 숫자, 영문, '-', '_' 조합으로 사업자별로 중복되지 않도록 구성
+    // [필수] 공급자 문서번호, 최대 24자리 영문 대소문자, 숫자, 특수문자('-','_')만 이용 가능
     $Taxinvoice->invoicerMgtKey = $invoicerMgtKey;
 
     // [필수] 공급자 대표자성명
@@ -192,7 +191,7 @@ class TaxinvoiceController extends Controller
     // [필수] 공급자 상호
     $Taxinvoice->invoiceeCorpName = '공급받는자 상호';
 
-    // [역발행시 필수] 공급받는자 문서번호, 최대 24자리 숫자, 영문, '-', '_' 조합으로 사업자별로 중복되지 않도록 구성
+    // [역발행시 필수] 공급받는자 문서번호, 최대 24자리 영문 대소문자, 숫자, 특수문자('-','_')만 이용 가능
     $Taxinvoice->invoiceeMgtKey = '';
 
     // [필수] 공급받는자 대표자성명
@@ -285,7 +284,7 @@ class TaxinvoiceController extends Controller
     $Taxinvoice->detailList = array();
     $Taxinvoice->detailList[] = new TaxinvoiceDetail();
     $Taxinvoice->detailList[0]->serialNum = 1;				      // [상세항목 배열이 있는 경우 필수] 일련번호 1~99까지 순차기재,
-    $Taxinvoice->detailList[0]->purchaseDT = '20190226';	  // 거래일자
+    $Taxinvoice->detailList[0]->purchaseDT = '20210226';	  // 거래일자
     $Taxinvoice->detailList[0]->itemName = '품목명1번';	  	// 품명
     $Taxinvoice->detailList[0]->spec = '';				      // 규격
     $Taxinvoice->detailList[0]->qty = '';					        // 수량
@@ -296,7 +295,7 @@ class TaxinvoiceController extends Controller
 
     $Taxinvoice->detailList[] = new TaxinvoiceDetail();
     $Taxinvoice->detailList[1]->serialNum = 2;				      // [상세항목 배열이 있는 경우 필수] 일련번호 1~99까지 순차기재,
-    $Taxinvoice->detailList[1]->purchaseDT = '20190226';	  // 거래일자
+    $Taxinvoice->detailList[1]->purchaseDT = '20210226';	  // 거래일자
     $Taxinvoice->detailList[1]->itemName = '품목명2번';	  	// 품명
     $Taxinvoice->detailList[1]->spec = '';				      // 규격
     $Taxinvoice->detailList[1]->qty = '';					        // 수량
@@ -338,8 +337,8 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-   * 1건의 세금계산서를 [임시저장]합니다.
-   * - 세금계산서 임시저장(Register API) 호출후에는 발행(Issue API)을 호출해야만 국세청으로 전송됩니다.
+   * 작성된 세금계산서 데이터를 팝빌에 저장합니다. 
+   * - "임시저장" 상태의 세금계산서는 발행(Issue)함수를 호출하여 "발행완료" 처리한 경우에만 국세청으로 전송됩니다.
    * - 정발행시 임시저장(Register)과 발행(Issue)을 한번의 호출로 처리하는 즉시발행(RegistIssue API) 프로세스 연동을 권장합니다.
    * - 역발행시 임시저장(Register)과 역발행요청(Request)을 한번의 호출로 처리하는 즉시요청(RegistRequest API) 프로세스 연동을 권장합니다.
    * - https://docs.popbill.com/taxinvoice/phplaravel/api#Register
@@ -350,8 +349,8 @@ class TaxinvoiceController extends Controller
     $testCorpNum = '1234567890';
 
     // 세금계산서 문서번호
-    // - 최대 24자리 숫자, 영문, '-', '_' 조합으로 사업자별로 중복되지 않도록 구성
-    $invoicerMgtKey = '20190226-024';
+    // - 최대 24자리 영문 대소문자, 숫자, 특수문자('-','_')만 이용 가능
+    $invoicerMgtKey = '20210701-024';
 
     /************************************************************
      *                        세금계산서 정보
@@ -361,7 +360,7 @@ class TaxinvoiceController extends Controller
     $Taxinvoice = new Taxinvoice();
 
     // [필수] 작성일자, 형식(yyyyMMdd) 예)20150101
-    $Taxinvoice->writeDate = '20190226';
+    $Taxinvoice->writeDate = '20210701';
 
     // [필수] 발행형태, '정발행', '역발행', '위수탁' 중 기재
     $Taxinvoice->issueType = '정발행';
@@ -389,7 +388,7 @@ class TaxinvoiceController extends Controller
     // [필수] 공급자 상호
     $Taxinvoice->invoicerCorpName = '공급자상호';
 
-    // [필수] 공급자 문서번호, 최대 24자리 숫자, 영문, '-', '_' 조합으로 사업자별로 중복되지 않도록 구성
+    // [필수] 공급자 문서번호, 최대 24자리 영문 대소문자, 숫자, 특수문자('-','_')만 이용 가능
     $Taxinvoice->invoicerMgtKey = $invoicerMgtKey;
 
     // [필수] 공급자 대표자성명
@@ -437,7 +436,7 @@ class TaxinvoiceController extends Controller
     // [필수] 공급자 상호
     $Taxinvoice->invoiceeCorpName = '공급받는자 상호';
 
-    // [역발행시 필수] 공급받는자 문서번호, 최대 24자리 숫자, 영문, '-', '_' 조합으로 사업자별로 중복되지 않도록 구성
+    // [역발행시 필수] 공급받는자 문서번호, 최대 24자리 영문 대소문자, 숫자, 특수문자('-','_')만 이용 가능
     $Taxinvoice->invoiceeMgtKey = '';
 
     // [필수] 공급받는자 대표자성명
@@ -535,7 +534,7 @@ class TaxinvoiceController extends Controller
     $Taxinvoice->detailList = array();
     $Taxinvoice->detailList[] = new TaxinvoiceDetail();
     $Taxinvoice->detailList[0]->serialNum = 1;				      // [상세항목 배열이 있는 경우 필수] 일련번호 1~99까지 순차기재,
-    $Taxinvoice->detailList[0]->purchaseDT = '20190101';	  // 거래일자
+    $Taxinvoice->detailList[0]->purchaseDT = '20210701';	  // 거래일자
     $Taxinvoice->detailList[0]->itemName = '품목명1번';	  	// 품명
     $Taxinvoice->detailList[0]->spec = '';				      // 규격
     $Taxinvoice->detailList[0]->qty = '';					        // 수량
@@ -546,7 +545,7 @@ class TaxinvoiceController extends Controller
 
     $Taxinvoice->detailList[] = new TaxinvoiceDetail();
     $Taxinvoice->detailList[1]->serialNum = 2;				      // [상세항목 배열이 있는 경우 필수] 일련번호 1~99까지 순차기재,
-    $Taxinvoice->detailList[1]->purchaseDT = '20190101';	  // 거래일자
+    $Taxinvoice->detailList[1]->purchaseDT = '20210701';	  // 거래일자
     $Taxinvoice->detailList[1]->itemName = '품목명2번';	  	// 품명
     $Taxinvoice->detailList[1]->spec = '';				      // 규격
     $Taxinvoice->detailList[1]->qty = '';					        // 수량
@@ -588,7 +587,7 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-   * [임시저장] 상태의 세금계산서의 항목을 수정합니다.
+   * "임시저장" 상태의 세금계산서를 수정합니다. 
    * - https://docs.popbill.com/taxinvoice/phplaravel/api#Update
    */
   public function Update(){
@@ -599,8 +598,8 @@ class TaxinvoiceController extends Controller
     // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
-    // 세금계산서 문서번호
-    $mgtKey = '20190213-002';
+    // 세금계산서 문서번호, 최대 24자리 영문 대소문자, 숫자, 특수문자('-','_')만 이용 가능
+    $mgtKey = '20210701-002';
 
     /************************************************************
      *                        세금계산서 정보
@@ -610,7 +609,7 @@ class TaxinvoiceController extends Controller
     $Taxinvoice = new Taxinvoice();
 
     // [필수] 작성일자, 형식(yyyyMMdd) 예)20150101
-    $Taxinvoice->writeDate = '20190213';
+    $Taxinvoice->writeDate = '20210701';
 
     // [필수] 발행형태, '정발행', '역발행', '위수탁' 중 기재
     $Taxinvoice->issueType = '정발행';
@@ -686,7 +685,7 @@ class TaxinvoiceController extends Controller
     // [필수] 공급자 상호
     $Taxinvoice->invoiceeCorpName = '공급받는자 상호_수정';
 
-    // [역발행시 필수] 공급받는자 문서번호, 최대 24자리 숫자, 영문, '-', '_' 조합으로 사업자별로 중복되지 않도록 구성
+    // [역발행시 필수] 공급받는자 문서번호, 최대 24자리 영문 대소문자, 숫자, 특수문자('-','_')만 이용 가능
     $Taxinvoice->invoiceeMgtKey = '';
 
     // [필수] 공급받는자 대표자성명
@@ -786,7 +785,7 @@ class TaxinvoiceController extends Controller
     $Taxinvoice->detailList = array();
     $Taxinvoice->detailList[] = new TaxinvoiceDetail();
     $Taxinvoice->detailList[0]->serialNum = 1;				      // [상세항목 배열이 있는 경우 필수] 일련번호 1~99까지 순차기재,
-    $Taxinvoice->detailList[0]->purchaseDT = '20190101';	  // 거래일자
+    $Taxinvoice->detailList[0]->purchaseDT = '20210701';	  // 거래일자
     $Taxinvoice->detailList[0]->itemName = '품목명1번';	  	// 품명
     $Taxinvoice->detailList[0]->spec = '';				      // 규격
     $Taxinvoice->detailList[0]->qty = '';					        // 수량
@@ -797,7 +796,7 @@ class TaxinvoiceController extends Controller
 
     $Taxinvoice->detailList[] = new TaxinvoiceDetail();
     $Taxinvoice->detailList[1]->serialNum = 2;				      // [상세항목 배열이 있는 경우 필수] 일련번호 1~99까지 순차기재,
-    $Taxinvoice->detailList[1]->purchaseDT = '20190101';	  // 거래일자
+    $Taxinvoice->detailList[1]->purchaseDT = '20210701';	  // 거래일자
     $Taxinvoice->detailList[1]->itemName = '품목명2번';	  	// 품명
     $Taxinvoice->detailList[1]->spec = '';				      // 규격
     $Taxinvoice->detailList[1]->qty = '';					        // 수량
@@ -836,7 +835,8 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-   * [임시저장] 또는 [발행대기] 상태의 세금계산서를 [공급자]가 [발행]합니다.
+   * "임시저장" 또는 "(역)발행대기" 상태의 세금계산서를 발행(전자서명)하며, "발행완료" 상태로 처리합니다.
+   * - 세금계산서 국세청 전송정책 : https://docs.popbill.com/taxinvoice/ntsSendPolicy?lang=php 
    * - https://docs.popbill.com/taxinvoice/phplaravel/api#TIIssue
    */
   public function Issue(){
@@ -848,7 +848,7 @@ class TaxinvoiceController extends Controller
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
     // 문서번호
-    $mgtKey = '20190226-024';
+    $mgtKey = '20210701-024';
 
     // 메모
     $memo = '발행 메모입니다';
@@ -877,10 +877,8 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-   * [발행완료] 상태의 세금계산서를 [공급자]가 [발행취소]합니다.
-   * - [발행취소]는 국세청 전송전에만 가능합니다.
-   * - 발행취소된 세금계산서는 국세청에 전송되지 않습니다.
-   * - 발행취소 세금계산서에 사용된 문서번호를 재사용 하기 위해서는 삭제(Delete API)를 호출하여 해당세금계산서를 삭제해야 합니다.
+   * 국세청 전송 이전 "발행완료" 상태의 전자세금계산서를 "발행취소"하고, 해당 건은 국세청 신고 대상에서 제외됩니다. 
+   * - Delete(삭제)함수를 호출하여 "발행취소" 상태의 전자세금계산서를 삭제하면, 문서번호 재사용이 가능합니다. 
    * - https://docs.popbill.com/taxinvoice/phplaravel/api#CancelIssue
    */
   public function CancelIssue(){
@@ -892,7 +890,7 @@ class TaxinvoiceController extends Controller
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
     // 문서번호
-    $mgtKey = '20190213-002';
+    $mgtKey = '20210701-002';
 
     // 메모
     $memo = '발행 취소메모입니다';
@@ -911,9 +909,9 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-   * 1건의 전자세금계산서를 [삭제]합니다.
-   * - 세금계산서를 삭제해야만 문서번호(mgtKey)를 재사용할 수 있습니다.
-   * - 삭제가능한 문서 상태 : [임시저장], [발행취소], [발행예정 취소], [발행예정 거부]
+   * 삭제 가능한 상태의 세금계산서를 삭제합니다. 
+   * - 삭제 가능한 상태: "임시저장", "발행취소", "역발행거부", "역발행취소", "전송실패" 
+   * - 세금계산서를 삭제해야만 문서번호(mgtKey)를 재사용할 수 있습니다. 
    * - https://docs.popbill.com/taxinvoice/phplaravel/api#Delete
    */
   public function Delete(){
@@ -922,7 +920,7 @@ class TaxinvoiceController extends Controller
     $testCorpNum = '1234567890';
 
     // 문서번호
-    $mgtKey = '20190213-002';
+    $mgtKey = '20210702-002';
 
     // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
     $mgtKeyType = TIENumMgtKeyType::SELL;
@@ -941,10 +939,9 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-   * [공급받는자]가 공급자에게 1건의 역발행 세금계산서를 [즉시 요청]합니다.
-   * - 역발행 세금계산서 프로세스를 구현하기 위해서는 공급자/공급받는자가 모두 팝빌에 회원이여야 합니다.
-   * - 역발행 즉시요청후 공급자가 [발행] 처리시 포인트가 차감되며 역발행 세금계산서 항목중 과금방향(ChargeDirection)에 기재한 값에 따라
-   *   정과금(공급자과금) 또는 역과금(공급받는자과금) 처리됩니다.
+   * 공급받는자가 작성한 세금계산서 데이터를 팝빌에 저장하고 공급자에게 송부하여 발행을 요청합니다. 
+   * - 역발행 세금계산서 프로세스를 구현하기위해서는 공급자/공급받는자가 모두 팝빌에 회원이여야 합니다. 
+   * - 역발행 즉시요청후 공급자가 [발행] 처리시 포인트가 차감되며 역발행 세금계산서 항목중 과금방향(ChargeDirection)에 기재한 값에 따라 정과금(공급자과금) 또는 역과금(공급받는자과금) 처리됩니다.
    * - https://docs.popbill.com/taxinvoice/phplaravel/api#RegistRequest
    */
   public function RegistRequest(){
@@ -956,8 +953,8 @@ class TaxinvoiceController extends Controller
     $testUserID = 'testkorea';
 
     // 공급받는자 문서번호
-    // - 최대 24자리 숫자, 영문, '-', '_' 조합으로 사업자별로 중복되지 않도록 구성
-    $invoiceeMgtKey = '20190213-005';
+    // - 최대 24자리 영문 대소문자, 숫자, 특수문자('-','_')만 이용 가능
+    $invoiceeMgtKey = '20210701-005';
 
     /************************************************************
      *                        세금계산서 정보
@@ -967,7 +964,7 @@ class TaxinvoiceController extends Controller
     $Taxinvoice = new Taxinvoice();
 
     // [필수] 작성일자, 형식(yyyyMMdd) 예)20150101
-    $Taxinvoice->writeDate = '20190101';
+    $Taxinvoice->writeDate = '20210701';
 
     // [필수] 발행형태, '정발행', '역발행', '위수탁' 중 기재
     $Taxinvoice->issueType = '역발행';
@@ -996,7 +993,7 @@ class TaxinvoiceController extends Controller
     $Taxinvoice->invoicerCorpName = '공급자상호';
 
     // 공급자 문서번호,
-    // 최대 24자리 숫자, 영문, '-', '_' 조합으로 사업자별로 중복되지 않도록 구성
+    // 최대 24자리 영문 대소문자, 숫자, 특수문자('-','_')만 이용 가능
     $Taxinvoice->invoicerMgtKey = '';
 
     // [필수] 공급자 대표자성명
@@ -1040,7 +1037,7 @@ class TaxinvoiceController extends Controller
     $Taxinvoice->invoiceeCorpName = '공급받는자 상호';
 
     // [역발행시 필수] 공급받는자 문서번호,
-    // 최대 24자리 숫자, 영문, '-', '_' 조합으로 사업자별로 중복되지 않도록 구성
+    // 최대 24자리 영문 대소문자, 숫자, 특수문자('-','_')만 이용 가능
     $Taxinvoice->invoiceeMgtKey = $invoiceeMgtKey;
 
     // [필수] 공급받는자 대표자성명
@@ -1137,7 +1134,7 @@ class TaxinvoiceController extends Controller
     $Taxinvoice->detailList = array();
     $Taxinvoice->detailList[] = new TaxinvoiceDetail();
     $Taxinvoice->detailList[0]->serialNum = 1;               // [상세항목 배열이 있는 경우 필수] 일련번호 1~99까지 순차기재,
-    $Taxinvoice->detailList[0]->purchaseDT = '20190101';     // 거래일자
+    $Taxinvoice->detailList[0]->purchaseDT = '20210701';     // 거래일자
     $Taxinvoice->detailList[0]->itemName = '품목명1번';        // 품명
     $Taxinvoice->detailList[0]->spec = '';                   // 규격
     $Taxinvoice->detailList[0]->qty = '';                    // 수량
@@ -1148,7 +1145,7 @@ class TaxinvoiceController extends Controller
 
     $Taxinvoice->detailList[] = new TaxinvoiceDetail();
     $Taxinvoice->detailList[1]->serialNum = 2;               // [상세항목 배열이 있는 경우 필수] 일련번호 1~99까지 순차기재,
-    $Taxinvoice->detailList[1]->purchaseDT = '20190101';     // 거래일자
+    $Taxinvoice->detailList[1]->purchaseDT = '20210701';     // 거래일자
     $Taxinvoice->detailList[1]->itemName = '품목명1번';        // 품명
     $Taxinvoice->detailList[1]->spec = '';                   // 규격
     $Taxinvoice->detailList[1]->qty = '';                    // 수량
@@ -1172,10 +1169,9 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-   * 공급받는자가 공급자에게 1건의 [임시저장] 상태의 역발행 세금계산서를 발행 요청합니다.
+   * 공급받는자가 저장된 역발행 세금계산서를 공급자에게 송부하여 발행 요청합니다.
    * - 역발행 세금계산서 프로세스를 구현하기 위해서는 공급자/공급받는자가 모두 팝빌에 회원이여야 합니다.
-   * - 역발행 요청후 공급자가 [발행] 처리시 포인트가 차감되며 역발행 세금계산서 항목중 과금방향(ChargeDirection) 에 기재한 값에 따라
-   *   정과금(공급자과금) 또는 역과금(공급받는자과금) 처리됩니다.
+   * - 역발행 요청후 공급자가 [발행] 처리시 포인트가 차감되며 역발행 세금계산서 항목중 과금방향(ChargeDirection)에 기재한 값에 따라 정과금(공급자과금) 또는 역과금(공급받는자과금) 처리됩니다.
    * - https://docs.popbill.com/taxinvoice/phplaravel/api#Request
    */
   public function Request(){
@@ -1187,7 +1183,7 @@ class TaxinvoiceController extends Controller
     $mgtKeyType = TIENumMgtKeyType::BUY;
 
     // 문서번호
-    $mgtKey = '20190101-002';
+    $mgtKey = '20210701-002';
 
     // 메모
     $memo = '역발행 요청 메모입니다';
@@ -1206,7 +1202,7 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-   * [공급받는자]가 역)발행대기 상태의 세금계산서를 [취소]합니다.
+   * 공급자가 요청받은 역발행 세금계산서를 발행하기 전, 공급받는자가 역발행요청을 취소합니다.
    * - [취소]한 세금계산서의 문서번호를 재사용하기 위해서는 삭제 (Delete API)를 호출해야 합니다.
    * - https://docs.popbill.com/taxinvoice/phplaravel/api#CancelRequest
    */
@@ -1219,7 +1215,7 @@ class TaxinvoiceController extends Controller
     $mgtKeyType = TIENumMgtKeyType::BUY;
 
     // 문서번호
-    $mgtKey = '20190101-001';
+    $mgtKey = '20210701-001';
 
     // 메모
     $memo = '역발행 요청 취소메모입니다';
@@ -1237,7 +1233,8 @@ class TaxinvoiceController extends Controller
     return view('PResponse', ['code' => $code, 'message' => $message]);
   }
   /**
-   * 공급받는자에게 요청받은 역발행 세금계산서를 [공급자]가 [거부]합니다.
+   * 공급자가 공급받는자에게 역발행 요청 받은 세금계산서의 발행을 거부합니다.
+   * - 세금계산서의 문서번호를 재사용하기 위해서는 삭제 (Delete API)를 호출하여 [삭제] 처리해야 합니다. 
    * - https://docs.popbill.com/taxinvoice/phplaravel/api#Refuse
    */
   public function Refuse(){
@@ -1249,7 +1246,7 @@ class TaxinvoiceController extends Controller
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
     // 문서번호
-    $mgtKey = '20190213-002';
+    $mgtKey = '20210701-002';
 
     // 메모
     $memo = '역)발행 요청 거부메모입니다';
@@ -1267,8 +1264,8 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-   * [발행완료] 상태의 세금계산서를 국세청으로 즉시전송합니다.
-   * - 국세청 즉시전송을 호출하지 않은 세금계산서는 발행일 기준 익일 오후 3시에 팝빌 시스템에서 일괄적으로 국세청으로 전송합니다.
+   * 공급자가 "발행완료" 상태의 전자세금계산서를 국세청에 즉시 전송하며, 함수 호출 후 최대 30분 이내에 전송 처리가 완료됩니다. 
+   * - 국세청 즉시전송을 호출하지 않은 세금계산서는 발행일 기준 익일 오후 3시에 팝빌 시스템에서 일괄적으로 국세청으로 전송합니다. 
    * - 익일전송시 전송일이 법정공휴일인 경우 다음 영업일에 전송됩니다.
    * - https://docs.popbill.com/taxinvoice/phplaravel/api#SendToNTS
    */
@@ -1281,7 +1278,7 @@ class TaxinvoiceController extends Controller
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
     // 문서번호
-    $mgtKey = '20190213-005';
+    $mgtKey = '20210701-005';
 
     try {
         $result = $this->PopbillTaxinvoice->SendToNTS($testCorpNum, $mgtKeyType, $mgtKey);
@@ -1297,7 +1294,7 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-   * 1건의 세금계산서 상태/요약 정보를 확인합니다.
+   * 세금계산서 1건의 상태 및 요약정보를 확인합니다.
    * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetInfo
    */
   public function GetInfo(){
@@ -1309,7 +1306,7 @@ class TaxinvoiceController extends Controller
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
     // 조회할 세금계산서 문서번호
-    $mgtKey = '20190101-001';
+    $mgtKey = '20210701-001';
 
     try {
         $result = $this->PopbillTaxinvoice->GetInfo($testCorpNum, $mgtKeyType, $mgtKey);
@@ -1324,7 +1321,7 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-   * 대량의 세금계산서 상태/요약 정보를 확인합니다. (최대 1000건)
+   * 다수건의 세금계산서 상태 및 요약 정보를 확인합니다. (1회 호출 시 최대 1,000건 확인 가능) 
    * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetInfos
    */
   public function GetInfos(){
@@ -1337,9 +1334,9 @@ class TaxinvoiceController extends Controller
 
     // 세금계산서 문서번호 배열, 최대 1000건
     $MgtKeyList = array();
-    array_push($MgtKeyList, "20190101-001");
-    array_push($MgtKeyList, '20190101-002');
-    array_push($MgtKeyList, '20190101-003');
+    array_push($MgtKeyList, "20210101-001");
+    array_push($MgtKeyList, '20210101-002');
+    array_push($MgtKeyList, '20210101-003');
 
     try {
         $result = $this->PopbillTaxinvoice->GetInfos($testCorpNum, $mgtKeyType, $MgtKeyList);
@@ -1353,7 +1350,7 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-   * 1건의 세금계산서 상세정보를 확인합니다.
+   * 세금계산서 1건의 상세정보를 확인합니다.
    * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetDetailInfo
    */
   public function GetDetailInfo(){
@@ -1365,7 +1362,7 @@ class TaxinvoiceController extends Controller
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
     // 세금계산서 문서번호
-    $mgtKey = '20190101-001';
+    $mgtKey = '20210101-001';
 
     try {
         $result = $this->PopbillTaxinvoice->GetDetailInfo($testCorpNum, $mgtKeyType, $mgtKey);
@@ -1379,7 +1376,7 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-   * 검색조건을 사용하여 세금계산서 목록을 조회합니다.
+   * 검색조건에 해당하는 세금계산서를 조회합니다. 
    * - https://docs.popbill.com/taxinvoice/phplaravel/api#Search
    */
   public function Search(){
@@ -1397,10 +1394,10 @@ class TaxinvoiceController extends Controller
     $DType = 'W';
 
     // [필수] 시작일자
-    $SDate = '20200701';
+    $SDate = '20210701';
 
     // [필수] 종료일자
-    $EDate = '20200731';
+    $EDate = '20210731';
 
     // 전송상태값 배열, 문서상태 값 3자리 배열, 2,3번째 자리 와일드카드 사용가능, 미기재시 전체조회
     $State = array (
@@ -1489,7 +1486,7 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-   * 세금계산서 상태 변경이력을 확인합니다.
+   * 세금계산서의 상태에 대한 변경이력을 확인합니다.
    * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetLogs
    */
   public function GetLogs(){
@@ -1501,7 +1498,7 @@ class TaxinvoiceController extends Controller
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
     // 세금계산서 문서번호
-    $mgtKey = '20190101-001';
+    $mgtKey = '20210101-001';
 
     try {
         $result = $this->PopbillTaxinvoice->GetLogs($testCorpNum, $mgtKeyType, $mgtKey);
@@ -1515,9 +1512,8 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-   * 팝빌 전자세금계산서 문서함 팝업 URL을 반환합니다.
-   * - TOGO - TBOX(임시문서함), SBOX(매출문서함), PBOX(매입문서함), WRITE(매출문서작성)
-   * - 반환된 URL은 보안정책에 따라 30초의 유효시간을 갖습니다.
+   * 로그인 상태로 팝빌 사이트의 전자세금계산서 문서함 메뉴에 접근할 수 있는 페이지의 팝업 URL을 반환합니다.
+   * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다. 
    * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetURL
    */
   public function GetURL(){
@@ -1544,8 +1540,8 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-   * 1건의 전자세금계산서 보기 팝업 URL을 반환합니다.
-   * - 반환된 URL은 보안정책으로 인해 30초의 유효시간을 갖습니다.
+   * 팝빌 사이트와 동일한 세금계산서 1건의 상세 정보 페이지의 팝업 URL을 반환합니다. 
+   * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다. 
    * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetPopUpURL
    */
   public function GetPopUpURL(){
@@ -1557,7 +1553,7 @@ class TaxinvoiceController extends Controller
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
     // 문서번호
-    $mgtKey = '20190213-001';
+    $mgtKey = '20210213-001';
 
     try {
         $url = $this->PopbillTaxinvoice->GetPopUpURL($testCorpNum, $mgtKeyType, $mgtKey);
@@ -1573,8 +1569,8 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-   * 1건의 전자세금계산서 보기 팝업 URL을 반환합니다. (메뉴/버튼 제외)
-   * - 반환된 URL은 보안정책으로 인해 30초의 유효시간을 갖습니다.
+   * 팝빌 사이트와 동일한 세금계산서 1건의 상세정보 페이지(사이트 상단, 좌측 메뉴 및 버튼 제외)의 팝업 URL을 반환합니다. 
+   * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
    * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetViewURL
    */
   public function GetViewURL(){
@@ -1586,7 +1582,7 @@ class TaxinvoiceController extends Controller
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
     // 문서번호
-    $mgtKey = '20190213-001';
+    $mgtKey = '20210213-001';
 
     try {
         $url = $this->PopbillTaxinvoice->GetViewURL($testCorpNum, $mgtKeyType, $mgtKey);
@@ -1602,8 +1598,8 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-   * 1건의 전자세금계산서 인쇄팝업 URL을 반환합니다.
-   * - 반환된 URL은 보안정책으로 인해 30초의 유효시간을 갖습니다.
+   * 세금계산서 1건을 인쇄하기 위한 페이지의 팝업 URL을 반환하며, 페이지내에서 인쇄 설정값을 "공급자" / "공급받는자" / "공급자+공급받는자"용 중 하나로 지정할 수 있습니다.
+   * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
    * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetPrintURL
    */
   public function GetPrintURL(){
@@ -1615,7 +1611,7 @@ class TaxinvoiceController extends Controller
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
     // 문서번호
-    $mgtKey = '20190213-001';
+    $mgtKey = '20210213-001';
 
     try {
         $url = $this->PopbillTaxinvoice->GetPrintURL($testCorpNum, $mgtKeyType, $mgtKey);
@@ -1629,8 +1625,8 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-   * 1건의 전자세금계산서 구버전 양식 인쇄팝업 URL을 반환합니다.
-   * - 반환된 URL은 보안정책으로 인해 30초의 유효시간을 갖습니다.
+   * 세금계산서 1건을 구버전 양식으로 인쇄하기 위한 페이지의 팝업 URL을 반환하며, 페이지내에서 인쇄 설정값을 "공급자" / "공급받는자" / "공급자+공급받는자"용 중 하나로 지정할 수 있습니다..
+   * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
    * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetOldPrintURL
    */
   public function GetOldPrintURL(){
@@ -1642,7 +1638,7 @@ class TaxinvoiceController extends Controller
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
     // 문서번호
-    $mgtKey = '20190213-001';
+    $mgtKey = '20210213-001';
 
     try {
         $url = $this->PopbillTaxinvoice->GetOldPrintURL($testCorpNum, $mgtKeyType, $mgtKey);
@@ -1656,8 +1652,8 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-  * 세금계산서 인쇄(공급받는자) 팝업 URL을 반환합니다.
-  * - URL 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
+  * "공급받는자" 용 세금계산서 1건을 인쇄하기 위한 페이지의 팝업 URL을 반환합니다.
+  * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
   * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetEPrintURL
   */
   public function GetEPrintURL(){
@@ -1669,7 +1665,7 @@ class TaxinvoiceController extends Controller
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
     // 문서번호
-    $mgtKey = '20190213-001';
+    $mgtKey = '20210213-001';
 
     try {
         $url = $this->PopbillTaxinvoice->GetEPrintURL($testCorpNum, $mgtKeyType, $mgtKey);
@@ -1683,8 +1679,8 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-   * 대량의 세금계산서 인쇄팝업 URL을 반환합니다. (최대 100건)
-   * - 보안정책으로 인해 반환된 URL의 유효시간은 30초입니다.
+   * 다수건의 세금계산서를 인쇄하기 위한 페이지의 팝업 URL을 반환합니다. (최대 100건)
+   * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
    * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetMassPrintURL
    */
   public function GetMassPrintURL(){
@@ -1697,9 +1693,9 @@ class TaxinvoiceController extends Controller
 
     // 문서번호 배열 최대 100건
     $MgtKeyList = array(
-        '20190213-001',
-        '20190101-001',
-        '20190101-002',
+        '20210213-001',
+        '20210101-001',
+        '20210101-002',
     );
     try {
         $url = $this->PopbillTaxinvoice->GetMassPrintURL($testCorpNum, $mgtKeyType, $MgtKeyList);
@@ -1713,8 +1709,8 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-   * 공급받는자 메일링크 URL을 반환합니다.
-   * - 메일링크 URL은 유효시간이 존재하지 않습니다.
+   * 안내메일과 관련된 전자세금계산서를 확인 할 수 있는 상세 페이지의 팝업 URL을 반환하며, 해당 URL은 메일 하단의 "전자세금계산서 보기" 버튼의 링크와 같습니다.
+   * - 함수 호출로 반환 받은 URL에는 유효시간이 없습니다. 
    * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetMailURL
    */
   public function GetMailURL(){
@@ -1726,7 +1722,7 @@ class TaxinvoiceController extends Controller
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
     // 문서번호
-    $mgtKey = '20190213-001';
+    $mgtKey = '20210213-001';
 
     try {
         $url = $this->PopbillTaxinvoice->GetMailURL($testCorpNum, $mgtKeyType, $mgtKey);
@@ -1740,8 +1736,8 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-   * 팝빌에 로그인 상태로 접근할 수 있는 팝업 URL을 반환합니다.
-   * - 반환된 URL의 유지시간은 30초이며, 제한된 시간 이후에는 정상적으로 처리되지 않습니다.
+   * 팝빌 사이트에 로그인 상태로 접근할 수 있는 페이지의 팝업 URL을 반환합니다.
+   * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
    * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetAccessURL
    */
   public function GetAccessURL(){
@@ -1764,8 +1760,8 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-   * 인감 및 첨부문서 등록 팝업 URL을 반환합니다.
-   * - 반환된 URL의 유지시간은 30초이며, 제한된 시간 이후에는 정상적으로 처리되지 않습니다.
+   * 세금계산서에 첨부할 인감, 사업자등록증, 통장사본을 등록하는 페이지의 팝업 URL을 반환합니다.
+   * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
    * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetSealURL
    */
   public function GetSealURL(){
@@ -1787,9 +1783,7 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-  * 세금계산서에 첨부파일을 등록합니다.
-  * - [임시저장] 상태의 세금계산서만 파일을 첨부할수 있습니다.
-  * - 첨부파일은 최대 5개까지 등록할 수 있습니다.
+  * "임시저장" 상태의 세금계산서에 1개의 파일을 첨부합니다. (최대 5개)
   * - https://docs.popbill.com/taxinvoice/phplaravel/api#AttachFile
   */
   public function AttachFile(){
@@ -1801,7 +1795,7 @@ class TaxinvoiceController extends Controller
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
     // 세금계산서 문서번호
-    $mgtKey = '20190213-004';
+    $mgtKey = '20210213-004';
 
     // 첨부파일 경로, 해당 파일에 읽기 권한이 설정되어 있어야 합니다.
     $filePath = '/Users/John/Desktop/03A4C36315C047B4A171CEF283ED9A40.jpg';
@@ -1820,7 +1814,7 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-   * 세금계산서에 첨부된 파일을 삭제합니다.
+   * "임시저장" 상태의 세금계산서에 첨부된 1개의 파일을 삭제합니다. 
    * - 파일을 식별하는 파일아이디는 첨부파일 목록(GetFiles API) 의 응답항목 중 파일아이디(AttachedFile) 값을 통해 확인할 수 있습니다.
    * - https://docs.popbill.com/taxinvoice/phplaravel/api#DeleteFile
    */
@@ -1833,7 +1827,7 @@ class TaxinvoiceController extends Controller
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
     // 문서번호
-    $mgtKey = '20190213-004';
+    $mgtKey = '20210213-004';
 
     // 삭제할 첨부파일 아이디, getFiles(첨부파일목록) API 응답항목중 attachedFile 변수값 참조
     $FileID = '0D583984-FDF3-4189-B61A-40942A2D834B.PBF';
@@ -1852,7 +1846,7 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-   * 세금계산서 첨부파일 목록을 확인합니다.
+   * 세금계산서에 첨부된 파일목록을 확인합니다.
    * - 응답항목 중 파일아이디(AttachedFile) 항목은 파일삭제(DeleteFile API) 호출시 이용할 수 있습니다.
    * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetFiles
    */
@@ -1865,7 +1859,7 @@ class TaxinvoiceController extends Controller
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
     // 문서번호
-    $mgtKey = '20190213-004';
+    $mgtKey = '20210213-004';
 
     try {
         $result = $this->PopbillTaxinvoice->GetFiles($testCorpNum, $mgtKeyType, $mgtKey);
@@ -1880,7 +1874,7 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-   * 세금계산서 안내 메일을 재전송합니다.
+   * 세금계산서와 관련된 안내 메일을 재전송 합니다. 
    * - https://docs.popbill.com/taxinvoice/phplaravel/api#SendEmail
    */
   public function SendEmail(){
@@ -1892,7 +1886,7 @@ class TaxinvoiceController extends Controller
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
     // 문서번호
-    $mgtKey = '20190213-004';
+    $mgtKey = '20210213-004';
 
     // 수신이메일주소
     // 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
@@ -1913,9 +1907,9 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-   * 안내문자를 전송합니다. (단문/SMS- 한글 최대 45자)
-   * - 문자 전송시 포인트가 차감됩니다. (전송실패시 환불처리)
-   * - 전송내역 확인은 "팝빌 로그인" > [문자 팩스] > [문자] > [전송내역] 메뉴에서 전송결과를 확인할 수 있습니다.
+   * 세금계산서와 관련된 안내 SMS(단문) 문자를 재전송하는 함수로, 팝빌 사이트 [문자·팩스] > [문자] > [전송내역] 메뉴에서 전송결과를 확인 할 수 있습니다.
+   * - 메시지는 최대 90byte까지 입력 가능하고, 초과한 내용은 자동으로 삭제되어 전송합니다. (한글 최대 45자)
+   * - 함수 호출시 포인트가 과금됩니다. 
    * - https://docs.popbill.com/taxinvoice/phplaravel/api#SendSMS
    */
   public function SendSMS(){
@@ -1927,7 +1921,7 @@ class TaxinvoiceController extends Controller
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
     // 세금계산서 문서번호
-    $mgtKey = '20190213-004';
+    $mgtKey = '20210213-004';
 
     // 발신번호
     $sender = '07043042991';
@@ -1952,9 +1946,8 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-   * 전자세금계산서를 팩스전송합니다.
-   * - 팩스 전송 요청시 포인트가 차감됩니다. (전송실패시 환불처리)
-   * - 전송내역 확인은 "팝빌 로그인" > [문자 팩스] > [팩스] > [전송내역] 메뉴에서 전송결과를 확인할 수 있습니다.
+   * 세금계산서를 팩스로 전송하는 함수로, 팝빌 사이트 [문자·팩스] > [팩스] > [전송내역] 메뉴에서 전송결과를 확인 할 수 있습니다.
+   * - 함수 호출시 포인트가 과금됩니다.
    * - https://docs.popbill.com/taxinvoice/phplaravel/api#SendFAX
    */
   public function SendFAX(){
@@ -1966,7 +1959,7 @@ class TaxinvoiceController extends Controller
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
     // 세금계산서 문서번호
-    $mgtKey = '20190101-001';
+    $mgtKey = '20210101-001';
 
     // 발신번호
     $sender = '07043042991';
@@ -1988,7 +1981,7 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-   * 세금계산서에 1건의 전자명세서를 첨부합니다.
+   * 팝빌 전자명세서 API를 통해 발행한 전자명세서를 세금계산서에 첨부합니다.
    * - https://docs.popbill.com/taxinvoice/phplaravel/api#AttachStatement
    */
   public function AttachStatement(){
@@ -2000,13 +1993,13 @@ class TaxinvoiceController extends Controller
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
     // 세금계산서 문서번호
-    $mgtKey = '20190101-001';
+    $mgtKey = '20210101-001';
 
     // 첨부할 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
     $subItemCode = 121;
 
     // 첨부할 명세서 문서번호
-    $subMgtKey = '20190101-001';
+    $subMgtKey = '20210101-001';
 
     try {
         $result = $this->PopbillTaxinvoice->AttachStatement($testCorpNum, $mgtKeyType, $mgtKey, $subItemCode, $subMgtKey);
@@ -2022,7 +2015,7 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-   * 세금계산서에 첨부된 전자명세서를 첨부해제합니다.
+   * 세금계산서에 첨부된 전자명세서를 해제합니다.
    * - https://docs.popbill.com/taxinvoice/phplaravel/api#DetachStatement
    */
   public function DetachStatement(){
@@ -2034,13 +2027,13 @@ class TaxinvoiceController extends Controller
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
     // 세금계산서 문서번호
-    $mgtKey = '20190101-001';
+    $mgtKey = '20210101-001';
 
     // 첨부해제할 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
     $subItemCode = 121;
 
     // 첨부해제할 명세서 문서번호
-    $subMgtKey = '20190101-001';
+    $subMgtKey = '20210101-001';
 
     try {
         $result = $this->PopbillTaxinvoice->DetachStatement($testCorpNum, $mgtKeyType, $mgtKey, $subItemCode, $subMgtKey);
@@ -2056,7 +2049,7 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-   * 대용량 연계사업자 유통메일주소 목록을 반환합니다.
+   * 전자세금계산서 유통사업자의 메일 목록을 확인합니다.
    * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetEmailPublicKeys
    */
   public function GetEmailPublicKeys(){
@@ -2078,7 +2071,7 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-   * 팝빌 사이트에서 작성된 세금계산서에 파트너 문서번호를 할당합니다.
+   * 팝빌 사이트를 통해 발행하였지만 문서번호가 존재하지 않는 세금계산서에 문서번호를 할당합니다.
    * - https://docs.popbill.com/taxinvoice/phplaravel/api#AssignMgtKey
    */
   public function AssignMgtKey(){
@@ -2094,7 +2087,7 @@ class TaxinvoiceController extends Controller
 
     // 할당할 문서번호, 숫자, 영문 '-', '_' 조합으로 1~24자리까지
     // 사업자번호별 중복없는 고유번호 할당
-    $mgtKey = '20190101-001';
+    $mgtKey = '20210101-001';
 
     try {
         $result = $this->PopbillTaxinvoice->AssignMgtKey($testCorpNum, $mgtKeyType, $itemKey, $mgtKey);
@@ -2111,7 +2104,7 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-   * 전자세금계산서 관련 메일전송 항목에 대한 전송여부를 목록으로 반환한다.
+   * 세금계산서 관련 메일 항목에 대한 발송설정을 확인합니다.
    * - https://docs.popbill.com/taxinvoice/phplaravel/api#ListEmailConfig
    */
   public function ListEmailConfig(){
@@ -2132,7 +2125,7 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-   * 전자세금계산서 관련 메일전송 항목에 대한 전송여부를 수정한다.
+   * 세금계산서 관련 메일 항목에 대한 발송설정을 수정합니다.
    * - https://docs.popbill.com/taxinvoice/phplaravel/api#UpdateEmailConfig
    *
    * 메일전송유형
@@ -2201,10 +2194,9 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-   * 팝빌 회원의 공인인증서를 등록하는 팝업 URL을 반환합니다.
-   * - 반환된 URL의 유지시간은 30초이며, 제한된 시간 이후에는 정상적으로 처리되지 않습니다.
-   * - 팝빌에 등록된 공인인증서가 유효하지 않은 경우 (비밀번호 변경, 인증서 재발급/갱신, 만료일 경과)
-   *  인증서를 재등록해야 정상적으로 전자세금계산서 발행이 가능합니다.
+   * 전자세금계산서 발행에 필요한 인증서를 팝빌 인증서버에 등록하기 위한 페이지의 팝업 URL을 반환합니다.
+   * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+   * - 인증서 갱신/재발급/비밀번호 변경한 경우, 변경된 인증서를 팝빌 인증서버에 재등록 해야합니다.
    * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetTaxCertURL
    */
   public function GetTaxCertURL(){
@@ -2227,9 +2219,7 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-   * 팝빌에 등록되어 있는 공인인증서의 만료일자를 확인합니다.
-   * - 공인인증서가 갱신/재발급/비밀번호 변경이 되는 경우 해당 인증서를
-   *   재등록 하셔야 정상적으로 세금계산서를 발행할 수 있습니다.
+   * 팝빌 인증서버에 등록된 인증서의 만료일을 확인합니다.
    * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetCertificateExpireDate
    */
   public function GetCertificateExpireDate(){
@@ -2250,7 +2240,7 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-   * 팝빌에 등록된 공인인증서의 유효성을 확인합니다.
+   * 팝빌 인증서버에 등록된 인증서의 유효성을 확인합니다. 
    * - https://docs.popbill.com/taxinvoice/phplaravel/api#CheckCertValidation
    */
   public function CheckCertValidation(){
@@ -2294,8 +2284,8 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-   * 팝빌 연동회원의 포인트충전 팝업 URL을 반환합니다.
-   * 반환된 URL의 유지시간은 30초이며, 제한된 시간 이후에는 정상적으로 처리되지 않습니다.
+   * 연동회원 포인트 충전을 위한 페이지의 팝업 URL을 반환합니다.
+   * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
    * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetChargeURL
    */
   public function GetChargeURL(){
@@ -2341,8 +2331,8 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-   * 파트너 포인트 충전 팝업 URL을 반환합니다.
-   * - 반환된 URL은 보안정책에 따라 30초의 유효시간을 갖습니다.
+   * 파트너 포인트 충전을 위한 페이지의 팝업 URL을 반환합니다.
+   * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
    * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetPartnerURL
    */
   public function GetPartnerURL(){
@@ -2366,7 +2356,7 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-   * 전자세금계산서 발행단가를 확인합니다.
+   * 전자세금계산서 발행단가를 확인합니다. 
    * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetUnitCost
    */
   public function GetUnitCost(){
@@ -2386,7 +2376,7 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-   * 전자세금계산서 API 서비스 과금정보를 확인합니다.
+   * 팝빌 전자세금계산서 API 서비스 과금정보를 확인합니다. 
    * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetChargeInfo
    */
   public function GetChargeInfo(){
@@ -2406,7 +2396,7 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-   * 해당 사업자의 파트너 연동회원 가입여부를 확인합니다.
+   * 사업자번호를 조회하여 연동회원 가입여부를 확인합니다.
    * - LinkID는 config/popbill.php 파일에 선언되어 있는 인증정보 입니다.
    * - https://docs.popbill.com/taxinvoice/phplaravel/api#CheckIsMember
    */
@@ -2432,7 +2422,7 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-   * 팝빌 회원아이디 중복여부를 확인합니다.
+   * 사용하고자 하는 아이디의 중복여부를 확인합니다.
    * - https://docs.popbill.com/taxinvoice/phplaravel/api#CheckID
    */
   public function CheckID(){
@@ -2454,7 +2444,7 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-   * 파트너의 연동회원으로 회원가입을 요청합니다.
+   * 사용자를 연동회원으로 가입처리합니다.
    * - https://docs.popbill.com/taxinvoice/phplaravel/api#JoinMember
    */
   public function JoinMember(){
@@ -2532,7 +2522,7 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-   * 연동회원의 회사정보를 수정합니다
+   * 연동회원의 회사정보를 수정합니다.
    * - https://docs.popbill.com/taxinvoice/phplaravel/api#UpdateCorpInfo
    */
   public function UpdateCorpInfo(){
@@ -2572,7 +2562,7 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-   * 연동회원의 담당자를 신규로 등록합니다.
+   * 연동회원 사업자번호에 담당자(팝빌 로그인 계정)를 추가합니다.
    * - https://docs.popbill.com/taxinvoice/phplaravel/api#RegistContact
    */
   public function RegistContact(){
@@ -2624,7 +2614,7 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-   * 연동회원의 담당자 목록을 확인합니다.
+   * 연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 목록을 확인합니다.
    * - https://docs.popbill.com/taxinvoice/phplaravel/api#ListContact
    */
   public function ListContact(){
@@ -2645,7 +2635,7 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-   * 연동회원의 담당자 정보를 수정합니다.
+   * 연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 정보를 수정합니다.
    * - https://docs.popbill.com/taxinvoice/phplaravel/api#UpdateContact
    */
   public function UpdateContact(){
@@ -2694,8 +2684,8 @@ class TaxinvoiceController extends Controller
   }
 
   /**
-   * 전자세금계산서 PDF 다운로드 URL을 반환합니다.
-   * - 반환된 URL은 보안정책으로 인해 30초의 유효시간을 갖습니다.
+   * 전자세금계산서 PDF 파일을 다운 받을 수 있는 URL을 반환합니다.
+   * - 반환되는 URL은 보안정책상 30초의 유효시간을 갖으며, 유효시간 이후 호출시 정상적으로 페이지가 호출되지 않습니다.
    * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetPDFURL
    */
   public function GetPDFURL(){
@@ -2707,7 +2697,7 @@ class TaxinvoiceController extends Controller
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
     // 문서번호
-    $mgtKey = '20200401-01';
+    $mgtKey = '20210401-01';
 
     try {
         $url = $this->PopbillTaxinvoice->GetPDFURL($testCorpNum, $mgtKeyType, $mgtKey);
@@ -2720,39 +2710,5 @@ class TaxinvoiceController extends Controller
 
     return view('ReturnValue', ['filedName' => "세금계산서 PDF 다운로드 URL" , 'value' => $url]);
 
-  }
-
-  /**
-   * 전자세금계산서 PDF byte array를 파일로 저장합니다.
-   * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetPDF
-   */
-  public function GetPDF(){
-
-    // 팝빌 회원 사업자 번호, '-'제외 10자리
-    $testCorpNum = '1234567890';
-
-    // 발행유형, ENumMgtKeyType::SELL:매출, ENumMgtKeyType::BUY:매입, ENumMgtKeyType::TRUSTEE:위수탁
-    $mgtKeyType = TIENumMgtKeyType::SELL;
-
-    // 문서번호
-    $mgtKey = '20200401-01';
-
-    // PDF 파일경로, PDF 파일을 저장할 폴더에 777 권한 필요.
-    $pdfFilePath = '/Users/John/Desktop/'.$mgtKey.'.pdf';
-
-    try {
-        $bytes = $this->PopbillTaxinvoice->GetPDF($testCorpNum, $mgtKeyType, $mgtKey);
-    }
-    catch(PopbillException $pe) {
-        $code = $pe->getCode();
-        $message = $pe->getMessage();
-    }
-
-    if(file_put_contents( $pdfFilePath, $bytes )){
-      $code = 1;
-      $message = $pdfFilePath;
-    };
-
-    return view('PResponse', ['code' => $code, 'message' => $message]);
   }
 }
