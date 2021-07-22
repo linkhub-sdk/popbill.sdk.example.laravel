@@ -153,9 +153,30 @@ class KakaoTalkController extends Controller
         return view('PResponse', ['code' => $code, 'message' => $message]);
     }
     return view('ReturnValue', ['filedName' => "알림톡 템플릿 관리 팝업 URL" , 'value' => $url]);
-
   }
+  /**
+   * 승인된 알림톡 템플릿 정보를 확인합니다.
+   * - https://docs.popbill.com/kakao/phplaravel/api#getATSTemplate
+   */
+  public function GetATSTemplate(){
+    // 팝빌 회원 사업자 번호, "-"제외 10자리
+    $testCorpNum = '1234567890';
 
+    //확인할 템플릿 코드
+    $templateCode = '021030000625';
+
+    // 팝빌 회원 아이디
+    $testUserID = 'testkorea';
+
+    try {
+        $result = $this->PopbillKakao->GetATSTemplate($testCorpNum, $templateCode, $testUserID);
+    } catch(PopbillException $pe) {
+        $code = $pe->getCode();
+        $message = $pe->getMessage();
+        return view('PResponse', ['code' => $code, 'message' => $message]);
+    }
+    return view('KakaoTalk/GetATSTemplate', ['Result' => $result]);
+  }
   /**
   * 승인된 알림톡 템플릿 목록을 확인합니다.
   * - 반환항목중 템플릿코드(templateCode)는 알림톡 전송시 사용됩니다.
