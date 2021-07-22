@@ -45,7 +45,7 @@ class StatementController extends Controller
 
   /**
    * 전자명세서 문서번호 중복여부를 확인합니다.
-   * - 문서번호는 1~24자리로 숫자, 영문 '-', '_' 조합하여 사업자별로 중복되지 않도록 구성해야합니다.
+   * - 최대 24자리 영문 대소문자, 숫자, 특수문자('-','_')만 이용 가능 하며 사업자별로 중복되지 않도록 구성해야합니다.
    * - https://docs.popbill.com/statement/phplaravel/api#CheckMgtKeyInUse
    */
   public function CheckMgtKeyInUse(){
@@ -56,8 +56,8 @@ class StatementController extends Controller
     // 명세서 종류코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
     $itemCode = '121';
 
-    // 문서번호, 1~24자리
-    $mgtKey = '20190101-001';
+    // 문서번호, 최대 24자리 영문 대소문자, 숫자, 특수문자('-','_')만 이용 가능
+    $mgtKey = '20210101-001';
 
     try {
         $result = $this->PopbillStatement->CheckMgtKeyInUse($testCorpNum ,$itemCode, $mgtKey);
@@ -72,7 +72,8 @@ class StatementController extends Controller
   }
 
   /**
-   * 1건의 전자명세서를 즉시발행 처리합니다.
+   * 작성된 전자명세서 데이터를 팝빌에 저장과 동시에 발행하여, "발행완료" 상태로 처리합니다.
+   * - 팝빌 사이트 [전자명세서] > [환경설정] > [전자명세서 관리] 메뉴의 발행시 자동승인 옵션 설정을 통해 전자명세서를 "발행완료" 상태가 아닌 "승인대기" 상태로 발행 처리 할 수 있습니다.
    * - https://docs.popbill.com/statement/phplaravel/api#RegistIssue
    */
   public function RegistIssue(){
@@ -84,8 +85,8 @@ class StatementController extends Controller
     $testUserID = 'testkorea';
 
     // 전자명세서 문서번호
-    // 1~24자리 숫자, 영문, '-', '_' 조합으로 사업자별로 중복되지 않도록 구성
-    $mgtKey = '20191024-002';
+    // 최대 24자리 영문 대소문자, 숫자, 특수문자('-','_')만 이용 가능
+    $mgtKey = '20211024-002';
 
     // 명세서 종류코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
     $itemCode = '121';
@@ -104,7 +105,7 @@ class StatementController extends Controller
      ************************************************************/
 
     // [필수] 기재상 작성일자
-    $Statement->writeDate = '20191024';
+    $Statement->writeDate = '20211024';
 
     // [필수] (영수, 청구) 중 기재
     $Statement->purposeType = '영수';
@@ -118,7 +119,7 @@ class StatementController extends Controller
     // 명세서 종류 코드
     $Statement->itemCode = $itemCode;
 
-    // 전자명세서 문서번호
+    // 전자명세서 문서번호, 최대 24자리 영문 대소문자, 숫자, 특수문자('-','_')만 이용 가능
     $Statement->mgtKey = $mgtKey;
 
     /************************************************************
@@ -174,7 +175,7 @@ class StatementController extends Controller
     $Statement->detailList = array();
     $Statement->detailList[0] = new StatementDetail();
     $Statement->detailList[0]->serialNum = '1';					//품목 일련번호 1부터 순차 기재
-    $Statement->detailList[0]->purchaseDT = '20190101';			//거래일자 yyyyMMdd
+    $Statement->detailList[0]->purchaseDT = '20210101';			//거래일자 yyyyMMdd
     $Statement->detailList[0]->itemName = '품명';
     $Statement->detailList[0]->spec = '규격';
     $Statement->detailList[0]->unit = '단위';
@@ -191,7 +192,7 @@ class StatementController extends Controller
 
     $Statement->detailList[1] = new StatementDetail();
     $Statement->detailList[1]->serialNum = '2';					//품목 일련번호 순차기재
-    $Statement->detailList[1]->purchaseDT = '20190101';			//거래일자 yyyyMMdd
+    $Statement->detailList[1]->purchaseDT = '20210101';			//거래일자 yyyyMMdd
     $Statement->detailList[1]->itemName = '품명';
     $Statement->detailList[1]->spec = '규격';
     $Statement->detailList[1]->unit = '단위';
@@ -231,7 +232,7 @@ class StatementController extends Controller
   }
 
   /**
-   * 1건의 전자명세서를 임시저장합니다.
+   * 작성된 전자명세서 데이터를 팝빌에 저장합니다.
    * - https://docs.popbill.com/statement/phplaravel/api#Register
    */
   public function Register(){
@@ -240,7 +241,7 @@ class StatementController extends Controller
     $testCorpNum = '1234567890';
 
     // 문서번호, 발행자별 고유번호 할당, 1~24자리 영문,숫자 조합으로 중복없이 구성
-    $mgtKey = '20190213-003';
+    $mgtKey = '20210213-003';
 
     // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
     $itemCode = '121';
@@ -253,7 +254,7 @@ class StatementController extends Controller
      ************************************************************/
 
     // [필수] 기재상 작성일자
-    $Statement->writeDate = '20190213';
+    $Statement->writeDate = '20210213';
 
     // [필수] (영수, 청구) 중 기재
     $Statement->purposeType = '영수';
@@ -267,7 +268,7 @@ class StatementController extends Controller
     // 명세서 종류 코드
     $Statement->itemCode = $itemCode;
 
-    // 전자명세서 문서번호
+    // 전자명세서 문서번호, 최대 24자리 영문 대소문자, 숫자, 특수문자('-','_')만 이용 가능
     $Statement->mgtKey = $mgtKey;
 
     /************************************************************
@@ -323,7 +324,7 @@ class StatementController extends Controller
     $Statement->detailList = array();
     $Statement->detailList[0] = new StatementDetail();
     $Statement->detailList[0]->serialNum = '1';					//품목 일련번호 1부터 순차 기재
-    $Statement->detailList[0]->purchaseDT = '20190101';			//거래일자 yyyyMMdd
+    $Statement->detailList[0]->purchaseDT = '20210101';			//거래일자 yyyyMMdd
     $Statement->detailList[0]->itemName = '품명';
     $Statement->detailList[0]->spec = '규격';
     $Statement->detailList[0]->unit = '단위';
@@ -340,7 +341,7 @@ class StatementController extends Controller
 
     $Statement->detailList[1] = new StatementDetail();
     $Statement->detailList[1]->serialNum = '2';					//품목 일련번호 순차기재
-    $Statement->detailList[1]->purchaseDT = '20190101';			//거래일자 yyyyMMdd
+    $Statement->detailList[1]->purchaseDT = '20210101';			//거래일자 yyyyMMdd
     $Statement->detailList[1]->itemName = '품명';
     $Statement->detailList[1]->spec = '규격';
     $Statement->detailList[1]->unit = '단위';
@@ -380,8 +381,7 @@ class StatementController extends Controller
   }
 
   /**
-   * 1건의 전자명세서를 수정합니다.
-   * - [임시저장] 상태의 전자명세서만 수정할 수 있습니다.
+   * "임시저장" 상태의 전자명세서를 수정합니다.건의 전자명세서를 [수정]합니다.
    * - https://docs.popbill.com/statement/phplaravel/api#Update
    */
   public function Update(){
@@ -390,8 +390,8 @@ class StatementController extends Controller
     $testCorpNum = '1234567890';
 
     // 전자명세서 문서번호
-    // 1~24자리로 영문, 숫자 '-', '_' 조합으로 사업자별로 중복되지 않도록 구성
-    $mgtKey = '20190213-003';
+    // 최대 24자리 영문 대소문자, 숫자, 특수문자('-','_')만 이용 가능
+    $mgtKey = '20210213-003';
 
     // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
     $itemCode = '121';
@@ -404,7 +404,7 @@ class StatementController extends Controller
      ************************************************************/
 
     // [필수] 기재상 작성일자
-    $Statement->writeDate = '20190213';
+    $Statement->writeDate = '20210213';
 
     // [필수] (영수, 청구) 중 기재
     $Statement->purposeType = '청구';
@@ -418,7 +418,7 @@ class StatementController extends Controller
     // 명세서 종류 코드
     $Statement->itemCode = $itemCode;
 
-    // 전자명세서 문서번호
+    // 전자명세서 문서번호, 최대 24자리 영문 대소문자, 숫자, 특수문자('-','_')만 이용 가능
     $Statement->mgtKey = $mgtKey;
 
     /************************************************************
@@ -474,7 +474,7 @@ class StatementController extends Controller
     $Statement->detailList = array();
     $Statement->detailList[0] = new StatementDetail();
     $Statement->detailList[0]->serialNum = '1';					//품목 일련번호 1부터 순차 기재
-    $Statement->detailList[0]->purchaseDT = '20190101';			//거래일자 yyyyMMdd
+    $Statement->detailList[0]->purchaseDT = '20210101';			//거래일자 yyyyMMdd
     $Statement->detailList[0]->itemName = '품명';
     $Statement->detailList[0]->spec = '규격';
     $Statement->detailList[0]->unit = '단위';
@@ -491,7 +491,7 @@ class StatementController extends Controller
 
     $Statement->detailList[1] = new StatementDetail();
     $Statement->detailList[1]->serialNum = '2';					//품목 일련번호 순차기재
-    $Statement->detailList[1]->purchaseDT = '20190101';			//거래일자 yyyyMMdd
+    $Statement->detailList[1]->purchaseDT = '20210101';			//거래일자 yyyyMMdd
     $Statement->detailList[1]->itemName = '품명';
     $Statement->detailList[1]->spec = '규격';
     $Statement->detailList[1]->unit = '단위';
@@ -531,7 +531,9 @@ class StatementController extends Controller
   }
 
   /**
-   * 1건의 [임시저장] 상태의 전자명세서를 발행처리합니다.
+   * "임시저장" 상태의 전자명세서를 발행하여, "발행완료" 상태로 처리합니다.
+   * - 팝빌 사이트 [전자명세서] > [환경설정] > [전자명세서 관리] 메뉴의 발행시 자동승인 옵션 설정을 통해 전자명세서를 "발행완료" 상태가 아닌 "승인대기" 상태로 발행 처리 할 수 있습니다.
+   * - 전자명세서 발행 함수 호출시 포인트가 과금되며, 수신자에게 발행 안내 메일이 발송됩니다.
    * - https://docs.popbill.com/statement/phplaravel/api#StmIssue
    */
   public function Issue(){
@@ -543,7 +545,7 @@ class StatementController extends Controller
     $itemCode = '121';
 
     // 전자명세서 문서번호
-    $MgtKey = '20190213-003';
+    $MgtKey = '20210213-003';
 
     // 메모
     $memo = '전자명세서 발행 메모';
@@ -562,7 +564,7 @@ class StatementController extends Controller
   }
 
   /**
-   * 1건의 전자명세서를 [발행취소] 처리합니다.
+   * 발신자가 발행한 전자명세서를 발행취소합니다.
    * - https://docs.popbill.com/statement/phplaravel/api#CancelIssue
    */
   public function CancelIssue(){
@@ -574,7 +576,7 @@ class StatementController extends Controller
     $itemCode = '121';
 
     // 문서번호
-    $MgtKey = '20190213-003';
+    $MgtKey = '20210213-003';
 
     // 메모
     $memo = '전자명세서 발행취소 메모';
@@ -593,9 +595,9 @@ class StatementController extends Controller
   }
 
   /**
-   * 1건의 전자명세서를 삭제합니다.
+   * 삭제 가능한 상태의 전자명세서를 삭제합니다.
+   * - 삭제 가능한 상태: "임시저장", "취소", "승인거부", "발행취소"
    * - 전자명세서를 삭제하면 사용된 문서번호(mgtKey)를 재사용할 수 있습니다.
-   * - 삭제가능한 문서 상태 : [임시저장], [발행취소]
    * - https://docs.popbill.com/statement/phplaravel/api#Delete
    */
   public function Delete(){
@@ -607,7 +609,7 @@ class StatementController extends Controller
     $itemCode = '121';
 
     // 문서번호
-    $MgtKey = '20190213-003';
+    $MgtKey = '20210213-003';
 
     try	{
         $result = $this->PopbillStatement->Delete($testCorpNum, $itemCode, $MgtKey);
@@ -623,7 +625,7 @@ class StatementController extends Controller
   }
 
   /**
-   * 1건의 전자명세서 상태/요약 정보를 확인합니다.
+   * 전자명세서의 1건의 상태 및 요약정보 확인합니다.
    * - https://docs.popbill.com/statement/phplaravel/api#GetInfo
    */
   public function GetInfo(){
@@ -635,7 +637,7 @@ class StatementController extends Controller
     $itemCode = '121';
 
     // 문서번호
-    $mgtKey = '20190101-001';
+    $mgtKey = '20210101-001';
 
     try {
         $result = $this->PopbillStatement->GetInfo($testCorpNum, $itemCode, $mgtKey);
@@ -664,9 +666,9 @@ class StatementController extends Controller
 
     // 조회할 전자명세서 문서번호 배열, 최대 1000건
     $MgtKeyList = array(
-        '20190101-001',
-        '20190213-002',
-        '20190213-003'
+        '20210101-001',
+        '20210213-002',
+        '20210213-003'
     );
 
     try {
@@ -683,7 +685,7 @@ class StatementController extends Controller
   }
 
   /**
-   * 전자명세서 1건의 상세정보를 조회합니다.
+   * 전자명세서 1건의 상세정보 확인합니다.
    * - https://docs.popbill.com/statement/phplaravel/api#GetDetailInfo
    */
   public function GetDetailInfo(){
@@ -695,7 +697,7 @@ class StatementController extends Controller
     $itemCode = '121';
 
     // 문서번호
-    $mgtKey = '20190213-002';
+    $mgtKey = '20210213-002';
 
     try {
         $result = $this->PopbillStatement->GetDetailInfo($testCorpNum, $itemCode, $mgtKey);
@@ -710,7 +712,7 @@ class StatementController extends Controller
   }
 
   /**
-   * 검색조건을 사용하여 전자명세서 목록을 조회합니다.
+   * 검색조건에 해당하는 세금계산서를 조회합니다.
    * - https://docs.popbill.com/statement/phplaravel/api#Search
    */
   public function Search(){
@@ -722,10 +724,10 @@ class StatementController extends Controller
     $DType = 'W';
 
     // [필수] 시작일자
-    $SDate = '20200101';
+    $SDate = '20210101';
 
     // [필수] 종료일자
-    $EDate = '20200131';
+    $EDate = '20210131';
 
     // 전송상태값 배열, 문서상태값 3자리 배열, 2,3번째 와일드카드 사용가능
     $State = array(
@@ -769,7 +771,7 @@ class StatementController extends Controller
   }
 
   /**
-   * 전자명세서 상태 변경이력을 확인합니다.
+   * 전자명세서의 상태에 대한 변경이력을 확인합니다.
    * - https://docs.popbill.com/statement/phplaravel/api#GetLogs
    */
   public function GetLogs(){
@@ -781,7 +783,7 @@ class StatementController extends Controller
     $itemCode = '121';
 
     // 문서번호
-    $mgtKey = '20190101-001';
+    $mgtKey = '20210101-001';
 
     try {
         $result = $this->PopbillStatement->GetLogs($testCorpNum, $itemCode, $mgtKey);
@@ -795,8 +797,8 @@ class StatementController extends Controller
   }
 
   /**
-   * 팝빌 전자명세서 문서함 관련 팝업 URL을 반환합니다.
-   * - 반환된 URL은 보안정책에 따라 30초의 유효시간을 갖습니다.
+   * 로그인 상태로 팝빌 사이트의 전자명세서 문서함 메뉴에 접근할 수 있는 페이지의 팝업 URL을 반환합니다.
+   * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
    * - https://docs.popbill.com/statement/phplaravel/api#GetURL
    */
   public function GetURL(){
@@ -822,8 +824,8 @@ class StatementController extends Controller
   }
 
   /**
-   * 1건의 전자명세서 보기 팝업 URL을 반환합니다.
-   * - 보안정책으로 인해 반환된 URL의 유효시간은 30초입니다.
+   * 팝빌 사이트와 동일한 전자명세서 1건의 상세 정보 페이지의 팝업 URL을 반환합니다.
+   * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
    * - https://docs.popbill.com/statement/phplaravel/api#GetPopUpURL
    */
   public function GetPopUpURL(){
@@ -835,7 +837,7 @@ class StatementController extends Controller
     $itemCode = '121';
 
     // 전자명세서 문서번호
-    $mgtKey = '20190101-001';
+    $mgtKey = '20210101-001';
 
     try {
         $url = $this->PopbillStatement->GetPopUpURL($testCorpNum, $itemCode, $mgtKey);
@@ -849,8 +851,9 @@ class StatementController extends Controller
   }
 
   /**
-   * 1건의 전자명세서 보기 팝업 URL을 반환합니다.(메뉴/버튼 제외)
-   * - 보안정책으로 인해 반환된 URL의 유효시간은 30초입니다.
+   * 팝빌 사이트와 동일한 전자명세서 1건의 상세 정보 페이지(사이트 상단, 좌측 메뉴 및 버튼 제외)의 팝업 URL을 반환합니다.
+   * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+   * - https://docs.popbill.com/statement/phplaravel/api#GetViewURL
    */
   public function GetViewURL(){
 
@@ -861,7 +864,7 @@ class StatementController extends Controller
     $itemCode = '121';
 
     // 전자명세서 문서번호
-    $mgtKey = '20190101-001';
+    $mgtKey = '20210101-001';
 
     try {
         $url = $this->PopbillStatement->GetViewURL($testCorpNum, $itemCode, $mgtKey);
@@ -875,8 +878,8 @@ class StatementController extends Controller
   }
 
   /**
-   * 1건의 전자명세서 인쇄팝업 URL을 반환합니다.
-   * - 보안정책으로 인해 반환된 URL의 유효시간은 30초입니다.
+   * 전자명세서 1건을 인쇄하기 위한 페이지의 팝업 URL을 반환하며, 페이지내에서 인쇄 설정값을 "공급자" / "공급받는자" / "공급자+공급받는자"용 중 하나로 지정할 수 있습니다.
+   * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
    * - https://docs.popbill.com/statement/phplaravel/api#GetPrintURL
    */
   public function GetPrintURL(){
@@ -888,7 +891,7 @@ class StatementController extends Controller
     $itemCode = '121';
 
     // 전자명세서 문서번호
-    $mgtKey = '20190101-001';
+    $mgtKey = '20210101-001';
 
     try {
         $url = $this->PopbillStatement->GetPrintURL($testCorpNum, $itemCode, $mgtKey);
@@ -902,8 +905,8 @@ class StatementController extends Controller
   }
 
   /**
-   * 1건의 전자명세서 인쇄팝업 URL을 반환합니다.
-   * - 보안정책으로 인해 반환된 URL의 유효시간은 30초입니다.
+   * "공급받는자" 용 세금계산서 1건을 인쇄하기 위한 페이지의 팝업 URL을 반환합니다.
+   * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
    * - https://docs.popbill.com/statement/phplaravel/api#GetEPrintURL
    */
   public function GetEPrintURL(){
@@ -915,7 +918,7 @@ class StatementController extends Controller
     $itemCode = '121';
 
     // 문서번호
-    $mgtKey = '20190101-001';
+    $mgtKey = '20210101-001';
 
     try {
         $url = $this->PopbillStatement->GetEPrintURL($testCorpNum, $itemCode, $mgtKey);
@@ -930,8 +933,8 @@ class StatementController extends Controller
   }
 
   /**
-   * 다수건의 전자명세서 인쇄팝업 URL을 반환합니다. (최대 100건)
-   * - 보안정책으로 인해 반환된 URL의 유효시간은 30초입니다.
+   * 다수건의 전자명세서를 인쇄하기 위한 페이지의 팝업 URL을 반환합니다. (최대 100건)
+   * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
    * - https://docs.popbill.com/statement/phplaravel/api#GetMassPrintURL
    */
   public function GetMassPrintURL(){
@@ -944,9 +947,9 @@ class StatementController extends Controller
 
     // 문서번호 배열, 최대 100건
     $mgtKeyList = array (
-        '20190101-001',
-        '20190213-002',
-        '20190213-003'
+        '20210101-001',
+        '20210213-002',
+        '20210213-003'
     );
 
     try {
@@ -961,8 +964,8 @@ class StatementController extends Controller
   }
 
   /**
-   * 공급받는자 메일링크 URL을 반환합니다.
-   * - 메일링크 URL은 유효시간이 존재하지 않습니다.
+   * 안내메일과 관련된 전자명세서를 확인 할 수 있는 상세 페이지의 팝업 URL을 반환하며, 해당 URL은 메일 하단의 파란색 버튼의 링크와 같습니다.
+   * - 함수 호출로 반환 받은 URL에는 유효시간이 없습니다.
    * - https://docs.popbill.com/statement/phplaravel/api#GetMailURL
    */
   public function GetMailURL(){
@@ -974,7 +977,7 @@ class StatementController extends Controller
     $itemCode = '121';
 
     // 전자명세서 문서번호
-    $mgtKey = '20190101-001';
+    $mgtKey = '20210101-001';
 
     try {
         $url = $this->PopbillStatement->GetMailURL($testCorpNum, $itemCode, $mgtKey);
@@ -988,8 +991,8 @@ class StatementController extends Controller
   }
 
   /**
-   * 팝빌에 로그인 상태로 접근할 수 있는 팝업 URL을 반환합니다.
-   * - 반환된 URL의 유지시간은 30초이며, 제한된 시간 이후에는 정상적으로 처리되지 않습니다.
+   * 팝빌 사이트에 로그인 상태로 접근할 수 있는 페이지의 팝업 URL을 반환합니다.
+   * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
    * - https://docs.popbill.com/statement/phplaravel/api#GetAccessURL
    */
   public function GetAccessURL(){
@@ -1012,9 +1015,7 @@ class StatementController extends Controller
   }
 
   /**
-   * 전자명세서에 첨부파일을 등록합니다.
-   * - 첨부파일 등록은 전자명세서가 [임시저장] 상태인 경우에만 가능합니다.
-   * - 첨부파일은 최대 5개까지 등록할 수 있습니다.
+   * "임시저장" 상태의 명세서에 1개의 파일을 첨부합니다. (최대 5개)
    * - https://docs.popbill.com/statement/phplaravel/api#AttachFile
    */
   public function AttachFile(){
@@ -1026,7 +1027,7 @@ class StatementController extends Controller
     $itemCode= '121';
 
     // 문서번호
-    $mgtKey = '20190213-003';
+    $mgtKey = '20210213-003';
 
     // 첨부파일 경로, 해당 파일에 읽기 권한이 설정되어 있어야 합니다.
     $filePath = '/Users/John/Desktop/03A4C36315C047B4A171CEF283ED9A40.jpg';
@@ -1046,7 +1047,7 @@ class StatementController extends Controller
   }
 
   /**
-   * 전자명세서에 첨부된 파일의 목록을 확인합니다.
+   * 전자명세서에 첨부된 파일목록을 확인합니다.
    * - 응답항목 중 파일아이디(AttachedFile) 항목은 파일삭제(DeleteFile API) 호출시 이용할 수 있습니다.
    * - https://docs.popbill.com/statement/phplaravel/api#GetFiles
    */
@@ -1059,7 +1060,7 @@ class StatementController extends Controller
     $itemCode = '121';
 
     // 문서번호
-    $mgtKey = '20190213-003';
+    $mgtKey = '20210213-003';
 
     try {
         $result = $this->PopbillStatement->GetFiles($testCorpNum, $itemCode, $mgtKey);
@@ -1074,8 +1075,8 @@ class StatementController extends Controller
   }
 
   /**
-   * 전자명세서에 첨부된 파일을 삭제합니다.
-   * - 파일을 식별하는 파일아이디는 첨부파일 목록(GetFileList API) 의 응답항목 중 파일아이디(AttachedFile) 값을 통해 확인할 수 있습니다.
+   * "임시저장" 상태의 전자명세서에 첨부된 1개의 파일을 삭제합니다.
+   * - 파일을 식별하는 파일아이디는 첨부파일 목록(GetFiles API) 의 응답항목 중 파일아이디(AttachedFile) 값을 통해 확인할 수 있습니다.
    * - https://docs.popbill.com/statement/phplaravel/api#DeleteFile
    */
   public function DeleteFile(){
@@ -1087,7 +1088,7 @@ class StatementController extends Controller
     $itemCode = '121';
 
     // 문서번호
-    $mgtKey = '20190213-003';
+    $mgtKey = '20210213-003';
 
     // 첨부된 파일의 아이디, GetFiles API 응답항목중 AttachedFile 항목
     $FileID= '7D536E85-7CA7-44AA-89F4-A85781A1CD55.PBF';
@@ -1107,7 +1108,7 @@ class StatementController extends Controller
   }
 
   /**
-   * 발행 안내메일을 재전송합니다.
+   * "승인대기", "발행완료" 상태의 전자명세서와 관련된 발행 안내 메일을 재전송 합니다.
    * - https://docs.popbill.com/statement/phplaravel/api#SendEmail
    */
   public function SendEmail(){
@@ -1119,7 +1120,7 @@ class StatementController extends Controller
     $itemCode = '121';
 
     // 문서번호
-    $mgtKey = '20190213-001';
+    $mgtKey = '20210213-001';
 
     // 수신자 이메일주소
     $receiver = 'test@test.com';
@@ -1138,9 +1139,9 @@ class StatementController extends Controller
   }
 
   /**
-   * 알림문자를 전송합니다. (단문/SMS- 한글 최대 45자)
-   * - 알림문자 전송시 포인트가 차감됩니다. (전송실패시 환불처리)
-   * - 전송내역 확인은 "팝빌 로그인" > [문자 팩스] > [문자] > [전송내역] 메뉴에서 전송결과를 확인할 수 있습니다.
+   * 전자명세서와 관련된 안내 SMS(단문) 문자를 재전송하는 함수로, 팝빌 사이트 [문자·팩스] > [문자] > [전송내역] 메뉴에서 전송결과를 확인 할 수 있습니다.
+   * - 메시지는 최대 90byte까지 입력 가능하고, 초과한 내용은 자동으로 삭제되어 전송합니다. (한글 최대 45자)
+   * - 함수 호출시 포인트가 과금됩니다.
    * - https://docs.popbill.com/statement/phplaravel/api#SendSMS
    */
   public function SendSMS(){
@@ -1152,7 +1153,7 @@ class StatementController extends Controller
     $itemCode = '121';
 
     // 문서번호
-    $mgtKey = '20190101-001';
+    $mgtKey = '20210101-001';
 
     // 발신번호
     $sender = '07043042991';
@@ -1178,9 +1179,8 @@ class StatementController extends Controller
   }
 
   /**
-   * 전자명세서를 팩스전송합니다.
-   * - 팩스 전송 요청시 포인트가 차감됩니다. (전송실패시 환불처리)
-   * - 전송내역 확인은 "팝빌 로그인" > [문자 팩스] > [팩스] > [전송내역] 메뉴에서 전송결과를 확인할 수 있습니다.
+   * 전자명세서를 팩스로 전송하는 함수로, 팝빌 사이트 [문자·팩스] > [팩스] > [전송내역] 메뉴에서 전송결과를 확인 할 수 있습니다.
+   * - 함수 호출시 포인트가 과금됩니다.
    * - https://docs.popbill.com/statement/phplaravel/api#SendFAX
    */
   public function SendFAX(){
@@ -1192,7 +1192,7 @@ class StatementController extends Controller
     $itemCode = '121';
 
     // 문서번호
-    $mgtKey = '20190101-001';
+    $mgtKey = '20210101-001';
 
     // 발신번호
     $sender = '07043042991';
@@ -1214,10 +1214,11 @@ class StatementController extends Controller
   }
 
   /**
-   * 팝빌에 전자명세서를 등록하지 않고 공급받는자에게 팩스전송합니다.
-   * - 팩스 전송 요청시 포인트가 차감됩니다. (전송실패시 환불처리)
+   * 전자명세서를 팩스로 전송하는 함수로, 팝빌에 데이터를 저장하는 과정이 없습니다.
+   * - 팝빌 사이트 [문자·팩스] > [팩스] > [전송내역] 메뉴에서 전송결과를 확인 할 수 있습니다.
+   * - 함수 호출시 포인트가 과금됩니다.
    * - 팩스 발행 요청시 작성한 문서번호는 팩스전송 파일명으로 사용됩니다.
-   * - 전송내역 확인은 "팝빌 로그인" > [문자 팩스] > [팩스] > [전송내역] 메뉴에서 전송결과를 확인할 수 있습니다.
+   * - 팩스 전송결과를 확인하기 위해서는 선팩스 전송 요청 시 반환받은 접수번호를 이용하여 팩스 API의 전송결과 확인 (GetFaxDetail) API를 이용하면 됩니다.
    * - https://docs.popbill.com/statement/phplaravel/api#FAXSend
    */
   public function FAXSend(){
@@ -1225,8 +1226,8 @@ class StatementController extends Controller
     // 팝빌 회원 사업자번호, '-' 제외 10자리
     $testCorpNum = '1234567890';
 
-    // 문서번호
-    $mgtKey = '20190213-005';
+    // 문서번호, 최대 24자리 영문 대소문자, 숫자, 특수문자('-','_')만 이용 가능
+    $mgtKey = '20210213-005';
 
     // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
     $itemCode = '121';
@@ -1244,7 +1245,7 @@ class StatementController extends Controller
      *                       전자명세서 정보
      ************************************************************/
     // [필수] 기재상 작성일자
-    $Statement->writeDate = '20190213';
+    $Statement->writeDate = '20210213';
 
     // [필수] (영수, 청구) 중 기재
     $Statement->purposeType = '영수';
@@ -1314,7 +1315,7 @@ class StatementController extends Controller
     $Statement->detailList = array();
     $Statement->detailList[0] = new StatementDetail();
     $Statement->detailList[0]->serialNum = '1';					//품목 일련번호 1부터 순차 기재
-    $Statement->detailList[0]->purchaseDT = '20190101';			//거래일자 yyyyMMdd
+    $Statement->detailList[0]->purchaseDT = '20210101';			//거래일자 yyyyMMdd
     $Statement->detailList[0]->itemName = '품명';
     $Statement->detailList[0]->spec = '규격';
     $Statement->detailList[0]->unit = '단위';
@@ -1331,7 +1332,7 @@ class StatementController extends Controller
 
     $Statement->detailList[1] = new StatementDetail();
     $Statement->detailList[1]->serialNum = '2';					//품목 일련번호 순차기재
-    $Statement->detailList[1]->purchaseDT = '20190101';			//거래일자 yyyyMMdd
+    $Statement->detailList[1]->purchaseDT = '20210101';			//거래일자 yyyyMMdd
     $Statement->detailList[1]->itemName = '품명';
     $Statement->detailList[1]->spec = '규격';
     $Statement->detailList[1]->unit = '단위';
@@ -1370,7 +1371,7 @@ class StatementController extends Controller
   }
 
   /**
-   * 전자명세서에 다른 전자명세서 1건을 첨부합니다.
+   * 하나의 전자명세서에 다른 전자명세서를 첨부합니다.
    * - https://docs.popbill.com/statement/phplaravel/api#AttachStatement
    */
   public function AttachStatement(){
@@ -1382,13 +1383,13 @@ class StatementController extends Controller
     $itemCode = '121';
 
     // 문서번호
-    $mgtKey = '20190213-001';
+    $mgtKey = '20210213-001';
 
     // 첨부할 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
     $subItemCode = '121';
 
     // 첨부할 명세서 문서번호
-    $subMgtKey = '20190213-002';
+    $subMgtKey = '20210213-002';
 
     try {
         $result = $this->PopbillStatement->AttachStatement($testCorpNum, $itemCode, $mgtKey, $subItemCode, $subMgtKey);
@@ -1404,7 +1405,7 @@ class StatementController extends Controller
   }
 
   /**
-   * 전자명세서에 첨부된 다른 전자명세서를 첨부해제합니다.
+   * 하나의 전자명세서에 첨부된 다른 전자명세서를 해제합니다.
    * - https://docs.popbill.com/statement/phplaravel/api#DetachStatement
    */
   public function DetachStatement(){
@@ -1416,13 +1417,13 @@ class StatementController extends Controller
     $itemCode = '121';
 
     // 문서번호
-    $mgtKey = '20190213-001';
+    $mgtKey = '20210213-001';
 
     // 첨부해제할 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
     $subItemCode = '121';
 
     // 첨부해제할 명세서 문서번호
-    $subMgtKey = '20190213-002';
+    $subMgtKey = '20210213-002';
 
     try {
         $result = $this->PopbillStatement->DetachStatement($testCorpNum, $itemCode, $mgtKey, $subItemCode, $subMgtKey);
@@ -1438,7 +1439,7 @@ class StatementController extends Controller
   }
 
   /**
-   * 전자명세서 관련 메일전송 항목에 대한 전송여부를 목록으로 반환한다.
+   * 전자명세서 관련 메일 항목에 대한 발송설정을 확인합니다.
    * - https://docs.popbill.com/statement/phplaravel/api#ListEmailConfig
    */
   public function ListEmailConfig(){
@@ -1459,7 +1460,7 @@ class StatementController extends Controller
   }
 
   /**
-   * 전자명세서 관련 메일전송 항목에 대한 전송여부를 수정합니다.
+   * 전자명세서 관련 메일 항목에 대한 발송설정을 수정합니다.
    * - https://docs.popbill.com/statement/phplaravel/api#UpdateEmailConfig
    *
    * 메일전송유형
@@ -1515,8 +1516,8 @@ class StatementController extends Controller
   }
 
   /**
-   * 팝빌 연동회원의 포인트충전 팝업 URL을 반환합니다.
-   * - 반환된 URL의 유지시간은 30초이며, 제한된 시간 이후에는 정상적으로 처리되지 않습니다.
+   * 연동회원 포인트 충전을 위한 페이지의 팝업 URL을 반환합니다.
+   * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
    * - https://docs.popbill.com/statement/phplaravel/api#GetChargeURL
    */
   public function GetChargeURL(){
@@ -1561,8 +1562,8 @@ class StatementController extends Controller
   }
 
   /**
-   * 파트너 포인트 충전 팝업 URL을 반환합니다.
-   * - 반환된 URL은 보안정책에 따라 30초의 유효시간을 갖습니다.
+   * 파트너 포인트 충전을 위한 페이지의 팝업 URL을 반환합니다.
+   * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
    * - https://docs.popbill.com/statement/phplaravel/api#GetPartnerURL
    */
   public function GetPartnerURL(){
@@ -1586,7 +1587,7 @@ class StatementController extends Controller
   }
 
   /**
-   * 전자명세서 발행단가를 확인합니다.
+   * 전자명세서 발행시 과금되는 포인트 단가를 확인합니다.
    * - https://docs.popbill.com/statement/phplaravel/api#GetUnitCost
    */
   public function GetUnitCost(){
@@ -1608,7 +1609,7 @@ class StatementController extends Controller
   }
 
   /**
-   * 전자명세서 API 서비스 과금정보를 확인합니다.
+   * 팝빌 전자명세서 API 서비스 과금정보를 확인합니다.
    * - https://docs.popbill.com/statement/phplaravel/api#GetChargeInfo
    */
   public function GetChargeInfo(){
@@ -1635,7 +1636,7 @@ class StatementController extends Controller
 
 
   /**
-   * 해당 사업자의 파트너 연동회원 가입여부를 확인합니다.
+   * 사업자번호를 조회하여 연동회원 가입여부를 확인합니다.
    * - https://docs.popbill.com/statement/phplaravel/api#CheckIsMember
    */
   public function CheckIsMember(){
@@ -1661,7 +1662,7 @@ class StatementController extends Controller
   }
 
   /**
-   * 팝빌 회원아이디 중복여부를 확인합니다.
+   * 사용하고자 하는 아이디의 중복여부를 확인합니다.
    * - https://docs.popbill.com/statement/phplaravel/api#CheckID
    */
   public function CheckID(){
@@ -1683,7 +1684,7 @@ class StatementController extends Controller
   }
 
   /**
-   * 파트너의 연동회원으로 회원가입을 요청합니다.
+   * 사용자를 연동회원으로 가입처리합니다.
    * - https://docs.popbill.com/statement/phplaravel/api#JoinMember
    */
   public function JoinMember(){
@@ -1761,7 +1762,7 @@ class StatementController extends Controller
   }
 
   /**
-   * 연동회원의 회사정보를 수정합니다
+   * 연동회원의 회사정보를 수정합니다.
    * - https://docs.popbill.com/statement/phplaravel/api#UpdateCorpInfo
    */
   public function UpdateCorpInfo(){
@@ -1801,7 +1802,7 @@ class StatementController extends Controller
   }
 
   /**
-   * 연동회원의 담당자를 신규로 등록합니다.
+   * 연동회원 사업자번호에 담당자(팝빌 로그인 계정)를 추가합니다.
    * - https://docs.popbill.com/statement/phplaravel/api#RegistContact
    */
   public function RegistContact(){
@@ -1853,7 +1854,7 @@ class StatementController extends Controller
   }
 
   /**
-   * 연동회원의 담당자 목록을 확인합니다.
+   * 연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 목록을 확인합니다.
    * - https://docs.popbill.com/statement/phplaravel/api#ListContact
    */
   public function ListContact(){
@@ -1874,7 +1875,7 @@ class StatementController extends Controller
   }
 
   /**
-   * 연동회원의 담당자 정보를 수정합니다.
+   * 연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 정보를 수정합니다.
    * - https://docs.popbill.com/statement/phplaravel/api#UpdateContact
    */
   public function UpdateContact(){
