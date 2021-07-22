@@ -41,7 +41,7 @@ Route::get('/KakaoTalk/{APIName}','KakaoTalkController@RouteHandelerFunc');
 
 // 휴폐업조회 Route Mapping
 Route::get('/CloseDown', function () { return view('CloseDown/index'); });
-Route::get('/CloseDown/{APIName}','CloseDownController@RouteHandelerFunc');
+Route::get('/CloseDown/{APIName}','ClosedownController@RouteHandelerFunc');
 
 // 홈택스 전자세금계산서 Route Mapping
 Route::get('/HTTaxinvoice', function () { return view('HTTaxinvoice/index'); });
