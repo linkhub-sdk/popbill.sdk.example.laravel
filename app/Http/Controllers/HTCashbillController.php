@@ -43,7 +43,7 @@ class HTCashbillController extends Controller
   }
 
   /*
-   * 현금영수증 매출/매입 내역 수집을 요청합니다
+   * 홈택스에 신고된 현금영수증 매입/매출 내역 수집을 팝빌에 요청합니다.
    * - 수집 요청후 반환받은 작업아이디(JobID)의 유효시간은 1시간 입니다.
    * - https://docs.popbill.com/htcashbill/phplaravel/api#RequestJob
    */
@@ -56,10 +56,10 @@ class HTCashbillController extends Controller
     $CBType = HTCBKeyType::BUY;
 
     // 시작일자, 형식(yyyyMMdd)
-    $SDate = '20200101';
+    $SDate = '20210101';
 
     // 종료일자, 형식(yyyyMMdd)
-    $EDate = '20200131';
+    $EDate = '20210131';
 
     try {
         $jobID = $this->PopbillHTCashbill->RequestJob( $testCorpNum, $CBType, $SDate, $EDate);
@@ -74,7 +74,7 @@ class HTCashbillController extends Controller
   }
 
   /*
-   * 수집 요청 상태를 확인합니다.
+   * 함수 RequestJob(수집 요청)를 통해 반환 받은 작업 아이디의 상태를 확인합니다.
    * - https://docs.popbill.com/htcashbill/phplaravel/api#GetJobState
    */
   public function GetJobState(){
@@ -83,7 +83,7 @@ class HTCashbillController extends Controller
     $testCorpNum = '1234567890';
 
     // 수집요청시 발급받은 작업아이디
-    $jobID = '019021510000000016';
+    $jobID = '021021510000000016';
 
     try {
         $result = $this->PopbillHTCashbill->GetJobState( $testCorpNum, $jobID);
@@ -97,8 +97,8 @@ class HTCashbillController extends Controller
   }
 
   /*
-   * 수집 요청건들에 대한 상태 목록을 확인합니다.
-   * - 수집 요청 작업아이디(JobID)의 유효시간은 1시간 입니다.
+   * 현금영수증 매입/매출 내역 수집요청에 대한 상태 목록을 확인합니다.
+   * - 수집 요청 후 1시간이 경과한 수집 요청건은 상태정보가 반환되지 않습니다.
    * - https://docs.popbill.com/htcashbill/phplaravel/api#ListActiveJob
    */
   public function ListActiveJob(){
@@ -118,7 +118,7 @@ class HTCashbillController extends Controller
   }
 
   /**
-   * 현금영수증 매입/매출 내역의 수집 결과를 조회합니다.
+   * 함수 GetJobState(수집 상태 확인)를 통해 상태 정보 확인된 작업아이디를 활용하여 현금영수증 매입/매출 내역을 조회합니다.
    * - https://docs.popbill.com/htcashbill/phplaravel/api#Search
    */
   public function Search(){
@@ -127,7 +127,7 @@ class HTCashbillController extends Controller
     $testCorpNum = '1234567890';
 
     // 수집 요청(RequestJob) 호출시 반환받은 작업아이디
-    $JobID = '019021510000000018';
+    $JobID = '021021510000000018';
 
     // 현금영수증 종류 배열, N-일반 현금영수증, C-취소 현금영수증
     $TradeType = array(
@@ -161,7 +161,7 @@ class HTCashbillController extends Controller
   }
 
   /**
-   * 현금영수증 매입/매출 내역의 수집 결과 요약정보를 조회합니다.
+   * 함수 GetJobState(수집 상태 확인)를 통해 상태 정보가 확인된 작업아이디를 활용하여 수집된 현금영수증 매입/매출 내역의 요약 정보를 조회합니다.
    * - https://docs.popbill.com/htcashbill/phplaravel/api#Summary
    */
   public function Summary(){
@@ -170,7 +170,7 @@ class HTCashbillController extends Controller
     $testCorpNum = '1234567890';
 
     // 수집 요청(RequestJob) 호출시 반환받은 작업아이디
-    $JobID = '019021510000000018';
+    $JobID = '021010415000000005';
 
     // 현금영수증 종류 배열, N-일반 현금영수증, C-취소 현금영수증
     $TradeType = array (
@@ -194,9 +194,9 @@ class HTCashbillController extends Controller
     return view('HTCashbill/Summary', ['Result' => $result] );
   }
   /**
-   * 홈택스연동 인증관리를 위한 URL을 반환합니다.
+   * 홈택스연동 인증정보를 관리하는 페이지의 팝업 URL을 반환합니다.
    * - 인증방식에는 부서사용자/공인인증서 인증 방식이 있습니다.
-   * - 반환된 URL은 보안정책에 따라 30초의 유효시간을 갖습니다.
+   * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
    * - https://docs.popbill.com/htcashbill/phplaravel/api#GetCertificatePopUpURL
    */
   public function GetCertificatePopUpURL(){
@@ -216,7 +216,7 @@ class HTCashbillController extends Controller
   }
 
   /**
-   * 팝빌에 등록된 홈택스 공인인증서의 만료일자를 반환합니다.
+   * 홈택스연동 인증을 위해 팝빌에 등록된 인증서 만료일자를 확인합니다.
    * - https://docs.popbill.com/htcashbill/phplaravel/api#GetCertificateExpireDate
    */
   public function GetCertificateExpireDate(){
@@ -236,7 +236,7 @@ class HTCashbillController extends Controller
   }
 
   /**
-   * 팝빌에 등록된 공인인증서의 홈택스 로그인을 테스트합니다.
+   * 팝빌에 등록된 인증서로 홈택스 로그인 가능 여부를 확인합니다.
    * - https://docs.popbill.com/htcashbill/phplaravel/api#CheckCertValidation
    */
   public function CheckCertValidation(){
@@ -258,7 +258,7 @@ class HTCashbillController extends Controller
   }
 
   /**
-   * 홈택스 현금영수증 부서사용자 계정을 등록한다.
+   * 홈택스연동 인증을 위해 팝빌에 현금영수증 자료조회 부서사용자 계정을 등록합니다.
    * - https://docs.popbill.com/htcashbill/phplaravel/api#RegistDeptUser
    */
   public function RegistDeptUser(){
@@ -285,7 +285,7 @@ class HTCashbillController extends Controller
   }
 
   /**
-   * 팝빌에 등록된 현금영수증 부서사용자 아이디를 확인합니다.
+   * 홈택스연동 인증을 위해 팝빌에 등록된 현금영수증 자료조회 부서사용자 계정을 확인합니다.
    * - https://docs.popbill.com/htcashbill/phplaravel/api#CheckDeptUser
    */
   public function CheckDeptUser(){
@@ -307,7 +307,7 @@ class HTCashbillController extends Controller
   }
 
   /**
-   * 팝빌에 등록된 현금영수증 부서사용자 계정정보를 이용하여 홈택스 로그인을 테스트합니다.
+   * 팝빌에 등록된 현금영수증 자료조회 부서사용자 계정 정보로 홈택스 로그인 가능 여부를 확인합니다.
    * - https://docs.popbill.com/htcashbill/phplaravel/api#CheckLoginDeptUser
    */
   public function CheckLoginDeptUser(){
@@ -329,7 +329,7 @@ class HTCashbillController extends Controller
   }
 
   /**
-   * 팝빌에 등록된 현금영수증 부서사용자 계정정보를 삭제합니다.
+   * 팝빌에 등록된 홈택스 현금영수증 자료조회 부서사용자 계정을 삭제합니다.
    * - https://docs.popbill.com/htcashbill/phplaravel/api#DeleteDeptUser
    */
   public function DeleteDeptUser(){
@@ -372,8 +372,8 @@ class HTCashbillController extends Controller
   }
 
   /**
-   * 팝빌 연동회원의 포인트충전 팝업 URL을 반환합니다.
-   * - 반환된 URL은 보안정책에 따라 30초의 유효시간을 갖습니다.
+   * 연동회원 포인트 충전을 위한 페이지의 팝업 URL을 반환합니다.
+   * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
    * - https://docs.popbill.com/htcashbill/phplaravel/api#GetChargeURL
    */
   public function GetChargeURL(){
@@ -416,8 +416,8 @@ class HTCashbillController extends Controller
   }
 
   /**
-   * 파트너 포인트 충전 팝업 URL을 반환합니다.
-   * - 반환된 URL은 보안정책에 따라 30초의 유효시간을 갖습니다.
+   * 파트너 포인트 충전을 위한 페이지의 팝업 URL을 반환합니다.
+   * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
    * - https://docs.popbill.com/htcashbill/phplaravel/api#GetPartnerURL
    */
   public function GetPartnerURL(){
@@ -464,8 +464,8 @@ class HTCashbillController extends Controller
   }
 
   /**
-   * 정액제 서비스 신청 URL을 반환합니다.
-   * - 반환된 URL은 보안정책에 따라 30초의 유효시간을 갖습니다.
+   * 홈택스연동 정액제 서비스 신청 페이지의 팝업 URL을 반환합니다.
+   * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
    * - https://docs.popbill.com/htcashbill/phplaravel/api#GetFlatRatePopUpURL
    */
   public function GetFlatRatePopUpURL(){
@@ -485,7 +485,7 @@ class HTCashbillController extends Controller
   }
 
   /**
-   * 연동회원의 정액제 서비스 이용상태를 확인합니다.
+   * 홈택스연동 정액제 서비스 상태를 확인합니다.
    * - https://docs.popbill.com/htcashbill/phplaravel/api#GetFlatRateState
    */
   public function GetFlatRateState(){
@@ -505,7 +505,7 @@ class HTCashbillController extends Controller
   }
 
   /**
-   * 해당 사업자의 파트너 연동회원 가입여부를 확인합니다.
+   *  사업자번호를 조회하여 연동회원 가입여부를 확인합니다.
    * - https://docs.popbill.com/htcashbill/phplaravel/api#CheckIsMember
    */
   public function CheckIsMember(){
@@ -531,7 +531,7 @@ class HTCashbillController extends Controller
   }
 
   /**
-   * 팝빌 회원아이디 중복여부를 확인합니다.
+   * 사용하고자 하는 아이디의 중복여부를 확인합니다.
    * - https://docs.popbill.com/htcashbill/phplaravel/api#CheckID
    */
   public function CheckID(){
@@ -553,7 +553,7 @@ class HTCashbillController extends Controller
   }
 
   /**
-   * 파트너의 연동회원으로 회원가입을 요청합니다.
+   * 사용자를 연동회원으로 가입처리합니다.
    * - https://docs.popbill.com/htcashbill/phplaravel/api#JoinMember
    */
   public function JoinMember(){
@@ -610,8 +610,8 @@ class HTCashbillController extends Controller
   }
 
   /**
-   * 팝빌에 로그인 상태로 접근할 수 있는 팝업 URL을 반환합니다.
-   * - 반환된 URL의 유지시간은 30초이며, 제한된 시간 이후에는 정상적으로 처리되지 않습니다.
+   * 팝빌 사이트에 로그인 상태로 접근할 수 있는 페이지의 팝업 URL을 반환합니다.
+   * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
    * - https://docs.popbill.com/htcashbill/phplaravel/api#GetAccessURL
    */
   public function GetAccessURL(){
@@ -695,7 +695,7 @@ class HTCashbillController extends Controller
   }
 
   /**
-   * 연동회원의 담당자를 신규로 등록합니다.
+   * 연동회원 사업자번호에 담당자(팝빌 로그인 계정)를 추가합니다.
    * - https://docs.popbill.com/htcashbill/phplaravel/api#RegistContact
    */
   public function RegistContact(){
@@ -747,7 +747,7 @@ class HTCashbillController extends Controller
   }
 
   /**
-   * 연동회원의 담당자 목록을 확인합니다.
+   * 연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 목록을 확인합니다.
    * - https://docs.popbill.com/htcashbill/phplaravel/api#ListContact
    */
   public function ListContact(){
@@ -768,7 +768,7 @@ class HTCashbillController extends Controller
   }
 
   /**
-   * 연동회원의 담당자 정보를 수정합니다.
+   * 연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 정보를 수정합니다.
    * - https://docs.popbill.com/htcashbill/phplaravel/api#UpdateContact
    */
   public function UpdateContact(){

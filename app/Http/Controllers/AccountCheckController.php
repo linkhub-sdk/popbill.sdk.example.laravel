@@ -42,7 +42,8 @@ class AccountCheckController extends Controller
   }
 
   /**
-   * 계좌에 대한 에금주성명을 조회합니다.
+   * 1건의 예금주성명을 조회합니다.
+   * - https://docs.popbill.com/accountcheck/phplaravel/api#CheckAccountInfo
    */
   public function CheckAccountInfo(){
 
@@ -69,6 +70,7 @@ class AccountCheckController extends Controller
   /**
    * 연동회원의 잔여포인트를 확인합니다.
    * - 과금방식이 파트너과금인 경우 파트너 잔여포인트(GetPartnerBalance API) 를 통해 확인하시기 바랍니다.
+   * - https://docs.popbill.com/accountcheck/phplaravel/api#GetBalance 
    */
   public function GetBalance(){
 
@@ -87,8 +89,9 @@ class AccountCheckController extends Controller
   }
 
   /**
-   * 팝빌 연동회원의 포인트충전 팝업 URL을 반환합니다.
-   * - 반환된 URL은 보안정책에 따라 30초의 유효시간을 갖습니다.
+   * 연동회원 포인트 충전을 위한 페이지의 팝업 URL을 반환합니다.
+   * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+   * - https://docs.popbill.com/accountcheck/phplaravel/api#GetChargeURL
    */
   public function GetChargeURL(){
 
@@ -109,7 +112,8 @@ class AccountCheckController extends Controller
   }
 
   /**
-   * 예금주조회 단가를 확인합니다.
+   * 예금주 성명 조회시 과금되는 포인트 단가를 확인합니다.
+   * - https://docs.popbill.com/accountcheck/phplaravel/api#GetUnitCost
    */
   public function GetUnitCost(){
 
@@ -130,6 +134,7 @@ class AccountCheckController extends Controller
   /**
    * 파트너의 잔여포인트를 확인합니다.
    * - 과금방식이 연동과금인 경우 연동회원 잔여포인트(GetBalance API)를 이용하시기 바랍니다.
+   * - https://docs.popbill.com/accountcheck/phplaravel/api#GetPartnerBalance
    */
   public function GetPartnerBalance(){
 
@@ -148,8 +153,9 @@ class AccountCheckController extends Controller
   }
 
   /**
-   * 파트너 포인트 충전 팝업 URL을 반환합니다.
-   * - 반환된 URL은 보안정책에 따라 30초의 유효시간을 갖습니다.
+   * 파트너 포인트 충전을 위한 페이지의 팝업 URL을 반환합니다.
+   * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+   * - https://docs.popbill.com/accountcheck/phplaravel/api#GetPartnerURL
    */
   public function GetPartnerURL(){
 
@@ -172,6 +178,7 @@ class AccountCheckController extends Controller
 
   /**
    * 예금주조회 API 서비스 과금정보를 확인합니다.
+   * - https://docs.popbill.com/accountcheck/phplaravel/api#GetChargeInfo
    */
 
   public function GetChargeInfo(){
@@ -194,7 +201,8 @@ class AccountCheckController extends Controller
   }
 
   /**
-   * 해당 사업자의 파트너 연동회원 가입여부를 확인합니다.
+   *  사업자번호를 조회하여 연동회원 가입여부를 확인합니다.
+   * - https://docs.popbill.com/accountcheck/phplaravel/api#CheckIsMember
    */
   public function CheckIsMember(){
 
@@ -219,7 +227,8 @@ class AccountCheckController extends Controller
   }
 
   /**
-   * 팝빌 회원아이디 중복여부를 확인합니다.
+   * 사용하고자 하는 아이디의 중복여부를 확인합니다.
+   * - https://docs.popbill.com/accountcheck/phplaravel/api#CheckID
    */
   public function CheckID(){
 
@@ -240,7 +249,8 @@ class AccountCheckController extends Controller
   }
 
   /**
-   * 파트너의 연동회원으로 회원가입을 요청합니다.
+   * 사용자를 연동회원으로 가입처리합니다.
+   * - https://docs.popbill.com/accountcheck/phplaravel/api#JoinMember
    */
   public function JoinMember(){
 
@@ -297,6 +307,7 @@ class AccountCheckController extends Controller
 
   /**
    * 연동회원의 회사정보를 확인합니다.
+   * - https://docs.popbill.com/accountcheck/phplaravel/api#GetCorpInfo
    */
   public function GetCorpInfo(){
 
@@ -317,6 +328,7 @@ class AccountCheckController extends Controller
 
   /**
    * 연동회원의 회사정보를 수정합니다
+   * - https://docs.popbill.com/accountcheck/phplaravel/api#UpdateCorpInfo
    */
   public function UpdateCorpInfo(){
 
@@ -355,7 +367,8 @@ class AccountCheckController extends Controller
   }
 
   /**
-   * 연동회원의 담당자를 신규로 등록합니다.
+   * 연동회원 사업자번호에 담당자(팝빌 로그인 계정)를 추가합니다.
+   * - https://docs.popbill.com/accountcheck/phplaravel/api#RegistContact
    */
   public function RegistContact(){
 
@@ -406,7 +419,8 @@ class AccountCheckController extends Controller
   }
 
   /**
-   * 연동회원의 담당자 목록을 확인합니다.
+   * 연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 목록을 확인합니다.
+   * - https://docs.popbill.com/accountcheck/phplaravel/api#ListContact
    */
   public function ListContact(){
 
@@ -426,7 +440,8 @@ class AccountCheckController extends Controller
   }
 
   /**
-   * 연동회원의 담당자 정보를 수정합니다.
+   * 연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 정보를 수정합니다.
+   * - https://docs.popbill.com/accountcheck/phplaravel/api#UpdateContact
    */
   public function UpdateContact(){
 
@@ -474,8 +489,9 @@ class AccountCheckController extends Controller
   }
 
   /**
-   * 팝빌에 로그인 상태로 접근할 수 있는 팝업 URL을 반환합니다.
-   * 반환된 URL의 유지시간은 30초이며, 제한된 시간 이후에는 정상적으로 처리되지 않습니다.
+   * 팝빌 사이트에 로그인 상태로 접근할 수 있는 페이지의 팝업 URL을 반환합니다.
+   * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+   * - https://docs.popbill.com/accountcheck/phplaravel/api#GetAccessURL
    */
   public function GetAccessURL(){
 
