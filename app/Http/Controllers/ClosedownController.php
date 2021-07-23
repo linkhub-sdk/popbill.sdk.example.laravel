@@ -51,7 +51,7 @@ class ClosedownController extends Controller
     $MemberCorpNum = "1234567890";
 
     // 조회 사업자번호
-    $CheckCorpNum = "6799800433";
+    $CheckCorpNum = "6798700433";
 
     try {
         $result = $this->PopbillClosedown->checkCorpNum($MemberCorpNum, $CheckCorpNum);
@@ -76,7 +76,7 @@ class ClosedownController extends Controller
     // 조회할 사업자번호 배열, 최대 1000건
     $CorpNumList = array(
         "1234567890",
-        "1234567890",
+        "6798700433",
         "401-03-94930",
     );
 
