@@ -1774,8 +1774,8 @@ class StatementController extends Controller
     // 아이디, 6자 이상 20자미만
     $joinForm->ID = 'userid_phpdd';
 
-    // 비밀번호, 6자 이상 20자미만
-    $joinForm->PWD = 'thisispassword';
+    // 비밀번호, 8자 이상 20지 이하 영문, 숫자, 특수문자 조합
+    $joinForm->Password = 'asdf1234!@';
 
     try	{
       $result = $this->PopbillStatement->JoinMember($joinForm);
