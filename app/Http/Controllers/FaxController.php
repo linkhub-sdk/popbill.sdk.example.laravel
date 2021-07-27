@@ -1085,7 +1085,7 @@ class FaxController extends Controller
     // 아이디, 6자 이상 20자미만
     $joinForm->ID = 'userid_phpdd';
 
-    // 비밀번호, 8자 이상 20지 이하 영문, 숫자, 특수문자 조합
+    // 비밀번호, 8자 이상 20자 이하(영문, 숫자, 특수문자 조합)
     $joinForm->Password = 'asdf1234!@';
 
     try	{
@@ -1177,8 +1177,8 @@ class FaxController extends Controller
     // 담당자 아이디
     $ContactInfo->id = 'testkorea001';
 
-    // 담당자 패스워드
-    $ContactInfo->pwd = 'testkorea!@#$/';
+    // 담당자 비밀번호, 8자 이상 20자 이하(영문, 숫자, 특수문자 조합)
+    $ContactInfo->Password = 'asdf123!@#';
 
     // 담당자명
     $ContactInfo->personName = '담당자_수정';
@@ -1195,11 +1195,8 @@ class FaxController extends Controller
     // 팩스
     $ContactInfo->fax = '070-111-222';
 
-    // 회사조회 여부, false-개인조회, true-회사조회
-    $ContactInfo->searchAllAllowYN = true;
-
-    // 관리자여부
-    $ContactInfo->mgrYN = false;
+    // 담당자 권한, 1 : 개인권한, 2 : 읽기권한, 3: 회사권한
+    $ContactInfo->searchRole = 3;
 
     try {
         $result = $this->PopbillFax->RegistContact($testCorpNum, $ContactInfo);
@@ -1294,8 +1291,8 @@ class FaxController extends Controller
     // 팩스번호
     $ContactInfo->fax = '070-111-222';
 
-    // 전체조회 여부, false-개인조회, true-전체조회
-    $ContactInfo->searchAllAllowYN = true;
+    // 담당자 권한, 1 : 개인권한, 2 : 읽기권한, 3: 회사권한
+    $ContactInfo->searchRole = 3;
 
     try {
         $result = $this->PopbillFax->UpdateContact($testCorpNum, $ContactInfo, $testUserID);
