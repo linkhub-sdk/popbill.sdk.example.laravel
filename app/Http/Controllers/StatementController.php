@@ -1921,7 +1921,7 @@ class StatementController extends Controller
         return view('PResponse', ['code' => $code, 'message' => $message]);
     }
 
-    return view('ContactInfo', ['ContactList' => $ContactList]);
+    return view('ListContact', ['ContactList' => $ContactList]);
   }
 
   /**
