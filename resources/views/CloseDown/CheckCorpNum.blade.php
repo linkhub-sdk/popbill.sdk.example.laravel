@@ -12,7 +12,7 @@
 				<legend>{{\Request::fullUrl()}}</legend>
         <br/>
         <p class="info">> state (휴폐업상태) : null-알수없음, 0-등록되지 않은 사업자번호, 1-사업중, 2-폐업, 3-휴업</p>
-				<p class="info">> type (사업 유형) : null-알수없음, 1-일반과세자, 2-면세과세자, 3-간이과세자, 4-비영리법인, 국가기관</p>
+				<p class="info">> taxType (사업 유형) : null-알수없음, 10-일반과세자, 20-면세과세자, 30-간이과세자, 31-간이과세자(세금계산서 발급사업자), 40-비영리법인, 국가기관</p>
           @foreach ($Result as $indexKey => $corpInfo)
           <fieldset class="fieldset2">
             <legend>휴폐업조회 확인 [{{ $indexKey+1 }} / {{ count($Result) }}]</legend>
@@ -20,7 +20,7 @@
               <li>사업자번호 (corpNum) : {{ $corpInfo->corpNum }}</li>
               <li>휴폐업상태 (state) : {{ $corpInfo->state }}</li>
               <li>휴폐업일자 (stateDate) : {{ $corpInfo->stateDate }}</li>
-              <li>사업자유형 (type) : {{ $corpInfo->type }}</li>
+              <li>사업자유형 (taxType) : {{ $corpInfo->taxType }}</li>
               <li>과세유형 전환일자 (typeDate) : {{ $corpInfo->typeDate }}</li>
               <li>국세청 확일일자 (checkDate) : {{ $corpInfo->checkDate }}</li>
             </ul>
