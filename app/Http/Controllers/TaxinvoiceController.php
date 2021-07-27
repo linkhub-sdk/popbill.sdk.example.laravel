@@ -351,6 +351,9 @@ class TaxinvoiceController extends Controller
     // 지연발행 강제 여부
     $fourceIssue = false;
 
+    // 세금계산서 객체정보 배열
+    $taxinvoiceList = [];
+
     for($i=0; $i<100; $i++){
         /************************************************************
         *                        세금계산서 정보
@@ -572,6 +575,7 @@ class TaxinvoiceController extends Controller
         $Taxinvoice->addContactList[1]->email = 'test@test.com';	    // 이메일주소
         $Taxinvoice->addContactList[1]->contactName	= '링크허브';		  // 담당자명
 
+        // 세금계산서 추가
         $taxinvoiceList[] = $Taxinvoice;
     }
 
