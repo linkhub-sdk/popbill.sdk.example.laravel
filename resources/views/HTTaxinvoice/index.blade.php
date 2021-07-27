@@ -46,6 +46,8 @@
         <ul>
             <li><a href="HTTaxinvoice/GetBalance">GetBalance</a> (연동회원 잔여포인트 확인) </li>
             <li><a href="HTTaxinvoice/GetChargeURL">GetChargeURL</a> (연동회원 포인트충전 URL) </li>
+            <li><a href="HTTaxinvoice/GetPaymentURL">GetPaymentURL</a> (연동회원 결재내역 URL)</li>
+            <li><a href="HTTaxinvoice/GetUseHistoryURL">GetUseHistoryURL</a> (연동회원 사용내역 URL)</li>
             <li><a href="HTTaxinvoice/GetPartnerBalance">GetPartnerBalance</a> (파트너 잔여포인트 확인) </li>
             <li><a href="HTTaxinvoice/GetPartnerURL">GetPartnerURL</a> (파트너 포인트충전 URL) </li>
             <li><a href="HTTaxinvoice/GetChargeInfo">GetChargeInfo</a> (과금정보 확인) </li>

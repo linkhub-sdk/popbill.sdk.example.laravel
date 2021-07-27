@@ -21,6 +21,8 @@
         <ul>
             <li><a href="CloseDown/GetBalance">GetBalance</a> (연동회원 잔여포인트 확인) </li>
             <li><a href="CloseDown/GetChargeURL">GetChargeURL</a> (연동회원 포인트충전 URL) </li>
+            <li><a href="CloseDown/GetPaymentURL">GetPaymentURL</a> (연동회원 결재내역 URL)</li>
+            <li><a href="CloseDown/GetUseHistoryURL">GetUseHistoryURL</a> (연동회원 사용내역 URL)</li>
             <li><a href="CloseDown/GetPartnerBalance">GetPartnerBalance</a> (파트너 잔여포인트 확인) </li>
             <li><a href="CloseDown/GetPartnerURL">GetPartnerURL</a> (파트너 포인트충전 URL) </li>
             <li><a href="CloseDown/GetUnitCost">GetUnitCost</a> (조회단가 확인) </li>

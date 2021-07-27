@@ -79,6 +79,8 @@
         <ul>
             <li><a href="KakaoTalk/GetBalance">GetBalance</a> (연동회원 잔여포인트 확인)</li>
             <li><a href="KakaoTalk/GetChargeURL">GetChargeURL</a> (연동회원 포인트 충전 팝업 URL)</li>
+            <li><a href="KakaoTalk/GetPaymentURL">GetPaymentURL</a> (연동회원 결재내역 URL)</li>
+            <li><a href="KakaoTalk/GetUseHistoryURL">GetUseHistoryURL</a> (연동회원 사용내역 URL)</li>
             <li><a href="KakaoTalk/GetPartnerBalance">GetPartnerBalance</a> (파트너 잔여포인트 확인)</li>
             <li><a href="KakaoTalk/GetPartnerURL">GetPartnerURL</a> (파트너 포인트충전 URL)</li>
             <li><a href="KakaoTalk/GetUnitCost">GetUnitCost</a> (전송단가 확인)</li>

@@ -41,6 +41,8 @@
         <ul>
             <li><a href="HTCashbill/GetBalance">GetBalance</a> (연동회원 잔여포인트 확인)</li>
             <li><a href="HTCashbill/GetChargeURL">GetChargeURL</a> (연동회원 포인트충전 URL)</li>
+            <li><a href="HTCashbill/GetPaymentURL">GetPaymentURL</a> (연동회원 결재내역 URL)</li>
+            <li><a href="HTCashbill/GetUseHistoryURL">GetUseHistoryURL</a> (연동회원 사용내역 URL)</li>
             <li><a href="HTCashbill/GetPartnerBalance">GetPartnerBalance</a> (파트너 잔여포인트 확인)</li>
             <li><a href="HTCashbill/GetPartnerURL">GetPartnerURL</a> (파트너 포인트충전 URL)</li>
             <li><a href="HTCashbill/GetChargeInfo">GetChargeInfo</a> (과금정보 확인)</li>

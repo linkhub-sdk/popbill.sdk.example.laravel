@@ -66,6 +66,8 @@
       <ul>
           <li><a href="Statement/GetBalance">GetBalance</a> (연동회원 잔여포인트 확인)</li>
           <li><a href="Statement/GetChargeURL">GetChargeURL</a> (연동회원 포인트충전 URL)</li>
+          <li><a href="Statement/GetPaymentURL">GetPaymentURL</a> (연동회원 결재내역 URL)</li>
+          <li><a href="Statement/GetUseHistoryURL">GetUseHistoryURL</a> (연동회원 사용내역 URL)</li>
           <li><a href="Statement/GetPartnerBalance">GetPartnerBalance</a> (파트너 잔여포인트 확인)</li>
           <li><a href="Statement/GetPartnerURL">GetPartnerURL</a> (파트너 포인트충전 URL)</li>
           <li><a href="Statement/GetUnitCost">GetUnitCost</a> (발행 단가 확인)</li>

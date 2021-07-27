@@ -135,6 +135,56 @@ class ClosedownController extends Controller
     }
 
     /**
+     * 연동회원 포인트 결제내역 확인을 위한 페이지의 팝업 URL을 반환합니다.
+     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * - https://docs.popbill.com/closedown/phplaravel/api#GetPaymentURL
+     */
+    public function GetPaymentURL(){
+
+      // 팝빌 회원 사업자 번호, "-"제외 10자리
+      $testCorpNum = '1234567890';
+
+      // 팝빌 회원 아이디
+      $testUserID = 'testkorea';
+
+      try {
+          $url = $this->PopbillClosedown->GetPaymentURL($testCorpNum, $testUserID);
+      } catch(PopbillException $pe) {
+          $code = $pe->getCode();
+          $message = $pe->getMessage();
+          return view('PResponse', ['code' => $code, 'message' => $message]);
+      }
+
+      return view('ReturnValue', ['filedName' => "연동회원 포인트 결제내역 팝업 URL" , 'value' => $url]);
+
+    }
+
+    /**
+     * 연동회원 포인트 사용내역 확인을 위한 페이지의 팝업 URL을 반환합니다.
+     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * - https://docs.popbill.com/closedown/phplaravel/api#GetUseHistoryURL
+     */
+    public function GetUseHistoryURL(){
+
+      // 팝빌 회원 사업자 번호, "-"제외 10자리
+      $testCorpNum = '1234567890';
+
+      // 팝빌 회원 아이디
+      $testUserID = 'testkorea';
+
+      try {
+          $url = $this->PopbillClosedown->GetUseHistoryURL($testCorpNum, $testUserID);
+      } catch(PopbillException $pe) {
+          $code = $pe->getCode();
+          $message = $pe->getMessage();
+        return view('PResponse', ['code' => $code, 'message' => $message]);
+      }
+
+      return view('ReturnValue', ['filedName' => "연동회원 포인트 사용내역 팝업 URL" , 'value' => $url]);
+
+    }
+
+    /**
      * 휴폐업 조회시 과금되는 포인트 단가를 확인합니다.
      * - https://docs.popbill.com/closedown/phplaravel/api#GetUnitCost
      */

@@ -46,6 +46,8 @@
         <ul>
             <li><a href="Fax/GetBalance">GetBalance</a> (연동회원 잔여포인트 확인)</li>
             <li><a href="Fax/GetChargeURL">GetChargeURL</a> (연동회원 포인트충전 URL)</li>
+            <li><a href="Fax/GetPaymentURL">GetPaymentURL</a> (연동회원 결재내역 URL)</li>
+            <li><a href="Fax/GetUseHistoryURL">GetUseHistoryURL</a> (연동회원 사용내역 URL)</li>
             <li><a href="Fax/GetPartnerBalance">GetPartnerBalance</a> (파트너 잔여포인트 확인)</li>
             <li><a href="Fax/GetPartnerURL">GetPartnerURL</a> (파트너 포인트충전 URL)</li>
             <li><a href="Fax/GetUnitCost">GetUnitCost</a> (전송 단가 확인)</li>
