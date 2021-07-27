@@ -87,6 +87,7 @@
             <li><a href="Message/JoinMember">JoinMember</a> (연동회원 신규가입)</li>
             <li><a href="Message/GetAccessURL">GetAccessURL</a> (팝빌 로그인 URL)</li>
             <li><a href="Message/RegistContact">RegistContact</a> (담당자 등록)</li>
+            <li><a href="Message/GetContactInfo">GetContactInfo</a> (담당자 정보 확인)</li>
             <li><a href="Message/ListContact">ListContact</a> (담당자 목록 확인)</li>
             <li><a href="Message/UpdateContact">UpdateContact</a> (담당자 정보 수정)</li>
             <li><a href="Message/GetCorpInfo">GetCorpInfo</a> (회사정보 확인)</li>

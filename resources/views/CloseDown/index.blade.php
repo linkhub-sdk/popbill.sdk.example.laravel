@@ -38,6 +38,7 @@
             <li><a href="CloseDown/GetCorpInfo">GetCorpInfo</a> (회사정보 확인) </li>
             <li><a href="CloseDown/UpdateCorpInfo">UpdateCorpInfo</a> (회사정보 수정) </li>
             <li><a href="CloseDown/RegistContact">RegistContact</a> (담당자 등록) </li>
+            <li><a href="CloseDown/GetContactInfo">GetContactInfo</a> (담당자 정보 확인)</li>
             <li><a href="CloseDown/ListContact">ListContact</a> (담당자 목록 확인) </li>
             <li><a href="CloseDown/UpdateContact">UpdateContact</a> (담당자 정보 수정) </li>
             <li><a href="CloseDown/GetAccessURL">GetAccessURL</a> (팝빌 로그인 URL) </li>

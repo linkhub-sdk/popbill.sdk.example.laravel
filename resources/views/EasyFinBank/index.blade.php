@@ -62,6 +62,7 @@
             <li><a href="EasyFinBank/GetCorpInfo">GetCorpInfo</a> (회사정보 확인) </li>
             <li><a href="EasyFinBank/UpdateCorpInfo">UpdateCorpInfo</a> (회사정보 수정) </li>
             <li><a href="EasyFinBank/RegistContact">RegistContact</a> (담당자 등록) </li>
+            <li><a href="EasyFinBank/GetContactInfo">GetContactInfo</a> (담당자 정보 확인)</li>
             <li><a href="EasyFinBank/ListContact">ListContact</a> (담당자 목록 확인) </li>
             <li><a href="EasyFinBank/UpdateContact">UpdateContact</a> (담당자 정보 수정) </li>
         </ul>

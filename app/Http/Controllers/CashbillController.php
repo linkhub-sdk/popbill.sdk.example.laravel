@@ -1565,6 +1565,32 @@ class CashbillController extends Controller
   }
 
   /**
+   * 연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 정보을 확인합니다.
+   * - https://docs.popbill.com/cashbill/phplaravel/api#GetContactInfo
+   */
+  public function GetContactInfo(){
+    // 팝빌회원 사업자번호, '-'제외 10자리
+    $testCorpNum = '1234567890';
+
+    //확인할 담당자 아이디
+    $contactID = 'checkContact';
+
+    // 팝빌회원 아이디
+    $testUserID = 'testkorea';
+
+    try {
+        $ContactInfo = $this->PopbillCashbill->GetContactInfo($testCorpNum, $contactID, $testUserID);
+    }
+    catch(PopbillException $pe) {
+        $code = $pe->getCode();
+        $message = $pe->getMessage();
+        return view('PResponse', ['code' => $code, 'message' => $message]);
+    }
+
+    return view('ContactInfo', ['ContactInfo' => $ContactInfo]);
+  }
+
+  /**
    * 연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 목록을 확인합니다.
    * - https://docs.popbill.com/cashbill/phplaravel/api#ListContact
    */

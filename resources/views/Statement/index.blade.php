@@ -83,6 +83,7 @@
           <li><a href="Statement/GetCorpInfo">GetCorpInfo</a> (회사정보 확인)</li>
           <li><a href="Statement/UpdateCorpInfo">UpdateCorpInfo</a> (회사정보 수정)</li>
           <li><a href="Statement/RegistContact">RegistContact</a> (담당자 등록)</li>
+          <li><a href="Statement/GetContactInfo">GetContactInfo</a> (담당자 정보 확인)</li>
           <li><a href="Statement/ListContact">ListContact</a> (담당자 목록 확인)</li>
           <li><a href="Statement/UpdateContact">UpdateContact</a> (담당자 정보 수정)</li>
       </ul>
