@@ -12,7 +12,7 @@
     <fieldset class="fieldset1">
         <legend>현금영수증 발행</legend>
         <ul>
-            <li><a href="Cashbill/CheckMgtKeyInUse">CheckMgtKeyInUse</a> (관리번호 확인)</li>
+            <li><a href="Cashbill/CheckMgtKeyInUse">CheckMgtKeyInUse</a> (문서번호 확인)</li>
             <li><a href="Cashbill/RegistIssue">RegistIssue</a> (즉시발행)</li>
             <li><a href="Cashbill/Register">Register</a> (임시저장)</li>
             <li><a href="Cashbill/Update">Update</a> (수정)</li>

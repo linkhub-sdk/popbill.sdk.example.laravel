@@ -21,7 +21,7 @@
             <li> ntsconfirmNum (국세청승인번호) : {{ $Taxinvoice->ntsconfirmNum }} </li>
 
             <li> invoicerCorpNum (공급자 사업자번호) : {{ $Taxinvoice->invoicerCorpNum}} </li>
-            <li> invoicerMgtKey (공급자 문서관리번호) : {{ $Taxinvoice->invoicerMgtKey }} </li>
+            <li> invoicerMgtKey (공급자 문서번호) : {{ $Taxinvoice->invoicerMgtKey }} </li>
             <li> invoicerCorpName (공급자 상호) : {{ $Taxinvoice->invoicerCorpName }} </li>
             <li> invoicerCEOName (공급자 대표자명) : {{ $Taxinvoice->invoicerCEOName }} </li>
             <li> invoicerAddr (공급자 주소) : {{ $Taxinvoice->invoicerAddr }} </li>
@@ -33,7 +33,7 @@
 
             <li> invoiceeCorpNum (공급받는자 사업자번호) : {{ $Taxinvoice->invoiceeCorpNum }} </li>
             <li> invoiceeType (공급받는자 구분) : {{ $Taxinvoice->invoiceeType}}  </li>
-            <li> invoiceeMgtKey (공급받는자 문서관리번호) : {{ $Taxinvoice->invoiceeMgtKey }} </li>
+            <li> invoiceeMgtKey (공급받는자 문서번호) : {{ $Taxinvoice->invoiceeMgtKey }} </li>
             <li> invoiceeCorpName (공급받는자 상호) : {{ $Taxinvoice->invoiceeCorpName }} </li>
             <li> invoiceeCEOName (공급받는자 대표자명 : {{ $Taxinvoice->invoiceeCEOName }} </li>
             <li> invoiceeAddr (공급받는자 주소) : {{ $Taxinvoice->invoiceeAddr }} </li>

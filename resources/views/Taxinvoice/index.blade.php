@@ -13,7 +13,7 @@
     <fieldset class="fieldset1">
         <legend>정방행/역발행/위수탁발행</legend>
         <ul>
-            <li><a href="Taxinvoice/CheckMgtKeyInUse">CheckMgtKeyInUse</a> (관리번호 확인)</li>
+            <li><a href="Taxinvoice/CheckMgtKeyInUse">CheckMgtKeyInUse</a> (문서번호 확인)</li>
             <li><a href="Taxinvoice/RegistIssue">RegistIssue</a> (즉시 발행)</li>
             <li><a href="Taxinvoice/BulkSubmit">BulkSubmit</a> (초대량 발행 접수)</li>
             <li><a href="Taxinvoice/GetBulkResult">GetBulkResult</a> (초대량 접수결과 확인)</li>
@@ -72,7 +72,7 @@
             <li><a href="Taxinvoice/AttachStatement">AttachStatement</a> (전자명세서 첨부)</li>
             <li><a href="Taxinvoice/DetachStatement">DetachStatement</a> (전자명세서 첨부해제)</li>
             <li><a href="Taxinvoice/GetEmailPublicKeys">GetEmailPublicKeys</a> (유통사업자 메일 목록 확인)</li>
-            <li><a href="Taxinvoice/AssignMgtKey">AssignMgtKey</a> (관리번호 할당)</li>
+            <li><a href="Taxinvoice/AssignMgtKey">AssignMgtKey</a> (문서번호 할당)</li>
             <li><a href="Taxinvoice/ListEmailConfig">ListEmailConfig</a> (세금계산서 알림메일 전송목록 조회)</li>
             <li><a href="Taxinvoice/UpdateEmailConfig">UpdateEmailConfig</a> (세금계산서 알림메일 전송설정 수정)</li>
             <li><a href="Taxinvoice/GetSendToNTSConfig">GetSendToNTSConfig</a> (국세청 전송 설정 확인)</li>

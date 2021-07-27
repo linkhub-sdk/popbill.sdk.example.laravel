@@ -14,7 +14,7 @@
           <fieldset class="fieldset2">
             <legend>세금계산서 상태 및 요약 정보 확인 [{{ $indexKey+1 }}]</legend>
     				<ul>
-                <li>itemKey (팝빌 관리번호) : {{ $tiInfo->itemKey }}</li>
+                <li>itemKey (팝빌번호) : {{ $tiInfo->itemKey }}</li>
                 <li>stateCode (상태코드) : {{ $tiInfo->stateCode }}</li>
                 <li>taxType (과세형태) : {{ $tiInfo->taxType }}</li>
                 <li>purposeType (영수/청구) : {{ $tiInfo->purposeType }}</li>
@@ -25,11 +25,11 @@
                 <li>writeDate (작성일자) : {{ $tiInfo->writeDate }}</li>
                 <li>invoicerCorpName (공급자 상호) : {{ $tiInfo->invoicerCorpName }}</li>
                 <li>invoicerCorpNum (공급자 사업자번호) : {{ $tiInfo->invoicerCorpNum }}</li>
-                <li>invoicerMgtKey (공급자 문서관리번호) : {{ $tiInfo->invoicerMgtKey }}</li>
+                <li>invoicerMgtKey (공급자 문서번호) : {{ $tiInfo->invoicerMgtKey }}</li>
                 <li>invoicerPrintYN (공급자 인쇄여부) : {{ $tiInfo->invoicerPrintYN ? 'true' : 'false' }}</li>
                 <li>invoiceeCorpName (공급받는자 상호) : {{ $tiInfo->invoiceeCorpName }}</li>
                 <li>invoiceeCorpNum (공급받는자 사업자번호) : {{ $tiInfo->invoiceeCorpNum }}</li>
-                <li>invoiceeMgtKey (공급받는자 관리번호) : {{ $tiInfo->invoiceeMgtKey }}</li>
+                <li>invoiceeMgtKey (공급받는자 문서번호) : {{ $tiInfo->invoiceeMgtKey }}</li>
                 <li>invoiceePrintYN (공급받는자 인쇄여부) : {{ $tiInfo->invoiceePrintYN ? 'true' : 'false' }}</li>
                 <li>closeDownState (공급받는자 휴폐업상태) : {{ $tiInfo->closeDownState }}</li>
                 <li>closeDownStateDate (공급받는자 휴폐업일자) : {{ $tiInfo->closeDownStateDate }}</li>

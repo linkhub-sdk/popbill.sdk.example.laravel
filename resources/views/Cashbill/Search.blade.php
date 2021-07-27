@@ -22,8 +22,8 @@
           <fieldset class="fieldset2">
             <legend>현금영수증 상태/요약정보 [{{ $indexKey+1 }}]</legend>
     				<ul>
-              <li> itemKey (현금영수증 아이템키) : {{ $cbInfo->itemKey }}</li>
-              <li> mgtKey (문서관리번호) : {{ $cbInfo->mgtKey }}</li>
+              <li> itemKey (팝빌번호) : {{ $cbInfo->itemKey }}</li>
+              <li> mgtKey (문서번호) : {{ $cbInfo->mgtKey }}</li>
               <li> tradeDate (거래일자) : {{ $cbInfo->tradeDate }}</li>
               <li> tradeType (문서형태) : {{ $cbInfo->tradeType }}</li>
               <li> tradeUsage (거래구분) : {{ $cbInfo->tradeUsage }}</li>

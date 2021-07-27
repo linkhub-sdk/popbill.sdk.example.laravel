@@ -13,7 +13,7 @@
   <fieldset class="fieldset1">
       <legend>전자명세서 발행</legend>
       <ul>
-          <li><a href="Statement/CheckMgtKeyInUse">CheckMgtKeyInUse</a> (관리번호 확인)</li>
+          <li><a href="Statement/CheckMgtKeyInUse">CheckMgtKeyInUse</a> (문서번호 확인)</li>
           <li><a href="Statement/RegistIssue">RegistIssue</a> (즉시 발행)</li>
           <li><a href="Statement/Register">Register</a> (임시저장)</li>
           <li><a href="Statement/Update">Update</a> (수정)</li>
