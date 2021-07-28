@@ -346,13 +346,13 @@ class TaxinvoiceController extends Controller
     $testCorpNum = '1234567890';
 
     // 제출 아이디 ,최대 36자리 영문, 숫자, '-' 조합으로 구성
-    $submitID = 'Laravel-Bulk00';
+    $submitID = 'Laravel-0728-Bulk00';
 
     // 지연발행 강제 여부
     $fourceIssue = false;
 
     // 세금계산서 객체정보 배열
-    $taxinvoiceList = [];
+    $taxinvoiceList = array();
 
     for($i=0; $i<100; $i++){
         /************************************************************
