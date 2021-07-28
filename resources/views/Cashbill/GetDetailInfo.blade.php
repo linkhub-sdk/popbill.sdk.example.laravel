@@ -1,16 +1,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<link rel="stylesheet" type="text/css" href="/css/example.css" media="screen" />
-		<title>팝빌 SDK PHP Laravel Example.</title>
-	</head>
-	<body>
-		<div id="content">
-			<p class="heading1">Response</p>
-			<br/>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="/css/example.css" media="screen" />
+    <title>팝빌 SDK PHP Laravel Example.</title>
+  </head>
+  <body>
+    <div id="content">
+      <p class="heading1">Response</p>
+      <br/>
       <fieldset class="fieldset1">
-				<legend>{{\Request::fullUrl()}}</legend>
-				<ul>
+        <legend>{{\Request::fullUrl()}}</legend>
+        <ul>
           <li>mgtKey (현금영수증 문서번호) : {{ $CashbillInfo->mgtKey }} </li>
           <li>orgConfirmNum (원본 현금영수증 국세청승인번호) : {{ $CashbillInfo->orgConfirmNum }} </li>
           <li>orgTradeDate (원본 현금영수증 거래일자) : {{ $CashbillInfo->orgTradeDate }} </li>
@@ -36,8 +36,8 @@
           <li>hp (주문자 휴대폰) : {{ $CashbillInfo->hp }} </li>
           <li>smssendYN (발행 안내문자 전송여부) : {{ $CashbillInfo->smssendYN }} </li>
           <li>cancelType (취소사유) : {{ $CashbillInfo->cancelType }} </li>
-				</ul>
-			</fieldset>
-		 </div>
-	</body>
+        </ul>
+      </fieldset>
+     </div>
+  </body>
 </html>

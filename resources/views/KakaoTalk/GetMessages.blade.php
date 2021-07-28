@@ -1,15 +1,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<link rel="stylesheet" type="text/css" href="/css/example.css" media="screen" />
-		<title>팝빌 SDK PHP Laravel Example.</title>
-	</head>
-	<body>
-		<div id="content">
-			<p class="heading1">Response</p>
-			<br/>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="/css/example.css" media="screen" />
+    <title>팝빌 SDK PHP Laravel Example.</title>
+  </head>
+  <body>
+    <div id="content">
+      <p class="heading1">Response</p>
+      <br/>
       <fieldset class="fieldset1">
-				<legend>{{\Request::fullUrl()}}</legend>
+        <legend>{{\Request::fullUrl()}}</legend>
         <ul>
           <li>contentType (카카오톡 유형) : {{ $Result->contentType }} </li>
           <li>templateCode (템플릿 코드) : {{ $Result->templateCode ? $Result->templateCode : '' }} </li>
@@ -44,7 +44,7 @@
         @foreach ($Result->msgs as $indexKey => $msgInfo)
         <fieldset class="fieldset2">
           <legend>카카오톡 결과정보 확인 [ {{ $indexKey+1 }} / {{count($Result->msgs)}} ]</legend>
-  				<ul>
+          <ul>
             <li> state (전송상태 코드) : {{ $msgInfo->state }} </li>
             <li> sendDT (전송일시) : {{ $msgInfo->sendDT }} </li>
             <li> receiveNum (수신번호) : {{ $msgInfo->receiveNum }} </li>
@@ -60,10 +60,10 @@
             <li> receiptNum (접수번호) : {{ $msgInfo->receiptNum }} </li>
             <li> requestNum (요청번호) : {{ $msgInfo->requestNum }} </li>
             <li> interOPRefKey (파트너 지정키) : {{ $msgInfo->interOPRefKey }} </li>
-  				</ul>
+          </ul>
         </fieldset>
         @endforeach
-			</fieldset>
-		 </div>
-	</body>
+      </fieldset>
+     </div>
+  </body>
 </html>

@@ -1,16 +1,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<link rel="stylesheet" type="text/css" href="/css/example.css" media="screen" />
-		<title>팝빌 SDK PHP Laravel Example.</title>
-	</head>
-	<body>
-		<div id="content">
-			<p class="heading1">Response</p>
-			<br/>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="/css/example.css" media="screen" />
+    <title>팝빌 SDK PHP Laravel Example.</title>
+  </head>
+  <body>
+    <div id="content">
+      <p class="heading1">Response</p>
+      <br/>
       <fieldset class="fieldset1">
-				<legend>{{\Request::fullUrl()}}</legend>
-				<ul>
+        <legend>{{\Request::fullUrl()}}</legend>
+        <ul>
           <li> itemCode (명세서코드) : {{ $Statement->itemCode }} </li>
           <li> mgtKey (문서번호) : {{ $Statement->mgtKey }} </li>
           <li> invoiceNum (팝빌부여 문서고유번호) : {{ $Statement->invoiceNum }} </li>
@@ -86,10 +86,8 @@
               </ul>
             </fieldset>
           @endif
-
-
-				</ul>
-			</fieldset>
-		 </div>
-	</body>
+        </ul>
+      </fieldset>
+     </div>
+  </body>
 </html>

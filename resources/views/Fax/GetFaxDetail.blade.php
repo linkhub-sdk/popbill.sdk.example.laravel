@@ -1,19 +1,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<link rel="stylesheet" type="text/css" href="/css/example.css" media="screen" />
-		<title>팝빌 SDK PHP Laravel Example.</title>
-	</head>
-	<body>
-		<div id="content">
-			<p class="heading1">Response</p>
-			<br/>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="/css/example.css" media="screen" />
+    <title>팝빌 SDK PHP Laravel Example.</title>
+  </head>
+  <body>
+    <div id="content">
+      <p class="heading1">Response</p>
+      <br/>
       <fieldset class="fieldset1">
-				<legend>{{\Request::fullUrl()}}</legend>
+        <legend>{{\Request::fullUrl()}}</legend>
         @foreach ($Result as $indexKey => $faxInfo)
         <fieldset class="fieldset2">
           <legend>팩스전송 결과정보 확인 [ {{ $indexKey+1 }} / {{count($Result)}} ]</legend>
-  				<ul>
+          <ul>
             <li> state (전송상태 코드) : {{ $faxInfo->state }} </li>
             <li> result (전송결과 코드) : {{ $faxInfo->result }} </li>
             <li> sendNum (발신번호) : {{ $faxInfo->sendNum }} </li>
@@ -35,10 +35,10 @@
             <li> requestNum (요청번호) : {{ $faxInfo->requestNum }} </li>
             <li> chargePageCnt (과금 페이지수) : {{ $faxInfo->chargePageCnt }} </li>
             <li> tiffFileSize (변환파일용랑) : {{ $faxInfo->tiffFileSize }}byte</li>
-  				</ul>
+          </ul>
         </fieldset>
         @endforeach
-			</fieldset>
-		 </div>
-	</body>
+      </fieldset>
+     </div>
+  </body>
 </html>

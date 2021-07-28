@@ -1,19 +1,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<link rel="stylesheet" type="text/css" href="/css/example.css" media="screen" />
-		<title>팝빌 SDK PHP Laravel Example.</title>
-	</head>
-	<body>
-		<div id="content">
-			<p class="heading1">Response</p>
-			<br/>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="/css/example.css" media="screen" />
+    <title>팝빌 SDK PHP Laravel Example.</title>
+  </head>
+  <body>
+    <div id="content">
+      <p class="heading1">Response</p>
+      <br/>
       <fieldset class="fieldset1">
-				<legend>{{\Request::fullUrl()}}</legend>
+        <legend>{{\Request::fullUrl()}}</legend>
         @foreach ($Result as $indexKey => $msgInfo)
         <fieldset class="fieldset2">
           <legend>문자전송 결과정보 확인 [ {{ $indexKey+1 }} / {{count($Result)}} ]</legend>
-  				<ul>
+          <ul>
               <li> state (전송상태 코드) : {{ $msgInfo->state }} </li>
               <li> result (전송결과 코드) : {{ $msgInfo->result }} </li>
               <li> subject (제목) : {{ $msgInfo->subject }} </li>
@@ -30,10 +30,10 @@
               <li> tranNet (전송처리 이동통신사명) : {{ $msgInfo->tranNet }} </li>
               <li> receiptNum (접수번호) : {{ $msgInfo->receiptNum }} </li>
               <li> requestNum (요청번호) : {{ $msgInfo->requestNum }} </li>
-  				</ul>
+          </ul>
         </fieldset>
         @endforeach
-			</fieldset>
-		 </div>
-	</body>
+      </fieldset>
+     </div>
+  </body>
 </html>
