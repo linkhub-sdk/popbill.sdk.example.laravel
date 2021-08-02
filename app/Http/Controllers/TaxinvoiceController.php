@@ -594,6 +594,10 @@ class TaxinvoiceController extends Controller
     return view('/PResponse', ['code' => $code, 'message' => $message, 'receiptID' => $receiptID]);
   }
 
+  /*
+   * 접수시 기재한 SubmitID를 사용하여 세금계산서 접수결과를 확인합니다.
+   * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetBulkResult
+   */
   public function getBulkResult(){
 
     // 팝빌회원 사업자번호, '-' 제외 10자리
