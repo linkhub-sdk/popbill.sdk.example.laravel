@@ -48,7 +48,7 @@ class TaxinvoiceController extends Controller
 
   /**
    * 파트너가 세금계산서 관리 목적으로 할당하는 문서번호의 사용여부를 확인합니다.
-   * - 문서번호는 최대 24자리 영문 대소문자, 숫자, 특수문자('-','_')로 구성 합니다.
+   * - 문서번호, 최대 24자리 영문 대소문자, 숫자, 특수문자('-','_')로 구성
    * - https://docs.popbill.com/taxinvoice/phplaravel/api#CheckMgtKeyInUse
    */
   public function CheckMgtKeyInUse(){
@@ -89,7 +89,7 @@ class TaxinvoiceController extends Controller
     // 팝빌회원 아이디
     $testUserID = 'testkorea';
 
-    // 문서번호, 최대 24자리 영문 대소문자, 숫자, 특수문자('-','_')만 이용 가능
+    // 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
     $invoicerMgtKey = '20211024-023';
 
     // 지연발행 강제여부
@@ -105,7 +105,7 @@ class TaxinvoiceController extends Controller
     $writeSpecification = false;
 
     // 거래명세서 동시작성시 명세서 문서번호
-    // 최대 24자리 영문 대소문자, 숫자, 특수문자('-','_')만 이용 가능
+    // 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
     $dealInvoiceMgtKey = '';
 
     /************************************************************
@@ -143,7 +143,7 @@ class TaxinvoiceController extends Controller
     // [필수] 공급자 상호
     $Taxinvoice->invoicerCorpName = '공급자상호';
 
-    // [필수] 공급자 문서번호, 최대 24자리 영문 대소문자, 숫자, 특수문자('-','_')만 이용 가능
+    // [필수] 공급자 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
     $Taxinvoice->invoicerMgtKey = $invoicerMgtKey;
 
     // [필수] 공급자 대표자성명
@@ -191,7 +191,7 @@ class TaxinvoiceController extends Controller
     // [필수] 공급자 상호
     $Taxinvoice->invoiceeCorpName = '공급받는자 상호';
 
-    // [역발행시 필수] 공급받는자 문서번호, 최대 24자리 영문 대소문자, 숫자, 특수문자('-','_')만 이용 가능
+    // [역발행시 필수] 공급받는자 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
     $Taxinvoice->invoiceeMgtKey = '';
 
     // [필수] 공급받는자 대표자성명
@@ -390,7 +390,7 @@ class TaxinvoiceController extends Controller
         // [필수] 공급자 상호
         $Taxinvoice->invoicerCorpName = 'BulkTEST';
 
-        // [필수] 공급자 문서번호, 최대 24자리 영문 대소문자, 숫자, 특수문자('-','_')만 이용 가능
+        // [필수] 공급자 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
         $Taxinvoice->invoicerMgtKey = $submitID . $i;
 
         // [필수] 공급자 대표자성명
@@ -438,7 +438,7 @@ class TaxinvoiceController extends Controller
         // [필수] 공급자 상호
         $Taxinvoice->invoiceeCorpName = 'BulkTEST';
 
-        // [역발행시 필수] 공급받는자 문서번호, 최대 24자리 영문 대소문자, 숫자, 특수문자('-','_')만 이용 가능
+        // [역발행시 필수] 공급받는자 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
         $Taxinvoice->invoiceeMgtKey = '';
 
         // [필수] 공급받는자 대표자성명
@@ -626,7 +626,7 @@ class TaxinvoiceController extends Controller
     $testCorpNum = '1234567890';
 
     // 세금계산서 문서번호
-    // - 최대 24자리 영문 대소문자, 숫자, 특수문자('-','_')만 이용 가능
+    // - 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
     $invoicerMgtKey = '20210701-024';
 
     /************************************************************
@@ -665,7 +665,7 @@ class TaxinvoiceController extends Controller
     // [필수] 공급자 상호
     $Taxinvoice->invoicerCorpName = '공급자상호';
 
-    // [필수] 공급자 문서번호, 최대 24자리 영문 대소문자, 숫자, 특수문자('-','_')만 이용 가능
+    // [필수] 공급자 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
     $Taxinvoice->invoicerMgtKey = $invoicerMgtKey;
 
     // [필수] 공급자 대표자성명
@@ -713,7 +713,7 @@ class TaxinvoiceController extends Controller
     // [필수] 공급자 상호
     $Taxinvoice->invoiceeCorpName = '공급받는자 상호';
 
-    // [역발행시 필수] 공급받는자 문서번호, 최대 24자리 영문 대소문자, 숫자, 특수문자('-','_')만 이용 가능
+    // [역발행시 필수] 공급받는자 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
     $Taxinvoice->invoiceeMgtKey = '';
 
     // [필수] 공급받는자 대표자성명
@@ -875,7 +875,7 @@ class TaxinvoiceController extends Controller
     // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
-    // 세금계산서 문서번호, 최대 24자리 영문 대소문자, 숫자, 특수문자('-','_')만 이용 가능
+    // 세금계산서 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
     $mgtKey = '20210701-002';
 
     /************************************************************
@@ -962,7 +962,7 @@ class TaxinvoiceController extends Controller
     // [필수] 공급자 상호
     $Taxinvoice->invoiceeCorpName = '공급받는자 상호_수정';
 
-    // [역발행시 필수] 공급받는자 문서번호, 최대 24자리 영문 대소문자, 숫자, 특수문자('-','_')만 이용 가능
+    // [역발행시 필수] 공급받는자 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
     $Taxinvoice->invoiceeMgtKey = '';
 
     // [필수] 공급받는자 대표자성명
@@ -1230,7 +1230,7 @@ class TaxinvoiceController extends Controller
     $testUserID = 'testkorea';
 
     // 공급받는자 문서번호
-    // - 최대 24자리 영문 대소문자, 숫자, 특수문자('-','_')만 이용 가능
+    // - 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
     $invoiceeMgtKey = '20210701-005';
 
     /************************************************************
@@ -1270,7 +1270,7 @@ class TaxinvoiceController extends Controller
     $Taxinvoice->invoicerCorpName = '공급자상호';
 
     // 공급자 문서번호,
-    // 최대 24자리 영문 대소문자, 숫자, 특수문자('-','_')만 이용 가능
+    // 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
     $Taxinvoice->invoicerMgtKey = '';
 
     // [필수] 공급자 대표자성명
@@ -1314,7 +1314,7 @@ class TaxinvoiceController extends Controller
     $Taxinvoice->invoiceeCorpName = '공급받는자 상호';
 
     // [역발행시 필수] 공급받는자 문서번호,
-    // 최대 24자리 영문 대소문자, 숫자, 특수문자('-','_')만 이용 가능
+    // 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
     $Taxinvoice->invoiceeMgtKey = $invoiceeMgtKey;
 
     // [필수] 공급받는자 대표자성명

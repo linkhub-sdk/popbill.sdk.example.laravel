@@ -44,7 +44,7 @@ class CashbillController extends Controller
 
   /**
    * 파트너가 현금영수증 관리 목적으로 할당하는 문서번호 사용여부를 확인합니다.
-   * - 문서번호는 최대 24자리 영문 대소문자, 숫자, 특수문자('-','_')만 이용 가능 하며 사업자별로 중복되지 않도록 구성해야합니다.
+   * - 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
    * - https://docs.popbill.com/cashbill/phplaravel/api#CheckMgtKeyInUse
    */
   public function CheckMgtKeyInUse(){
@@ -52,7 +52,7 @@ class CashbillController extends Controller
     // 팝빌회원 사업자번호, "-"제외 10자리
     $testCorpNum = '1234567890';
 
-    // 문서번호, 최대 24자리 영문 대소문자, 숫자, 특수문자('-','_')만 이용 가능
+    // 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
     $mgtKey = '20210101-001';
 
     try {
@@ -82,7 +82,7 @@ class CashbillController extends Controller
     // 팝빌회원 아이디
     $testUserID = 'testkorea';
 
-    // 문서번호, 최대 24자리 영문 대소문자, 숫자, 특수문자('-','_')만 이용 가능
+    // 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
     $mgtKey = '20211024-001';
 
     // 메모
@@ -184,7 +184,7 @@ class CashbillController extends Controller
     // 팝빌 회원 사업자번호, '-' 제외 10자리
     $testCorpNum = '1234567890';
 
-    // 문서번호, 최대 24자리 영문 대소문자, 숫자, 특수문자('-','_')만 이용 가능
+    // 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
     $mgtKey = '20210214-002';
 
     // 현금영수증 객체 생성
@@ -286,7 +286,7 @@ class CashbillController extends Controller
     // 현금영수증 객체 생성
     $Cashbill = new Cashbill();
 
-    // [필수] 현금영수증 문서번호, 최대 24자리 영문 대소문자, 숫자, 특수문자('-','_')만 이용 가능
+    // [필수] 현금영수증 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
     $Cashbill->mgtKey = $mgtKey;
 
     // [필수] 문서형태, (승인거래, 취소거래) 중 기재
@@ -461,7 +461,7 @@ class CashbillController extends Controller
     // 팝빌 회원 사업자번호, '-' 제외 10자리
     $testCorpNum = '1234567890';
 
-    // 문서번호, 최대 24자리 영문 대소문자, 숫자, 특수문자('-','_')만 이용 가능
+    // 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
     $mgtKey = '20210214-005';
 
     // 원본현금영수증 승인번호, 문서정보 확인(GetInfo API)을 통해 확인가능.
@@ -554,7 +554,7 @@ class CashbillController extends Controller
     // 팝빌 회원 사업자번호, '-' 제외 10자리
     $testCorpNum = '1234567890';
 
-    // 문서번호, 최대 24자리 영문 대소문자, 숫자, 특수문자('-','_')만 이용 가능
+    // 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
     $mgtKey = '20210214-007';
 
     // 원본현금영수증 승인번호, 문서정보 확인(GetInfo API)을 통해 확인가능.
@@ -588,7 +588,7 @@ class CashbillController extends Controller
     // 팝빌회원 아이디
     $testUserID = 'testkorea';
 
-    // 문서번호, 최대 24자리 영문 대소문자, 숫자, 특수문자('-','_')만 이용 가능
+    // 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
     $mgtKey = '20210214-009';
 
     // 원본현금영수증 승인번호, 문서정보 확인(GetInfo API)을 통해 확인가능.
