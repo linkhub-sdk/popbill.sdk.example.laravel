@@ -46,7 +46,7 @@ class EasyFinBankController extends Controller
 
   /**
    * 계좌조회 서비스를 이용할 계좌를 팝빌에 등록합니다.
-   * -https://docs.popbill.com/easyfinbank/phplaravel/api#RegistBankAccount
+   * - https://docs.popbill.com/easyfinbank/phplaravel/api#RegistBankAccount
    */
   public function RegistBankAccount(){
 
@@ -230,7 +230,7 @@ class EasyFinBankController extends Controller
   /**
    * 등록된 계좌를 삭제합니다.
    * - 정액제가 아닌 종량제 이용 시에만 등록된 계좌를 삭제할 수 있습니다.
-   * - https://docs.popbill.com/easyfinbank/php/api#DeleteBankAccount
+   * - https://docs.popbill.com/easyfinbank/phplaravel/api#DeleteBankAccount
    */
    public function DeleteBankAccount(){
 
