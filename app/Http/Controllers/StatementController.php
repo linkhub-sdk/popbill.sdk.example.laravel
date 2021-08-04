@@ -79,14 +79,14 @@ class StatementController extends Controller
   public function RegistIssue(){
 
     // 팝빌 회원 사업자번호, '-' 제외 10자리
-    $testCorpNum = '1234567899';
+    $testCorpNum = '1234567890';
 
     // 팝빌 회원 아이디
     $testUserID = 'testkorea';
 
     // 전자명세서 문서번호
     // 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
-    $mgtKey = '20211024-002';
+    $mgtKey = '20210804-001';
 
     // 명세서 종류코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
     $itemCode = '121';
@@ -105,7 +105,7 @@ class StatementController extends Controller
      ************************************************************/
 
     // [필수] 기재상 작성일자
-    $Statement->writeDate = '20211024';
+    $Statement->writeDate = '20210804';
 
     // [필수] (영수, 청구) 중 기재
     $Statement->purposeType = '영수';
@@ -222,13 +222,15 @@ class StatementController extends Controller
         $result = $this->PopbillStatement->RegistIssue($testCorpNum, $Statement, $memo, $testUserID, $emailSubject);
         $code = $result->code;
         $message = $result->message;
+        $invoiceNum = $result->invoiceNum;
     }
     catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
+        $invoiceNum = null;
     }
 
-    return view('PResponse', ['code' => $code, 'message' => $message]);
+    return view('PResponse', ['code' => $code, 'message' => $message, 'invoiceNum' => $invoiceNum]);
   }
 
   /**
