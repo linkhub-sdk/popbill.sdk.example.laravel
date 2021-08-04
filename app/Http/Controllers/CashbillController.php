@@ -479,6 +479,8 @@ class CashbillController extends Controller
 
     try {
         $result = $this->PopbillCashbill->RevokeRegistIssue($testCorpNum, $mgtKey, $orgConfirmNum, $orgTradeDate);
+        $code = $result->code;
+        $message = $result->message;
         $confirmNum = $result->confirmNum;
         $tradeDate = $result->tradeDate;
     }
@@ -543,16 +545,21 @@ class CashbillController extends Controller
         $result = $this->PopbillCashbill->RevokeRegistIssue($testCorpNum, $mgtKey, $orgConfirmNum,
           $orgTradeDate, $smssendYN, $memo, $testUserID, $isPartCancel, $cancelType,
           $supplyCost, $tax, $serviceFee, $totalAmount);
+          
+          $code = $result->code;
+          $message = $result->message;
+          $confirmNum = $result->confirmNum;
+          $tradeDate = $result->tradeDate;
+      }
+      catch(PopbillException $pe) {
+          $code = $pe->getCode();
+          $message = $pe->getMessage();
+          $confirmNum = null;
+          $tradeDate = null;
+      }
 
-        $code = $result->code;
-        $message = $result->message;
+      return view('PResponse', ['code' => $code, 'message' => $message, 'confirmNum' => $confirmNum, 'tradeDate' => $tradeDate]);
     }
-    catch(PopbillException $pe) {
-        $code = $pe->getCode();
-        $message = $pe->getMessage();
-    }
-    return view('PResponse', ['code' => $code, 'message' => $message]);
-  }
 
   /**
    * 1건의 취소현금영수증을 [임시저장]합니다.
