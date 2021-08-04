@@ -545,17 +545,17 @@ class CashbillController extends Controller
         $result = $this->PopbillCashbill->RevokeRegistIssue($testCorpNum, $mgtKey, $orgConfirmNum,
           $orgTradeDate, $smssendYN, $memo, $testUserID, $isPartCancel, $cancelType,
           $supplyCost, $tax, $serviceFee, $totalAmount);
-          
-          $code = $result->code;
-          $message = $result->message;
-          $confirmNum = $result->confirmNum;
-          $tradeDate = $result->tradeDate;
+
+        $code = $result->code;
+        $message = $result->message;
+        $confirmNum = $result->confirmNum;
+        $tradeDate = $result->tradeDate;
       }
       catch(PopbillException $pe) {
-          $code = $pe->getCode();
-          $message = $pe->getMessage();
-          $confirmNum = null;
-          $tradeDate = null;
+        $code = $pe->getCode();
+        $message = $pe->getMessage();
+        $confirmNum = null;
+        $tradeDate = null;
       }
 
       return view('PResponse', ['code' => $code, 'message' => $message, 'confirmNum' => $confirmNum, 'tradeDate' => $tradeDate]);
