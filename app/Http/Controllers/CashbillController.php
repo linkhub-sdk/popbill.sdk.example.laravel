@@ -53,7 +53,7 @@ class CashbillController extends Controller
     $testCorpNum = '1234567890';
 
     // 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
-    $mgtKey = '20210101-001';
+    $mgtKey = '20210801-001';
 
     try {
         $result = $this->PopbillCashbill->CheckMgtKeyInUse($testCorpNum, $mgtKey);
@@ -285,7 +285,7 @@ class CashbillController extends Controller
     $testCorpNum = '1234567890';
 
     // 문서번호
-    $mgtKey = '20210214-002';
+    $mgtKey = '20210801-002';
 
     // 현금영수증 객체 생성
     $Cashbill = new Cashbill();
@@ -413,7 +413,7 @@ class CashbillController extends Controller
     $testCorpNum = '1234567890';
 
     // 문서번호
-    $mgtKey = '20210214-002';
+    $mgtKey = '20210801-002';
 
     // 메모
     $memo = '현금영수증 발행취소메모';
@@ -443,7 +443,7 @@ class CashbillController extends Controller
     $testCorpNum = '1234567890';
 
     // 문서번호
-    $mgtKey = '20210214-002';
+    $mgtKey = '20210801-002';
 
     try {
         $result = $this->PopbillCashbill->Delete($testCorpNum, $mgtKey);
@@ -509,13 +509,13 @@ class CashbillController extends Controller
     $testUserID = 'testkorea';
 
     // 문서번호, 사업자별로 중복없이 1~24자리 영문, 숫자, '-', '_' 조합으로 구성
-    $mgtKey = '20210214-006';
+    $mgtKey = '20210801-006';
 
     // 원본현금영수증 승인번호, 문서정보 확인(GetInfo API)을 통해 확인가능.
     $orgConfirmNum = '171312673';
 
     // 원본현금영수증 거래일자, 문서정보 확인(GetInfo API)을 통해 확인가능.
-    $orgTradeDate = '20210211';
+    $orgTradeDate = '20210730';
 
     // 안내문자 전송여부
     $smssendYN = false;
@@ -572,13 +572,13 @@ class CashbillController extends Controller
     $testCorpNum = '1234567890';
 
     // 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
-    $mgtKey = '20210214-007';
+    $mgtKey = '20210801-007';
 
     // 원본현금영수증 승인번호, 문서정보 확인(GetInfo API)을 통해 확인가능.
     $orgConfirmNum = '171312673';
 
     // 원본현금영수증 거래일자, 문서정보 확인(GetInfo API)을 통해 확인가능.
-    $orgTradeDate = '20210211';
+    $orgTradeDate = '20210711';
 
     try {
         $result = $this->PopbillCashbill->RevokeRegister($testCorpNum, $mgtKey, $orgConfirmNum, $orgTradeDate);
@@ -606,13 +606,13 @@ class CashbillController extends Controller
     $testUserID = 'testkorea';
 
     // 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
-    $mgtKey = '20210214-009';
+    $mgtKey = '20210801-009';
 
     // 원본현금영수증 승인번호, 문서정보 확인(GetInfo API)을 통해 확인가능.
     $orgConfirmNum = '171312673';
 
     // 원본현금영수증 거래일자, 문서정보 확인(GetInfo API)을 통해 확인가능.
-    $orgTradeDate = '20210211';
+    $orgTradeDate = '20210711';
 
     // 안내문자 전송여부
     $smssendYN = false;
@@ -659,7 +659,7 @@ class CashbillController extends Controller
     $testCorpNum = '1234567890';
 
     // 문서번호
-    $mgtKey = '20210214-005';
+    $mgtKey = '20210801-005';
 
     try {
       $result = $this->PopbillCashbill->GetInfo($testCorpNum, $mgtKey);
@@ -684,8 +684,8 @@ class CashbillController extends Controller
 
     // 문서번호 배열, 최대 1000건
     $MgtKeyList = array(
-        '20210214-001',
-        '20210214-005',
+        '20210801-001',
+        '20210801-005',
     );
 
     try {
@@ -708,7 +708,7 @@ class CashbillController extends Controller
     $testCorpNum = '1234567890';
 
     // 문서번호
-    $mgtKey = '20210214-005';
+    $mgtKey = '20210801-005';
 
     try {
         $result = $this->PopbillCashbill->GetDetailInfo($testCorpNum, $mgtKey);
@@ -735,10 +735,10 @@ class CashbillController extends Controller
     $DType = 'R';
 
     // [필수] 시작일자
-    $SDate = '20210101';
+    $SDate = '20210701';
 
     // [필수] 종료일자
-    $EDate = '20210228';
+    $EDate = '20210728';
 
     // 문서상태코드, 2,3번째 자리 와일드카드 사용가능, 미기재시 전체조회
     $State = array(
@@ -808,7 +808,7 @@ class CashbillController extends Controller
     $testCorpNum = '1234567890';
 
     // 문서번호
-    $mgtKey = '20210101-001';
+    $mgtKey = '20210801-001';
 
     try {
         $result = $this->PopbillCashbill->GetLogs($testCorpNum, $mgtKey);
@@ -863,7 +863,7 @@ class CashbillController extends Controller
     $testCorpNum = '1234567890';
 
     // 문서번호
-    $mgtKey = '20210101-001';
+    $mgtKey = '20210801-001';
 
     try {
         $url = $this->PopbillCashbill->GetPopUpURL($testCorpNum, $mgtKey);
@@ -911,7 +911,7 @@ class CashbillController extends Controller
     $testCorpNum = '1234567890';
 
     // 문서번호
-    $mgtKey = '20210101-001';
+    $mgtKey = '20210801-001';
 
     try {
         $url = $this->PopbillCashbill->GetPrintURL($testCorpNum, $mgtKey);
@@ -937,10 +937,10 @@ class CashbillController extends Controller
 
     // 문서번호 배열, 최대 100건
     $mgtKeyList = array (
-        '20210101-001',
-        '20210101-002',
-        '20210214-001',
-        '20210214-005',
+        '20210801-001',
+        '20210801-002',
+        '20210801-001',
+        '20210801-005',
     );
 
     try {
@@ -965,7 +965,7 @@ class CashbillController extends Controller
     $testCorpNum = '1234567890';
 
     // 문서번호
-    $mgtKey = '20210101-001';
+    $mgtKey = '20210801-001';
 
     try {
         $url = $this->PopbillCashbill->GetMailURL($testCorpNum, $mgtKey);
@@ -1013,7 +1013,7 @@ class CashbillController extends Controller
     $testCorpNum = '1234567890';
 
     // 문서번호
-    $mgtKey = '20210101-001';
+    $mgtKey = '20210801-001';
 
     // 수신메일 주소
     $receiver = 'test@test.com';
@@ -1042,7 +1042,7 @@ class CashbillController extends Controller
     $testCorpNum = '1234567890';
 
     // 문서번호
-    $mgtKey = '20210101-001';
+    $mgtKey = '20210801-001';
 
     // 발신번호
     $sender = '07043042991';
@@ -1077,7 +1077,7 @@ class CashbillController extends Controller
     $testCorpNum = '1234567890';
 
     // 문서번호
-    $mgtKey = '20210101-001';
+    $mgtKey = '20210801-001';
 
     // 발신번호
     $sender = '07043042991';
@@ -1687,7 +1687,7 @@ class CashbillController extends Controller
     $testCorpNum = '1234567890';
 
     // 문서번호
-    $mgtKey = '20210101-001';
+    $mgtKey = '20210801-001';
 
     try {
         $url = $this->PopbillCashbill->GetPDFURL($testCorpNum, $mgtKey);

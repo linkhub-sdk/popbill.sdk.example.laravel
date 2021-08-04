@@ -103,7 +103,7 @@ class MessageController extends Controller
     // 전송요청번호
     // 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
     // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
-    $requestNum = '20210214-001';
+    $requestNum = '20210701-001';
 
     $Messages[] = array(
         'snd' => '07043042991',		// 발신번호, 팝빌에 등록되지 않은 발신번호 기재시 오류처리
@@ -224,7 +224,7 @@ class MessageController extends Controller
     // 전송요청번호
     // 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
     // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
-    $requestNum = '20210214-001';
+    $requestNum = '20210701-001';
 
     for ($i = 0; $i < 100; $i++){
         $Messages[] = array(
@@ -451,7 +451,7 @@ class MessageController extends Controller
     $testCorpNum = '1234567890';
 
     // 예약문자전송 요청시 할당한 전송요청번호
-    $requestNum = '20210214-001';
+    $requestNum = '20210701-001';
 
     try {
         $result = $this->PopbillMessaging->CancelReserveRN($testCorpNum ,$requestNum);
@@ -498,7 +498,7 @@ class MessageController extends Controller
     $testCorpNum = '1234567890';
 
     // 문자전송 요청 시 할당한 전송요청번호(requestNum)
-    $requestNum = '20210214-001';
+    $requestNum = '20210701-001';
 
     try {
         $result = $this->PopbillMessaging->GetMessagesRN($testCorpNum, $requestNum);
@@ -546,10 +546,10 @@ class MessageController extends Controller
     $testCorpNum = '1234567890';
 
     // [필수] 시작일자
-    $SDate = '20210101';
+    $SDate = '20210701';
 
     // [필수] 종료일자
-    $EDate = '20210131';
+    $EDate = '20210730';
 
     // 전송상태값 배열, 1-대기 2-성공 3-실패 4-취소
     $State = array('1', '2', '3', '4');

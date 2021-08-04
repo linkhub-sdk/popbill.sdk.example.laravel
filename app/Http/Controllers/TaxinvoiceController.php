@@ -90,7 +90,7 @@ class TaxinvoiceController extends Controller
     $testUserID = 'testkorea';
 
     // 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
-    $invoicerMgtKey = '20211024-023';
+    $invoicerMgtKey = '20210801-023';
 
     // 지연발행 강제여부
     $forceIssue = false;
@@ -115,7 +115,7 @@ class TaxinvoiceController extends Controller
     $Taxinvoice = new Taxinvoice();
 
     // [필수] 작성일자, 형식(yyyyMMdd) 예)20150101
-    $Taxinvoice->writeDate = '20210701';
+    $Taxinvoice->writeDate = '20210801';
 
     // [필수] 발행형태, '정발행', '역발행', '위수탁' 중 기재
     $Taxinvoice->issueType = '정발행';
@@ -284,7 +284,7 @@ class TaxinvoiceController extends Controller
     $Taxinvoice->detailList = array();
     $Taxinvoice->detailList[] = new TaxinvoiceDetail();
     $Taxinvoice->detailList[0]->serialNum = 1;				      // [상세항목 배열이 있는 경우 필수] 일련번호 1~99까지 순차기재,
-    $Taxinvoice->detailList[0]->purchaseDT = '20210226';	  // 거래일자
+    $Taxinvoice->detailList[0]->purchaseDT = '20210801';	  // 거래일자
     $Taxinvoice->detailList[0]->itemName = '품목명1번';	  	// 품명
     $Taxinvoice->detailList[0]->spec = '';				      // 규격
     $Taxinvoice->detailList[0]->qty = '';					        // 수량
@@ -295,7 +295,7 @@ class TaxinvoiceController extends Controller
 
     $Taxinvoice->detailList[] = new TaxinvoiceDetail();
     $Taxinvoice->detailList[1]->serialNum = 2;				      // [상세항목 배열이 있는 경우 필수] 일련번호 1~99까지 순차기재,
-    $Taxinvoice->detailList[1]->purchaseDT = '20210226';	  // 거래일자
+    $Taxinvoice->detailList[1]->purchaseDT = '20210801';	  // 거래일자
     $Taxinvoice->detailList[1]->itemName = '품목명2번';	  	// 품명
     $Taxinvoice->detailList[1]->spec = '';				      // 규격
     $Taxinvoice->detailList[1]->qty = '';					        // 수량
@@ -1779,7 +1779,7 @@ class TaxinvoiceController extends Controller
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
     // 세금계산서 문서번호
-    $mgtKey = '20210101-001';
+    $mgtKey = '20210801-001';
 
     try {
         $result = $this->PopbillTaxinvoice->GetLogs($testCorpNum, $mgtKeyType, $mgtKey);
@@ -1834,7 +1834,7 @@ class TaxinvoiceController extends Controller
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
     // 문서번호
-    $mgtKey = '20210213-001';
+    $mgtKey = '20210801-001';
 
     try {
         $url = $this->PopbillTaxinvoice->GetPopUpURL($testCorpNum, $mgtKeyType, $mgtKey);
@@ -1863,7 +1863,7 @@ class TaxinvoiceController extends Controller
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
     // 문서번호
-    $mgtKey = '20210213-001';
+    $mgtKey = '20210801-001';
 
     try {
         $url = $this->PopbillTaxinvoice->GetViewURL($testCorpNum, $mgtKeyType, $mgtKey);
@@ -1892,7 +1892,7 @@ class TaxinvoiceController extends Controller
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
     // 문서번호
-    $mgtKey = '20210213-001';
+    $mgtKey = '20210801-001';
 
     try {
         $url = $this->PopbillTaxinvoice->GetPrintURL($testCorpNum, $mgtKeyType, $mgtKey);
@@ -1919,7 +1919,7 @@ class TaxinvoiceController extends Controller
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
     // 문서번호
-    $mgtKey = '20210213-001';
+    $mgtKey = '20210801-001';
 
     try {
         $url = $this->PopbillTaxinvoice->GetOldPrintURL($testCorpNum, $mgtKeyType, $mgtKey);
@@ -1946,7 +1946,7 @@ class TaxinvoiceController extends Controller
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
     // 문서번호
-    $mgtKey = '20210213-001';
+    $mgtKey = '20210801-001';
 
     try {
         $url = $this->PopbillTaxinvoice->GetEPrintURL($testCorpNum, $mgtKeyType, $mgtKey);
@@ -1974,9 +1974,9 @@ class TaxinvoiceController extends Controller
 
     // 문서번호 배열 최대 100건
     $MgtKeyList = array(
-        '20210213-001',
-        '20210101-001',
-        '20210101-002',
+        '20210801-001',
+        '20210801-001',
+        '20210801-002',
     );
     try {
         $url = $this->PopbillTaxinvoice->GetMassPrintURL($testCorpNum, $mgtKeyType, $MgtKeyList);
@@ -2003,7 +2003,7 @@ class TaxinvoiceController extends Controller
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
     // 문서번호
-    $mgtKey = '20210213-001';
+    $mgtKey = '20210801-001';
 
     try {
         $url = $this->PopbillTaxinvoice->GetMailURL($testCorpNum, $mgtKeyType, $mgtKey);
@@ -2076,7 +2076,7 @@ class TaxinvoiceController extends Controller
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
     // 세금계산서 문서번호
-    $mgtKey = '20210213-004';
+    $mgtKey = '20210801-004';
 
     // 첨부파일 경로, 해당 파일에 읽기 권한이 설정되어 있어야 합니다.
     $filePath = '/Users/John/Desktop/03A4C36315C047B4A171CEF283ED9A40.jpg';
@@ -2108,7 +2108,7 @@ class TaxinvoiceController extends Controller
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
     // 문서번호
-    $mgtKey = '20210213-004';
+    $mgtKey = '20210801-004';
 
     // 삭제할 첨부파일 아이디, getFiles(첨부파일목록) API 응답항목중 attachedFile 변수값 참조
     $FileID = '0D583984-FDF3-4189-B61A-40942A2D834B.PBF';
@@ -2140,7 +2140,7 @@ class TaxinvoiceController extends Controller
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
     // 문서번호
-    $mgtKey = '20210213-004';
+    $mgtKey = '20210801-004';
 
     try {
         $result = $this->PopbillTaxinvoice->GetFiles($testCorpNum, $mgtKeyType, $mgtKey);
@@ -2167,7 +2167,7 @@ class TaxinvoiceController extends Controller
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
     // 문서번호
-    $mgtKey = '20210213-004';
+    $mgtKey = '20210801-004';
 
     // 수신이메일주소
     // 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
@@ -2202,7 +2202,7 @@ class TaxinvoiceController extends Controller
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
     // 세금계산서 문서번호
-    $mgtKey = '20210213-004';
+    $mgtKey = '20210801-004';
 
     // 발신번호
     $sender = '07043042991';
@@ -2240,7 +2240,7 @@ class TaxinvoiceController extends Controller
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
     // 세금계산서 문서번호
-    $mgtKey = '20210101-001';
+    $mgtKey = '20210801-001';
 
     // 발신번호
     $sender = '07043042991';
@@ -2274,13 +2274,13 @@ class TaxinvoiceController extends Controller
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
     // 세금계산서 문서번호
-    $mgtKey = '20210101-001';
+    $mgtKey = '20210801-001';
 
     // 첨부할 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
     $subItemCode = 121;
 
     // 첨부할 명세서 문서번호
-    $subMgtKey = '20210101-001';
+    $subMgtKey = '20210801-S001';
 
     try {
         $result = $this->PopbillTaxinvoice->AttachStatement($testCorpNum, $mgtKeyType, $mgtKey, $subItemCode, $subMgtKey);
@@ -2308,13 +2308,13 @@ class TaxinvoiceController extends Controller
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
     // 세금계산서 문서번호
-    $mgtKey = '20210101-001';
+    $mgtKey = '20210801-001';
 
     // 첨부해제할 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
     $subItemCode = 121;
 
     // 첨부해제할 명세서 문서번호
-    $subMgtKey = '20210101-001';
+    $subMgtKey = '20210801-S001';
 
     try {
         $result = $this->PopbillTaxinvoice->DetachStatement($testCorpNum, $mgtKeyType, $mgtKey, $subItemCode, $subMgtKey);
@@ -2368,7 +2368,7 @@ class TaxinvoiceController extends Controller
 
     // 할당할 문서번호, 숫자, 영문 '-', '_' 조합으로 1~24자리까지
     // 사업자번호별 중복없는 고유번호 할당
-    $mgtKey = '20210101-001';
+    $mgtKey = '20210801-001';
 
     try {
         $result = $this->PopbillTaxinvoice->AssignMgtKey($testCorpNum, $mgtKeyType, $itemKey, $mgtKey);
@@ -3072,7 +3072,7 @@ class TaxinvoiceController extends Controller
     $mgtKeyType = TIENumMgtKeyType::SELL;
 
     // 문서번호
-    $mgtKey = '20210401-01';
+    $mgtKey = '20210801-01';
 
     try {
         $url = $this->PopbillTaxinvoice->GetPDFURL($testCorpNum, $mgtKeyType, $mgtKey);

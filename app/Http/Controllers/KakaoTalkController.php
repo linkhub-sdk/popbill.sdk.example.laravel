@@ -1056,7 +1056,7 @@ class KakaoTalkController extends Controller
     $testCorpNum = '1234567890';
 
     // 예약전송 요청시 할당한 전송요청번호
-    $requestNum = '20210214-001';
+    $requestNum = '20210701-001';
 
     try {
         $result = $this->PopbillKakao->CancelReserveRN($testCorpNum ,$requestNum);
@@ -1103,7 +1103,7 @@ class KakaoTalkController extends Controller
     $testCorpNum = '1234567890';
 
     // 전송 요청시 할당한 전송요청번호
-    $requestNum = '20210214-001';
+    $requestNum = '20210701-001';
 
     try {
         $result = $this->PopbillKakao->GetMessagesRN($testCorpNum, $requestNum);
@@ -1126,10 +1126,10 @@ class KakaoTalkController extends Controller
     $testCorpNum = '1234567890';
 
     // [필수] 시작일자, 날짜형식(yyyyMMdd)
-    $SDate = '20210101';
+    $SDate = '20210701';
 
     // [필수] 종료일자, 날짜형식(yyyyMMdd)
-    $EDate = '20210131';
+    $EDate = '20210730';
 
     // 전송상태값 배열, 0-대기, 1-전송중, 2-성공, 3-대체, 4-실패, 5-예약취소
     $State = array('0', '1', '2', '3', '4', '5');

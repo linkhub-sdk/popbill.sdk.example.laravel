@@ -630,7 +630,7 @@ class FaxController extends Controller
     $testCorpNum = '1234567890';
 
     // 예약팩스전송 요청시 할당한 전송요청번호
-    $requestNum = '20210214-01';
+    $requestNum = '20210801-01';
 
     try {
         $result = $this->PopbillFax->CancelReserveRN($testCorpNum ,$requestNum);
@@ -700,10 +700,10 @@ class FaxController extends Controller
     $testCorpNum = '1234567890';
 
     // 검색시작일자
-    $SDate = '20210101';
+    $SDate = '20210701';
 
     // 검색종료일자
-    $EDate = '20210131';
+    $EDate = '20210730';
 
     // 전송상태값 배열, 1-대기, 2-성공, 3-실패, 4-취소
     $State = array(1, 2, 3, 4);

@@ -59,10 +59,10 @@ class HTTaxinvoiceController extends Controller
     $DType = 'S';
 
     // 시작일자, 형식(yyyyMMdd)
-    $SDate = '20210101';
+    $SDate = '20210701';
 
     // 종료일자, 형식(yyyyMMdd)
-    $EDate = '20210131';
+    $EDate = '20210730';
 
     try {
         $jobID = $this->PopbillHTTaxinvoice->RequestJob($testCorpNum, $TIKeyType, $DType, $SDate, $EDate);
