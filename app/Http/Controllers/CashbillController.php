@@ -83,7 +83,7 @@ class CashbillController extends Controller
     $testUserID = 'testkorea';
 
     // 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
-    $mgtKey = '20211024-001';
+    $mgtKey = '20210804-007';
 
     // 메모
     $memo = '현금영수증 즉시발행 메모';
@@ -165,13 +165,17 @@ class CashbillController extends Controller
         $result = $this->PopbillCashbill->RegistIssue($testCorpNum, $Cashbill, $memo, $testUserID, $emailSubject);
         $code = $result->code;
         $message = $result->message;
+        $confirmNum = $result->confirmNum;
+        $tradeDate = $result->tradeDate;
     }
     catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
+        $confirmNum = null;
+        $tradeDate = null;
     }
 
-    return view('PResponse', ['code' => $code, 'message' => $message]);
+    return view('PResponse', ['code' => $code, 'message' => $message, 'confirmNum' => $confirmNum, 'tradeDate' => $tradeDate]);
   }
 
   /**

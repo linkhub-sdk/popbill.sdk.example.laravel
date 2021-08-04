@@ -19,6 +19,12 @@
             @isset($receiptID)
             <li>$receiptID (접수 아이디) : {{ $receiptID }}</li>
             @endisset
+            @isset($confirmNum)
+            <li>confirmNum (국세청 승인번호) : {{ $confirmNum }}</li>
+            @endisset
+            @isset($tradeDate)
+            <li>tradeDate (거래일자) : {{ $tradeDate }}</li>
+            @endisset
         </ul>
     </fieldset>
 </div>
