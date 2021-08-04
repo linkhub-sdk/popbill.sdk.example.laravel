@@ -70,7 +70,7 @@ class CashbillController extends Controller
   }
 
   /**
-   * 현금영수증 데이터를 팝빌에 전송하여 발행합니다.
+   * 작성된 현금영수증 데이터를 팝빌에 저장과 동시에 발행하여 "발행완료" 상태로 처리합니다.
    * - 현금영수증 국세청 전송 정책 : https://docs.popbill.com/cashbill/ntsSendPolicy?lang=phplaravel
    * - https://docs.popbill.com/cashbill/phplaravel/api#RegistIssue
    */
@@ -460,7 +460,7 @@ class CashbillController extends Controller
   }
 
   /**
-   * 취소 현금영수증을 발행하며 취소 현금영수증의 금액은 원본 금액을 넘을 수 없습니다.
+   * 취소 현금영수증 데이터를 팝빌에 저장과 동시에 발행하여 "발행완료" 상태로 처리합니다.
    * - 현금영수증 국세청 전송 정책 : https://docs.popbill.com/cashbill/ntsSendPolicy?lang=phplaravel
    * - https://docs.popbill.com/cashbill/phplaravel/api#RevokeRegistIssue
    */
@@ -494,7 +494,8 @@ class CashbillController extends Controller
   }
 
   /**
-   * 1건의 (부분)취소현금영수증을 [즉시발행]합니다.
+   * 작성된 (부분)취소 현금영수증 데이터를 팝빌에 저장과 동시에 발행하여 "발행완료" 상태로 처리합니다.
+   * - 취소 현금영수증의 금액은 원본 금액을 넘을 수 없습니다.
    * - 현금영수증 국세청 전송 정책 : https://docs.popbill.com/cashbill/ntsSendPolicy?lang=phplaravel
    * - https://docs.popbill.com/cashbill/phplaravel/api#RevokeRegistIssue
    */
