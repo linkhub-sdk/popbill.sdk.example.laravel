@@ -403,9 +403,8 @@ class CashbillController extends Controller
   }
 
   /**
-   * 국세청 전송 이전 "발행완료" 상태의 현금영수증을 "발행취소"하고 국세청 전송 대상에서 제외됩니다.
-   * - 발행취소는 국세청 전송전에만 가능합니다.
-   * - 발행취소된 형금영수증은 국세청에 전송되지 않습니다.
+   * 국세청 전송 이전 "발행완료" 상태의 현금영수증을 "발행취소"하고 국세청 전송 대상에서 제외합니다.
+   * - Delete(삭제)함수를 호출하여 "발행취소" 상태의 현금영수증을 삭제하면, 문서번호 재사용이 가능합니다.
    * - https://docs.popbill.com/cashbill/phplaravel/api#CancelIssue
    */
   public function CancelIssue(){
