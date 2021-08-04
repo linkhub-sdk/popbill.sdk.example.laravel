@@ -189,7 +189,7 @@ class CashbillController extends Controller
     $testCorpNum = '1234567890';
 
     // 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
-    $mgtKey = '20210214-002';
+    $mgtKey = '20210804-012';
 
     // 현금영수증 객체 생성
     $Cashbill = new Cashbill();
@@ -380,7 +380,7 @@ class CashbillController extends Controller
     $testCorpNum = '1234567890';
 
     // 문서번호
-    $mgtKey = '20210214-002';
+    $mgtKey = '20210804-012';
 
     // 메모
     $memo = '현금영수증 발행메모';
@@ -389,13 +389,17 @@ class CashbillController extends Controller
         $result = $this->PopbillCashbill->Issue($testCorpNum, $mgtKey, $memo);
         $code = $result->code;
         $message = $result->message;
+        $confirmNum = $result->confirmNum;
+        $tradeDate = $result->tradeDate;
     }
     catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
+        $confirmNum = null;
+        $tradeDate = null;
     }
 
-    return view('PResponse', ['code' => $code, 'message' => $message]);
+    return view('PResponse', ['code' => $code, 'message' => $message, 'confirmNum' => $confirmNum, 'tradeDate' => $tradeDate]);
   }
 
   /**
@@ -466,25 +470,27 @@ class CashbillController extends Controller
     $testCorpNum = '1234567890';
 
     // 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
-    $mgtKey = '20210214-005';
+    $mgtKey = '20210804-0001';
 
     // 원본현금영수증 승인번호, 문서정보 확인(GetInfo API)을 통해 확인가능.
-    $orgConfirmNum = '171312673';
+    $orgConfirmNum = 'TB0000016';
 
     // 원본현금영수증 거래일자, 작성형식(yyyyMMdd) 문서정보 확인(GetInfo API)을 통해 확인가능.
-    $orgTradeDate = '20210211';
+    $orgTradeDate = '20210803';
 
     try {
         $result = $this->PopbillCashbill->RevokeRegistIssue($testCorpNum, $mgtKey, $orgConfirmNum, $orgTradeDate);
-        $code = $result->code;
-        $message = $result->message;
+        $confirmNum = $result->confirmNum;
+        $tradeDate = $result->tradeDate;
     }
     catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
+        $confirmNum = null;
+        $tradeDate = null;
     }
 
-    return view('PResponse', ['code' => $code, 'message' => $message]);
+    return view('PResponse', ['code' => $code, 'message' => $message, 'confirmNum' => $confirmNum, 'tradeDate' => $tradeDate]);
   }
 
   /**
