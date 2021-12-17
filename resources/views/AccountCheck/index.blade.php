@@ -13,6 +13,7 @@
         <legend>예금주조회</legend>
         <ul>
             <li><a href="AccountCheck/CheckAccountInfo">CheckAccountInfo</a> (예금주성명 조회) </li>
+            <li><a href="AccountCheck/CheckDepositorInfo">CheckDepositorInfo</a> (예금주실명 조회) </li>
         </ul>
     </fieldset>
     <fieldset class="fieldset1">

@@ -50,6 +50,9 @@ class AccountCheckController extends Controller
     // 팝빌회원 사업자번호
     $MemberCorpNum = "1234567890";
 
+    // 팝빌회원 아이디
+    $testUesrID = "testkorea";
+
     // 기관코드
     $bankCode = "0004";
 
@@ -57,7 +60,7 @@ class AccountCheckController extends Controller
     $accountNumber = "9432451175812";
 
     try {
-        $result = $this->PopbillAccountCheck->checkAccountInfo($MemberCorpNum, $bankCode, $accountNumber);
+        $result = $this->PopbillAccountCheck->checkAccountInfo($MemberCorpNum, $bankCode, $accountNumber, $testUesrID);
     }
     catch(PopbillException $pe) {
         $code = $pe->getCode();
@@ -65,6 +68,42 @@ class AccountCheckController extends Controller
         return view('PResponse', ['code' => $code, 'message' => $message]);
     }
     return view('AccountCheck/CheckAccountInfo', ['Result' => $result] );
+  }
+
+
+  /**
+   * 1건의 예금주실명을 조회합니다.
+   * - https://docs.popbill.com/accountcheck/phplaravel/api#CheckDepositorInfo
+   */
+  public function CheckDepositorInfo(){
+
+    // 팝빌회원 사업자번호
+    $MemberCorpNum = "1234567890";
+
+    //팝빌회원 아이디
+    $testUserID = "testkorea";
+
+    // 기관코드
+    $bankCode = "0004";
+
+    // 계좌번호
+    $accountNumber = "9432451175812";
+
+    //등록번호 유형, P-개인, B-사업자
+    $identityNumType = "P";
+
+    // 등록번호
+    $identityNum = "881030";
+
+    try {
+        $result = $this->PopbillAccountCheck->checkDepositorInfo($MemberCorpNum, $bankCode, $accountNumber, $identityNumType, $identityNum, $testUserID);
+    }
+    catch(PopbillException $pe) {
+        $code = $pe->getCode();
+        $message = $pe->getMessage();
+        return view('PResponse', ['code' => $code, 'message' => $message]);
+    }
+    return view('AccountCheck/CheckDepositorInfo', ['Result' => $result] );
   }
 
   /**
@@ -170,8 +209,14 @@ class AccountCheckController extends Controller
     // 팝빌 회원 사업자 번호, "-"제외 10자리
     $testCorpNum = '1234567890';
 
+    // 팝빌회원 아이디
+    $testUserID = 'testkorea';
+
+    // 서비스 유형, 성명 / 실명 중 택 1
+    $serviceType = '실명';
+
     try {
-        $unitCost = $this->PopbillAccountCheck->GetUnitCost($testCorpNum);
+        $unitCost = $this->PopbillAccountCheck->GetUnitCost($testCorpNum, $serviceType, $testUserID);
     }
     catch(PopbillException $pe) {
         $code = $pe->getCode();
@@ -237,10 +282,13 @@ class AccountCheckController extends Controller
     $testCorpNum = '1234567890';
 
     // 팝빌회원 아이디
-    $testUserID = '';
+    $testUserID = 'testkorea';
+
+    // 서비스 유형, 성명 / 실명 중 택 1
+    $serviceType = '성명';
 
     try {
-        $result = $this->PopbillAccountCheck->GetChargeInfo($testCorpNum,$testUserID);
+        $result = $this->PopbillAccountCheck->GetChargeInfo($testCorpNum, $testUserID, $serviceType);
     }
     catch(PopbillException $pe) {
         $code = $pe->getCode();

@@ -18,7 +18,8 @@
                 <li> templateCode (템플릿 코드) : {{ $object->templateCode }} </li>
                 <li> templateName (템플릿 제목) : {{ $object->templateName }} </li>
                 <li> template (템플릿 내용) : {{ $object->template }} </li>
-
+                <li> ads (광고메시지 내용) : {{ $object->ads }} </li>
+                <li> appendix (부가메시지 내용) : {{ $object->appendix }} </li>
                 @if (empty($object->btns) == false)
                   @foreach ($object->btns as $indexKey => $btnInfo)
                   <fieldset class="fieldset2">

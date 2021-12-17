@@ -26,6 +26,8 @@
             <li> failPageCnt (실패 페이지수) : {{ $faxInfo->failPageCnt }} </li>
             <li> refundPageCnt (환불 페이지수) : {{ $faxInfo->refundPageCnt }} </li>
             <li> cancelPageCnt (취소 페이지수) : {{ $faxInfo->cancelPageCnt }} </li>
+            <li> iSuccessPageCnt (지능망 성공장수) : {{ $faxInfo->iSuccessPageCnt }} </li>
+            <li> receiveNumType (수신번호 유형) : {{ $faxInfo->receiveNumType }} </li>
             <li> receiptDT (접수일시) : {{ $faxInfo->receiptDT }} </li>
             <li> reserveDT (예약일시) : {{ $faxInfo->reserveDT }} </li>
             <li> sendDT (전송일시) : {{ $faxInfo->sendDT }} </li>

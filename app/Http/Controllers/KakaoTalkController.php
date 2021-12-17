@@ -163,7 +163,7 @@ class KakaoTalkController extends Controller
     $testCorpNum = '1234567890';
 
     //확인할 템플릿 코드
-    $templateCode = '021030000625';
+    $templateCode = '021110000491';
 
     // 팝빌 회원 아이디
     $testUserID = 'testkorea';

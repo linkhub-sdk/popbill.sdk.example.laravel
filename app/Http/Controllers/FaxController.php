@@ -654,7 +654,7 @@ class FaxController extends Controller
     $testCorpNum = '1234567890';
 
     // 팩스전송 접수번호
-    $ReceiptNum = '018092923330400001';
+    $ReceiptNum = '021102113573800005';
 
     try {
         $result = $this->PopbillFax->GetFaxDetail($testCorpNum, $ReceiptNum);
