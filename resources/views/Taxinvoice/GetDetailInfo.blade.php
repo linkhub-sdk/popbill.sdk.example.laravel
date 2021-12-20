@@ -18,13 +18,20 @@
             <li> supplyCostTotal (공급가액 합계) : {{ $Taxinvoice->supplyCostTotal }} </li>
             <li> taxTotal (세액 합계) : {{ $Taxinvoice->taxTotal}}  </li>
             <li> totalAmount (합계금액) : {{ $Taxinvoice->totalAmount }} </li>
+            <li> cash (현금) : {{ $Taxinvoice->cash }} </li>
+            <li> chkBill (수표) : {{ $Taxinvoice->chkBill }} </li>
+            <li> credit (외상) : {{ $Taxinvoice->credit }} </li>
+            <li> note (어음) : {{ $Taxinvoice->note }} </li>
             <li> ntsconfirmNum (국세청승인번호) : {{ $Taxinvoice->ntsconfirmNum }} </li>
 
             <li> invoicerCorpNum (공급자 사업자번호) : {{ $Taxinvoice->invoicerCorpNum}} </li>
+            <li> invoicerTaxRegID (공급자 종사업장 식별번호) : {{ $Taxinvoice->invoicerTaxRegID}} </li>
             <li> invoicerMgtKey (공급자 문서번호) : {{ $Taxinvoice->invoicerMgtKey }} </li>
             <li> invoicerCorpName (공급자 상호) : {{ $Taxinvoice->invoicerCorpName }} </li>
             <li> invoicerCEOName (공급자 대표자명) : {{ $Taxinvoice->invoicerCEOName }} </li>
             <li> invoicerAddr (공급자 주소) : {{ $Taxinvoice->invoicerAddr }} </li>
+            <li> invoicerBizType (공급자 업태) : {{ $Taxinvoice->invoicerBizType }} </li>
+            <li> invoicerBizClass (공급자 종목) : {{ $Taxinvoice->invoicerBizClass }} </li>
             <li> invoicerContactName (공급자 담당자명) : {{ $Taxinvoice->invoicerContactName }} </li>
             <li> invoicerTEL (공급자 담당자 연락처) : {{ $Taxinvoice->invoicerTEL }} </li>
             <li> invoicerHP (공급자 담당자 휴대폰) : {{ $Taxinvoice->invoicerHP }} </li>
@@ -32,11 +39,14 @@
             <li> invoicerSMSSendYN (발행안내문자 전송여부) : {{ $Taxinvoice->invoicerSMSSendYN ? 'true' : 'false' }} </li>
 
             <li> invoiceeCorpNum (공급받는자 사업자번호) : {{ $Taxinvoice->invoiceeCorpNum }} </li>
+            <li> invoiceeTaxRegID (공급받는자 종사업장 식별번호) : {{ $Taxinvoice->invoiceeTaxRegID }} </li>
             <li> invoiceeType (공급받는자 구분) : {{ $Taxinvoice->invoiceeType}}  </li>
             <li> invoiceeMgtKey (공급받는자 문서번호) : {{ $Taxinvoice->invoiceeMgtKey }} </li>
             <li> invoiceeCorpName (공급받는자 상호) : {{ $Taxinvoice->invoiceeCorpName }} </li>
             <li> invoiceeCEOName (공급받는자 대표자명 : {{ $Taxinvoice->invoiceeCEOName }} </li>
             <li> invoiceeAddr (공급받는자 주소) : {{ $Taxinvoice->invoiceeAddr }} </li>
+            <li> invoiceeBizType (공급받는자 업태) : {{ $Taxinvoice->invoiceeBizType }} </li>
+            <li> invoiceeBizClass (공급받는자 종목) : {{ $Taxinvoice->invoiceeBizClass }} </li>
             <li> invoiceeContactName1 (공급받는자 담당자명) : {{ $Taxinvoice->invoiceeContactName1 }} </li>
             <li> invoiceeTEL1 (공급받는자 담당자 연락처) : {{ $Taxinvoice->invoiceeTEL1 }} </li>
             <li> invoiceeHP1 (공급받는자 담당자 휴대폰) : {{ $Taxinvoice->invoiceeHP1 }} </li>
