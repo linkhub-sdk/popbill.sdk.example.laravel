@@ -83,7 +83,7 @@ class CashbillController extends Controller
     $testUserID = 'testkorea';
 
     // 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
-    $mgtKey = '20210804-007';
+    $mgtKey = '20211220-TEST001';
 
     // 메모
     $memo = '현금영수증 즉시발행 메모';
@@ -123,6 +123,9 @@ class CashbillController extends Controller
 
     // [필수] 가맹점 사업자번호
     $Cashbill->franchiseCorpNum = $testCorpNum;
+
+    // 가맹점 종사업장 식별번호
+    $Cashbill->franchiseTaxRegID = '';
 
     // 가맹점 상호
     $Cashbill->franchiseCorpName = '발행자 상호';
@@ -223,6 +226,9 @@ class CashbillController extends Controller
 
     // [필수] 가맹점 사업자번호
     $Cashbill->franchiseCorpNum = $testCorpNum;
+
+    // 가맹점 종사업장 식별번호
+    $Cashbill->franchiseTaxRegID = '';
 
     // 가맹점 상호
     $Cashbill->franchiseCorpName = '발행자 상호';
@@ -708,7 +714,7 @@ class CashbillController extends Controller
     $testCorpNum = '1234567890';
 
     // 문서번호
-    $mgtKey = '20210801-005';
+    $mgtKey = '20211220-TEST001';
 
     try {
         $result = $this->PopbillCashbill->GetDetailInfo($testCorpNum, $mgtKey);
@@ -735,10 +741,10 @@ class CashbillController extends Controller
     $DType = 'R';
 
     // [필수] 시작일자
-    $SDate = '20210701';
+    $SDate = '20211201';
 
     // [필수] 종료일자
-    $EDate = '20210728';
+    $EDate = '20211220';
 
     // 문서상태코드, 2,3번째 자리 와일드카드 사용가능, 미기재시 전체조회
     $State = array(
@@ -785,10 +791,14 @@ class CashbillController extends Controller
     // 식별번호 조회, 미기재시 전체조회
     $QString = '';
 
+    // 가맹점 종사업장 번호
+    // └ 다수건 검색시 콤마(",")로 구분. 예) 1234, 1000
+    $FranchiseTaxRegID = "";
+
     try {
         $result = $this->PopbillCashbill->Search( $testCorpNum, $DType, $SDate,
           $EDate, $State, $TradeType, $TradeUsage, $TaxationType, $Page, $PerPage,
-          $Order, $QString, $TradeOpt);
+          $Order, $QString, $TradeOpt, $FranchiseTaxRegID);
     }	catch(PopbillException $pe) {
         $code = $pe->getCode();
         $message = $pe->getMessage();
