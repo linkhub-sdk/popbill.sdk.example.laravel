@@ -54,10 +54,10 @@ class AccountCheckController extends Controller
     $testUesrID = "testkorea";
 
     // 기관코드
-    $bankCode = "0004";
+    $bankCode = "";
 
     // 계좌번호
-    $accountNumber = "9432451175812";
+    $accountNumber = "";
 
     try {
         $result = $this->PopbillAccountCheck->checkAccountInfo($MemberCorpNum, $bankCode, $accountNumber, $testUesrID);
