@@ -84,16 +84,16 @@ class AccountCheckController extends Controller
     $testUserID = "testkorea";
 
     // 기관코드
-    $bankCode = "0004";
+    $bankCode = "";
 
     // 계좌번호
-    $accountNumber = "9432451175812";
+    $accountNumber = "";
 
     //등록번호 유형, P-개인, B-사업자
-    $identityNumType = "P";
+    $identityNumType = "";
 
     // 등록번호
-    $identityNum = "881030";
+    $identityNum = "";
 
     try {
         $result = $this->PopbillAccountCheck->checkDepositorInfo($MemberCorpNum, $bankCode, $accountNumber, $identityNumType, $identityNum, $testUserID);
