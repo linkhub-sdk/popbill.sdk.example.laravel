@@ -14,7 +14,7 @@
           <fieldset class="fieldset2">
             <legend>계좌정보 [{{ $indexKey+1 }}]</legend>
             <ul>
-              <li>bankCode (은행코드) : {{ $bankAccountInfo->bankCode }}</li>
+              <li>bankCode (기관코드) : {{ $bankAccountInfo->bankCode }}</li>
               <li>accountNumber (계좌번호) : {{ $bankAccountInfo->accountNumber }}</li>
               <li>accountName (계좌별칭) : {{ $bankAccountInfo->accountName }}</li>
               <li>accountType (계좌유형) : {{ $bankAccountInfo->accountType }}</li>
