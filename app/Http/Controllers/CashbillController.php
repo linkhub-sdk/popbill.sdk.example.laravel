@@ -325,6 +325,9 @@ class CashbillController extends Controller
 
     // [필수] 가맹점 사업자번호
     $Cashbill->franchiseCorpNum = $testCorpNum;
+    
+    // 가맹점 종사업장 식별번호
+    $Cashbill->franchiseTaxRegID = '';
 
     // 가맹점 상호
     $Cashbill->franchiseCorpName = '발행자 상호_수정';
