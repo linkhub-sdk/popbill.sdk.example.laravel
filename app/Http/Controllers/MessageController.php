@@ -101,16 +101,16 @@ class MessageController extends Controller
         $adsYN = false;
 
         // 전송요청번호
-        // 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
+        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
         // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
-        $requestNum = '20210701-001';
+        $requestNum = '';
 
         $Messages[] = array(
-            'snd' => '07043042991',  // 발신번호, 팝빌에 등록되지 않은 발신번호 기재시 오류처리
+            'snd' => '',  // 발신번호, 팝빌에 등록되지 않은 발신번호 기재시 오류처리
             'sndnm' => '발신자명',   // 발신자명
-            'rcv' => '010111222',   // 수신번호
+            'rcv' => '',   // 수신번호
             'rcvnm' => '수신자성명',  // 수신자성명
-            'msg' => '안녕하세요.' // 개별 메시지 내용
+            'msg' => '안녕하세요.' // 메시지 내용
         );
 
         try {
@@ -140,16 +140,16 @@ class MessageController extends Controller
         $adsYN = false;
 
         // 전송요청번호
-        // 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
+        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
         // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         $requestNum = '';
 
         // 문자전송정보 최대 1000건까지 호출가능
-        for ($i = 0; $i < 100; $i++ ) {
+        for ($i = 0; $i < 10; $i++ ) {
             $Messages[] = array(
-                'snd' => '07043042991',  // 발신번호, 팝빌에 등록되지 않은 발신번호 기재시 오류처리
+                'snd' => '',  // 발신번호, 팝빌에 등록되지 않은 발신번호 기재시 오류처리
                 'sndnm' => '발신자명',   // 발신자명
-                'rcv' => '010111222',   // 수신번호
+                'rcv' => '',   // 수신번호
                 'rcvnm' => '수신자성명'.$i, // 수신자성명
                 'msg' => '개별 메시지 내용'  // 개별 메시지 내용
             );
@@ -181,17 +181,17 @@ class MessageController extends Controller
         $adsYN = false;
 
         // 전송요청번호
-        // 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
+        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
         // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         $requestNum = '';
 
         $Messages[] = array(
-            'snd' => '07043042991',  // 발신번호, 팝빌에 등록되지 않은 발신번호 기재시 오류처리
+            'snd' => '',  // 발신번호, 팝빌에 등록되지 않은 발신번호 기재시 오류처리
             'sndnm' => '발신자명',   // 발신자명
-            'rcv' => '010111222',   // 수신번호
+            'rcv' => '',   // 수신번호
             'rcvnm' => '수신자성명',    // 수신자 성명
-            'msg' => '개별 메시지 내용',  // 개별 메시지 내용. 장문은 2000byte로 길이가 조정되어 전송됨.
-            'sjt' => '개발 메시지 제목'  // 개별 메시지 내용
+            'msg' => '메시지 내용',  // 메시지 내용. 장문은 2000byte로 길이가 조정되어 전송됨.
+            'sjt' => '메시지 제목'  // 메시지 제목
         );
 
         try {
@@ -222,15 +222,15 @@ class MessageController extends Controller
         $adsYN = false;
 
         // 전송요청번호
-        // 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
+        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
         // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
-        $requestNum = '20210701-001';
+        $requestNum = '';
 
-        for ($i = 0; $i < 100; $i++){
+        for ($i = 0; $i < 10; $i++){
             $Messages[] = array(
-                'snd' => '07043042991',  // 발신번호, 팝빌에 등록되지 않은 발신번호 기재시 오류처리
+                'snd' => '',  // 발신번호, 팝빌에 등록되지 않은 발신번호 기재시 오류처리
                 'sndnm' => '발신자명',   // 발신자명
-                'rcv' => '010111222',   // 수신번호
+                'rcv' => '',   // 수신번호
                 'rcvnm' => '수신자성명'.$i, // 수신자 성명
                 'msg' => '개별 메시지 내용',  // 개별 메시지 내용. 장문은 2000byte로 길이가 조정되어 전송됨.
                 'sjt' => '개발 메시지 제목'  // 개별 메시지 내용
@@ -247,7 +247,7 @@ class MessageController extends Controller
     }
 
     /**
-     * 메시지 크기(90byte)에 따라 단문/장문(SMS/LMS)을 자동으로 인식하여 1건의 메시지를 전송을 팝빌에 접수합니다.
+     * 메시지 길이(90byte)에 따라 단문/장문(SMS/LMS)을 자동으로 인식하여 1건의 메시지를 전송을 팝빌에 접수합니다.
      * - https://docs.popbill.com/message/phplaravel/api#SendXMS
      */
     public function SendXMS(){
@@ -262,16 +262,16 @@ class MessageController extends Controller
         $adsYN = false;
 
         // 전송요청번호
-        // 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
+        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
         // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         $requestNum = '';
 
         $Messages[] = array(
-            'snd' => '07043042991',  // 발신번호, 팝빌에 등록되지 않은 발신번호 기재시 오류처리
+            'snd' => '',  // 발신번호, 팝빌에 등록되지 않은 발신번호 기재시 오류처리
             'sndnm' => '발신자명',   // 발신자명
-            'rcv' => '010111222',   // 수신번호
+            'rcv' => '',   // 수신번호
             'rcvnm' => '수신자성명',  // 수신자성명
-            'msg' => '장문 메시지 내용 장문으로 보내는 기준은 메시지 길이을 기준으로 90byte이상입니다. 2000byte에서 길이가 조정됩니다.', // 개별전송 메시지 내용
+            'msg' => '장문 메시지 내용 장문으로 보내는 기준은 메시지 길이을 기준으로 90byte이상입니다. 2000byte에서 길이가 조정됩니다.' // 메시지 내용
         );
 
         try {
@@ -285,7 +285,7 @@ class MessageController extends Controller
     }
 
     /**
-     * 시지 크기(90byte)에 따라 단문/장문(SMS/LMS)을 자동으로 인식하여 다수건의 메시지 전송을 팝빌에 접수합니다. (최대 1,000건)
+     * 메시지 길이(90byte)에 따라 단문/장문(SMS/LMS)을 자동으로 인식하여 다수건의 메시지 전송을 팝빌에 접수합니다. (최대 1,000건)
      *  - https://docs.popbill.com/message/phplaravel/api#SendXMS
      */
     public function SendXMS_Multi(){
@@ -297,12 +297,12 @@ class MessageController extends Controller
         $Messages = array();
         for ( $i = 0; $i < 100; $i++ ) {
             $Messages[] = array(
-                'snd' => '07043042991',    // 발신번호, 팝빌에 등록되지 않은 발신번호 기재시 오류처리
+                'snd' => '',    // 발신번호, 팝빌에 등록되지 않은 발신번호 기재시 오류처리
                 'sndnm' => '발신자명',     // 발신자명
-                'rcv' => '010111222',     // 수신번호
-                'rcvnm' => '수신자성명',    // 수신자성명
+                'rcv' => '',     // 수신번호
+                'rcvnm' => '수신자성명',     // 수신자성명
                 'sjt' => '개별 메시지 제목', // 개별전송 메시지 제목
-                'msg' => '메시지 내용'      // 개별전송 메시지 내용
+                'msg' => '개별 메시지 내용'  // 개별전송 메시지 내용
             );
         }
 
@@ -313,7 +313,7 @@ class MessageController extends Controller
         $adsYN = false;
 
         // 전송요청번호
-        // 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
+        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
         // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         $requestNum = '';
 
@@ -344,20 +344,20 @@ class MessageController extends Controller
         $adsYN = false;
 
         // 전송요청번호
-        // 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
+        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
         // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         $requestNum = '';
 
         $Messages[] = array(
-            'snd' => '07043042991',  // 발신번호, 팝빌에 등록되지 않은 발신번호 기재시 오류처리
+            'snd' => '',  // 발신번호, 팝빌에 등록되지 않은 발신번호 기재시 오류처리
             'sndnm' => '발신자명',   // 발신자명
-            'rcv' => '010111222',   // 수신번호
+            'rcv' => '',   // 수신번호
             'rcvnm' => '수신자성명',   // 수신자 성명
-            'msg' => '개별 메시지 내용', // 개별 메시지 내용. 장문은 2000byte로 길이가 조정되어 전송됨.
-            'sjt' => '개별 메시지 제목' // 개별 메시지 내용
+            'msg' => '메시지 내용', // 메시지 내용. 장문은 2000byte로 길이가 조정되어 전송됨.
+            'sjt' => '메시지 제목' // 메시지 제목
         );
         // 최대 300KByte, JPEG 파일포맷 전송가능
-        $Files = array('/Users/John/Desktop/03A4C36315C047B4A171CEF283ED9A40.jpg');
+        $Files = array('/image.jpg');
 
         try {
             $receiptNum = $this->PopbillMessaging->SendMMS($testCorpNum,'','','',$Messages, $Files, $reserveDT, $adsYN, '', '', '', $requestNum);
@@ -388,24 +388,24 @@ class MessageController extends Controller
         $adsYN = false;
 
         // 전송요청번호
-        // 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
+        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
         // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         $requestNum = '';
 
         // 전송정보 배열, 최대 1000건
         for ($i = 0; $i < 10; $i++){
             $Messages[] = array(
-                'snd' => '07043042991',  // 발신번호, 팝빌에 등록되지 않은 발신번호 기재시 오류처리
+                'snd' => '',  // 발신번호, 팝빌에 등록되지 않은 발신번호 기재시 오류처리
                 'sndnm' => '발신자명',   // 발신자명
-                'rcv' => '010111222',   // 수신번호
+                'rcv' => '',   // 수신번호
                 'rcvnm' => '수신자성명'.$i, // 수신자성명
                 'msg' => '개별 메시지 내용',  // 개별 메시지 내용
-                'sjt' => '개발 메시지 제목'  // 개별 메시지 내용
+                'sjt' => '개발 메시지 제목'  // 개별 메시지 제목
             );
         }
 
         // 최대 300KByte, JPEG 파일포맷 전송가능
-        $Files = array('/Users/John/Desktop/03A4C36315C047B4A171CEF283ED9A40.jpg');
+        $Files = array('/image.jpg');
 
         try {
             $receiptNum = $this->PopbillMessaging->SendMMS($testCorpNum, '', '', '', $Messages, $Files, $reserveDT, $adsYN, '', '', '', $requestNum);
@@ -427,7 +427,7 @@ class MessageController extends Controller
         $testCorpNum = '1234567890';
 
         // 예약문자전송 요청시 발급받은 접수번호
-        $ReceiptNum = '019010211000000020';
+        $ReceiptNum = '022040511000000020';
 
         try {
             $result = $this->PopbillMessaging->CancelReserve($testCorpNum ,$ReceiptNum);
@@ -450,7 +450,7 @@ class MessageController extends Controller
         $testCorpNum = '1234567890';
 
         // 예약문자전송 요청시 할당한 전송요청번호
-        $requestNum = '20210701-001';
+        $requestNum = '';
 
         try {
             $result = $this->PopbillMessaging->CancelReserveRN($testCorpNum ,$requestNum);
@@ -473,7 +473,7 @@ class MessageController extends Controller
         $testCorpNum = '1234567890';
 
         // 문자전송 요청 시 발급받은 접수번호(receiptNum)
-        $ReceiptNum = '021021414000000012';
+        $ReceiptNum = '022040511000000020';
 
         try {
             $result = $this->PopbillMessaging->GetMessages($testCorpNum, $ReceiptNum);
@@ -497,7 +497,7 @@ class MessageController extends Controller
         $testCorpNum = '1234567890';
 
         // 문자전송 요청 시 할당한 전송요청번호(requestNum)
-        $requestNum = '20210701-001';
+        $requestNum = '';
 
         try {
             $result = $this->PopbillMessaging->GetMessagesRN($testCorpNum, $requestNum);
@@ -522,7 +522,7 @@ class MessageController extends Controller
         // 문자전송 요청 시 발급받은 접수번호 배열(receiptNum)
         $ReceiptNumList = array();
 
-        array_push($ReceiptNumList, '021021414000000016');
+        array_push($ReceiptNumList, '022040511000000020');
 
         try {
             $result = $this->PopbillMessaging->GetStates($testCorpNum, $ReceiptNumList);
@@ -545,22 +545,31 @@ class MessageController extends Controller
         // 팝빌회원 사업자번호, '-'제외 10자리
         $testCorpNum = '1234567890';
 
-        // [필수] 시작일자
-        $SDate = '20210701';
+        // 시작일자
+        $SDate = '20220401';
 
-        // [필수] 종료일자
-        $EDate = '20210730';
+        // 종료일자
+        $EDate = '20220430';
 
-        // 전송상태값 배열, 1-대기 2-성공 3-실패 4-취소
+        // 전송상태 배열 ("1" , "2" , "3" , "4" 중 선택, 다중 선택 가능)
+        // └ 1 = 대기 , 2 = 성공 , 3 = 실패 , 4 = 취소
+        // - 미입력 시 전체조회
         $State = array('1', '2', '3', '4');
 
-        // 전송유형 배열 SMS, LMS, MMS
+        // 검색대상 배열 ("SMS" , "LMS" , "MMS" 중 선택, 다중 선택 가능)
+        // └ SMS = 단문 , LMS = 장문 , MMS = 포토문자
+        // - 미입력 시 전체조회
         $Item = array( 'SMS', 'LMS', 'MMS' );
 
-        // 예약여부, false-전체조회, true-예약전송만 조회
+        // 예약여부 (false , true 중 택 1)
+        // └ false = 전체조회, true = 예약전송건 조회
+        // - 미입력시 기본값 false 처리
         $ReserveYN = false;
 
-        // 개인조회여부, false-전체조회, true-개인조회
+        // 개인조회 여부 (false , true 중 택 1)
+        // └ false = 접수한 문자 전체 조회 (관리자권한)
+        // └ true = 해당 담당자 계정으로 접수한 문자만 조회 (개인권한)
+        // - 미입력시 기본값 false 처리
         $SenderYN = false;
 
         // 페이지번호
@@ -572,9 +581,8 @@ class MessageController extends Controller
         // 정렬방향, D-내림차순, A-오름차순
         $Order = 'D';
 
-        // 조회 검색어.
-        // 문자 전송시 입력한 발신자명 또는 수신자명 기재.
-        // 조회 검색어를 포함한 발신자명 또는 수신자명을 검색합니다.
+        // 조회하고자 하는 발신자명 또는 수신자명
+        // - 미입력시 전체조회
         $QString = '';
 
         try {
@@ -590,7 +598,7 @@ class MessageController extends Controller
     }
 
     /**
-     * 팝빌 사이트와 동일한 문자 전송내역 확인 페이지의 팝업 URL을 반환합니다.
+     * 문자 전송내역 확인 페이지의 팝업 URL을 반환합니다.
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://docs.popbill.com/message/phplaravel/api#GetSentListURL
      */
@@ -635,7 +643,7 @@ class MessageController extends Controller
 
     /**
      * 연동회원의 잔여포인트를 확인합니다.
-     * - 과금방식이 파트너과금인 경우 파트너 잔여포인트(GetPartnerBalance API) 를 통해 확인하시기 바랍니다.
+     * - 과금방식이 파트너과금인 경우 파트너 잔여포인트 확인(GetPartnerBalance API) 함수를 통해 확인하시기 바랍니다.
      * - https://docs.popbill.com/message/phplaravel/api#GetBalance
      */
     public function GetBalance(){
@@ -700,7 +708,6 @@ class MessageController extends Controller
         }
 
         return view('ReturnValue', ['filedName' => "연동회원 포인트 결제내역 팝업 URL" , 'value' => $url]);
-
     }
 
     /**
@@ -729,7 +736,7 @@ class MessageController extends Controller
 
     /**
      * 파트너의 잔여포인트를 확인합니다.
-     * - 과금방식이 연동과금인 경우 연동회원 잔여포인트(GetBalance API)를 이용하시기 바랍니다.
+     * - 과금방식이 연동과금인 경우 연동회원 잔여포인트 확인(GetBalance API) 함수를 이용하시기 바랍니다.
      * - https://docs.popbill.com/message/phplaravel/api#GetPartnerBalance
      */
     public function GetPartnerBalance(){
@@ -831,7 +838,6 @@ class MessageController extends Controller
         // 사업자번호, "-"제외 10자리
         $testCorpNum = '1234567890';
 
-        // 파트너 링크아이디
         // ./config/popbill.php 에 선언된 링크아이디
         $LinkID = config('popbill.LinkID');
 
@@ -900,13 +906,13 @@ class MessageController extends Controller
         $joinForm->BizClass = '종목';
 
         // 담당자명
-        $joinForm->ContactName = '담당자상명';
+        $joinForm->ContactName = '담당자성명';
 
         // 담당자 이메일
-        $joinForm->ContactEmail = 'tester@test.com';
+        $joinForm->ContactEmail = '';
 
         // 담당자 연락처
-        $joinForm->ContactTEL = '07043042991';
+        $joinForm->ContactTEL = '';
 
         // 아이디, 6자 이상 20자미만
         $joinForm->ID = 'userid_phpdd';
@@ -1031,16 +1037,10 @@ class MessageController extends Controller
         $ContactInfo->personName = '담당자_수정';
 
         // 연락처
-        $ContactInfo->tel = '070-4304-2991';
-
-        // 핸드폰번호
-        $ContactInfo->hp = '010-1234-1234';
+        $ContactInfo->tel = '';
 
         // 이메일주소
-        $ContactInfo->email = 'test@test.com';
-
-        // 팩스
-        $ContactInfo->fax = '070-111-222';
+        $ContactInfo->email = '';
 
         // 담당자 권한, 1 : 개인권한, 2 : 읽기권한, 3: 회사권한
         $ContactInfo->searchRole = 3;
@@ -1126,16 +1126,10 @@ class MessageController extends Controller
         $ContactInfo->id = 'testkorea';
 
         // 담당자 연락처
-        $ContactInfo->tel = '070-4304-2991';
-
-        // 핸드폰 번호
-        $ContactInfo->hp = '010-1234-1234';
+        $ContactInfo->tel = '';
 
         // 이메일 주소
-        $ContactInfo->email = 'test@test.com';
-
-        // 팩스번호
-        $ContactInfo->fax = '070-111-222';
+        $ContactInfo->email = '';
 
         // 담당자 권한, 1 : 개인권한, 2 : 읽기권한, 3: 회사권한
         $ContactInfo->searchRole = 3;

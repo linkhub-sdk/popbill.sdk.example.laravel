@@ -44,7 +44,7 @@ class HTTaxinvoiceController extends Controller
 
     /**
      * 홈택스에 신고된 전자세금계산서 매입/매출 내역 수집을 팝빌에 요청합니다. (조회기간 단위 : 최대 3개월)
-     * - 수집 요청후 반환받은 작업아이디(JobID)의 유효시간은 1시간 입니다.
+     * - 주기적으로 자체 DB에 세금계산서 정보를 INSERT 하는 경우, 조회할 일자 유형(DType) 값을 "S"로 하는 것을 권장합니다.
      * - https://docs.popbill.com/httaxinvoice/phplaravel/api#RequestJob
      */
     public function RequestJob(){
@@ -59,10 +59,10 @@ class HTTaxinvoiceController extends Controller
         $DType = 'S';
 
         // 시작일자, 형식(yyyyMMdd)
-        $SDate = '20210701';
+        $SDate = '20220401';
 
         // 종료일자, 형식(yyyyMMdd)
-        $EDate = '20210730';
+        $EDate = '20220430';
 
         try {
             $jobID = $this->PopbillHTTaxinvoice->RequestJob($testCorpNum, $TIKeyType, $DType, $SDate, $EDate);
@@ -77,7 +77,13 @@ class HTTaxinvoiceController extends Controller
     }
 
     /**
-     * 함수 RequestJob(수집 요청)를 통해 반환 받은 작업 아이디의 상태를 확인합니다.
+     * 수집 요청(RequestJob API) 함수를 통해 반환 받은 작업 아이디의 상태를 확인합니다.
+     * - 수집 결과 조회(Search API) 함수 또는 수집 결과 요약 정보 조회(Summary API) 함수를 사용하기 전에
+     *   수집 작업의 진행 상태, 수집 작업의 성공 여부를 확인해야 합니다.
+     * - 작업 상태(jobState) = 3(완료)이고 수집 결과 코드(errorCode) = 1(수집성공)이면
+     *   수집 결과 내역 조회(Search) 또는 수집 결과 요약 정보 조회(Summary)를 해야합니다.
+     * - 작업 상태(jobState)가 3(완료)이지만 수집 결과 코드(errorCode)가 1(수집성공)이 아닌 경우에는
+     *   오류메시지(errorReason)로 수집 실패에 대한 원인을 파악할 수 있습니다.
      * - https://docs.popbill.com/httaxinvoice/phplaravel/api#GetJobState
      */
     public function GetJobState(){
@@ -86,7 +92,7 @@ class HTTaxinvoiceController extends Controller
         $testCorpNum = '1234567890';
 
         // 수집 요청시 반환받은 작업아이디
-        $jobID = '021021509000000001';
+        $jobID = '';
 
         try {
             $result = $this->PopbillHTTaxinvoice->GetJobState($testCorpNum, $jobID);
@@ -123,7 +129,7 @@ class HTTaxinvoiceController extends Controller
     }
 
     /**
-     * 함수 GetJobState(수집 상태 확인)를 통해 상태 정보가 확인된 작업아이디를 활용하여 수집된 전자세금계산서 매입/매출 내역을 조회합니다.
+     * 수집 상태 확인(GetJobState API) 함수를 통해 상태 정보가 확인된 작업아이디를 활용하여 수집된 전자세금계산서 매입/매출 내역을 조회합니다.
      * - https://docs.popbill.com/httaxinvoice/phplaravel/api#Search
      */
     public function Search(){
@@ -135,35 +141,45 @@ class HTTaxinvoiceController extends Controller
         $testUserID = '';
 
         // 수집 요청(RequestJob) 호출시 반환받은 작업아이디
-        $JobID = '021102414000000006';
+        $JobID = '';
 
-        // 문서형태 배열, N-일반세금계산서, M-수정세금계산서
+        // 문서형태 배열 ("N" 와 "M" 중 선택, 다중 선택 가능)
+        // └ N = 일반 , M = 수정
+        // - 미입력 시 전체조회
         $Type = array (
             'N',
             'M'
         );
 
-        // 과세형태 배열, T-과세, N-면세, Z-영세
+        // 과세형태 배열 ("T" , "N" , "Z" 중 선택, 다중 선택 가능)
+        // └ T = 과세, N = 면세, Z = 영세
+        // - 미입력 시 전체조회
         $TaxType = array (
             'T',
             'N',
             'Z'
         );
 
-        // 영수/청구 배열, R-영수, C-청구, N-없음
+        // 발행목적 배열 ("R" , "C", "N" 중 선택, 다중 선택 가능)
+        // └ R = 영수, C = 청구, N = 없음
+        // - 미입력 시 전체조회
         $PurposeType = array (
             'R',
             'C',
             'N'
         );
 
-        // 종사업장 유무, 공백-전체조회, 0-종사업장 없는 건만 조회, 1-종사업장번호 조건에 따라 조회
+        // 종사업장번호 유무 (null , "0" , "1" 중 택 1)
+        // - null = 전체조회 , 0 = 없음, 1 = 있음
         $TaxRegIDYN = "";
 
-        // 종사업장번호 유형, 공백-전체, S-공급자, B-공급받는자, T-수탁자
+        // 종사업장번호의 주체 ("S" , "B" , "T" 중 택 1)
+        // - S = 공급자 , B = 공급받는자 , T = 수탁자
         $TaxRegIDType = "";
 
-        // 종사업장번호, 콤마(",")로 구분하여 구성 ex) "1234,0001";
+        // 종사업장번호
+        // - 다수기재 시 콤마(",")로 구분. ex) "0001,0002"
+        // - 미입력 시 전체조회
         $TaxRegID = "";
 
         // 페이지 번호
@@ -175,7 +191,9 @@ class HTTaxinvoiceController extends Controller
         // 정렬방향, D-내림차순, A-오름차순
         $Order = "D";
 
-        // 조회 검색어, 거래처 사업자번호 또는 거래처명 like 검색
+        // 거래처 상호 / 사업자번호 (사업자) / 주민등록번호 (개인) / "9999999999999" (외국인) 중 검색하고자 하는 정보 입력
+        // - 사업자번호 / 주민등록번호는 하이픈('-')을 제외한 숫자만 입력
+        // - 미입력시 전체조회
         $SearchString = "";
 
         try {
@@ -193,7 +211,8 @@ class HTTaxinvoiceController extends Controller
     }
 
     /**
-     * 함수 GetJobState(수집 상태 확인)를 통해 상태 정보가 확인된 작업아이디를 활용하여 수집된 전자세금계산서 매입/매출 내역의 요약 정보를 조회합니다.
+     * 수집 상태 확인(GetJobState API) 함수를 통해 상태 정보가 확인된 작업아이디를 활용하여 수집된 전자세금계산서 매입/매출 내역의 요약 정보를 조회합니다.
+         * - 요약 정보 : 전자세금계산서 수집 건수, 공급가액 합계, 세액 합계, 합계 금액
      * - https://docs.popbill.com/httaxinvoice/phplaravel/api#Summary
      */
     public function Summary(){
@@ -204,39 +223,51 @@ class HTTaxinvoiceController extends Controller
         // 팝빌회원 아이디
         $testUserID = '';
 
-        // 수집 요청(RequestJob) 호출시 반환받은 작업아이디
-        $JobID = '021102414000000006';
+        // 수집 요청(RequestJob) 함수 호출시 반환받은 작업아이디
+        $JobID = '';
 
-        // 문서형태 배열, N-일반세금계산서, M-수정세금계산서
+        // 문서형태 배열 ("N" 와 "M" 중 선택, 다중 선택 가능)
+        // └ N = 일반 , M = 수정
+        // - 미입력 시 전체조회
         $Type = array (
             'N',
             'M'
         );
 
-        // 과세형태 배열, T-과세, N-면세, Z-영세
+        // 과세형태 배열 ("T" , "N" , "Z" 중 선택, 다중 선택 가능)
+        // └ T = 과세, N = 면세, Z = 영세
+        // - 미입력 시 전체조회
         $TaxType = array (
             'T',
             'N',
             'Z'
         );
 
-        // 영수/청구 배열, R-영수, C-청구, N-없음
+        // 발행목적 배열 ("R" , "C", "N" 중 선택, 다중 선택 가능)
+        // └ R = 영수, C = 청구, N = 없음
+        // - 미입력 시 전체조회
         $PurposeType = array (
             'R',
             'C',
             'N'
         );
 
-        // 종사업장 유무, 공백-전체조회, 0-종사업장 없는 건만 조회, 1-종사업장번호 조건에 따라 조회
+        // 종사업장번호 유무 (null , "0" , "1" 중 택 1)
+        // - null = 전체조회 , 0 = 없음, 1 = 있음
         $TaxRegIDYN = "";
 
-        // 종사업장번호 유형, 공백-전체, S-공급자, B-공급받는자, T-수탁자
+        // 종사업장번호의 주체 ("S" , "B" , "T" 중 택 1)
+        // - S = 공급자 , B = 공급받는자 , T = 수탁자
         $TaxRegIDType = "";
 
-        // 종사업장번호, 콤마(",")로 구분하여 구성 ex) "1234,0001";
+        // 종사업장번호
+        // - 다수기재 시 콤마(",")로 구분. ex) "0001,0002"
+        // - 미입력 시 전체조회
         $TaxRegID = "";
 
-        // 조회 검색어, 거래처 사업자번호 또는 거래처명 like 검색
+        // 거래처 상호 / 사업자번호 (사업자) / 주민등록번호 (개인) / "9999999999999" (외국인) 중 검색하고자 하는 정보 입력
+        // - 사업자번호 / 주민등록번호는 하이픈('-')을 제외한 숫자만 입력
+        // - 미입력시 전체조회
         $SearchString = "";
 
         try {
@@ -261,7 +292,7 @@ class HTTaxinvoiceController extends Controller
         $testCorpNum = '1234567890';
 
         //국세청 승인번호
-        $NTSConfirmNum = '202112264100020300002e07';
+        $NTSConfirmNum = '';
 
         try {
             $result = $this->PopbillHTTaxinvoice->GetTaxinvoice($testCorpNum, $NTSConfirmNum);
@@ -284,7 +315,7 @@ class HTTaxinvoiceController extends Controller
         $testCorpNum = '1234567890';
 
         //국세청 승인번호
-        $NTSConfirmNum = '202112264100020300002e07';
+        $NTSConfirmNum = '';
 
         try {
             $result = $this->PopbillHTTaxinvoice->GetXML($testCorpNum, $NTSConfirmNum);
@@ -308,7 +339,7 @@ class HTTaxinvoiceController extends Controller
         $testCorpNum = '1234567890';
 
         // 국세청 승인번호
-        $NTSConfirmNum = "202112264100020300002e07";
+        $NTSConfirmNum = "";
 
         try {
             $url = $this->PopbillHTTaxinvoice->getPopUpURL($testCorpNum, $NTSConfirmNum);
@@ -332,7 +363,7 @@ class HTTaxinvoiceController extends Controller
         $testCorpNum = '1234567890';
 
         // 국세청 승인번호
-        $NTSConfirmNum = "202112264100020300002e07";
+        $NTSConfirmNum = "";
 
         try {
             $url = $this->PopbillHTTaxinvoice->getPrintURL($testCorpNum, $NTSConfirmNum);
@@ -347,7 +378,6 @@ class HTTaxinvoiceController extends Controller
 
     /**
      * 홈택스연동 인증정보를 관리하는 페이지의 팝업 URL을 반환합니다.
-     * - 인증방식에는 부서사용자/공인인증서 인증 방식이 있습니다.
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://docs.popbill.com/httaxinvoice/phplaravel/api#GetCertificatePopUpURL
      */
@@ -368,7 +398,7 @@ class HTTaxinvoiceController extends Controller
     }
 
     /**
-     * 홈택스연동 인증을 위해 팝빌에 등록된 인증서 만료일자를 확인합니다.
+     * 팝빌에 등록된 인증서 만료일자를 확인합니다.
      * - https://docs.popbill.com/httaxinvoice/phplaravel/api#GetCertificateExpireDate
      */
     public function GetCertificateExpireDate(){
@@ -504,7 +534,7 @@ class HTTaxinvoiceController extends Controller
 
     /**
      * 연동회원의 잔여포인트를 확인합니다.
-     * - 과금방식이 파트너과금인 경우 파트너 잔여포인트(GetPartnerBalance API) 를 통해 확인하시기 바랍니다.
+     * - 과금방식이 파트너과금인 경우 파트너 잔여포인트 확인(GetPartnerBalance API) 함수를 통해 확인하시기 바랍니다.
      * - https://docs.popbill.com/httaxinvoice/phplaravel/api#GetBalance
      */
     public function GetBalance(){
@@ -598,7 +628,7 @@ class HTTaxinvoiceController extends Controller
 
     /**
      * 파트너의 잔여포인트를 확인합니다.
-     * - 과금방식이 연동과금인 경우 연동회원 잔여포인트(GetBalance API)를 이용하시기 바랍니다.
+     * - 과금방식이 연동과금인 경우 연동회원 잔여포인트 확인(GetBalance API) 함수를 이용하시기 바랍니다.
      * - https://docs.popbill.com/httaxinvoice/phplaravel/api#GetPartnerBalance
      */
     public function GetPartnerBalance(){
@@ -714,8 +744,7 @@ class HTTaxinvoiceController extends Controller
         // 사업자번호, "-"제외 10자리
         $testCorpNum = '1234567890';
 
-        // 파트너 링크아이디
-        // ./config/popbill.php에 선언된 파트너 링크아이디
+        // 연동신청 시 팝빌에서 발급받은 링크아이디
         $LinkID = config('popbill.LinkID');
 
         try {
@@ -783,13 +812,13 @@ class HTTaxinvoiceController extends Controller
         $joinForm->BizClass = '종목';
 
         // 담당자명
-        $joinForm->ContactName = '담당자상명';
+        $joinForm->ContactName = '담당자성명';
 
         // 담당자 이메일
-        $joinForm->ContactEmail = 'tester@test.com';
+        $joinForm->ContactEmail = '';
 
         // 담당자 연락처
-        $joinForm->ContactTEL = '07043042991';
+        $joinForm->ContactTEL = '';
 
         // 아이디, 6자 이상 20자미만
         $joinForm->ID = 'userid_phpdd';
@@ -916,16 +945,10 @@ class HTTaxinvoiceController extends Controller
         $ContactInfo->personName = '담당자_수정';
 
         // 연락처
-        $ContactInfo->tel = '070-4304-2991';
-
-        // 핸드폰번호
-        $ContactInfo->hp = '010-1234-1234';
+        $ContactInfo->tel = '';
 
         // 이메일주소
-        $ContactInfo->email = 'test@test.com';
-
-        // 팩스
-        $ContactInfo->fax = '070-111-222';
+        $ContactInfo->email = '';
 
         // 담당자 권한, 1 : 개인권한, 2 : 읽기권한, 3: 회사권한
         $ContactInfo->searchRole = 3;
@@ -1013,16 +1036,10 @@ class HTTaxinvoiceController extends Controller
         $ContactInfo->id = 'testkorea';
 
         // 담당자 연락처
-        $ContactInfo->tel = '070-4304-2991';
-
-        // 핸드폰 번호
-        $ContactInfo->hp = '010-1234-1234';
+        $ContactInfo->tel = '';
 
         // 이메일 주소
-        $ContactInfo->email = 'test@test.com';
-
-        // 팩스번호
-        $ContactInfo->fax = '070-111-222';
+        $ContactInfo->email = '';
 
         // 담당자 권한, 1 : 개인권한, 2 : 읽기권한, 3: 회사권한
         $ContactInfo->searchRole = 3;

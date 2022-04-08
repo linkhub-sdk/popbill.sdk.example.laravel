@@ -48,16 +48,16 @@ class TaxinvoiceController extends Controller
 
     /**
      * 파트너가 세금계산서 관리 목적으로 할당하는 문서번호의 사용여부를 확인합니다.
-     * - 문서번호, 최대 24자리 영문 대소문자, 숫자, 특수문자('-','_')로 구성
+     * - 이미 사용 중인 문서번호는 중복 사용이 불가하고, 세금계산서가 삭제된 경우에만 문서번호의 재사용이 가능합니다.
      * - https://docs.popbill.com/taxinvoice/phplaravel/api#CheckMgtKeyInUse
      */
     public function CheckMgtKeyInUse(){
 
-        // 팝빌회원 사업자번호, '-'제외 10자리
+        // 팝빌회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
 
-        // 세금계산서 문서번호, 연동회원 사업자번호 범위에서 중복되지 않는 문서번호 할당
-        $mgtKey = '20210712-001';
+        // 세금계산서 문서번호, 1~24자리 (숫자, 영문, '-', '_') 조합으로 사업자 별로 중복되지 않도록 구성
+        $mgtKey = '20220405-PHP7-001';
 
         // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
         $mgtKeyType = TIENumMgtKeyType::SELL;
@@ -78,21 +78,30 @@ class TaxinvoiceController extends Controller
 
     /**
      * 작성된 세금계산서 데이터를 팝빌에 저장과 동시에 발행(전자서명)하여 "발행완료" 상태로 처리합니다.
-     * - 세금계산서 국세청 전송 정책 : https://docs.popbill.com/taxinvoice/ntsSendPolicy?lang=phplaravel
+     * - 세금계산서 국세청 전송 정책 [https://docs.popbill.com/taxinvoice/ntsSendPolicy?lang=phplaravel]
+     * - "발행완료"된 전자세금계산서는 국세청 전송 이전에 발행취소(CancelIssue API) 함수로 국세청 신고 대상에서 제외할 수 있습니다.
+     * - 임시저장(Register API) 함수와 발행(Issue API) 함수를 한 번의 프로세스로 처리합니다.
+     * - 세금계산서 발행을 위해서 공급자의 인증서가 팝빌 인증서버에 사전등록 되어야 합니다.
+     *   └ 위수탁발행의 경우, 수탁자의 인증서 등록이 필요합니다.
      * - https://docs.popbill.com/taxinvoice/phplaravel/api#RegistIssue
      */
     public function RegistIssue(){
 
         // 팝빌회원 사업자번호, '-' 제외 10자리
-        $testCorpNum = '1234567899';
+        $testCorpNum = '1234567890';
 
         // 팝빌회원 아이디
         $testUserID = 'testkorea';
 
         // 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
-        $invoicerMgtKey = '20210801-023';
+        $invoicerMgtKey = '20220405-PHP7-001';
 
-        // 지연발행 강제여부
+        // 지연발행 강제여부  (true / false 중 택 1)
+        // └ true = 가능 , false = 불가능
+        // - 미입력 시 기본값 false 처리
+        // - 발행마감일이 지난 세금계산서를 발행하는 경우, 가산세가 부과될 수 있습니다.
+        // - 가산세가 부과되더라도 발행을 해야하는 경우에는 forceIssue의 값을
+        //   true로 선언하여 발행(Issue API)를 호출하시면 됩니다.
         $forceIssue = false;
 
         // 즉시발행 메모
@@ -101,12 +110,15 @@ class TaxinvoiceController extends Controller
         // 안내메일 제목, 미기재시 기본제목으로 전송
         $emailSubject = '';
 
-        // 거래명세서 동시작성 여부
-        $writeSpecification = false;
+        // 거래명세서 동시작성여부 (true / false 중 택 1)
+        // └ true = 사용 , false = 미사용
+        // - 미입력 시 기본값 false 처리
+        $WriteSpecification = false;
 
-        // 거래명세서 동시작성시 명세서 문서번호
-        // 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
-        $dealInvoiceMgtKey = '';
+        // {writeSpecification} = true인 경우, 거래명세서 문서번호 할당
+        // - 미입력시 기본값 세금계산서 문서번호와 동일하게 할당
+        $DealInvoiceKey = null;
+
 
         /************************************************************
          *                        세금계산서 정보
@@ -114,39 +126,42 @@ class TaxinvoiceController extends Controller
         // 세금계산서 객체 생성
         $Taxinvoice = new Taxinvoice();
 
-        // [필수] 작성일자, 형식(yyyyMMdd) 예)20150101
-        $Taxinvoice->writeDate = '20210801';
+        // 작성일자, 형식(yyyyMMdd) 예)20150101
+        $Taxinvoice->writeDate = '20220405';
 
-        // [필수] 발행형태, '정발행', '역발행', '위수탁' 중 기재
+        // 발행유형, {정발행, 역발행, 위수탁} 중 기재
         $Taxinvoice->issueType = '정발행';
 
-        // [필수] 과금방향,
-        // - '정과금'(공급자 과금), '역과금'(공급받는자 과금) 중 기재, 역과금은 역발행시에만 가능.
+        // 과금방향, {정과금, 역과금} 중 기재
+        // └ 정과금 = 공급자 과금 , 역과금 = 공급받는자 과금
+        // -'역과금'은 역발행 세금계산서 발행 시에만 이용가능
         $Taxinvoice->chargeDirection = '정과금';
 
-        // [필수] '영수', '청구' 중 기재
+        // {영수, 청구, 없음} 중 기재
         $Taxinvoice->purposeType = '영수';
 
-        // [필수] 과세형태, '과세', '영세', '면세' 중 기재
+        // 과세형태, {과세, 영세, 면세} 중 기재
         $Taxinvoice->taxType = '과세';
 
 
         /************************************************************
          *                         공급자 정보
          ************************************************************/
-        // [필수] 공급자 사업자번호
+
+        // 공급자 사업자번호
         $Taxinvoice->invoicerCorpNum = $testCorpNum;
 
         // 공급자 종사업장 식별번호, 4자리 숫자 문자열
         $Taxinvoice->invoicerTaxRegID = '';
 
-        // [필수] 공급자 상호
+        // 공급자 상호
         $Taxinvoice->invoicerCorpName = '공급자상호';
 
-        // [필수] 공급자 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
+        // 공급자 문서번호
+        // 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
         $Taxinvoice->invoicerMgtKey = $invoicerMgtKey;
 
-        // [필수] 공급자 대표자성명
+        // 공급자 대표자성명
         $Taxinvoice->invoicerCEOName = '공급자 대표자성명';
 
         // 공급자 주소
@@ -162,39 +177,43 @@ class TaxinvoiceController extends Controller
         $Taxinvoice->invoicerContactName = '공급자 담당자성명';
 
         // 공급자 담당자 메일주소
-        $Taxinvoice->invoicerEmail = 'tester@test.com';
+        $Taxinvoice->invoicerEmail = '';
 
         // 공급자 담당자 연락처
-        $Taxinvoice->invoicerTEL = '070-4304-2991';
+        $Taxinvoice->invoicerTEL = '';
 
         // 공급자 휴대폰 번호
-        $Taxinvoice->invoicerHP = '010-111-222';
+        $Taxinvoice->invoicerHP = '';
 
-        // 발행시 알림문자 전송여부 (정발행에서만 사용가능)
-        // - 공급받는자 주)담당자 휴대폰번호(invoiceeHP1)로 전송
-        // - 전송시 포인트가 차감되며 전송실패하는 경우 포인트 환불처리
+        // 발행 안내 문자 전송여부 (true / false 중 택 1)
+        // └ true = 전송 , false = 미전송
+        // └ 공급받는자 (주)담당자 휴대폰번호 {invoiceeHP1} 값으로 문자 전송
+        // - 전송 시 포인트 차감되며, 전송실패시 환불처리
         $Taxinvoice->invoicerSMSSendYN = false;
 
         /************************************************************
          *                      공급받는자 정보
          ************************************************************/
 
-        // [필수] 공급받는자 구분, '사업자', '개인', '외국인' 중 기재
+        // 공급받는자 구분, [사업자, 개인, 외국인] 중 기재
         $Taxinvoice->invoiceeType = '사업자';
 
-        // [필수] 공급받는자 사업자번호
+        // 공급받는자 사업자번호
+        // - {invoiceeType}이 "사업자" 인 경우, 사업자번호 (하이픈 ('-') 제외 10자리)
+        // - {invoiceeType}이 "개인" 인 경우, 주민등록번호 (하이픈 ('-') 제외 13자리)
+        // - {invoiceeType}이 "외국인" 인 경우, "9999999999999" (하이픈 ('-') 제외 13자리)
         $Taxinvoice->invoiceeCorpNum = '8888888888';
 
         // 공급받는자 종사업장 식별번호, 4자리 숫자 문자열
         $Taxinvoice->invoiceeTaxRegID = '';
 
-        // [필수] 공급자 상호
+        // 공급받는자 상호
         $Taxinvoice->invoiceeCorpName = '공급받는자 상호';
 
         // [역발행시 필수] 공급받는자 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
         $Taxinvoice->invoiceeMgtKey = '';
 
-        // [필수] 공급받는자 대표자성명
+        // 공급받는자 대표자성명
         $Taxinvoice->invoiceeCEOName = '공급받는자 대표자성명';
 
         // 공급받는자 주소
@@ -212,28 +231,29 @@ class TaxinvoiceController extends Controller
         // 공급받는자 담당자 메일주소
         // 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
         // 실제 거래처의 메일주소가 기재되지 않도록 주의
-        $Taxinvoice->invoiceeEmail1 = 'test@test.com';
+        $Taxinvoice->invoiceeEmail1 = '';
 
         // 공급받는자 담당자 연락처
-        $Taxinvoice->invoiceeTEL1 = '070-111-222';
+        $Taxinvoice->invoiceeTEL1 = '';
 
         // 공급받는자 담당자 휴대폰 번호
-        $Taxinvoice->invoiceeHP1 = '010-111-222';
+        $Taxinvoice->invoiceeHP1 = '';
 
         /************************************************************
          *                       세금계산서 기재정보
          ************************************************************/
-        // [필수] 공급가액 합계
+
+        // 공급가액 합계
         $Taxinvoice->supplyCostTotal = '200000';
 
-        // [필수] 세액 합계
+        // 세액 합계
         $Taxinvoice->taxTotal = '20000';
 
-        // [필수] 합계금액, (공급가액 합계 + 세액 합계)
+        // 합계금액, (공급가액 합계 + 세액 합계)
         $Taxinvoice->totalAmount = '220000';
 
         // 기재상 '일련번호'항목
-        $Taxinvoice->serialNum = '123';
+        $Taxinvoice->serialNum = '';
 
         // 기재상 '현금'항목
         $Taxinvoice->cash = '';
@@ -247,23 +267,27 @@ class TaxinvoiceController extends Controller
         // 기재상 '외상'항목
         $Taxinvoice->credit = '';
 
-        // 기재상 '비고' 항목
+        // 비고
+        // {invoiceeType}이 "외국인" 이면 remark1 필수
+        // - 외국인 등록번호 또는 여권번호 입력
         $Taxinvoice->remark1 = '비고1';
         $Taxinvoice->remark2 = '비고2';
         $Taxinvoice->remark3 = '비고3';
 
         // 기재상 '권' 항목, 최대값 32767
-        // 미기재시 $Taxinvoice->kwon = null;
         $Taxinvoice->kwon = 1;
 
         // 기재상 '호' 항목, 최대값 32767
-        // 미기재시 $Taxinvoice->ho = null;
         $Taxinvoice->ho = 1;
 
-        // 사업자등록증 이미지파일 첨부여부
+        // 사업자등록증 이미지 첨부여부 (true / false 중 택 1)
+        // └ true = 첨부 , false = 미첨부(기본값)
+        // - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
         $Taxinvoice->businessLicenseYN = false;
 
-        // 통장사본 이미지파일 첨부여부
+        // 통장사본 이미지 첨부여부 (true / false 중 택 1)
+        // └ true = 첨부 , false = 미첨부(기본값)
+        // - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
         $Taxinvoice->bankBookYN = false;
 
         /************************************************************
@@ -281,44 +305,48 @@ class TaxinvoiceController extends Controller
         /************************************************************
          *                       상세항목(품목) 정보
          ************************************************************/
+
         $Taxinvoice->detailList = array();
-        $Taxinvoice->detailList[] = new TaxinvoiceDetail();
-        $Taxinvoice->detailList[0]->serialNum = 1;          // [상세항목 배열이 있는 경우 필수] 일련번호 1~99까지 순차기재,
-        $Taxinvoice->detailList[0]->purchaseDT = '20210801';   // 거래일자
-        $Taxinvoice->detailList[0]->itemName = '품목명1번';    // 품명
-        $Taxinvoice->detailList[0]->spec = '';          // 규격
-        $Taxinvoice->detailList[0]->qty = '';             // 수량
-        $Taxinvoice->detailList[0]->unitCost = '';      // 단가
-        $Taxinvoice->detailList[0]->supplyCost = '100000';    // 공급가액
-        $Taxinvoice->detailList[0]->tax = '10000';          // 세액
-        $Taxinvoice->detailList[0]->remark = '';      // 비고
 
         $Taxinvoice->detailList[] = new TaxinvoiceDetail();
-        $Taxinvoice->detailList[1]->serialNum = 2;          // [상세항목 배열이 있는 경우 필수] 일련번호 1~99까지 순차기재,
-        $Taxinvoice->detailList[1]->purchaseDT = '20210801';   // 거래일자
-        $Taxinvoice->detailList[1]->itemName = '품목명2번';    // 품명
-        $Taxinvoice->detailList[1]->spec = '';          // 규격
-        $Taxinvoice->detailList[1]->qty = '';             // 수량
-        $Taxinvoice->detailList[1]->unitCost = '';      // 단가
-        $Taxinvoice->detailList[1]->supplyCost = '100000';    // 공급가액
-        $Taxinvoice->detailList[1]->tax = '10000';          // 세액
-        $Taxinvoice->detailList[1]->remark = '';      // 비고
+        $Taxinvoice->detailList[0]->serialNum = 1;               // [상세항목 배열이 있는 경우 필수] 일련번호 1~99까지 순차기재,
+        $Taxinvoice->detailList[0]->purchaseDT = '20220405';     // 거래일자
+        $Taxinvoice->detailList[0]->itemName = '품목명1번';      // 품명
+        $Taxinvoice->detailList[0]->spec = '';                   // 규격
+        $Taxinvoice->detailList[0]->qty = '';                    // 수량
+        $Taxinvoice->detailList[0]->unitCost = '';               // 단가
+        $Taxinvoice->detailList[0]->supplyCost = '100000';       // 공급가액
+        $Taxinvoice->detailList[0]->tax = '10000';               // 세액
+        $Taxinvoice->detailList[0]->remark = '';                 // 비고
+
+        $Taxinvoice->detailList[] = new TaxinvoiceDetail();
+        $Taxinvoice->detailList[1]->serialNum = 2;               // [상세항목 배열이 있는 경우 필수] 일련번호 1~99까지 순차기재,
+        $Taxinvoice->detailList[1]->purchaseDT = '20220405';     // 거래일자
+        $Taxinvoice->detailList[1]->itemName = '품목명1번';      // 품명
+        $Taxinvoice->detailList[1]->spec = '';                   // 규격
+        $Taxinvoice->detailList[1]->qty = '';                    // 수량
+        $Taxinvoice->detailList[1]->unitCost = '';               // 단가
+        $Taxinvoice->detailList[1]->supplyCost = '100000';       // 공급가액
+        $Taxinvoice->detailList[1]->tax = '10000';               // 세액
+        $Taxinvoice->detailList[1]->remark = '';                 // 비고
 
         /************************************************************
          *                      추가담당자 정보
          * - 세금계산서 발행안내 메일을 수신받을 공급받는자 담당자가 다수인 경우
          * 추가 담당자 정보를 등록하여 발행안내메일을 다수에게 전송할 수 있습니다. (최대 5명)
          ************************************************************/
+
         $Taxinvoice->addContactList = array();
-        $Taxinvoice->addContactList[] = new TaxinvoiceAddContact();
-        $Taxinvoice->addContactList[0]->serialNum = 1;            // 일련번호 1부터 순차기재
-        $Taxinvoice->addContactList[0]->email = 'test@test.com';     // 이메일주소
-        $Taxinvoice->addContactList[0]->contactName = '팝빌담당자';  // 담당자명
 
         $Taxinvoice->addContactList[] = new TaxinvoiceAddContact();
-        $Taxinvoice->addContactList[1]->serialNum = 2;            // 일련번호 1부터 순차기재
-        $Taxinvoice->addContactList[1]->email = 'test@test.com';     // 이메일주소
-        $Taxinvoice->addContactList[1]->contactName = '링크허브';    // 담당자명
+        $Taxinvoice->addContactList[0]->serialNum = 1;              // 일련번호 1부터 순차기재
+        $Taxinvoice->addContactList[0]->email = '';                 // 이메일주소
+        $Taxinvoice->addContactList[0]->contactName = '팝빌담당자'; // 담당자명
+
+        $Taxinvoice->addContactList[] = new TaxinvoiceAddContact();
+        $Taxinvoice->addContactList[1]->serialNum = 2;              // 일련번호 1부터 순차기재
+        $Taxinvoice->addContactList[1]->email = '';                 // 이메일주소
+        $Taxinvoice->addContactList[1]->contactName = '링크허브';   // 담당자명
 
         try {
             $result = $this->PopbillTaxinvoice->RegistIssue($testCorpNum, $Taxinvoice, $testUserID,
@@ -337,16 +365,18 @@ class TaxinvoiceController extends Controller
     }
 
     /**
-    * 최대 100건의 세금계산서 발행을 한번의 요청으로 접수합니다.
-    * - https://docs.popbill.com/taxinvoice/phplaravel/api#BulkSubmit
-    */
+     * 최대 100건의 세금계산서 발행을 한번의 요청으로 접수합니다.
+     * - 세금계산서 발행을 위해서 공급자의 인증서가 팝빌 인증서버에 사전등록 되어야 합니다.
+     *   └ 위수탁발행의 경우, 수탁자의 인증서 등록이 필요합니다.
+     * - https://docs.popbill.com/taxinvoice/phplaravel/api#BulkSubmit
+     */
     public function BulkSubmit(){
 
         // 팝빌회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
 
         // 제출 아이디 ,최대 36자리 영문, 숫자, '-' 조합으로 구성
-        $submitID = 'Laravel-0728-Bulk00';
+        $submitID = '20220405-PHP7-BULK';
 
         // 지연발행 강제 여부
         $fourceIssue = false;
@@ -361,39 +391,41 @@ class TaxinvoiceController extends Controller
             // 세금계산서 객체 생성
             $Taxinvoice = new Taxinvoice();
 
-            // [필수] 작성일자, 형식(yyyyMMdd) 예)20150101
-            $Taxinvoice->writeDate = '20210705';
+            // 작성일자, 형식(yyyyMMdd) 예)20150101
+            $Taxinvoice->writeDate = '20220405';
 
-            // [필수] 발행형태, '정발행', '역발행', '위수탁' 중 기재
+            // 발행유형, {정발행, 역발행, 위수탁} 중 기재
             $Taxinvoice->issueType = '정발행';
 
-            // [필수] 과금방향,
-            // - '정과금'(공급자 과금), '역과금'(공급받는자 과금) 중 기재, 역과금은 역발행시에만 가능.
+            // 과금방향, {정과금, 역과금} 중 기재
+            // └ 정과금 = 공급자 과금 , 역과금 = 공급받는자 과금
+            // -'역과금'은 역발행 세금계산서 발행 시에만 이용가능
             $Taxinvoice->chargeDirection = '정과금';
 
-                // [필수] '영수', '청구' 중 기재
+            // [영수, 청구, 없음] 중 기재
             $Taxinvoice->purposeType = '영수';
 
-            // [필수] 과세형태, '과세', '영세', '면세' 중 기재
+            // 과세형태, {과세, 영세, 면세} 중 기재
             $Taxinvoice->taxType = '과세';
 
             /************************************************************
              *                         공급자 정보
              ************************************************************/
 
-            // [필수] 공급자 사업자번호
+            // 공급자 사업자번호
             $Taxinvoice->invoicerCorpNum = $testCorpNum;
 
             // 공급자 종사업장 식별번호, 4자리 숫자 문자열
             $Taxinvoice->invoicerTaxRegID = '';
 
-            // [필수] 공급자 상호
+            // 공급자 상호
             $Taxinvoice->invoicerCorpName = 'BulkTEST';
 
-            // [필수] 공급자 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
-            $Taxinvoice->invoicerMgtKey = $submitID . $i;
+            // 공급자 문서번호
+            // 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
+            $Taxinvoice->invoicerMgtKey = $submitID . '-' . $i;
 
-            // [필수] 공급자 대표자성명
+            // 공급자 대표자성명
             $Taxinvoice->invoicerCEOName = '공급자 대표자성명';
 
             // 공급자 주소
@@ -409,39 +441,43 @@ class TaxinvoiceController extends Controller
             $Taxinvoice->invoicerContactName = '공급자 담당자성명';
 
             // 공급자 담당자 메일주소
-            $Taxinvoice->invoicerEmail = 'tester@test.com';
+            $Taxinvoice->invoicerEmail = '';
 
             // 공급자 담당자 연락처
-            $Taxinvoice->invoicerTEL = '070-4304-2991';
+            $Taxinvoice->invoicerTEL = '';
 
             // 공급자 휴대폰 번호
-            $Taxinvoice->invoicerHP = '010-111-222';
+            $Taxinvoice->invoicerHP = '';
 
-            // 발행시 알림문자 전송여부 (정발행에서만 사용가능)
-            // - 공급받는자 주)담당자 휴대폰번호(invoiceeHP1)로 전송
-            // - 전송시 포인트가 차감되며 전송실패하는 경우 포인트 환불처리
+            // 발행 안내 문자 전송여부 (true / false 중 택 1)
+            // └ true = 전송 , false = 미전송
+            // └ 공급받는자 (주)담당자 휴대폰번호 {invoiceeHP1} 값으로 문자 전송
+            // - 전송 시 포인트 차감되며, 전송실패시 환불처리
             $Taxinvoice->invoicerSMSSendYN = false;
 
             /************************************************************
              *                      공급받는자 정보
              ************************************************************/
 
-            // [필수] 공급받는자 구분, '사업자', '개인', '외국인' 중 기재
+            // 공급받는자 구분, [사업자, 개인, 외국인] 중 기재
             $Taxinvoice->invoiceeType = '사업자';
 
-            // [필수] 공급받는자 사업자번호
+            // 공급받는자 사업자번호
+            // - {invoiceeType}이 "사업자" 인 경우, 사업자번호 (하이픈 ('-') 제외 10자리)
+            // - {invoiceeType}이 "개인" 인 경우, 주민등록번호 (하이픈 ('-') 제외 13자리)
+            // - {invoiceeType}이 "외국인" 인 경우, "9999999999999" (하이픈 ('-') 제외 13자리)
             $Taxinvoice->invoiceeCorpNum = '8888888888';
 
             // 공급받는자 종사업장 식별번호, 4자리 숫자 문자열
             $Taxinvoice->invoiceeTaxRegID = '';
 
-            // [필수] 공급자 상호
+            // 공급받는자 상호
             $Taxinvoice->invoiceeCorpName = 'BulkTEST';
 
             // [역발행시 필수] 공급받는자 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
             $Taxinvoice->invoiceeMgtKey = '';
 
-            // [필수] 공급받는자 대표자성명
+            // 공급받는자 대표자성명
             $Taxinvoice->invoiceeCEOName = '공급받는자 대표자성명';
 
             // 공급받는자 주소
@@ -459,30 +495,30 @@ class TaxinvoiceController extends Controller
             // 공급받는자 담당자 메일주소
             // 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
             // 실제 거래처의 메일주소가 기재되지 않도록 주의
-            $Taxinvoice->invoiceeEmail1 = 'test@test.com';
+            $Taxinvoice->invoiceeEmail1 = '';
 
             // 공급받는자 담당자 연락처
-            $Taxinvoice->invoiceeTEL1 = '070-111-222';
+            $Taxinvoice->invoiceeTEL1 = '';
 
             // 공급받는자 담당자 휴대폰 번호
-            $Taxinvoice->invoiceeHP1 = '010-111-222';
+            $Taxinvoice->invoiceeHP1 = '';
 
 
             /************************************************************
              *                       세금계산서 기재정보
              ************************************************************/
 
-            // [필수] 공급가액 합계
+            // 공급가액 합계
             $Taxinvoice->supplyCostTotal = '200000';
 
-            // [필수] 세액 합계
+            // 세액 합계
             $Taxinvoice->taxTotal = '20000';
 
-            // [필수] 합계금액, (공급가액 합계 + 세액 합계)
+            // 합계금액, (공급가액 합계 + 세액 합계)
             $Taxinvoice->totalAmount = '220000';
 
             // 기재상 '일련번호'항목
-            $Taxinvoice->serialNum = '123';
+            $Taxinvoice->serialNum = '';
 
             // 기재상 '현금'항목
             $Taxinvoice->cash = '';
@@ -495,37 +531,40 @@ class TaxinvoiceController extends Controller
             // 기재상 '외상'항목
             $Taxinvoice->credit = '';
 
-            // 기재상 '비고' 항목
+            // 비고
+            // {invoiceeType}이 "외국인" 이면 remark1 필수
+            // - 외국인 등록번호 또는 여권번호 입력
             $Taxinvoice->remark1 = '비고1';
             $Taxinvoice->remark2 = '비고2';
             $Taxinvoice->remark3 = '비고3';
 
             // 기재상 '권' 항목, 최대값 32767
-            // 미기재시 $Taxinvoice->kwon = null;
             $Taxinvoice->kwon = 1;
 
             // 기재상 '호' 항목, 최대값 32767
-            // 미기재시 $Taxinvoice->ho = null;
             $Taxinvoice->ho = 1;
 
-            // 사업자등록증 이미지파일 첨부여부
+            // 사업자등록증 이미지 첨부여부 (true / false 중 택 1)
+            // └ true = 첨부 , false = 미첨부(기본값)
+            // - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
             $Taxinvoice->businessLicenseYN = false;
 
-            // 통장사본 이미지파일 첨부여부
+            // 통장사본 이미지 첨부여부 (true / false 중 택 1)
+            // └ true = 첨부 , false = 미첨부(기본값)
+            // - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
             $Taxinvoice->bankBookYN = false;
 
             /************************************************************
              *                     수정 세금계산서 기재정보
              * - 수정세금계산서 관련 정보는 연동매뉴얼 또는 개발가이드 링크 참조
-             * - [참고] 수정세금계산서 작성방법 안내 - https://docs.popbill.com/taxinvoice/modify?lang=php
+             * - [참고] 수정세금계산서 작성방법 안내 - https://docs.popbill.com/taxinvoice/modify?lang=phplaravel
              ************************************************************/
 
-            // 수정사유코드, 수정사유에 따라 1~6중 선택기재
-            // $Taxinvoice->modifyCode = '2';
-          //
-            // 원본세금계산서의 국세청 승인번호 기재
-            // $Taxinvoice->orgNTSConfirmNum = '';
+            // [수정세금계산서 작성시 필수] 수정사유코드, 수정사유에 따라 1~6중 선택기재
+            // $Taxinvoice->modifyCode = '';
 
+            // [수정세금계산서 작성시 필수] 원본세금계산서 국세청 승인번호 기재
+            // $Taxinvoice->orgNTSConfirmNum = '';
 
             /************************************************************
              *                       상세항목(품목) 정보
@@ -534,28 +573,26 @@ class TaxinvoiceController extends Controller
             $Taxinvoice->detailList = array();
 
             $Taxinvoice->detailList[] = new TaxinvoiceDetail();
-            $Taxinvoice->detailList[0]->serialNum = 1;          // [상세항목 배열이 있는 경우 필수] 일련번호 1~99까지 순차기재,
-            $Taxinvoice->detailList[0]->purchaseDT = '20210701';   // 거래일자
-            $Taxinvoice->detailList[0]->itemName = '품목명1번';    // 품명
-            $Taxinvoice->detailList[0]->spec = '';          // 규격
-            $Taxinvoice->detailList[0]->qty = '';             // 수량
-            $Taxinvoice->detailList[0]->unitCost = '';      // 단가
-            $Taxinvoice->detailList[0]->supplyCost = '100000';    // 공급가액
-            $Taxinvoice->detailList[0]->tax = '10000';          // 세액
-            $Taxinvoice->detailList[0]->remark = '';      // 비고
+            $Taxinvoice->detailList[0]->serialNum = 1;               // [상세항목 배열이 있는 경우 필수] 일련번호 1~99까지 순차기재,
+            $Taxinvoice->detailList[0]->purchaseDT = '20220405';     // 거래일자
+            $Taxinvoice->detailList[0]->itemName = '품목명1번';      // 품명
+            $Taxinvoice->detailList[0]->spec = '';                   // 규격
+            $Taxinvoice->detailList[0]->qty = '';                    // 수량
+            $Taxinvoice->detailList[0]->unitCost = '';               // 단가
+            $Taxinvoice->detailList[0]->supplyCost = '100000';       // 공급가액
+            $Taxinvoice->detailList[0]->tax = '10000';               // 세액
+            $Taxinvoice->detailList[0]->remark = '';                 // 비고
 
             $Taxinvoice->detailList[] = new TaxinvoiceDetail();
-            $Taxinvoice->detailList[1]->serialNum = 2;          // [상세항목 배열이 있는 경우 필수] 일련번호 1~99까지 순차기재,
-            $Taxinvoice->detailList[1]->purchaseDT = '20210701';   // 거래일자
-            $Taxinvoice->detailList[1]->itemName = '품목명2번';    // 품명
-            $Taxinvoice->detailList[1]->spec = '';          // 규격
-            $Taxinvoice->detailList[1]->qty = '';             // 수량
-            $Taxinvoice->detailList[1]->unitCost = '';      // 단가
-            $Taxinvoice->detailList[1]->supplyCost = '100000';    // 공급가액
-            $Taxinvoice->detailList[1]->tax = '10000';          // 세액
-            $Taxinvoice->detailList[1]->remark = '';      // 비고
-
-
+            $Taxinvoice->detailList[1]->serialNum = 2;               // [상세항목 배열이 있는 경우 필수] 일련번호 1~99까지 순차기재,
+            $Taxinvoice->detailList[1]->purchaseDT = '20220405';     // 거래일자
+            $Taxinvoice->detailList[1]->itemName = '품목명1번';      // 품명
+            $Taxinvoice->detailList[1]->spec = '';                   // 규격
+            $Taxinvoice->detailList[1]->qty = '';                    // 수량
+            $Taxinvoice->detailList[1]->unitCost = '';               // 단가
+            $Taxinvoice->detailList[1]->supplyCost = '100000';       // 공급가액
+            $Taxinvoice->detailList[1]->tax = '10000';               // 세액
+            $Taxinvoice->detailList[1]->remark = '';                 // 비고
 
             /************************************************************
              *                      추가담당자 정보
@@ -566,14 +603,14 @@ class TaxinvoiceController extends Controller
             $Taxinvoice->addContactList = array();
 
             $Taxinvoice->addContactList[] = new TaxinvoiceAddContact();
-            $Taxinvoice->addContactList[0]->serialNum = 1;            // 일련번호 1부터 순차기재
-            $Taxinvoice->addContactList[0]->email = 'test@test.com';     // 이메일주소
-            $Taxinvoice->addContactList[0]->contactName = '팝빌담당자';  // 담당자명
+            $Taxinvoice->addContactList[0]->serialNum = 1;              // 일련번호 1부터 순차기재
+            $Taxinvoice->addContactList[0]->email = '';                 // 이메일주소
+            $Taxinvoice->addContactList[0]->contactName = '팝빌담당자'; // 담당자명
 
             $Taxinvoice->addContactList[] = new TaxinvoiceAddContact();
-            $Taxinvoice->addContactList[1]->serialNum = 2;            // 일련번호 1부터 순차기재
-            $Taxinvoice->addContactList[1]->email = 'test@test.com';     // 이메일주소
-            $Taxinvoice->addContactList[1]->contactName = '링크허브';    // 담당자명
+            $Taxinvoice->addContactList[1]->serialNum = 2;              // 일련번호 1부터 순차기재
+            $Taxinvoice->addContactList[1]->email = '';                 // 이메일주소
+            $Taxinvoice->addContactList[1]->contactName = '링크허브';   // 담당자명
 
             // 세금계산서 추가
             $taxinvoiceList[] = $Taxinvoice;
@@ -604,7 +641,7 @@ class TaxinvoiceController extends Controller
         $testCorpNum = '1234567890';
 
         // 초대량 발행 접수시 기재한 제출 아이디
-        $submitID = 'Laravel-Bulk00';
+        $submitID = '20220405-PHP7-BULK';
 
         try {
             $result = $this->PopbillTaxinvoice->GetBulkResult($testCorpNum, $submitID);
@@ -619,9 +656,13 @@ class TaxinvoiceController extends Controller
 
     /**
      * 작성된 세금계산서 데이터를 팝빌에 저장합니다.
-     * - "임시저장" 상태의 세금계산서는 발행(Issue)함수를 호출하여 "발행완료" 처리한 경우에만 국세청으로 전송됩니다.
-     * - 정발행시 임시저장(Register)과 발행(Issue)을 한번의 호출로 처리하는 즉시발행(RegistIssue API) 프로세스 연동을 권장합니다.
-     * - 역발행시 임시저장(Register)과 역발행요청(Request)을 한번의 호출로 처리하는 즉시요청(RegistRequest API) 프로세스 연동을 권장합니다.
+     * - "임시저장" 상태의 세금계산서는 발행(Issue) 함수를 호출하여 "발행완료" 처리한 경우에만 국세청으로 전송됩니다.
+     * - 정발행 시 임시저장(Register)과 발행(Issue)을 한번의 호출로 처리하는 즉시발행(RegistIssue API) 프로세스 연동을 권장합니다.
+     * - 역발행 시 임시저장(Register)과 역발행요청(Request)을 한번의 호출로 처리하는 즉시요청(RegistRequest API) 프로세스 연동을 권장합니다.
+     * - 세금계산서 파일첨부 기능을 구현하는 경우, 임시저장(Register API) -> 파일첨부(AttachFile API) -> 발행(Issue API) 함수를 차례로 호출합니다.
+     * - 역발행 세금계산서를 저장하는 경우, 객체 'Taxinvoice'의 변수 'chargeDirection' 값을 통해 과금 주체를 지정할 수 있습니다.
+     *   └ 정과금 : 공급자 과금 , 역과금 : 공급받는자 과금
+     * - 임시저장된 세금계산서는 팝빌 사이트 '임시문서함'에서 확인 가능합니다.
      * - https://docs.popbill.com/taxinvoice/phplaravel/api#Register
      */
     public function Register(){
@@ -631,7 +672,7 @@ class TaxinvoiceController extends Controller
 
         // 세금계산서 문서번호
         // - 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
-        $invoicerMgtKey = '20210701-024';
+        $invoicerMgtKey = '20220405-PHP7-002';
 
         /************************************************************
          *                        세금계산서 정보
@@ -640,39 +681,41 @@ class TaxinvoiceController extends Controller
         // 세금계산서 객체 생성
         $Taxinvoice = new Taxinvoice();
 
-        // [필수] 작성일자, 형식(yyyyMMdd) 예)20150101
-        $Taxinvoice->writeDate = '20210701';
+        // 작성일자, 형식(yyyyMMdd) 예)20150101
+        $Taxinvoice->writeDate = '20220405';
 
-        // [필수] 발행형태, '정발행', '역발행', '위수탁' 중 기재
+        // 발행유형, {정발행, 역발행, 위수탁} 중 기재
         $Taxinvoice->issueType = '정발행';
 
-        // [필수] 과금방향,
-        // - '정과금'(공급자 과금), '역과금'(공급받는자 과금) 중 기재, 역과금은 역발행시에만 가능.
+        // 과금방향, {정과금, 역과금} 중 기재
+        // └ 정과금 = 공급자 과금 , 역과금 = 공급받는자 과금
+        // -'역과금'은 역발행 세금계산서 발행 시에만 이용가능
         $Taxinvoice->chargeDirection = '정과금';
 
-        // [필수] '영수', '청구' 중 기재
+        // [영수, 청구, 없음] 중 기재
         $Taxinvoice->purposeType = '영수';
 
-        // [필수] 과세형태, '과세', '영세', '면세' 중 기재
+        // 과세형태, {과세, 영세, 면세} 중 기재
         $Taxinvoice->taxType = '과세';
 
         /************************************************************
          *                         공급자 정보
          ************************************************************/
 
-        // [필수] 공급자 사업자번호
+        // 공급자 사업자번호
         $Taxinvoice->invoicerCorpNum = $testCorpNum;
 
         // 공급자 종사업장 식별번호, 4자리 숫자 문자열
         $Taxinvoice->invoicerTaxRegID = '';
 
-        // [필수] 공급자 상호
+        // 공급자 상호
         $Taxinvoice->invoicerCorpName = '공급자상호';
 
-        // [필수] 공급자 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
+        // 공급자 문서번호
+        // 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
         $Taxinvoice->invoicerMgtKey = $invoicerMgtKey;
 
-        // [필수] 공급자 대표자성명
+        // 공급자 대표자성명
         $Taxinvoice->invoicerCEOName = '공급자 대표자성명';
 
         // 공급자 주소
@@ -688,39 +731,43 @@ class TaxinvoiceController extends Controller
         $Taxinvoice->invoicerContactName = '공급자 담당자성명';
 
         // 공급자 담당자 메일주소
-        $Taxinvoice->invoicerEmail = 'tester@test.com';
+        $Taxinvoice->invoicerEmail = '';
 
         // 공급자 담당자 연락처
-        $Taxinvoice->invoicerTEL = '070-4304-2991';
+        $Taxinvoice->invoicerTEL = '';
 
         // 공급자 휴대폰 번호
-        $Taxinvoice->invoicerHP = '010-0000-0000';
+        $Taxinvoice->invoicerHP = '';
 
-        // 발행시 알림문자 전송여부 (정발행에서만 사용가능)
-        // - 공급받는자 주)담당자 휴대폰번호(invoiceeHP1)로 전송
-        // - 전송시 포인트가 차감되며 전송실패하는 경우 포인트 환불처리
+        // 발행 안내 문자 전송여부 (true / false 중 택 1)
+        // └ true = 전송 , false = 미전송
+        // └ 공급받는자 (주)담당자 휴대폰번호 {invoiceeHP1} 값으로 문자 전송
+        // - 전송 시 포인트 차감되며, 전송실패시 환불처리
         $Taxinvoice->invoicerSMSSendYN = false;
 
         /************************************************************
          *                      공급받는자 정보
          ************************************************************/
 
-        // [필수] 공급받는자 구분, '사업자', '개인', '외국인' 중 기재
+        // 공급받는자 구분, [사업자, 개인, 외국인] 중 기재
         $Taxinvoice->invoiceeType = '사업자';
 
-        // [필수] 공급받는자 사업자번호
+        // 공급받는자 사업자번호
+        // - {invoiceeType}이 "사업자" 인 경우, 사업자번호 (하이픈 ('-') 제외 10자리)
+        // - {invoiceeType}이 "개인" 인 경우, 주민등록번호 (하이픈 ('-') 제외 13자리)
+        // - {invoiceeType}이 "외국인" 인 경우, "9999999999999" (하이픈 ('-') 제외 13자리)
         $Taxinvoice->invoiceeCorpNum = '8888888888';
 
         // 공급받는자 종사업장 식별번호, 4자리 숫자 문자열
         $Taxinvoice->invoiceeTaxRegID = '';
 
-        // [필수] 공급자 상호
+        // 공급받는자 상호
         $Taxinvoice->invoiceeCorpName = '공급받는자 상호';
 
         // [역발행시 필수] 공급받는자 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
         $Taxinvoice->invoiceeMgtKey = '';
 
-        // [필수] 공급받는자 대표자성명
+        // 공급받는자 대표자성명
         $Taxinvoice->invoiceeCEOName = '공급받는자 대표자성명';
 
         // 공급받는자 주소
@@ -738,33 +785,35 @@ class TaxinvoiceController extends Controller
         // 공급받는자 담당자 메일주소
         // 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
         // 실제 거래처의 메일주소가 기재되지 않도록 주의
-        $Taxinvoice->invoiceeEmail1 = 'tester@test.com';
+        $Taxinvoice->invoiceeEmail1 = '';
 
         // 공급받는자 담당자 연락처
-        $Taxinvoice->invoiceeTEL1 = '070-0000-0000';
+        $Taxinvoice->invoiceeTEL1 = '';
 
         // 공급받는자 담당자 휴대폰 번호
-        $Taxinvoice->invoiceeHP1 = '010-0000-0000';
+        $Taxinvoice->invoiceeHP1 = '';
 
-        // 역발행 요청시 알림문자 전송여부 (역발행에서만 사용가능)
-        // - 공급자 담당자 휴대폰번호(invoicerHP)로 전송
-        // - 전송시 포인트가 차감되며 전송실패하는 경우 포인트 환불처리
+        // 역발행 안내 문자 전송여부 (true / false 중 택 1)
+        // └ true = 전송 , false = 미전송
+        // └ 공급자 담당자 휴대폰번호 {invoicerHP} 값으로 문자 전송
+        // - 전송 시 포인트 차감되며, 전송실패시 환불처리
         $Taxinvoice->invoiceeSMSSendYN = false;
 
         /************************************************************
          *                       세금계산서 기재정보
          ************************************************************/
-        // [필수] 공급가액 합계
+
+        // 공급가액 합계
         $Taxinvoice->supplyCostTotal = '200000';
 
-        // [필수] 세액 합계
+        // 세액 합계
         $Taxinvoice->taxTotal = '20000';
 
-        // [필수] 합계금액, (공급가액 합계 + 세액 합계)
+        // 합계금액, (공급가액 합계 + 세액 합계)
         $Taxinvoice->totalAmount = '220000';
 
         // 기재상 '일련번호'항목
-        $Taxinvoice->serialNum = '123';
+        $Taxinvoice->serialNum = '';
 
         // 기재상 '현금'항목
         $Taxinvoice->cash = '';
@@ -778,23 +827,27 @@ class TaxinvoiceController extends Controller
         // 기재상 '외상'항목
         $Taxinvoice->credit = '';
 
-        // 기재상 '비고' 항목
+        // 비고
+        // {invoiceeType}이 "외국인" 이면 remark1 필수
+        // - 외국인 등록번호 또는 여권번호 입력
         $Taxinvoice->remark1 = '비고1';
         $Taxinvoice->remark2 = '비고2';
         $Taxinvoice->remark3 = '비고3';
 
         // 기재상 '권' 항목, 최대값 32767
-        // 미기재시 $Taxinvoice->kwon = null;
         $Taxinvoice->kwon = 1;
 
         // 기재상 '호' 항목, 최대값 32767
-        // 미기재시 $Taxinvoice->ho = null;
         $Taxinvoice->ho = 1;
 
-        // 사업자등록증 이미지파일 첨부여부
+        // 사업자등록증 이미지 첨부여부 (true / false 중 택 1)
+        // └ true = 첨부 , false = 미첨부(기본값)
+        // - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
         $Taxinvoice->businessLicenseYN = false;
 
-        // 통장사본 이미지파일 첨부여부
+        // 통장사본 이미지 첨부여부 (true / false 중 택 1)
+        // └ true = 첨부 , false = 미첨부(기본값)
+        // - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
         $Taxinvoice->bankBookYN = false;
 
         /************************************************************
@@ -803,55 +856,61 @@ class TaxinvoiceController extends Controller
          * - [참고] 수정세금계산서 작성방법 안내 - https://docs.popbill.com/taxinvoice/modify?lang=phplaravel
          ************************************************************/
 
-        // 수정사유코드, 수정사유에 따라 1~6중 선택기재
-        //$Taxinvoice->modifyCode = '';
+        // [수정세금계산서 작성시 필수] 수정사유코드, 수정사유에 따라 1~6중 선택기재
+        // $Taxinvoice->modifyCode = '';
 
         // [수정세금계산서 작성시 필수] 원본세금계산서 국세청 승인번호 기재
-        //$Taxinvoice->orgNTSConfirmNUm = '';
+        // $Taxinvoice->orgNTSConfirmNum = '';
 
         /************************************************************
          *                       상세항목(품목) 정보
          ************************************************************/
+
         $Taxinvoice->detailList = array();
-        $Taxinvoice->detailList[] = new TaxinvoiceDetail();
-        $Taxinvoice->detailList[0]->serialNum = 1;          // [상세항목 배열이 있는 경우 필수] 일련번호 1~99까지 순차기재,
-        $Taxinvoice->detailList[0]->purchaseDT = '20210701';   // 거래일자
-        $Taxinvoice->detailList[0]->itemName = '품목명1번';    // 품명
-        $Taxinvoice->detailList[0]->spec = '';          // 규격
-        $Taxinvoice->detailList[0]->qty = '';             // 수량
-        $Taxinvoice->detailList[0]->unitCost = '';      // 단가
-        $Taxinvoice->detailList[0]->supplyCost = '100000';    // 공급가액
-        $Taxinvoice->detailList[0]->tax = '10000';          // 세액
-        $Taxinvoice->detailList[0]->remark = '';      // 비고
 
         $Taxinvoice->detailList[] = new TaxinvoiceDetail();
-        $Taxinvoice->detailList[1]->serialNum = 2;          // [상세항목 배열이 있는 경우 필수] 일련번호 1~99까지 순차기재,
-        $Taxinvoice->detailList[1]->purchaseDT = '20210701';   // 거래일자
-        $Taxinvoice->detailList[1]->itemName = '품목명2번';    // 품명
-        $Taxinvoice->detailList[1]->spec = '';          // 규격
-        $Taxinvoice->detailList[1]->qty = '';             // 수량
-        $Taxinvoice->detailList[1]->unitCost = '';      // 단가
-        $Taxinvoice->detailList[1]->supplyCost = '100000';    // 공급가액
-        $Taxinvoice->detailList[1]->tax = '10000';          // 세액
-        $Taxinvoice->detailList[1]->remark = '';      // 비고
+        $Taxinvoice->detailList[0]->serialNum = 1;               // [상세항목 배열이 있는 경우 필수] 일련번호 1~99까지 순차기재,
+        $Taxinvoice->detailList[0]->purchaseDT = '20220405';     // 거래일자
+        $Taxinvoice->detailList[0]->itemName = '품목명1번';      // 품명
+        $Taxinvoice->detailList[0]->spec = '';                   // 규격
+        $Taxinvoice->detailList[0]->qty = '';                    // 수량
+        $Taxinvoice->detailList[0]->unitCost = '';               // 단가
+        $Taxinvoice->detailList[0]->supplyCost = '100000';       // 공급가액
+        $Taxinvoice->detailList[0]->tax = '10000';               // 세액
+        $Taxinvoice->detailList[0]->remark = '';                 // 비고
+
+        $Taxinvoice->detailList[] = new TaxinvoiceDetail();
+        $Taxinvoice->detailList[1]->serialNum = 2;               // [상세항목 배열이 있는 경우 필수] 일련번호 1~99까지 순차기재,
+        $Taxinvoice->detailList[1]->purchaseDT = '20220405';     // 거래일자
+        $Taxinvoice->detailList[1]->itemName = '품목명1번';      // 품명
+        $Taxinvoice->detailList[1]->spec = '';                   // 규격
+        $Taxinvoice->detailList[1]->qty = '';                    // 수량
+        $Taxinvoice->detailList[1]->unitCost = '';               // 단가
+        $Taxinvoice->detailList[1]->supplyCost = '100000';       // 공급가액
+        $Taxinvoice->detailList[1]->tax = '10000';               // 세액
+        $Taxinvoice->detailList[1]->remark = '';                 // 비고
 
         /************************************************************
          *                      추가담당자 정보
          * - 세금계산서 발행안내 메일을 수신받을 공급받는자 담당자가 다수인 경우
          * 추가 담당자 정보를 등록하여 발행안내메일을 다수에게 전송할 수 있습니다. (최대 5명)
          ************************************************************/
+
         $Taxinvoice->addContactList = array();
-        $Taxinvoice->addContactList[] = new TaxinvoiceAddContact();
-        $Taxinvoice->addContactList[0]->serialNum = 1;            // 일련번호 1부터 순차기재
-        $Taxinvoice->addContactList[0]->email = 'test@test.com';     // 이메일주소
-        $Taxinvoice->addContactList[0]->contactName = '팝빌담당자';  // 담당자명
 
         $Taxinvoice->addContactList[] = new TaxinvoiceAddContact();
-        $Taxinvoice->addContactList[1]->serialNum = 2;            // 일련번호 1부터 순차기재
-        $Taxinvoice->addContactList[1]->email = 'test@test.com';     // 이메일주소
-        $Taxinvoice->addContactList[1]->contactName = '링크허브';    // 담당자명
+        $Taxinvoice->addContactList[0]->serialNum = 1;              // 일련번호 1부터 순차기재
+        $Taxinvoice->addContactList[0]->email = '';                 // 이메일주소
+        $Taxinvoice->addContactList[0]->contactName = '팝빌담당자'; // 담당자명
 
-        // 전자거래명세서 동시작성 여부
+        $Taxinvoice->addContactList[] = new TaxinvoiceAddContact();
+        $Taxinvoice->addContactList[1]->serialNum = 2;              // 일련번호 1부터 순차기재
+        $Taxinvoice->addContactList[1]->email = '';                 // 이메일주소
+        $Taxinvoice->addContactList[1]->contactName = '링크허브';   // 담당자명
+
+        // 거래명세서 동시작성여부 (true / false 중 택 1)
+        // └ true = 사용 , false = 미사용
+        // - 미입력 시 기본값 false 처리
         $writeSpecification = false;
 
         try {
@@ -880,7 +939,7 @@ class TaxinvoiceController extends Controller
         $mgtKeyType = TIENumMgtKeyType::SELL;
 
         // 세금계산서 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
-        $mgtKey = '20210701-002';
+        $mgtKey = '20220405-PHP7-002';
 
         /************************************************************
          *                        세금계산서 정보
@@ -889,39 +948,41 @@ class TaxinvoiceController extends Controller
         // 세금계산서 객체 생성
         $Taxinvoice = new Taxinvoice();
 
-        // [필수] 작성일자, 형식(yyyyMMdd) 예)20150101
-        $Taxinvoice->writeDate = '20210701';
+        // 작성일자, 형식(yyyyMMdd) 예)20150101
+        $Taxinvoice->writeDate = '20220405';
 
-        // [필수] 발행형태, '정발행', '역발행', '위수탁' 중 기재
+        // 발행유형, {정발행, 역발행, 위수탁} 중 기재
         $Taxinvoice->issueType = '정발행';
 
-        // [필수] 과금방향,
-        // - '정과금'(공급자 과금), '역과금'(공급받는자 과금) 중 기재, 역과금은 역발행시에만 가능.
+        // 과금방향, {정과금, 역과금} 중 기재
+        // └ 정과금 = 공급자 과금 , 역과금 = 공급받는자 과금
+        // -'역과금'은 역발행 세금계산서 발행 시에만 이용가능
         $Taxinvoice->chargeDirection = '정과금';
 
-        // [필수] '영수', '청구' 중 기재
+        // [영수, 청구, 없음] 중 기재
         $Taxinvoice->purposeType = '영수';
 
-        // [필수] 과세형태, '과세', '영세', '면세' 중 기재
+        // 과세형태, {과세, 영세, 면세} 중 기재
         $Taxinvoice->taxType = '과세';
 
         /************************************************************
          *                         공급자 정보
          ************************************************************/
 
-        // [필수] 공급자 사업자번호
+        // 공급자 사업자번호
         $Taxinvoice->invoicerCorpNum = $testCorpNum;
 
         // 공급자 종사업장 식별번호, 4자리 숫자 문자열
         $Taxinvoice->invoicerTaxRegID = '';
 
-        // [필수] 공급자 상호
+        // 공급자 상호
         $Taxinvoice->invoicerCorpName = '공급자상호_수정';
 
-        // [필수] 공급자 문서번호, 최대 24자리 숫자, 영문, '-', '_' 조합으로 사업자별로 중복되지 않도록 구성
+        // 공급자 문서번호
+        // 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
         $Taxinvoice->invoicerMgtKey = $mgtKey;
 
-        // [필수] 공급자 대표자성명
+        // 공급자 대표자성명
         $Taxinvoice->invoicerCEOName = '공급자 대표자성명';
 
         // 공급자 주소
@@ -937,39 +998,43 @@ class TaxinvoiceController extends Controller
         $Taxinvoice->invoicerContactName = '공급자 담당자성명';
 
         // 공급자 담당자 메일주소
-        $Taxinvoice->invoicerEmail = 'tester@test.com';
+        $Taxinvoice->invoicerEmail = '';
 
         // 공급자 담당자 연락처
-        $Taxinvoice->invoicerTEL = '070-4304-2991';
+        $Taxinvoice->invoicerTEL = '';
 
         // 공급자 휴대폰 번호
-        $Taxinvoice->invoicerHP = '010-0000-0000';
+        $Taxinvoice->invoicerHP = '';
 
-        // 발행시 알림문자 전송여부 (정발행에서만 사용가능)
-        // - 공급받는자 주)담당자 휴대폰번호(invoiceeHP1)로 전송
-        // - 전송시 포인트가 차감되며 전송실패하는 경우 포인트 환불처리
+        // 발행 안내 문자 전송여부 (true / false 중 택 1)
+        // └ true = 전송 , false = 미전송
+        // └ 공급받는자 (주)담당자 휴대폰번호 {invoiceeHP1} 값으로 문자 전송
+        // - 전송 시 포인트 차감되며, 전송실패시 환불처리
         $Taxinvoice->invoicerSMSSendYN = false;
 
         /************************************************************
          *                      공급받는자 정보
          ************************************************************/
 
-        // [필수] 공급받는자 구분, '사업자', '개인', '외국인' 중 기재
+        // 공급받는자 구분, [사업자, 개인, 외국인] 중 기재
         $Taxinvoice->invoiceeType = '사업자';
 
-        // [필수] 공급받는자 사업자번호
+        // 공급받는자 사업자번호
+        // - {invoiceeType}이 "사업자" 인 경우, 사업자번호 (하이픈 ('-') 제외 10자리)
+        // - {invoiceeType}이 "개인" 인 경우, 주민등록번호 (하이픈 ('-') 제외 13자리)
+        // - {invoiceeType}이 "외국인" 인 경우, "9999999999999" (하이픈 ('-') 제외 13자리)
         $Taxinvoice->invoiceeCorpNum = '8888888888';
 
         // 공급받는자 종사업장 식별번호, 4자리 숫자 문자열
         $Taxinvoice->invoiceeTaxRegID = '';
 
-        // [필수] 공급자 상호
+        // 공급받는자 상호
         $Taxinvoice->invoiceeCorpName = '공급받는자 상호_수정';
 
         // [역발행시 필수] 공급받는자 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
         $Taxinvoice->invoiceeMgtKey = '';
 
-        // [필수] 공급받는자 대표자성명
+        // 공급받는자 대표자성명
         $Taxinvoice->invoiceeCEOName = '공급받는자 대표자성명';
 
         // 공급받는자 주소
@@ -987,34 +1052,35 @@ class TaxinvoiceController extends Controller
         // 공급받는자 담당자 메일주소
         // 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
         // 실제 거래처의 메일주소가 기재되지 않도록 주의
-        $Taxinvoice->invoiceeEmail1 = 'tester@test.com';
+        $Taxinvoice->invoiceeEmail1 = '';
 
         // 공급받는자 담당자 연락처
-        $Taxinvoice->invoiceeTEL1 = '070-0000-0000';
+        $Taxinvoice->invoiceeTEL1 = '';
 
         // 공급받는자 담당자 휴대폰 번호
-        $Taxinvoice->invoiceeHP1 = '010-0000-0000';
+        $Taxinvoice->invoiceeHP1 = '';
 
-        // 역발행 요청시 알림문자 전송여부 (역발행에서만 사용가능)
-        // - 공급자 담당자 휴대폰번호(invoicerHP)로 전송
-        // - 전송시 포인트가 차감되며 전송실패하는 경우 포인트 환불처리
+        // 역발행 안내 문자 전송여부 (true / false 중 택 1)
+        // └ true = 전송 , false = 미전송
+        // └ 공급자 담당자 휴대폰번호 {invoicerHP} 값으로 문자 전송
+        // - 전송 시 포인트 차감되며, 전송실패시 환불처리
         $Taxinvoice->invoiceeSMSSendYN = false;
 
         /************************************************************
          *                       세금계산서 기재정보
          ************************************************************/
 
-        // [필수] 공급가액 합계
+        // 공급가액 합계
         $Taxinvoice->supplyCostTotal = '200000';
 
-        // [필수] 세액 합계
+        // 세액 합계
         $Taxinvoice->taxTotal = '20000';
 
-        // [필수] 합계금액, (공급가액 합계 + 세액 합계)
+        // 합계금액, (공급가액 합계 + 세액 합계)
         $Taxinvoice->totalAmount = '220000';
 
         // 기재상 '일련번호'항목
-        $Taxinvoice->serialNum = '123';
+        $Taxinvoice->serialNum = '';
 
         // 기재상 '현금'항목
         $Taxinvoice->cash = '';
@@ -1028,23 +1094,27 @@ class TaxinvoiceController extends Controller
         // 기재상 '외상'항목
         $Taxinvoice->credit = '';
 
-        // 기재상 '비고' 항목
+        // 비고
+        // {invoiceeType}이 "외국인" 이면 remark1 필수
+        // - 외국인 등록번호 또는 여권번호 입력
         $Taxinvoice->remark1 = '비고1';
         $Taxinvoice->remark2 = '비고2';
         $Taxinvoice->remark3 = '비고3';
 
         // 기재상 '권' 항목, 최대값 32767
-        // 미기재시 $Taxinvoice->kwon = null;
         $Taxinvoice->kwon = 1;
 
         // 기재상 '호' 항목, 최대값 32767
-        // 미기재시 $Taxinvoice->ho = null;
         $Taxinvoice->ho = 1;
 
-        // 사업자등록증 이미지파일 첨부여부
+        // 사업자등록증 이미지 첨부여부 (true / false 중 택 1)
+        // └ true = 첨부 , false = 미첨부(기본값)
+        // - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
         $Taxinvoice->businessLicenseYN = false;
 
-        // 통장사본 이미지파일 첨부여부
+        // 통장사본 이미지 첨부여부 (true / false 중 택 1)
+        // └ true = 첨부 , false = 미첨부(기본값)
+        // - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
         $Taxinvoice->bankBookYN = false;
 
         /************************************************************
@@ -1053,54 +1123,57 @@ class TaxinvoiceController extends Controller
          * - [참고] 수정세금계산서 작성방법 안내 - https://docs.popbill.com/taxinvoice/modify?lang=phplaravel
          ************************************************************/
 
-        // 수정사유코드, 수정사유에 따라 1~6중 선택기재
-        //$Taxinvoice->modifyCode = '';
+        // [수정세금계산서 작성시 필수] 수정사유코드, 수정사유에 따라 1~6중 선택기재
+        // $Taxinvoice->modifyCode = '';
 
         // [수정세금계산서 작성시 필수] 원본세금계산서 국세청 승인번호 기재
-        //$Taxinvoice->orgNTSConfirmNUm = '';
+        // $Taxinvoice->orgNTSConfirmNum = '';
 
         /************************************************************
          *                       상세항목(품목) 정보
          ************************************************************/
 
         $Taxinvoice->detailList = array();
-        $Taxinvoice->detailList[] = new TaxinvoiceDetail();
-        $Taxinvoice->detailList[0]->serialNum = 1;          // [상세항목 배열이 있는 경우 필수] 일련번호 1~99까지 순차기재,
-        $Taxinvoice->detailList[0]->purchaseDT = '20210701';   // 거래일자
-        $Taxinvoice->detailList[0]->itemName = '품목명1번';    // 품명
-        $Taxinvoice->detailList[0]->spec = '';          // 규격
-        $Taxinvoice->detailList[0]->qty = '';             // 수량
-        $Taxinvoice->detailList[0]->unitCost = '';      // 단가
-        $Taxinvoice->detailList[0]->supplyCost = '100000';    // 공급가액
-        $Taxinvoice->detailList[0]->tax = '10000';          // 세액
-        $Taxinvoice->detailList[0]->remark = '';      // 비고
 
         $Taxinvoice->detailList[] = new TaxinvoiceDetail();
-        $Taxinvoice->detailList[1]->serialNum = 2;          // [상세항목 배열이 있는 경우 필수] 일련번호 1~99까지 순차기재,
-        $Taxinvoice->detailList[1]->purchaseDT = '20210701';   // 거래일자
-        $Taxinvoice->detailList[1]->itemName = '품목명2번';    // 품명
-        $Taxinvoice->detailList[1]->spec = '';          // 규격
-        $Taxinvoice->detailList[1]->qty = '';             // 수량
-        $Taxinvoice->detailList[1]->unitCost = '';      // 단가
-        $Taxinvoice->detailList[1]->supplyCost = '100000';    // 공급가액
-        $Taxinvoice->detailList[1]->tax = '10000';          // 세액
-        $Taxinvoice->detailList[1]->remark = '';      // 비고
+        $Taxinvoice->detailList[0]->serialNum = 1;               // [상세항목 배열이 있는 경우 필수] 일련번호 1~99까지 순차기재,
+        $Taxinvoice->detailList[0]->purchaseDT = '20220405';     // 거래일자
+        $Taxinvoice->detailList[0]->itemName = '품목명1번';      // 품명
+        $Taxinvoice->detailList[0]->spec = '';                   // 규격
+        $Taxinvoice->detailList[0]->qty = '';                    // 수량
+        $Taxinvoice->detailList[0]->unitCost = '';               // 단가
+        $Taxinvoice->detailList[0]->supplyCost = '100000';       // 공급가액
+        $Taxinvoice->detailList[0]->tax = '10000';               // 세액
+        $Taxinvoice->detailList[0]->remark = '';                 // 비고
+
+        $Taxinvoice->detailList[] = new TaxinvoiceDetail();
+        $Taxinvoice->detailList[1]->serialNum = 2;               // [상세항목 배열이 있는 경우 필수] 일련번호 1~99까지 순차기재,
+        $Taxinvoice->detailList[1]->purchaseDT = '20220405';     // 거래일자
+        $Taxinvoice->detailList[1]->itemName = '품목명1번';      // 품명
+        $Taxinvoice->detailList[1]->spec = '';                   // 규격
+        $Taxinvoice->detailList[1]->qty = '';                    // 수량
+        $Taxinvoice->detailList[1]->unitCost = '';               // 단가
+        $Taxinvoice->detailList[1]->supplyCost = '100000';       // 공급가액
+        $Taxinvoice->detailList[1]->tax = '10000';               // 세액
+        $Taxinvoice->detailList[1]->remark = '';                 // 비고
 
         /************************************************************
          *                      추가담당자 정보
          * - 세금계산서 발행안내 메일을 수신받을 공급받는자 담당자가 다수인 경우
          * 추가 담당자 정보를 등록하여 발행안내메일을 다수에게 전송할 수 있습니다. (최대 5명)
-         ************************************************************/
+        ************************************************************/
+
         $Taxinvoice->addContactList = array();
-        $Taxinvoice->addContactList[] = new TaxinvoiceAddContact();
-        $Taxinvoice->addContactList[0]->serialNum = 1;            // 일련번호 1부터 순차기재
-        $Taxinvoice->addContactList[0]->email = 'test@test.com';     // 이메일주소
-        $Taxinvoice->addContactList[0]->contactName = '팝빌담당자';  // 담당자명
 
         $Taxinvoice->addContactList[] = new TaxinvoiceAddContact();
-        $Taxinvoice->addContactList[1]->serialNum = 2;            // 일련번호 1부터 순차기재
-        $Taxinvoice->addContactList[1]->email = 'test@test.com';     // 이메일주소
-        $Taxinvoice->addContactList[1]->contactName = '링크허브';    // 담당자명
+        $Taxinvoice->addContactList[0]->serialNum = 1;              // 일련번호 1부터 순차기재
+        $Taxinvoice->addContactList[0]->email = '';                 // 이메일주소
+        $Taxinvoice->addContactList[0]->contactName = '팝빌담당자'; // 담당자명
+
+        $Taxinvoice->addContactList[] = new TaxinvoiceAddContact();
+        $Taxinvoice->addContactList[1]->serialNum = 2;              // 일련번호 1부터 순차기재
+        $Taxinvoice->addContactList[1]->email = '';                 // 이메일주소
+        $Taxinvoice->addContactList[1]->contactName = '링크허브';   // 담당자명
 
         try {
             $result = $this->PopbillTaxinvoice->Update($testCorpNum, $mgtKeyType, $mgtKey, $Taxinvoice);
@@ -1116,10 +1189,14 @@ class TaxinvoiceController extends Controller
     }
 
     /**
-    * "임시저장" 또는 "(역)발행대기" 상태의 세금계산서를 발행(전자서명)하며, "발행완료" 상태로 처리합니다.
-    * - 세금계산서 국세청 전송정책 : https://docs.popbill.com/taxinvoice/ntsSendPolicy?lang=php
-    * - https://docs.popbill.com/taxinvoice/phplaravel/api#TIIssue
-    */
+     * "임시저장" 또는 "(역)발행대기" 상태의 세금계산서를 발행(전자서명)하며, "발행완료" 상태로 처리합니다.
+     * - 세금계산서 국세청 전송정책 [https://docs.popbill.com/taxinvoice/ntsSendPolicy?lang=laravel]
+     * - "발행완료" 된 전자세금계산서는 국세청 전송 이전에 발행취소(CancelIssue API) 함수로 국세청 신고 대상에서 제외할 수 있습니다.
+     * - 세금계산서 발행을 위해서 공급자의 인증서가 팝빌 인증서버에 사전등록 되어야 합니다.
+     *   └ 위수탁발행의 경우, 수탁자의 인증서 등록이 필요합니다.
+     * - 세금계산서 발행 시 공급받는자에게 발행 메일이 발송됩니다.
+     * - https://docs.popbill.com/taxinvoice/phplaravel/api#TIIssue
+     */
     public function Issue(){
 
         // 팝빌 회원 사업자번호, '-' 제외 10자리
@@ -1129,14 +1206,17 @@ class TaxinvoiceController extends Controller
         $mgtKeyType = TIENumMgtKeyType::SELL;
 
         // 문서번호
-        $mgtKey = '20210701-024';
+        $mgtKey = '20220405-PHP7-002';
 
         // 메모
         $memo = '발행 메모입니다';
 
-        // 지연발행 강제여부
-        // 지연발행 세금계산서를 발행하는 경우, 가산세가 부과될 수 있습니다.
-        // 지연발행 세금계산서를 신고해야 하는 경우 $forceIssue 값을 true 선언하여 발행(Issue API)을 호출할 수 있습니다.
+        // 지연발행 강제여부  (true / false 중 택 1)
+        // └ true = 가능 , false = 불가능
+        // - 미입력 시 기본값 false 처리
+        // - 발행마감일이 지난 세금계산서를 발행하는 경우, 가산세가 부과될 수 있습니다.
+        // - 가산세가 부과되더라도 발행을 해야하는 경우에는 forceIssue의 값을
+        //   true로 선언하여 발행(Issue API)를 호출하시면 됩니다.
         $forceIssue = false;
 
         // 발행 안내메일 제목, 미기재시 기본제목으로 전송
@@ -1171,7 +1251,7 @@ class TaxinvoiceController extends Controller
         $mgtKeyType = TIENumMgtKeyType::SELL;
 
         // 문서번호
-        $mgtKey = '20210701-002';
+        $mgtKey = '20220405-PHP7-002';
 
         // 메모
         $memo = '발행 취소메모입니다';
@@ -1190,39 +1270,11 @@ class TaxinvoiceController extends Controller
     }
 
     /**
-     * 삭제 가능한 상태의 세금계산서를 삭제합니다.
-     * - 삭제 가능한 상태: "임시저장", "발행취소", "역발행거부", "역발행취소", "전송실패"
-     * - 세금계산서를 삭제해야만 문서번호(mgtKey)를 재사용할 수 있습니다.
-     * - https://docs.popbill.com/taxinvoice/phplaravel/api#Delete
-     */
-    public function Delete(){
-
-        // 팝빌회원 사업자번호, '-' 제외 10자리
-        $testCorpNum = '1234567890';
-
-        // 문서번호
-        $mgtKey = '20210702-002';
-
-        // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
-        $mgtKeyType = TIENumMgtKeyType::SELL;
-
-        try {
-            $result = $this->PopbillTaxinvoice->Delete($testCorpNum, $mgtKeyType, $mgtKey);
-            $code = $result->code;
-            $message = $result->message;
-        }
-        catch(PopbillException $pe) {
-            $code = $pe->getCode();
-            $message = $pe->getMessage();
-        }
-
-        return view('PResponse', ['code' => $code, 'message' => $message]);
-    }
-
-    /**
      * 공급받는자가 작성한 세금계산서 데이터를 팝빌에 저장하고 공급자에게 송부하여 발행을 요청합니다.
-     * - 역발행 세금계산서 프로세스를 구현하기위해서는 공급자/공급받는자가 모두 팝빌에 회원이여야 합니다.
-     * - 역발행 즉시요청후 공급자가 [발행] 처리시 포인트가 차감되며 역발행 세금계산서 항목중 과금방향(ChargeDirection)에 기재한 값에 따라 정과금(공급자과금) 또는 역과금(공급받는자과금) 처리됩니다.
+     * - 역발행 세금계산서 프로세스를 구현하기 위해서는 공급자/공급받는자가 모두 팝빌에 회원이여야 합니다.
+     * - 발행 요청된 세금계산서는 "(역)발행대기" 상태이며, 공급자가 팝빌 사이트 또는 함수를 호출하여 발행한 경우에만 국세청으로 전송됩니다.
+     * - 공급자는 팝빌 사이트의 "매출 발행 대기함"에서 발행대기 상태의 역발행 세금계산서를 확인할 수 있습니다.
+     * - 임시저장(Register API) 함수와 역발행 요청(Request API) 함수를 한 번의 프로세스로 처리합니다.
      * - https://docs.popbill.com/taxinvoice/phplaravel/api#RegistRequest
      */
     public function RegistRequest(){
@@ -1235,7 +1287,7 @@ class TaxinvoiceController extends Controller
 
         // 공급받는자 문서번호
         // - 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
-        $invoiceeMgtKey = '20210701-005';
+        $invoiceeMgtKey = '20220405-PHP7-003';
 
         /************************************************************
          *                        세금계산서 정보
@@ -1244,40 +1296,41 @@ class TaxinvoiceController extends Controller
         // 세금계산서 객체 생성
         $Taxinvoice = new Taxinvoice();
 
-        // [필수] 작성일자, 형식(yyyyMMdd) 예)20150101
-        $Taxinvoice->writeDate = '20210701';
+        // 작성일자, 형식(yyyyMMdd) 예)20150101
+        $Taxinvoice->writeDate = '20220405';
 
-        // [필수] 발행형태, '정발행', '역발행', '위수탁' 중 기재
+        // 발행유형, {정발행, 역발행, 위수탁} 중 기재
         $Taxinvoice->issueType = '역발행';
 
-        // [필수] 과금방향,
-        // - '정과금'(공급자 과금), '역과금'(공급받는자 과금) 중 기재, 역과금은 역발행시에만 가능.
+        // 과금방향, {정과금, 역과금} 중 기재
+        // └ 정과금 = 공급자 과금 , 역과금 = 공급받는자 과금
+        // -'역과금'은 역발행 세금계산서 발행 시에만 이용가능
         $Taxinvoice->chargeDirection = '정과금';
 
-        // [필수] '영수', '청구' 중 기재
+        // {영수, 청구, 없음} 중 기재
         $Taxinvoice->purposeType = '영수';
 
-        // [필수] 과세형태, '과세', '영세', '면세' 중 기재
+        // 과세형태, {과세, 영세, 면세} 중 기재
         $Taxinvoice->taxType = '과세';
 
         /************************************************************
          *                         공급자 정보
          ************************************************************/
 
-        // [필수] 공급자 사업자번호
+        // 공급자 사업자번호
         $Taxinvoice->invoicerCorpNum = '8888888888';
 
         // 공급자 종사업장 식별번호, 4자리 숫자 문자열
         $Taxinvoice->invoicerTaxRegID = '';
 
-        // [필수] 공급자 상호
+        // 공급자 상호
         $Taxinvoice->invoicerCorpName = '공급자상호';
 
-        // 공급자 문서번호,
+        // 공급자 문서번호
         // 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
         $Taxinvoice->invoicerMgtKey = '';
 
-        // [필수] 공급자 대표자성명
+        // 공급자 대표자성명
         $Taxinvoice->invoicerCEOName = '공급자 대표자성명';
 
         // 공급자 주소
@@ -1293,35 +1346,38 @@ class TaxinvoiceController extends Controller
         $Taxinvoice->invoicerContactName = '공급자 담당자성명';
 
         // 공급자 담당자 메일주소
-        $Taxinvoice->invoicerEmail = 'tester@test.com';
+        $Taxinvoice->invoicerEmail = '';
 
         // 공급자 담당자 연락처
-        $Taxinvoice->invoicerTEL = '070-4304-2991';
+        $Taxinvoice->invoicerTEL = '';
 
         // 공급자 휴대폰 번호
-        $Taxinvoice->invoicerHP = '010-111-222';
+        $Taxinvoice->invoicerHP = '';
 
         /************************************************************
          *                      공급받는자 정보
          ************************************************************/
 
-        // [필수] 공급받는자 구분, '사업자', '개인', '외국인' 중 기재
+        // 공급받는자 구분, [사업자, 개인, 외국인] 중 기재
         $Taxinvoice->invoiceeType = '사업자';
 
-        // [필수] 공급받는자 사업자번호
+        // 공급받는자 사업자번호
+        // - {invoiceeType}이 "사업자" 인 경우, 사업자번호 (하이픈 ('-') 제외 10자리)
+        // - {invoiceeType}이 "개인" 인 경우, 주민등록번호 (하이픈 ('-') 제외 13자리)
+        // - {invoiceeType}이 "외국인" 인 경우, "9999999999999" (하이픈 ('-') 제외 13자리)
         $Taxinvoice->invoiceeCorpNum = $testCorpNum;
 
         // 공급받는자 종사업장 식별번호, 4자리 숫자 문자열
         $Taxinvoice->invoiceeTaxRegID = '';
 
-        // [필수] 공급자 상호
+        // 공급받는자 상호
         $Taxinvoice->invoiceeCorpName = '공급받는자 상호';
 
         // [역발행시 필수] 공급받는자 문서번호,
         // 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
         $Taxinvoice->invoiceeMgtKey = $invoiceeMgtKey;
 
-        // [필수] 공급받는자 대표자성명
+        // 공급받는자 대표자성명
         $Taxinvoice->invoiceeCEOName = '공급받는자 대표자성명';
 
         // 공급받는자 주소
@@ -1339,29 +1395,31 @@ class TaxinvoiceController extends Controller
         // 공급받는자 담당자 메일주소
         // 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
         // 실제 거래처의 메일주소가 기재되지 않도록 주의
-        $Taxinvoice->invoiceeEmail1 = 'test@test.com';
+        $Taxinvoice->invoiceeEmail1 = '';
 
         // 공급받는자 담당자 연락처
-        $Taxinvoice->invoiceeTEL1 = '070-111-222';
+        $Taxinvoice->invoiceeTEL1 = '';
 
         // 공급받는자 담당자 휴대폰 번호
-        $Taxinvoice->invoiceeHP1 = '010-111-222';
+        $Taxinvoice->invoiceeHP1 = '';
 
-        // 역발행 요청시 알림문자 전송여부 (역발행에서만 사용가능)
-        // - 공급자 담당자 휴대폰번호(invoicerHP)로 전송
-        // - 전송시 포인트가 차감되며 전송실패하는 경우 포인트 환불처리
+        // 역발행 안내 문자 전송여부 (true / false 중 택 1)
+        // └ true = 전송 , false = 미전송
+        // └ 공급자 담당자 휴대폰번호 {invoicerHP} 값으로 문자 전송
+        // - 전송 시 포인트 차감되며, 전송실패시 환불처리
         $Taxinvoice->invoiceeSMSSendYN = false;
 
         /************************************************************
          *                       세금계산서 기재정보
          ************************************************************/
-        // [필수] 공급가액 합계
+
+        // 공급가액 합계
         $Taxinvoice->supplyCostTotal = '200000';
 
-        // [필수] 세액 합계
+        // 세액 합계
         $Taxinvoice->taxTotal = '20000';
 
-        // [필수] 합계금액, (공급가액 합계 + 세액 합계)
+        // 합계금액, (공급가액 합계 + 세액 합계)
         $Taxinvoice->totalAmount = '220000';
 
         // 기재상 '일련번호'항목
@@ -1379,23 +1437,27 @@ class TaxinvoiceController extends Controller
         // 기재상 '외상'항목
         $Taxinvoice->credit = '';
 
-        // 기재상 '비고' 항목
+        // 비고
+        // {invoiceeType}이 "외국인" 이면 remark1 필수
+        // - 외국인 등록번호 또는 여권번호 입력
         $Taxinvoice->remark1 = '비고1';
         $Taxinvoice->remark2 = '비고2';
         $Taxinvoice->remark3 = '비고3';
 
         // 기재상 '권' 항목, 최대값 32767
-        // 미기재시 $Taxinvoice->kwon = null;
         $Taxinvoice->kwon = 1;
 
         // 기재상 '호' 항목, 최대값 32767
-        // 미기재시 $Taxinvoice->ho = null;
         $Taxinvoice->ho = 1;
 
-        // 사업자등록증 이미지파일 첨부여부
+        // 사업자등록증 이미지 첨부여부 (true / false 중 택 1)
+        // └ true = 첨부 , false = 미첨부(기본값)
+        // - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
         $Taxinvoice->businessLicenseYN = false;
 
-        // 통장사본 이미지파일 첨부여부
+        // 통장사본 이미지 첨부여부 (true / false 중 택 1)
+        // └ true = 첨부 , false = 미첨부(기본값)
+        // - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
         $Taxinvoice->bankBookYN = false;
 
         /************************************************************
@@ -1403,20 +1465,23 @@ class TaxinvoiceController extends Controller
          * - 수정세금계산서 관련 정보는 연동매뉴얼 또는 개발가이드 링크 참조
          * - [참고] 수정세금계산서 작성방법 안내 - https://docs.popbill.com/taxinvoice/modify?lang=phplaravel
          ************************************************************/
-        // 수정사유코드, 수정사유에 따라 1~6중 선택기재
-        //$Taxinvoice->modifyCode = '';
+
+        // [수정세금계산서 작성시 필수] 수정사유코드, 수정사유에 따라 1~6중 선택기재
+        // $Taxinvoice->modifyCode = '';
 
         // [수정세금계산서 작성시 필수] 원본세금계산서 국세청 승인번호 기재
-        //$Taxinvoice->orgNTSConfirmNUm = '';
+        // $Taxinvoice->orgNTSConfirmNum = '';
 
         /************************************************************
          *                       상세항목(품목) 정보
          ************************************************************/
+
         $Taxinvoice->detailList = array();
+
         $Taxinvoice->detailList[] = new TaxinvoiceDetail();
         $Taxinvoice->detailList[0]->serialNum = 1;               // [상세항목 배열이 있는 경우 필수] 일련번호 1~99까지 순차기재,
-        $Taxinvoice->detailList[0]->purchaseDT = '20210701';     // 거래일자
-        $Taxinvoice->detailList[0]->itemName = '품목명1번';        // 품명
+        $Taxinvoice->detailList[0]->purchaseDT = '20220405';     // 거래일자
+        $Taxinvoice->detailList[0]->itemName = '품목명1번';      // 품명
         $Taxinvoice->detailList[0]->spec = '';                   // 규격
         $Taxinvoice->detailList[0]->qty = '';                    // 수량
         $Taxinvoice->detailList[0]->unitCost = '';               // 단가
@@ -1426,8 +1491,8 @@ class TaxinvoiceController extends Controller
 
         $Taxinvoice->detailList[] = new TaxinvoiceDetail();
         $Taxinvoice->detailList[1]->serialNum = 2;               // [상세항목 배열이 있는 경우 필수] 일련번호 1~99까지 순차기재,
-        $Taxinvoice->detailList[1]->purchaseDT = '20210701';     // 거래일자
-        $Taxinvoice->detailList[1]->itemName = '품목명1번';        // 품명
+        $Taxinvoice->detailList[1]->purchaseDT = '20220405';     // 거래일자
+        $Taxinvoice->detailList[1]->itemName = '품목명1번';      // 품명
         $Taxinvoice->detailList[1]->spec = '';                   // 규격
         $Taxinvoice->detailList[1]->qty = '';                    // 수량
         $Taxinvoice->detailList[1]->unitCost = '';               // 단가
@@ -1452,7 +1517,10 @@ class TaxinvoiceController extends Controller
     /**
      * 공급받는자가 저장된 역발행 세금계산서를 공급자에게 송부하여 발행 요청합니다.
      * - 역발행 세금계산서 프로세스를 구현하기 위해서는 공급자/공급받는자가 모두 팝빌에 회원이여야 합니다.
-     * - 역발행 요청후 공급자가 [발행] 처리시 포인트가 차감되며 역발행 세금계산서 항목중 과금방향(ChargeDirection)에 기재한 값에 따라 정과금(공급자과금) 또는 역과금(공급받는자과금) 처리됩니다.
+     * - 역발행 요청된 세금계산서는 "(역)발행대기" 상태이며, 공급자가 팝빌 사이트 또는 함수를 호출하여 발행한 경우에만 국세청으로 전송됩니다.
+     * - 공급자는 팝빌 사이트의 "매출 발행 대기함"에서 발행대기 상태의 역발행 세금계산서를 확인할 수 있습니다.
+     * - 역발행 요청시 공급자에게 역발행 요청 메일이 발송됩니다.
+     * - 공급자가 역발행 세금계산서 발행시 포인트가 과금됩니다.
      * - https://docs.popbill.com/taxinvoice/phplaravel/api#Request
      */
     public function Request(){
@@ -1464,7 +1532,7 @@ class TaxinvoiceController extends Controller
         $mgtKeyType = TIENumMgtKeyType::BUY;
 
         // 문서번호
-        $mgtKey = '20210701-002';
+        $mgtKey = '20220405-PHP7-004';
 
         // 메모
         $memo = '역발행 요청 메모입니다';
@@ -1484,7 +1552,8 @@ class TaxinvoiceController extends Controller
 
     /**
      * 공급자가 요청받은 역발행 세금계산서를 발행하기 전, 공급받는자가 역발행요청을 취소합니다.
-     * - [취소]한 세금계산서의 문서번호를 재사용하기 위해서는 삭제 (Delete API)를 호출해야 합니다.
+     * - 함수 호출시 상태 값이 "취소"로 변경되고, 해당 역발행 세금계산서는 공급자에 의해 발행 될 수 없습니다.
+     * - [취소]한 세금계산서의 문서번호를 재사용하기 위해서는 삭제 (Delete API) 함수를 호출해야 합니다.
      * - https://docs.popbill.com/taxinvoice/phplaravel/api#CancelRequest
      */
     public function CancelRequest(){
@@ -1496,7 +1565,7 @@ class TaxinvoiceController extends Controller
         $mgtKeyType = TIENumMgtKeyType::BUY;
 
         // 문서번호
-        $mgtKey = '20210701-001';
+        $mgtKey = '20220405-PHP7-004';
 
         // 메모
         $memo = '역발행 요청 취소메모입니다';
@@ -1516,7 +1585,6 @@ class TaxinvoiceController extends Controller
 
     /**
      * 공급자가 공급받는자에게 역발행 요청 받은 세금계산서의 발행을 거부합니다.
-     * - 세금계산서의 문서번호를 재사용하기 위해서는 삭제 (Delete API)를 호출하여 [삭제] 처리해야 합니다.
      * - https://docs.popbill.com/taxinvoice/phplaravel/api#Refuse
      */
     public function Refuse(){
@@ -1528,7 +1596,7 @@ class TaxinvoiceController extends Controller
         $mgtKeyType = TIENumMgtKeyType::SELL;
 
         // 문서번호
-        $mgtKey = '20210701-002';
+        $mgtKey = '20220405-PHP7-005';
 
         // 메모
         $memo = '역)발행 요청 거부메모입니다';
@@ -1546,9 +1614,38 @@ class TaxinvoiceController extends Controller
     }
 
     /**
-     * 공급자가 "발행완료" 상태의 전자세금계산서를 국세청에 즉시 전송하며, 함수 호출 후 최대 30분 이내에 전송 처리가 완료됩니다.
-     * - 국세청 즉시전송을 호출하지 않은 세금계산서는 발행일 기준 익일 오후 3시에 팝빌 시스템에서 일괄적으로 국세청으로 전송합니다.
-     * - 익일전송시 전송일이 법정공휴일인 경우 다음 영업일에 전송됩니다.
+     * 삭제 가능한 상태의 세금계산서를 삭제합니다.
+     * - 삭제 가능한 상태: "임시저장", "발행취소", "역발행거부", "역발행취소", "전송실패"
+     * - 세금계산서를 삭제해야만 문서번호(mgtKey)를 재사용할 수 있습니다.
+     * - https://docs.popbill.com/taxinvoice/phplaravel/api#Delete
+     */
+    public function Delete(){
+
+        // 팝빌회원 사업자번호, '-' 제외 10자리
+        $testCorpNum = '1234567890';
+
+        // 문서번호
+        $mgtKey = '20220405-PHP7-001';
+
+        // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
+        $mgtKeyType = TIENumMgtKeyType::SELL;
+
+        try {
+            $result = $this->PopbillTaxinvoice->Delete($testCorpNum, $mgtKeyType, $mgtKey);
+            $code = $result->code;
+            $message = $result->message;
+        }
+        catch(PopbillException $pe) {
+            $code = $pe->getCode();
+            $message = $pe->getMessage();
+        }
+
+        return view('PResponse', ['code' => $code, 'message' => $message]);
+    }
+
+    /**
+     * "발행완료" 상태의 전자세금계산서를 국세청에 즉시 전송하며, 함수 호출 후 최대 30분 이내에 전송 처리가 완료됩니다.
+     * - 국세청 즉시전송을 호출하지 않은 세금계산서는 발행일 기준 다음 영업일 오후 3시에 팝빌 시스템에서 일괄적으로 국세청으로 전송합니다.
      * - https://docs.popbill.com/taxinvoice/phplaravel/api#SendToNTS
      */
     public function SendToNTS(){
@@ -1560,7 +1657,7 @@ class TaxinvoiceController extends Controller
         $mgtKeyType = TIENumMgtKeyType::SELL;
 
         // 문서번호
-        $mgtKey = '20210701-005';
+        $mgtKey = '20220405-PHP7-002';
 
         try {
             $result = $this->PopbillTaxinvoice->SendToNTS($testCorpNum, $mgtKeyType, $mgtKey);
@@ -1577,18 +1674,20 @@ class TaxinvoiceController extends Controller
 
     /**
      * 세금계산서 1건의 상태 및 요약정보를 확인합니다.
+     * 리턴값 'TaxinvoiceInfo'의 변수 'stateCode'를 통해 세금계산서의 상태코드를 확인합니다.
+     * 세금계산서 상태코드 [https://docs.popbill.com/taxinvoice/stateCode?lang=phplaravel]
      * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetInfo
      */
     public function GetInfo(){
 
-        // 팝빌회원 사업자번호, '-'제외 10자리
+        // 팝빌회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
 
         // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
         $mgtKeyType = TIENumMgtKeyType::SELL;
 
         // 조회할 세금계산서 문서번호
-        $mgtKey = '20210701-001';
+        $mgtKey = '20220405-PHP7-002';
 
         try {
             $result = $this->PopbillTaxinvoice->GetInfo($testCorpNum, $mgtKeyType, $mgtKey);
@@ -1604,11 +1703,13 @@ class TaxinvoiceController extends Controller
 
     /**
      * 다수건의 세금계산서 상태 및 요약 정보를 확인합니다. (1회 호출 시 최대 1,000건 확인 가능)
+     * 리턴값 'TaxinvoiceInfo'의 변수 'stateCode'를 통해 세금계산서의 상태코드를 확인합니다.
+     * 세금계산서 상태코드 [https://docs.popbill.com/taxinvoice/stateCode?lang=phplaravel]
      * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetInfos
      */
     public function GetInfos(){
 
-        // 팝빌회원 사업자번호, '-'제외 10자리
+        // 팝빌회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
 
         // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
@@ -1616,9 +1717,8 @@ class TaxinvoiceController extends Controller
 
         // 세금계산서 문서번호 배열, 최대 1000건
         $MgtKeyList = array();
-        array_push($MgtKeyList, "20210101-001");
-        array_push($MgtKeyList, '20210101-002');
-        array_push($MgtKeyList, '20210101-003');
+        array_push($MgtKeyList, "20220405-PHP7-001");
+        array_push($MgtKeyList, '20220405-PHP7-002');
 
         try {
             $result = $this->PopbillTaxinvoice->GetInfos($testCorpNum, $mgtKeyType, $MgtKeyList);
@@ -1644,7 +1744,7 @@ class TaxinvoiceController extends Controller
         $mgtKeyType = TIENumMgtKeyType::SELL;
 
         // 세금계산서 문서번호
-        $mgtKey = '20210101-001';
+        $mgtKey = '20220405-PHP7-002';
 
         try {
             $result = $this->PopbillTaxinvoice->GetDetailInfo($testCorpNum, $mgtKeyType, $mgtKey);
@@ -1663,7 +1763,7 @@ class TaxinvoiceController extends Controller
      */
     public function Search(){
 
-        // 팝빌회원 사업자번호, '-'제외 10자리
+        // 팝빌회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
 
         // 팝빌회원 아이디
@@ -1672,42 +1772,52 @@ class TaxinvoiceController extends Controller
         // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
         $mgtKeyType = TIENumMgtKeyType::SELL;
 
-        // [필수] 일자유형, R-등록일시, W-작성일자, I-발행일시 중 1개 기입
+        // 일자유형 ("R" , "W" , "I" 중 택 1)
+        // - R = 등록일자 , W = 작성일자 , I = 발행일자
         $DType = 'W';
 
-        // [필수] 시작일자
-        $SDate = '20210701';
+        // 시작일자
+        $SDate = '20220401';
 
-        // [필수] 종료일자
-        $EDate = '20210731';
+        // 종료일자
+        $EDate = '20220430';
 
-        // 전송상태값 배열, 문서상태 값 3자리 배열, 2,3번째 자리 와일드카드 사용가능, 미기재시 전체조회
+        // 세금계산서 상태코드 배열 (2,3번째 자리에 와일드카드(*) 사용 가능)
+        // - 미입력시 전체조회
         $State = array (
             '3**',
             '6**'
         );
 
-        // 문서유형 배열, N-일반, M-수정, 선택 배열
+        // 문서유형 배열 ("N" , "M" 중 선택, 다중 선택 가능)
+        // - N = 일반세금계산서 , M = 수정세금계산서
+        // - 미입력시 전체조회
         $Type = array (
             'N',
             'M'
         );
 
-        // 과세형태 배열 , T-과세, N-면세, Z-영세 선택 배열
+        // 과세형태 배열 ("T" , "N" , "Z" 중 선택, 다중 선택 가능)
+        // - T = 과세 , N = 면세 , Z = 영세
+        // - 미입력시 전체조회
         $TaxType = array (
             'T',
             'N',
             'Z'
         );
 
-        // 발행형태 배열 , N-정발행, R-역발행, T-위수탁 선택 배열
+        // 발행형태 배열 ("N" , "R" , "T" 중 선택, 다중 선택 가능)
+        // - N = 정발행 , R = 역발행 , T = 위수탁발행
+        // - 미입력시 전체조회
         $IssueType = array (
             'N',
             'R',
             'T'
         );
 
-        // 공급받는자 휴폐업상태 배열, N-미확인, 0-미등록, 1-사업중, 2-폐업, 3-휴업
+        // 공급받는자 휴폐업상태 배열 ("N" , "0" , "1" , "2" , "3" , "4" 중 선택, 다중 선택 가능)
+        // - N = 미확인 , 0 = 미등록 , 1 = 사업 , 2 = 폐업 , 3 = 휴업 , 4 = 확인실패
+        // - 미입력시 전체조회
         $CloseDownState = array (
             'N',
             '0',
@@ -1716,22 +1826,30 @@ class TaxinvoiceController extends Controller
             '3'
         );
 
-        // 등록유형 배열, P-팝빌, H-홈택스 또는 외부ASP
+        // 등록유형 배열 ("P" , "H" 중 선택, 다중 선택 가능)
+        // - P = 팝빌에서 등록 , H = 홈택스 또는 외부ASP 등록
+        // - 미입력시 전체조회
         $RegType = array (
             'P',
             'H'
         );
 
-        // 지연발행여부, 0-정상발행분만 조회, 1-지연발행분만 조회, 미기재시 전체조회
+        // 지연발행 여부 (null , true , false 중 택 1)
+        // - null = 전체조회 , true = 지연발행 , false = 정상발행
         $LateOnly = 0;
 
-        // 종사업장 유무, 공백-전체조회, 0-종사업장번호 없는경우 조회, 1-종사업장번호 있는건만 조회
+        // 종사업장번호 유무 (null , "0" , "1" 중 택 1)
+        // - null = 전체 , 0 = 없음, 1 = 있음
         $TaxRegIDYN = "";
 
-        // 종사업장번호 사업자유형, S-공급자, B-공급받는자, T-수탁자
+        // 종사업장번호의 주체 ("S" , "B" , "T" 중 택 1)
+        // └ S = 공급자 , B = 공급받는자 , T = 수탁자
+        // - 미입력시 전체조회
         $TaxRegIDType = "S";
 
-        // 종사업장번호, 콤마(",")로 구분하여 구성, ex) 1234,0001
+        // 종사업장번호
+        // 다수기재시 콤마(",")로 구분하여 구성 ex ) "0001,0002"
+        // - 미입력시 전체조회
         $TaxRegID = "";
 
         // 페이지 번호 기본값 1
@@ -1743,13 +1861,18 @@ class TaxinvoiceController extends Controller
         // 정렬방향, D-내림차순, A-오름차순
         $Order = 'D';
 
-        // 거래처 조회, 거래처 상호 또는 거래처 사업자등록번호 기재하여 조회, 미기재시 전체조회
+        // 거래처 상호 / 사업자번호 (사업자) / 주민등록번호 (개인) / "9999999999999" (외국인) 중 검색하고자 하는 정보 입력
+        // └ 사업자번호 / 주민등록번호는 하이픈('-')을 제외한 숫자만 입력
+        // - 미입력시 전체조회
         $QString = '';
 
         // 문서번호 또는 국세청승인번호 조회
         $MgtKey = '';
 
-        // 연동문서 조회여부, 공백-전체조회, 0-일반문서 조회, 1-연동문서 조회
+        // 연동문서 여부 (null , "0" , "1" 중 택 1)
+        // └ null = 전체조회 , 0 = 일반문서 , 1 = 연동문서
+        // - 일반문서 : 팝빌 사이트를 통해 저장 또는 발행한 세금계산서
+        // - 연동문서 : 팝빌 API를 통해 저장 또는 발행한 세금계산서
         $InterOPYN = '';
 
         try {
@@ -1773,14 +1896,14 @@ class TaxinvoiceController extends Controller
      */
     public function GetLogs(){
 
-        // 팝빌회원 사업자번호, '-'제외 10자리
+        // 팝빌회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
 
         // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
         $mgtKeyType = TIENumMgtKeyType::SELL;
 
         // 세금계산서 문서번호
-        $mgtKey = '20210801-001';
+        $mgtKey = '20220405-PHP7-002';
 
         try {
             $result = $this->PopbillTaxinvoice->GetLogs($testCorpNum, $mgtKeyType, $mgtKey);
@@ -1822,7 +1945,7 @@ class TaxinvoiceController extends Controller
     }
 
     /**
-     * 팝빌 사이트와 동일한 세금계산서 1건의 상세 정보 페이지의 팝업 URL을 반환합니다.
+     * 세금계산서 1건의 상세 정보 페이지의 팝업 URL을 반환합니다.
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetPopUpURL
      */
@@ -1835,7 +1958,7 @@ class TaxinvoiceController extends Controller
         $mgtKeyType = TIENumMgtKeyType::SELL;
 
         // 문서번호
-        $mgtKey = '20210801-001';
+        $mgtKey = '20220405-PHP7-001';
 
         try {
             $url = $this->PopbillTaxinvoice->GetPopUpURL($testCorpNum, $mgtKeyType, $mgtKey);
@@ -1850,7 +1973,7 @@ class TaxinvoiceController extends Controller
     }
 
     /**
-     * 팝빌 사이트와 동일한 세금계산서 1건의 상세정보 페이지(사이트 상단, 좌측 메뉴 및 버튼 제외)의 팝업 URL을 반환합니다.
+     * 세금계산서 1건의 상세정보 페이지(사이트 상단, 좌측 메뉴 및 버튼 제외)의 팝업 URL을 반환합니다.
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetViewURL
      */
@@ -1863,7 +1986,7 @@ class TaxinvoiceController extends Controller
         $mgtKeyType = TIENumMgtKeyType::SELL;
 
         // 문서번호
-        $mgtKey = '20210801-001';
+        $mgtKey = '20220405-PHP7-001';
 
         try {
             $url = $this->PopbillTaxinvoice->GetViewURL($testCorpNum, $mgtKeyType, $mgtKey);
@@ -1891,7 +2014,7 @@ class TaxinvoiceController extends Controller
         $mgtKeyType = TIENumMgtKeyType::SELL;
 
         // 문서번호
-        $mgtKey = '20210801-001';
+        $mgtKey = '20220405-PHP7-001';
 
         try {
             $url = $this->PopbillTaxinvoice->GetPrintURL($testCorpNum, $mgtKeyType, $mgtKey);
@@ -1918,7 +2041,7 @@ class TaxinvoiceController extends Controller
         $mgtKeyType = TIENumMgtKeyType::SELL;
 
         // 문서번호
-        $mgtKey = '20210801-001';
+        $mgtKey = '20220405-PHP7-001';
 
         try {
             $url = $this->PopbillTaxinvoice->GetOldPrintURL($testCorpNum, $mgtKeyType, $mgtKey);
@@ -1945,7 +2068,7 @@ class TaxinvoiceController extends Controller
         $mgtKeyType = TIENumMgtKeyType::SELL;
 
         // 문서번호
-        $mgtKey = '20210801-001';
+        $mgtKey = '20220405-PHP7-001';
 
         try {
             $url = $this->PopbillTaxinvoice->GetEPrintURL($testCorpNum, $mgtKeyType, $mgtKey);
@@ -1973,9 +2096,8 @@ class TaxinvoiceController extends Controller
 
         // 문서번호 배열 최대 100건
         $MgtKeyList = array(
-            '20210801-001',
-            '20210801-001',
-            '20210801-002',
+            '20220405-PHP7-001',
+            '20220405-PHP7-002'
         );
         try {
             $url = $this->PopbillTaxinvoice->GetMassPrintURL($testCorpNum, $mgtKeyType, $MgtKeyList);
@@ -1989,7 +2111,7 @@ class TaxinvoiceController extends Controller
     }
 
     /**
-     * 안내메일과 관련된 전자세금계산서를 확인 할 수 있는 상세 페이지의 팝업 URL을 반환하며, 해당 URL은 메일 하단의 "전자세금계산서 보기" 버튼의 링크와 같습니다.
+     * 전자세금계산서 안내메일의 상세보기 링크 URL을 반환합니다.
      * - 함수 호출로 반환 받은 URL에는 유효시간이 없습니다.
      * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetMailURL
      */
@@ -2002,7 +2124,7 @@ class TaxinvoiceController extends Controller
         $mgtKeyType = TIENumMgtKeyType::SELL;
 
         // 문서번호
-        $mgtKey = '20210801-001';
+        $mgtKey = '20220405-PHP7-001';
 
         try {
             $url = $this->PopbillTaxinvoice->GetMailURL($testCorpNum, $mgtKeyType, $mgtKey);
@@ -2013,6 +2135,34 @@ class TaxinvoiceController extends Controller
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
         return view('ReturnValue', ['filedName' => "공급받는자 세금계산서 메일링크 URL" , 'value' => $url]);
+    }
+
+    /**
+     * 전자세금계산서 PDF 파일을 다운 받을 수 있는 URL을 반환합니다.
+     * - 반환되는 URL은 보안정책상 30초의 유효시간을 갖으며, 유효시간 이후 호출시 정상적으로 페이지가 호출되지 않습니다.
+     * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetPDFURL
+     */
+    public function GetPDFURL(){
+
+        // 팝빌 회원 사업자 번호, '-'제외 10자리
+        $testCorpNum = '1234567890';
+
+        // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
+        $mgtKeyType = TIENumMgtKeyType::SELL;
+
+        // 문서번호
+        $mgtKey = '20220405-PHP7-001';
+
+        try {
+            $url = $this->PopbillTaxinvoice->GetPDFURL($testCorpNum, $mgtKeyType, $mgtKey);
+        }
+        catch(PopbillException $pe) {
+            $code = $pe->getCode();
+            $message = $pe->getMessage();
+            return view('PResponse', ['code' => $code, 'message' => $message]);
+        }
+
+        return view('ReturnValue', ['filedName' => "세금계산서 PDF 다운로드 URL" , 'value' => $url]);
     }
 
     /**
@@ -2074,10 +2224,10 @@ class TaxinvoiceController extends Controller
         $mgtKeyType = TIENumMgtKeyType::SELL;
 
         // 세금계산서 문서번호
-        $mgtKey = '20210801-004';
+        $mgtKey = '20220405-PHP7-002';
 
         // 첨부파일 경로, 해당 파일에 읽기 권한이 설정되어 있어야 합니다.
-        $filePath = '/Users/John/Desktop/03A4C36315C047B4A171CEF283ED9A40.jpg';
+        $filePath = '/image.jpg';
 
         try {
             $result = $this->PopbillTaxinvoice->AttachFile($testCorpNum, $mgtKeyType, $mgtKey, $filePath);
@@ -2094,7 +2244,7 @@ class TaxinvoiceController extends Controller
 
     /**
      * "임시저장" 상태의 세금계산서에 첨부된 1개의 파일을 삭제합니다.
-     * - 파일을 식별하는 파일아이디는 첨부파일 목록(GetFiles API) 의 응답항목 중 파일아이디(AttachedFile) 값을 통해 확인할 수 있습니다.
+     * - 파일 식별을 위해 첨부 시 부여되는 'FileID'는 첨부파일 목록 확인(GetFiles API) 함수를 호출하여 확인합니다.
      * - https://docs.popbill.com/taxinvoice/phplaravel/api#DeleteFile
      */
     public function DeleteFile(){
@@ -2106,10 +2256,11 @@ class TaxinvoiceController extends Controller
         $mgtKeyType = TIENumMgtKeyType::SELL;
 
         // 문서번호
-        $mgtKey = '20210801-004';
+        $mgtKey = '20220405-PHP7-002';
 
-        // 삭제할 첨부파일 아이디, getFiles(첨부파일목록) API 응답항목중 attachedFile 변수값 참조
-        $FileID = '0D583984-FDF3-4189-B61A-40942A2D834B.PBF';
+        // 팝빌이 첨부파일 관리를 위해 할당하는 식별번호
+        // 첨부파일 목록 확인(getFiles API) 함수의 리턴 값 중 attachedFile 필드값 기재.
+        $FileID = '';
 
         try {
             $result = $this->PopbillTaxinvoice->DeleteFile($testCorpNum, $mgtKeyType, $mgtKey, $FileID);
@@ -2131,14 +2282,14 @@ class TaxinvoiceController extends Controller
      */
     public function GetFiles(){
 
-        // 팝빌회원 사업자번호, '-'제외 10자리
+        // 팝빌회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
 
         // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
         $mgtKeyType = TIENumMgtKeyType::SELL;
 
         // 문서번호
-        $mgtKey = '20210801-004';
+        $mgtKey = '20220405-PHP7-002';
 
         try {
             $result = $this->PopbillTaxinvoice->GetFiles($testCorpNum, $mgtKeyType, $mgtKey);
@@ -2165,12 +2316,12 @@ class TaxinvoiceController extends Controller
         $mgtKeyType = TIENumMgtKeyType::SELL;
 
         // 문서번호
-        $mgtKey = '20210801-004';
+        $mgtKey = '20220405-PHP7-002';
 
         // 수신이메일주소
         // 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
         // 실제 거래처의 메일주소가 기재되지 않도록 주의
-        $receiver = 'test@test.com';
+        $receiver = '';
 
         try {
             $result = $this->PopbillTaxinvoice->SendEmail($testCorpNum, $mgtKeyType, $mgtKey, $receiver);
@@ -2200,16 +2351,16 @@ class TaxinvoiceController extends Controller
         $mgtKeyType = TIENumMgtKeyType::SELL;
 
         // 세금계산서 문서번호
-        $mgtKey = '20210801-004';
+        $mgtKey = '20220405-PHP7-001';
 
         // 발신번호
-        $sender = '07043042991';
+        $sender = '';
 
         // 수신번호
-        $receiver = '010111222';
+        $receiver = '';
 
         // 메시지 내용, 90byte 초과시 길이가 조정되어 전송됨.
-        $contents = '문자전송 내용입니다. 90Byte를 초과한내용은 길이 조정되어 전송됩니다. 참고하시기 바랍니다.';
+        $contents = '문자 메시지 내용입니다. 세금계산서가 발행되었습니다.';
 
         try {
             $result = $this->PopbillTaxinvoice->SendSMS($testCorpNum , $mgtKeyType, $mgtKey, $sender, $receiver, $contents);
@@ -2238,13 +2389,13 @@ class TaxinvoiceController extends Controller
         $mgtKeyType = TIENumMgtKeyType::SELL;
 
         // 세금계산서 문서번호
-        $mgtKey = '20210801-001';
+        $mgtKey = '20220405-PHP7-001';
 
         // 발신번호
-        $sender = '07043042991';
+        $sender = '';
 
         // 수신팩스번호
-        $receiver = '070111222';
+        $receiver = '';
 
         try {
             $result = $this->PopbillTaxinvoice->SendFAX($testCorpNum, $mgtKeyType, $mgtKey, $sender, $receiver);
@@ -2272,13 +2423,13 @@ class TaxinvoiceController extends Controller
         $mgtKeyType = TIENumMgtKeyType::SELL;
 
         // 세금계산서 문서번호
-        $mgtKey = '20210801-001';
+        $mgtKey = '20220405-PHP7-001';
 
         // 첨부할 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
         $subItemCode = 121;
 
         // 첨부할 명세서 문서번호
-        $subMgtKey = '20210801-S001';
+        $subMgtKey = '20220405-PHP7-001';
 
         try {
             $result = $this->PopbillTaxinvoice->AttachStatement($testCorpNum, $mgtKeyType, $mgtKey, $subItemCode, $subMgtKey);
@@ -2306,13 +2457,13 @@ class TaxinvoiceController extends Controller
         $mgtKeyType = TIENumMgtKeyType::SELL;
 
         // 세금계산서 문서번호
-        $mgtKey = '20210801-001';
+        $mgtKey = '20220405-PHP7-001';
 
         // 첨부해제할 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
         $subItemCode = 121;
 
         // 첨부해제할 명세서 문서번호
-        $subMgtKey = '20210801-S001';
+        $subMgtKey = '20220405-PHP7-001';
 
         try {
             $result = $this->PopbillTaxinvoice->DetachStatement($testCorpNum, $mgtKeyType, $mgtKey, $subItemCode, $subMgtKey);
@@ -2354,7 +2505,7 @@ class TaxinvoiceController extends Controller
      */
     public function AssignMgtKey(){
 
-        // 팝빌회원 사업자번호, '-'제외 10자리
+        // 팝빌회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
 
         // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
@@ -2365,7 +2516,7 @@ class TaxinvoiceController extends Controller
 
         // 할당할 문서번호, 숫자, 영문 '-', '_' 조합으로 1~24자리까지
         // 사업자번호별 중복없는 고유번호 할당
-        $mgtKey = '20210801-001';
+        $mgtKey = '20220405-PHP7-006';
 
         try {
             $result = $this->PopbillTaxinvoice->AssignMgtKey($testCorpNum, $mgtKeyType, $itemKey, $mgtKey);
@@ -2386,7 +2537,7 @@ class TaxinvoiceController extends Controller
      */
     public function ListEmailConfig(){
 
-        // 팝빌회원 사업자번호, '-'제외 10자리
+        // 팝빌회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
 
         try {
@@ -2433,7 +2584,7 @@ class TaxinvoiceController extends Controller
      */
     public function UpdateEmailConfig(){
 
-        // 팝빌회원 사업자번호, '-'제외 10자리
+        // 팝빌회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
 
         // 메일 전송 유형
@@ -2457,6 +2608,7 @@ class TaxinvoiceController extends Controller
 
     /**
      * 연동회원의 국세청 전송 옵션 설정 상태를 확인합니다.
+     * - 팝빌 국세청 전송 정책 [https://docs.popbill.com/taxinvoice/ntsSendPolicy?lang=laravel]
      * - 국세청 전송 옵션 설정은 팝빌 사이트 [전자세금계산서] > [환경설정] > [세금계산서 관리] 메뉴에서 설정할 수 있으며, API로 설정은 불가능 합니다.
      * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetSendToNTSConfig
      */
@@ -2510,7 +2662,7 @@ class TaxinvoiceController extends Controller
      */
     public function GetCertificateExpireDate(){
 
-        // 팝빌회원 사업자번호
+        // 팝빌회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
 
         try {
@@ -2554,7 +2706,7 @@ class TaxinvoiceController extends Controller
      */
     public function GetBalance(){
 
-        // 팝빌회원 사업자번호
+        // 팝빌회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
 
         try {
@@ -2643,12 +2795,12 @@ class TaxinvoiceController extends Controller
 
     /**
      * 파트너의 잔여포인트를 확인합니다.
-     * - 과금방식이 연동과금인 경우 연동회원 잔여포인트(GetBalance API)를 이용하시기 바랍니다.
+     * - 과금방식이 연동과금인 경우 연동회원 잔여포인트 확인(GetBalance API) 함수를 이용하시기 바랍니다.
      * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetPartnerBalance
      */
     public function GetPartnerBalance(){
 
-        // 팝빌회원 사업자번호
+        // 팝빌회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
 
         try {
@@ -2714,7 +2866,7 @@ class TaxinvoiceController extends Controller
      */
     public function GetChargeInfo(){
 
-        // 팝빌회원 사업자번호, '-'제외 10자리
+        // 팝빌회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
 
         try {
@@ -2730,7 +2882,6 @@ class TaxinvoiceController extends Controller
 
     /**
      * 사업자번호를 조회하여 연동회원 가입여부를 확인합니다.
-     * - LinkID는 config/popbill.php 파일에 선언되어 있는 인증정보 입니다.
      * - https://docs.popbill.com/taxinvoice/phplaravel/api#CheckIsMember
      */
     public function CheckIsMember(){
@@ -2738,7 +2889,7 @@ class TaxinvoiceController extends Controller
         // 사업자번호, "-"제외 10자리
         $testCorpNum = '1234567890';
 
-        // 파트너 링크아이디
+        // 연동신청 시 팝빌에서 발급받은 링크아이디
         $LinkID = config('popbill.LinkID');
 
         try {
@@ -2806,13 +2957,13 @@ class TaxinvoiceController extends Controller
         $joinForm->BizClass = '종목';
 
         // 담당자명
-        $joinForm->ContactName = '담당자상명';
+        $joinForm->ContactName = '담당자성명';
 
         // 담당자 이메일
-        $joinForm->ContactEmail = 'tester@test.com';
+        $joinForm->ContactEmail = '';
 
         // 담당자 연락처
-        $joinForm->ContactTEL = '07043042991';
+        $joinForm->ContactTEL = '';
 
         // 아이디, 6자 이상 20자미만
         $joinForm->ID = 'userid_phpdd';
@@ -2839,7 +2990,7 @@ class TaxinvoiceController extends Controller
      */
     public function GetCorpInfo(){
 
-        // 팝빌회원 사업자번호, '-'제외 10자리
+        // 팝빌회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
 
         try {
@@ -2916,16 +3067,10 @@ class TaxinvoiceController extends Controller
         $ContactInfo->personName = '담당자_수정';
 
         // 연락처
-        $ContactInfo->tel = '070-4304-2991';
-
-        // 핸드폰번호
-        $ContactInfo->hp = '010-1234-1234';
+        $ContactInfo->tel = '';
 
         // 이메일주소
-        $ContactInfo->email = 'test@test.com';
-
-        // 팩스
-        $ContactInfo->fax = '070-111-222';
+        $ContactInfo->email = '';
 
         // 담당자 권한, 1 : 개인권한, 2 : 읽기권한, 3: 회사권한
         $ContactInfo->searchRole = 3;
@@ -2949,7 +3094,7 @@ class TaxinvoiceController extends Controller
      */
     public function GetContactInfo(){
 
-        // 팝빌회원 사업자번호, '-'제외 10자리
+        // 팝빌회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
 
         //확인할 담당자 아이디
@@ -2976,7 +3121,7 @@ class TaxinvoiceController extends Controller
      */
     public function ListContact(){
 
-        // 팝빌회원 사업자번호, '-'제외 10자리
+        // 팝빌회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
 
         try {
@@ -3013,16 +3158,9 @@ class TaxinvoiceController extends Controller
         $ContactInfo->id = 'testkorea';
 
         // 담당자 연락처
-        $ContactInfo->tel = '070-4304-2991';
-
-        // 핸드폰 번호
-        $ContactInfo->hp = '010-1234-1234';
-
+        $ContactInfo->tel = '';
         // 이메일 주소
-        $ContactInfo->email = 'test@test.com';
-
-        // 팩스번호
-        $ContactInfo->fax = '070-111-222';
+        $ContactInfo->email = '';
 
         // 담당자 권한, 1 : 개인권한, 2 : 읽기권한, 3: 회사권한
         $ContactInfo->searchRole = 3;
@@ -3034,37 +3172,9 @@ class TaxinvoiceController extends Controller
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
-            $message = $pe->getMessage();
+            $message = $pe->getM
         }
 
         return view('PResponse', ['code' => $code, 'message' => $message]);
-    }
-
-    /**
-     * 전자세금계산서 PDF 파일을 다운 받을 수 있는 URL을 반환합니다.
-     * - 반환되는 URL은 보안정책상 30초의 유효시간을 갖으며, 유효시간 이후 호출시 정상적으로 페이지가 호출되지 않습니다.
-     * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetPDFURL
-     */
-    public function GetPDFURL(){
-
-        // 팝빌 회원 사업자 번호, '-'제외 10자리
-        $testCorpNum = '1234567890';
-
-        // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
-        $mgtKeyType = TIENumMgtKeyType::SELL;
-
-        // 문서번호
-        $mgtKey = '20210801-01';
-
-        try {
-            $url = $this->PopbillTaxinvoice->GetPDFURL($testCorpNum, $mgtKeyType, $mgtKey);
-        }
-        catch(PopbillException $pe) {
-            $code = $pe->getCode();
-            $message = $pe->getMessage();
-            return view('PResponse', ['code' => $code, 'message' => $message]);
-        }
-
-        return view('ReturnValue', ['filedName' => "세금계산서 PDF 다운로드 URL" , 'value' => $url]);
     }
 }

@@ -61,7 +61,7 @@
             <li> remark2 (비고2) : {{ $Taxinvoice->remark2 }} </li>
             <li> remark3 (비고3) : {{ $Taxinvoice->remark3 }} </li>
             <li> kwon (권) : {{ $Taxinvoice->kwon }} </li>
-            <li> ho(호)  : {{ $Taxinvoice->ho }} </li>
+            <li> ho (호)  : {{ $Taxinvoice->ho }} </li>
             <li> businessLicenseYN (사업자등록증 이미지 첨부여부) : {{ $Taxinvoice->businessLicenseYN  ? 'true' : 'false' }} </li>
             <li> bankBookYN (통장사본이미지 첨부여부) : {{ $Taxinvoice->bankBookYN ? 'true' : 'false' }} </li>
 

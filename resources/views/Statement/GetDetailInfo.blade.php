@@ -57,20 +57,20 @@
             <fieldset class="fieldset2">
               <legend>전자명세서 상세항목(품목)정보 [{{ $indexKey+1 }}]</legend>
               <ul>
-                <li> serialNum(일련번호) : {{ $StatementDetail->serialNum }} </li>
-                <li> purchaseDT(거래일자) : {{ $StatementDetail->purchaseDT }} </li>
-                <li> itemName(품목명) : {{ $StatementDetail->itemName }} </li>
-                <li> spec(규격) : {{ $StatementDetail->spec }} </li>
-                <li> qty(수량) : {{ $StatementDetail->qty }} </li>
-                <li> unitCost(단가) : {{ $StatementDetail->unitCost }} </li>
-                <li> supplyCost(공급가액) : {{ $StatementDetail->supplyCost }} </li>
-                <li> tax(세액) : {{ $StatementDetail->tax }} </li>
-                <li> remark(비고) : {{ $StatementDetail->remark }} </li>
-                <li> spare1(여분1) : {{ $StatementDetail->spare1 }} </li>
-                <li> spare2(여분2) : {{ $StatementDetail->spare2 }} </li>
-                <li> spare3(여분3) : {{ $StatementDetail->spare3 }} </li>
-                <li> spare4(여분4) : {{ $StatementDetail->spare4 }} </li>
-                <li> spare5(여분5) : {{ $StatementDetail->spare5 }} </li>
+                <li> serialNum (일련번호) : {{ $StatementDetail->serialNum }} </li>
+                <li> purchaseDT (거래일자) : {{ $StatementDetail->purchaseDT }} </li>
+                <li> itemName (품목명) : {{ $StatementDetail->itemName }} </li>
+                <li> spec (규격) : {{ $StatementDetail->spec }} </li>
+                <li> qty (수량) : {{ $StatementDetail->qty }} </li>
+                <li> unitCost (단가) : {{ $StatementDetail->unitCost }} </li>
+                <li> supplyCost (공급가액) : {{ $StatementDetail->supplyCost }} </li>
+                <li> tax (세액) : {{ $StatementDetail->tax }} </li>
+                <li> remark (비고) : {{ $StatementDetail->remark }} </li>
+                <li> spare1 (여분1) : {{ $StatementDetail->spare1 }} </li>
+                <li> spare2 (여분2) : {{ $StatementDetail->spare2 }} </li>
+                <li> spare3 (여분3) : {{ $StatementDetail->spare3 }} </li>
+                <li> spare4 (여분4) : {{ $StatementDetail->spare4 }} </li>
+                <li> spare5 (여분5) : {{ $StatementDetail->spare5 }} </li>
               </ul>
             </fieldset>
             @endforeach

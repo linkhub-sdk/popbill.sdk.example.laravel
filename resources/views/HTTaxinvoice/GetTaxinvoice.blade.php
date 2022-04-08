@@ -67,7 +67,7 @@
               <fieldset class="fieldset2">
                 <legend>세금계산서 상세항목(품목)정보 [{{ $indexKey+1 }}]</legend>
                 <ul>
-                  <li> serialNum (일련번호) : {{ $TaxinvoiceDetail->serialNum }} </li>
+                    <li> serialNum (일련번호) : {{ $TaxinvoiceDetail->serialNum }} </li>
                     <li> purchaseDT (거래일자) : {{ $TaxinvoiceDetail->purchaseDT }} </li>
                     <li> itemName (품명) : {{ $TaxinvoiceDetail->itemName }} </li>
                     <li> spec (규격) : {{ $TaxinvoiceDetail->spec }} </li>

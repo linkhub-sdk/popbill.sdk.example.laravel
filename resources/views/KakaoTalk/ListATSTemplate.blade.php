@@ -14,21 +14,21 @@
           <fieldset class="fieldset2">
             <legend>알림톡 템플릿 정보 [{{$index+1}}]</legend>
             <ul>
-                <li> plusFriendID (카카오톡채널 아이디) : {{ $object->plusFriendID }} </li>
+                <li> plusFriendID (카카오톡 검색용 아이디) : {{ $object->plusFriendID }} </li>
                 <li> templateCode (템플릿 코드) : {{ $object->templateCode }} </li>
                 <li> templateName (템플릿 제목) : {{ $object->templateName }} </li>
                 <li> template (템플릿 내용) : {{ $object->template }} </li>
                 <li> ads (광고메시지 내용) : {{ $object->ads }} </li>
                 <li> appendix (부가메시지 내용) : {{ $object->appendix }} </li>
-                @if (empty($object->btns) == false)
-                  @foreach ($object->btns as $indexKey => $btnInfo)
-                  <fieldset class="fieldset2">
-                    <legend>버튼 정보 [{{ $indexKey+1 }}]</legend>
-                    <ul>
-                      <li>n (버튼명) : {{ $btnInfo->n }} </li>
-                      <li>t (버튼유형) : {{ $btnInfo->t }} </li>
-                      <li>u1 (버튼링크1) : {{ false == empty($btnInfo->u1) ? $btnInfo->u1 : ''}} </li>
-                      <li>u2 (버튼링크2) : {{ false == empty($btnInfo->u2) ? $btnInfo->u2 : ''}} </li>
+                    @if (empty($object->btns) == false)
+                    @foreach ($object->btns as $indexKey => $btnInfo)
+                    <fieldset class="fieldset2">
+                        <legend>버튼 정보 [{{ $indexKey+1 }}]</legend>
+                        <ul>
+                            <li>n (버튼명) : {{ $btnInfo->n }} </li>
+                            <li>t (버튼유형) : {{ $btnInfo->t }} </li>
+                            <li>u1 (버튼링크1) : {{ false == empty($btnInfo->u1) ? $btnInfo->u1 : ''}} </li>
+                            <li>u2 (버튼링크2) : {{ false == empty($btnInfo->u2) ? $btnInfo->u2 : ''}} </li>
                     </ul>
                   </fieldset>
                   @endforeach

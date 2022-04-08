@@ -33,7 +33,6 @@
               <li> sendPageCnt (전체 페이지수) : {{ $faxInfo->sendPageCnt }} </li>
               <li> successPageCnt (성공 페이지수) : {{ $faxInfo->successPageCnt }} </li>
               <li> failPageCnt (실패 페이지수) : {{ $faxInfo->failPageCnt }} </li>
-              <li> refundPageCnt (환불 페이지수) : {{ $faxInfo->refundPageCnt }} </li>
               <li> cancelPageCnt (취소 페이지수) : {{ $faxInfo->cancelPageCnt }} </li>
               <li> receiptDT (접수일시) : {{ $faxInfo->receiptDT }} </li>
               <li> reserveDT (예약일시) : {{ $faxInfo->reserveDT }} </li>
@@ -43,6 +42,7 @@
               <li> receiptNum (접수번호) : {{ $faxInfo->receiptNum }} </li>
               <li> requestNum (요청번호) : {{ $faxInfo->requestNum }} </li>
               <li> chargePageCnt (과금 페이지수) : {{ $faxInfo->chargePageCnt }} </li>
+              <li> refundPageCnt (환불 페이지수) : {{ $faxInfo->refundPageCnt }} </li>
               <li> tiffFileSize (변환파일용랑) : {{ $faxInfo->tiffFileSize }}byte</li>
             </ul>
           </fieldset>

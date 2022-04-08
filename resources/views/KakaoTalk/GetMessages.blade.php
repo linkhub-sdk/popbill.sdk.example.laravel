@@ -13,7 +13,7 @@
         <ul>
           <li>contentType (카카오톡 유형) : {{ $Result->contentType }} </li>
           <li>templateCode (템플릿 코드) : {{ $Result->templateCode ? $Result->templateCode : '' }} </li>
-          <li>plusFriendID (카카오톡채널 아이디) : {{ $Result->plusFriendID }} </li>
+          <li>plusFriendID (카카오톡 검색용 아이디) : {{ $Result->plusFriendID }} </li>
           <li>sendNum (발신번호) : {{ $Result->sendNum }} </li>
           <li>altContent ([동보]대체문자 내용) : {{ $Result->altContent }} </li>
           <li>altSendType (대체문자 전송유형) : {{ $Result->altSendType }} </li>

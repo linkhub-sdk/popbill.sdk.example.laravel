@@ -44,8 +44,8 @@ class StatementController extends Controller
     }
 
     /**
-     * 전자명세서 문서번호 중복여부를 확인합니다.
-     * - 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
+     * 파트너가 전자명세서 관리 목적으로 할당하는 문서번호의 사용여부를 확인합니다.
+     * - 이미 사용 중인 문서번호는 중복 사용이 불가하고, 전자명세서가 삭제된 경우에만 문서번호의 재사용이 가능합니다.
      * - https://docs.popbill.com/statement/phplaravel/api#CheckMgtKeyInUse
      */
     public function CheckMgtKeyInUse(){
@@ -57,7 +57,7 @@ class StatementController extends Controller
         $itemCode = '121';
 
         // 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
-        $mgtKey = '20210701-001';
+        $mgtKey = '20220405-PHP7-001';
 
         try {
             $result = $this->PopbillStatement->CheckMgtKeyInUse($testCorpNum ,$itemCode, $mgtKey);
@@ -86,7 +86,7 @@ class StatementController extends Controller
 
         // 전자명세서 문서번호
         // 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
-        $mgtKey = '20210804-001';
+        $mgtKey = '20220405-PHP7-001';
 
         // 명세서 종류코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
         $itemCode = '121';
@@ -94,7 +94,8 @@ class StatementController extends Controller
         // 메모
         $memo = '즉시발행 메모';
 
-        // 안내 메일 제목, 공백 입력시 기본양식으로 전송
+        // 발행 안내 메일 제목
+        // - 미입력 시 팝빌에서 지정한 이메일 제목으로 전송
         $emailSubject = '';
 
         // 전자명세서 객체 생성
@@ -104,13 +105,13 @@ class StatementController extends Controller
          *                       전자명세서 정보
          ************************************************************/
 
-        // [필수] 기재상 작성일자
-        $Statement->writeDate = '20210804';
+        // 기재상 작성일자
+        $Statement->writeDate = '20220405';
 
-        // [필수] (영수, 청구) 중 기재
+        // {영수, 청구, 없음} 중 기재
         $Statement->purposeType = '영수';
 
-        // [필수]  과세형태, (과세, 영세, 면세) 중 기재
+        //  과세형태, (과세, 영세, 면세) 중 기재
         $Statement->taxType = '과세';
 
         // 맞춤양식코드, 미기재시 기본양식으로 처리
@@ -133,9 +134,9 @@ class StatementController extends Controller
         $Statement->senderBizClass = '공급자 업종';
         $Statement->senderBizType = '공급자 업태';
         $Statement->senderContactName = '공급자 담당자명';
-        $Statement->senderTEL = '070-7070-0707';
-        $Statement->senderHP = '010-000-2222';
-        $Statement->senderEmail = 'test@test.com';
+        $Statement->senderTEL = '';
+        $Statement->senderHP = '';
+        $Statement->senderEmail = '';
 
         /************************************************************
          *                         공급받는자 정보
@@ -148,26 +149,37 @@ class StatementController extends Controller
         $Statement->receiverBizClass = '공급받는자 업종';
         $Statement->receiverBizType = '공급받는자 업태';
         $Statement->receiverContactName = '공급받는자 담당자명';
-        $Statement->receiverTEL = '010-0000-1111';
-        $Statement->receiverHP = '010-1111-2222';
+        $Statement->receiverTEL = '';
+        $Statement->receiverHP = '';
 
         // 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
         // 실제 거래처의 메일주소가 기재되지 않도록 주의
-        $Statement->receiverEmail = 'test@test.com';
+        $Statement->receiverEmail = '';
 
         /************************************************************
          *                       전자명세서 기재정보
          ************************************************************/
-        $Statement->supplyCostTotal = '200000' ;    // [필수] 공급가액 합계
-        $Statement->taxTotal = '20000';       // [필수] 세액 합계
-        $Statement->totalAmount = '220000';      // [필수] 합계금액 (공급가액 합계+세액합계)
+        $Statement->supplyCostTotal = '200000' ;    // 공급가액 합계
+        $Statement->taxTotal = '20000';       // 세액 합계
+        $Statement->totalAmount = '220000';      // 합계금액 (공급가액 합계+세액합계)
         $Statement->serialNum = '123';       // 기재상 일련번호 항목
         $Statement->remark1 = '비고1';
         $Statement->remark2 = '비고2';
         $Statement->remark3 = '비고3';
-        $Statement->businessLicenseYN = False;     //사업자등록증 첨부 여부
-        $Statement->bankBookYN = False;       //통장사본 첨부 여부
-        $Statement->smssendYN = False;       //발행시 안내문자 전송여부
+
+        // 사업자등록증 이미지 첨부여부 (true / false 중 택 1)
+        // └ true = 첨부 , false = 미첨부(기본값)
+        // - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
+        $Statement->businessLicenseYN = False;
+
+        // 통장사본 이미지 첨부여부 (true / false 중 택 1)
+        // └ true = 첨부 , false = 미첨부(기본값)
+        // - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
+        $Statement->bankBookYN = False;
+
+        // 문자 자동전송 여부 (true / false 중 택 1)
+        // └ true = 전송 , false = 미전송(기본값)
+        $Statement->smssendYN = False;
 
         /************************************************************
          *                       상세항목(품목) 정보
@@ -175,7 +187,7 @@ class StatementController extends Controller
         $Statement->detailList = array();
         $Statement->detailList[0] = new StatementDetail();
         $Statement->detailList[0]->serialNum = '1';     //품목 일련번호 1부터 순차 기재
-        $Statement->detailList[0]->purchaseDT = '20210701';   //거래일자 yyyyMMdd
+        $Statement->detailList[0]->purchaseDT = '20220405';   //거래일자 yyyyMMdd
         $Statement->detailList[0]->itemName = '품명';
         $Statement->detailList[0]->spec = '규격';
         $Statement->detailList[0]->unit = '단위';
@@ -192,7 +204,7 @@ class StatementController extends Controller
 
         $Statement->detailList[1] = new StatementDetail();
         $Statement->detailList[1]->serialNum = '2';     //품목 일련번호 순차기재
-        $Statement->detailList[1]->purchaseDT = '20210701';   //거래일자 yyyyMMdd
+        $Statement->detailList[1]->purchaseDT = '20220405';   //거래일자 yyyyMMdd
         $Statement->detailList[1]->itemName = '품명';
         $Statement->detailList[1]->spec = '규격';
         $Statement->detailList[1]->unit = '단위';
@@ -210,12 +222,13 @@ class StatementController extends Controller
         /************************************************************
          * 전자명세서 추가속성
          * - 추가속성에 관한 자세한 사항은 "[전자명세서 API 연동매뉴얼] >
-         *   5.2. 기본양식 추가속성 테이블"을 참조하시기 바랍니다.
+         *   기본양식 추가속성 테이블"을 참조하시기 바랍니다.
+         * [https://docs.popbill.com/statement/propertyBag?lang=phplaravel]
          ************************************************************/
         $Statement->propertyBag = array(
-            'Balance' => '50000',
-            'Deposit' => '100000',
-            'CBalance' => '150000'
+            'Balance' => '50000',           // 전잔액
+            'Deposit' => '100000',          // 입금액
+            'CBalance' => '150000'          // 현잔액
         );
 
         try {
@@ -235,6 +248,7 @@ class StatementController extends Controller
 
     /**
      * 작성된 전자명세서 데이터를 팝빌에 저장합니다.
+     * - "임시저장" 상태의 전자명세서는 발행(Issue API) 함수를 호출하여 "발행완료"처리한 경우에만 수신자에게 발행 안내 메일이 발송됩니다.
      * - https://docs.popbill.com/statement/phplaravel/api#Register
      */
     public function Register(){
@@ -243,7 +257,7 @@ class StatementController extends Controller
         $testCorpNum = '1234567890';
 
         // 문서번호, 발행자별 고유번호 할당, 1~24자리 영문,숫자 조합으로 중복없이 구성
-        $mgtKey = '20210701-003';
+        $mgtKey = '20220405-PHP7-002';
 
         // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
         $itemCode = '121';
@@ -255,13 +269,13 @@ class StatementController extends Controller
          *                       전자명세서 정보
          ************************************************************/
 
-        // [필수] 기재상 작성일자
-        $Statement->writeDate = '20210701';
+        // 기재상 작성일자
+        $Statement->writeDate = '20220405';
 
-        // [필수] (영수, 청구) 중 기재
+        // (영수, 청구, 없음) 중 기재
         $Statement->purposeType = '영수';
 
-        // [필수]  과세형태, (과세, 영세, 면세) 중 기재
+        //  과세형태, (과세, 영세, 면세) 중 기재
         $Statement->taxType = '과세';
 
         // 맞춤양식코드, 미기재시 기본양식으로 처리
@@ -284,9 +298,9 @@ class StatementController extends Controller
         $Statement->senderBizClass = '공급자 업종';
         $Statement->senderBizType = '공급자 업태';
         $Statement->senderContactName = '공급자 담당자명';
-        $Statement->senderTEL = '070-7070-0707';
-        $Statement->senderHP = '010-000-2222';
-        $Statement->senderEmail = 'test@test.com';
+        $Statement->senderTEL = '';
+        $Statement->senderHP = '';
+        $Statement->senderEmail = '';
 
         /************************************************************
          *                         공급받는자 정보
@@ -299,26 +313,37 @@ class StatementController extends Controller
         $Statement->receiverBizClass = '공급받는자 업종';
         $Statement->receiverBizType = '공급받는자 업태';
         $Statement->receiverContactName = '공급받는자 담당자명';
-        $Statement->receiverTEL = '010-0000-1111';
-        $Statement->receiverHP = '010-1111-2222';
+        $Statement->receiverTEL = '';
+        $Statement->receiverHP = '';
 
         // 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
         // 실제 거래처의 메일주소가 기재되지 않도록 주의
-        $Statement->receiverEmail = 'test@test.com';
+        $Statement->receiverEmail = '';
 
         /************************************************************
          *                       전자명세서 기재정보
          ************************************************************/
-        $Statement->supplyCostTotal = '200000' ;    // [필수] 공급가액 합계
-        $Statement->taxTotal = '20000';       // [필수] 세액 합계
-        $Statement->totalAmount = '220000';      // [필수] 합계금액 (공급가액 합계+세액합계)
+        $Statement->supplyCostTotal = '200000' ;    // 공급가액 합계
+        $Statement->taxTotal = '20000';       // 세액 합계
+        $Statement->totalAmount = '220000';      // 합계금액 (공급가액 합계+세액합계)
         $Statement->serialNum = '123';       // 기재상 일련번호 항목
         $Statement->remark1 = '비고1';
         $Statement->remark2 = '비고2';
         $Statement->remark3 = '비고3';
-        $Statement->businessLicenseYN = False;     //사업자등록증 첨부 여부
-        $Statement->bankBookYN = False;       //통장사본 첨부 여부
-        $Statement->smssendYN = False;       //발행시 안내문자 전송여부
+
+        // 사업자등록증 이미지 첨부여부 (true / false 중 택 1)
+        // └ true = 첨부 , false = 미첨부(기본값)
+        // - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
+        $Statement->businessLicenseYN = False;
+
+        // 통장사본 이미지 첨부여부 (true / false 중 택 1)
+        // └ true = 첨부 , false = 미첨부(기본값)
+        // - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
+        $Statement->bankBookYN = False;
+
+        // 문자 자동전송 여부 (true / false 중 택 1)
+        // └ true = 전송 , false = 미전송(기본값)
+        $Statement->smssendYN = False;
 
         /************************************************************
          *                       상세항목(품목) 정보
@@ -326,7 +351,7 @@ class StatementController extends Controller
         $Statement->detailList = array();
         $Statement->detailList[0] = new StatementDetail();
         $Statement->detailList[0]->serialNum = '1';     //품목 일련번호 1부터 순차 기재
-        $Statement->detailList[0]->purchaseDT = '20210701';   //거래일자 yyyyMMdd
+        $Statement->detailList[0]->purchaseDT = '20220405';   //거래일자 yyyyMMdd
         $Statement->detailList[0]->itemName = '품명';
         $Statement->detailList[0]->spec = '규격';
         $Statement->detailList[0]->unit = '단위';
@@ -343,7 +368,7 @@ class StatementController extends Controller
 
         $Statement->detailList[1] = new StatementDetail();
         $Statement->detailList[1]->serialNum = '2';     //품목 일련번호 순차기재
-        $Statement->detailList[1]->purchaseDT = '20210701';   //거래일자 yyyyMMdd
+        $Statement->detailList[1]->purchaseDT = '20220405';   //거래일자 yyyyMMdd
         $Statement->detailList[1]->itemName = '품명';
         $Statement->detailList[1]->spec = '규격';
         $Statement->detailList[1]->unit = '단위';
@@ -361,7 +386,8 @@ class StatementController extends Controller
         /************************************************************
          * 전자명세서 추가속성
          * - 추가속성에 관한 자세한 사항은 "[전자명세서 API 연동매뉴얼] >
-         *   5.2. 기본양식 추가속성 테이블"을 참조하시기 바랍니다.
+         *   기본양식 추가속성 테이블"을 참조하시기 바랍니다.
+         * [https://docs.popbill.com/statement/propertyBag?lang=phplaravel]
          ************************************************************/
         $Statement->propertyBag = array(
             'Balance' => '50000',
@@ -393,7 +419,7 @@ class StatementController extends Controller
 
         // 전자명세서 문서번호
         // 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
-        $mgtKey = '20210701-003';
+        $mgtKey = '20220405-PHP7-002';
 
         // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
         $itemCode = '121';
@@ -405,13 +431,13 @@ class StatementController extends Controller
          *                       전자명세서 정보
          ************************************************************/
 
-        // [필수] 기재상 작성일자
-        $Statement->writeDate = '20210701';
+        // 기재상 작성일자
+        $Statement->writeDate = '20220405';
 
-        // [필수] (영수, 청구) 중 기재
+        // {영수, 청구, 없음} 중 기재
         $Statement->purposeType = '청구';
 
-        // [필수]  과세형태, (과세, 영세, 면세) 중 기재
+        //  과세형태, (과세, 영세, 면세) 중 기재
         $Statement->taxType = '과세';
 
         // 맞춤양식코드, 미기재시 기본양식으로 처리
@@ -434,9 +460,9 @@ class StatementController extends Controller
         $Statement->senderBizClass = '공급자 업종';
         $Statement->senderBizType = '공급자 업태';
         $Statement->senderContactName = '공급자 담당자명';
-        $Statement->senderTEL = '070-7070-0707';
-        $Statement->senderHP = '010-000-2222';
-        $Statement->senderEmail = 'test@test.com';
+        $Statement->senderTEL = '';
+        $Statement->senderHP = '';
+        $Statement->senderEmail = '';
 
         /************************************************************
          *                         공급받는자 정보
@@ -449,26 +475,37 @@ class StatementController extends Controller
         $Statement->receiverBizClass = '공급받는자 업종';
         $Statement->receiverBizType = '공급받는자 업태';
         $Statement->receiverContactName = '공급받는자 담당자명';
-        $Statement->receiverTEL = '010-0000-1111';
-        $Statement->receiverHP = '010-1111-2222';
+        $Statement->receiverTEL = '';
+        $Statement->receiverHP = '';
 
         // 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
         // 실제 거래처의 메일주소가 기재되지 않도록 주의
-        $Statement->receiverEmail = 'test@test.com';
+        $Statement->receiverEmail = '';
 
         /************************************************************
          *                       전자명세서 기재정보
          ************************************************************/
-        $Statement->supplyCostTotal = '200000' ;    // [필수] 공급가액 합계
-        $Statement->taxTotal = '20000';       // [필수] 세액 합계
-        $Statement->totalAmount = '220000';      // [필수] 합계금액 (공급가액 합계+세액합계)
+        $Statement->supplyCostTotal = '200000' ;    // 공급가액 합계
+        $Statement->taxTotal = '20000';       // 세액 합계
+        $Statement->totalAmount = '220000';      // 합계금액 (공급가액 합계+세액합계)
         $Statement->serialNum = '123';       // 기재상 일련번호 항목
         $Statement->remark1 = '비고1';
         $Statement->remark2 = '비고2';
         $Statement->remark3 = '비고3';
-        $Statement->businessLicenseYN = False;     //사업자등록증 첨부 여부
-        $Statement->bankBookYN = False;       //통장사본 첨부 여부
-        $Statement->smssendYN = False;       //발행시 안내문자 전송여부
+
+        // 사업자등록증 이미지 첨부여부 (true / false 중 택 1)
+        // └ true = 첨부 , false = 미첨부(기본값)
+        // - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
+        $Statement->businessLicenseYN = False;
+
+        // 통장사본 이미지 첨부여부 (true / false 중 택 1)
+        // └ true = 첨부 , false = 미첨부(기본값)
+        // - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
+        $Statement->bankBookYN = False;
+
+        // 문자 자동전송 여부 (true / false 중 택 1)
+        // └ true = 전송 , false = 미전송(기본값)
+        $Statement->smssendYN = False;
 
         /************************************************************
          *                       상세항목(품목) 정보
@@ -476,7 +513,7 @@ class StatementController extends Controller
         $Statement->detailList = array();
         $Statement->detailList[0] = new StatementDetail();
         $Statement->detailList[0]->serialNum = '1';     //품목 일련번호 1부터 순차 기재
-        $Statement->detailList[0]->purchaseDT = '20210701';   //거래일자 yyyyMMdd
+        $Statement->detailList[0]->purchaseDT = '20220405';   //거래일자 yyyyMMdd
         $Statement->detailList[0]->itemName = '품명';
         $Statement->detailList[0]->spec = '규격';
         $Statement->detailList[0]->unit = '단위';
@@ -493,7 +530,7 @@ class StatementController extends Controller
 
         $Statement->detailList[1] = new StatementDetail();
         $Statement->detailList[1]->serialNum = '2';     //품목 일련번호 순차기재
-        $Statement->detailList[1]->purchaseDT = '20210701';   //거래일자 yyyyMMdd
+        $Statement->detailList[1]->purchaseDT = '20220405';   //거래일자 yyyyMMdd
         $Statement->detailList[1]->itemName = '품명';
         $Statement->detailList[1]->spec = '규격';
         $Statement->detailList[1]->unit = '단위';
@@ -511,7 +548,8 @@ class StatementController extends Controller
         /************************************************************
          * 전자명세서 추가속성
          * - 추가속성에 관한 자세한 사항은 "[전자명세서 API 연동매뉴얼] >
-         *   5.2. 기본양식 추가속성 테이블"을 참조하시기 바랍니다.
+         *   기본양식 추가속성 테이블"을 참조하시기 바랍니다.
+         * [https://docs.popbill.com/statement/propertyBag?lang=phplaravel]
          ************************************************************/
         $Statement->propertyBag = array(
             'Balance' => '50000',
@@ -534,8 +572,9 @@ class StatementController extends Controller
 
     /**
      * "임시저장" 상태의 전자명세서를 발행하여, "발행완료" 상태로 처리합니다.
-     * - 팝빌 사이트 [전자명세서] > [환경설정] > [전자명세서 관리] 메뉴의 발행시 자동승인 옵션 설정을 통해 전자명세서를 "발행완료" 상태가 아닌 "승인대기" 상태로 발행 처리 할 수 있습니다.
-     * - 전자명세서 발행 함수 호출시 포인트가 과금되며, 수신자에게 발행 안내 메일이 발송됩니다.
+     * - 팝빌 사이트 [전자명세서] > [환경설정] > [전자명세서 관리] 메뉴의 발행시 자동승인 옵션 설정을 통해
+     *   전자명세서를 "발행완료" 상태가 아닌 "승인대기" 상태로 발행 처리 할 수 있습니다.
+     * - 전자명세서 발행 함수 호출시 수신자에게 발행 안내 메일이 발송됩니다.
      * - https://docs.popbill.com/statement/phplaravel/api#StmIssue
      */
     public function Issue(){
@@ -547,7 +586,7 @@ class StatementController extends Controller
         $itemCode = '121';
 
         // 전자명세서 문서번호
-        $MgtKey = '20210701-003';
+        $MgtKey = '20220405-PHP7-002';
 
         // 메모
         $memo = '전자명세서 발행 메모';
@@ -567,6 +606,7 @@ class StatementController extends Controller
 
     /**
      * 발신자가 발행한 전자명세서를 발행취소합니다.
+     * - "발행취소" 상태의 전자명세서를 삭제(Delete API) 함수를 이용하면, 전자명세서 관리를 위해 부여했던 문서번호를 재사용 할 수 있습니다.
      * - https://docs.popbill.com/statement/phplaravel/api#CancelIssue
      */
     public function CancelIssue(){
@@ -578,7 +618,7 @@ class StatementController extends Controller
         $itemCode = '121';
 
         // 문서번호
-        $MgtKey = '20210701-003';
+        $MgtKey = '20220405-PHP7-002';
 
         // 메모
         $memo = '전자명세서 발행취소 메모';
@@ -611,7 +651,7 @@ class StatementController extends Controller
         $itemCode = '121';
 
         // 문서번호
-        $MgtKey = '20210701-003';
+        $MgtKey = '20220405-PHP7-002';
 
         try {
             $result = $this->PopbillStatement->Delete($testCorpNum, $itemCode, $MgtKey);
@@ -639,7 +679,7 @@ class StatementController extends Controller
         $itemCode = '121';
 
         // 문서번호
-        $mgtKey = '20210701-001';
+        $mgtKey = '20220405-PHP7-001';
 
         try {
             $result = $this->PopbillStatement->GetInfo($testCorpNum, $itemCode, $mgtKey);
@@ -667,9 +707,8 @@ class StatementController extends Controller
 
         // 조회할 전자명세서 문서번호 배열, 최대 1000건
         $MgtKeyList = array(
-            '20210701-001',
-            '20210701-002',
-            '20210701-003'
+            '20220405-PHP7-001',
+            '20220405-PHP7-002'
         );
 
         try {
@@ -697,7 +736,7 @@ class StatementController extends Controller
         $itemCode = '121';
 
         // 문서번호
-        $mgtKey = '20210701-002';
+        $mgtKey = '20220405-PHP7-001';
 
         try {
             $result = $this->PopbillStatement->GetDetailInfo($testCorpNum, $itemCode, $mgtKey);
@@ -720,16 +759,18 @@ class StatementController extends Controller
         // 팝빌회원 사업자번호, '-'제외 10자리
         $testCorpNum = '1234567890';
 
-        // [필수] 조회일자 유형, R-등록일자, W-작성일자, I-발행일자
+        // 일자 유형 ("R" , "W" , "I" 중 택 1)
+         // └ R = 등록일자 , W = 작성일자 , I = 발행일자
         $DType = 'W';
 
-        // [필수] 시작일자
-        $SDate = '20210701';
+        // 시작일자
+        $SDate = '20220401';
 
-        // [필수] 종료일자
-        $EDate = '20210730';
+        // 종료일자
+        $EDate = '20220430';
 
-        // 전송상태값 배열, 문서상태값 3자리 배열, 2,3번째 와일드카드 사용가능
+        // 전자명세서 상태코드 배열 (2,3번째 자리에 와일드카드(*) 사용 가능)
+        // - 미입력시 전체조회
         $State = array(
             '100',
             '2**',
@@ -755,7 +796,8 @@ class StatementController extends Controller
         // 정렬방향, D-내림차순, A-오름차순
         $Order = 'D';
 
-        // 거래처 조회, 거래처 상호 또는 거래처 사업자등록번호 기재하여 조회, 미기재시 전체조회
+        // 통합검색어, 거래처 상호명 또는 거래처 사업자번호로 조회
+        // - 미입력시 전체조회
         $QString = '';
 
         try {
@@ -783,7 +825,7 @@ class StatementController extends Controller
         $itemCode = '121';
 
         // 문서번호
-        $mgtKey = '20210701-001';
+        $mgtKey = '20220405-PHP7-001';
 
         try {
             $result = $this->PopbillStatement->GetLogs($testCorpNum, $itemCode, $mgtKey);
@@ -824,7 +866,7 @@ class StatementController extends Controller
     }
 
     /**
-     * 팝빌 사이트와 동일한 전자명세서 1건의 상세 정보 페이지의 팝업 URL을 반환합니다.
+     * 전자명세서 1건의 상세 정보 페이지의 팝업 URL을 반환합니다.
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://docs.popbill.com/statement/phplaravel/api#GetPopUpURL
      */
@@ -837,7 +879,7 @@ class StatementController extends Controller
         $itemCode = '121';
 
         // 전자명세서 문서번호
-        $mgtKey = '20210701-001';
+        $mgtKey = '20220405-PHP7-001';
 
         try {
             $url = $this->PopbillStatement->GetPopUpURL($testCorpNum, $itemCode, $mgtKey);
@@ -851,7 +893,7 @@ class StatementController extends Controller
     }
 
     /**
-     * 팝빌 사이트와 동일한 전자명세서 1건의 상세 정보 페이지(사이트 상단, 좌측 메뉴 및 버튼 제외)의 팝업 URL을 반환합니다.
+     * 전자명세서 1건의 상세 정보 페이지(사이트 상단, 좌측 메뉴 및 버튼 제외)의 팝업 URL을 반환합니다.
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://docs.popbill.com/statement/phplaravel/api#GetViewURL
      */
@@ -864,7 +906,7 @@ class StatementController extends Controller
         $itemCode = '121';
 
         // 전자명세서 문서번호
-        $mgtKey = '20210701-001';
+        $mgtKey = '20220405-PHP7-001';
 
         try {
             $url = $this->PopbillStatement->GetViewURL($testCorpNum, $itemCode, $mgtKey);
@@ -880,6 +922,7 @@ class StatementController extends Controller
     /**
      * 전자명세서 1건을 인쇄하기 위한 페이지의 팝업 URL을 반환하며, 페이지내에서 인쇄 설정값을 "공급자" / "공급받는자" / "공급자+공급받는자"용 중 하나로 지정할 수 있습니다.
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * - 전자명세서의 공급자는 "발신자", 공급받는자는 "수신자"를 나타내는 용어입니다.
      * - https://docs.popbill.com/statement/phplaravel/api#GetPrintURL
      */
     public function GetPrintURL(){
@@ -891,7 +934,7 @@ class StatementController extends Controller
         $itemCode = '121';
 
         // 전자명세서 문서번호
-        $mgtKey = '20210701-001';
+        $mgtKey = '20220405-PHP7-001';
 
         try {
             $url = $this->PopbillStatement->GetPrintURL($testCorpNum, $itemCode, $mgtKey);
@@ -907,6 +950,7 @@ class StatementController extends Controller
     /**
      * "공급받는자" 용 전자명세서 1건을 인쇄하기 위한 페이지의 팝업 URL을 반환합니다.
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * - 전자명세서의 공급받는자는 "수신자"를 나타내는 용어입니다.
      * - https://docs.popbill.com/statement/phplaravel/api#GetEPrintURL
      */
     public function GetEPrintURL(){
@@ -918,7 +962,7 @@ class StatementController extends Controller
         $itemCode = '121';
 
         // 문서번호
-        $mgtKey = '20210701-001';
+        $mgtKey = '20220405-PHP7-001';
 
         try {
             $url = $this->PopbillStatement->GetEPrintURL($testCorpNum, $itemCode, $mgtKey);
@@ -947,9 +991,8 @@ class StatementController extends Controller
 
         // 문서번호 배열, 최대 100건
         $mgtKeyList = array (
-            '20210801-001',
-            '20210801-002',
-            '20210801-003'
+            '20220405-PHP7-001',
+            '20220405-PHP7-002'
         );
 
         try {
@@ -964,7 +1007,7 @@ class StatementController extends Controller
     }
 
     /**
-     * 안내메일과 관련된 전자명세서를 확인 할 수 있는 상세 페이지의 팝업 URL을 반환하며, 해당 URL은 메일 하단의 파란색 버튼의 링크와 같습니다.
+     * 전자명세서 안내메일의 상세보기 링크 URL을 반환합니다.
      * - 함수 호출로 반환 받은 URL에는 유효시간이 없습니다.
      * - https://docs.popbill.com/statement/phplaravel/api#GetMailURL
      */
@@ -977,7 +1020,7 @@ class StatementController extends Controller
         $itemCode = '121';
 
         // 전자명세서 문서번호
-        $mgtKey = '20210801-001';
+        $mgtKey = '20220405-PHP7-001';
 
         try {
             $url = $this->PopbillStatement->GetMailURL($testCorpNum, $itemCode, $mgtKey);
@@ -1015,6 +1058,30 @@ class StatementController extends Controller
     }
 
     /**
+     * 전자명세서에 첨부할 인감, 사업자등록증, 통장사본을 등록하는 페이지의 팝업 URL을 반환합니다.
+     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * - https://docs.popbill.com/statement/phplaravel/api#GetSealURL
+     */
+    public function GetSealURL(){
+
+        // 팝빌 회원 사업자번호, '-' 제외 10자리
+        $testCorpNum = '1234567890';
+
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
+        try {
+            $url = $this->PopbillStatement->GetSealURL($testCorpNum, $testUserID);
+        }
+        catch(PopbillException $pe) {
+            $code = $pe->getCode();
+            $message = $pe->getMessage();
+            return view('PResponse', ['code' => $code, 'message' => $message]);
+        }
+        return view('ReturnValue', ['filedName' => "인감 및 첨부문서 등록 URL" , 'value' => $url]);
+    }
+
+    /**
      * "임시저장" 상태의 명세서에 1개의 파일을 첨부합니다. (최대 5개)
      * - https://docs.popbill.com/statement/phplaravel/api#AttachFile
      */
@@ -1027,10 +1094,10 @@ class StatementController extends Controller
         $itemCode= '121';
 
         // 문서번호
-        $mgtKey = '20210801-003';
+        $mgtKey = '20220405-PHP7-002';
 
         // 첨부파일 경로, 해당 파일에 읽기 권한이 설정되어 있어야 합니다.
-        $filePath = '/Users/John/Desktop/03A4C36315C047B4A171CEF283ED9A40.jpg';
+        $filePath = '/image.jpg';
 
         try {
             $result = $this->PopbillStatement->AttachFile($testCorpNum, $itemCode, $mgtKey, $filePath);
@@ -1043,34 +1110,6 @@ class StatementController extends Controller
         }
 
         return view('PResponse', ['code' => $code, 'message' => $message])
-    }
-
-    /**
-     * 전자명세서에 첨부된 파일목록을 확인합니다.
-     * - 응답항목 중 파일아이디(AttachedFile) 항목은 파일삭제(DeleteFile API) 호출시 이용할 수 있습니다.
-     * - https://docs.popbill.com/statement/phplaravel/api#GetFiles
-     */
-    public function GetFiles(){
-
-        // 팝빌회원 사업자번호, '-'제외 10자리
-        $testCorpNum = '1234567890';
-
-        // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
-        $itemCode = '121';
-
-        // 문서번호
-        $mgtKey = '20210801-003';
-
-        try {
-            $result = $this->PopbillStatement->GetFiles($testCorpNum, $itemCode, $mgtKey);
-        }
-        catch(PopbillException $pe) {
-            $code = $pe->getCode();
-            $message = $pe->getMessage();
-            return view('PResponse', ['code' => $code, 'message' => $message]);
-        }
-
-        return view('GetFiles', ['Result' => $result] );
     }
 
     /**
@@ -1087,10 +1126,11 @@ class StatementController extends Controller
         $itemCode = '121';
 
         // 문서번호
-        $mgtKey = '20210801-003';
+        $mgtKey = '20220405-PHP7-002';
 
-        // 첨부된 파일의 아이디, GetFiles API 응답항목중 AttachedFile 항목
-        $FileID= '7D536E85-7CA7-44AA-89F4-A85781A1CD55.PBF';
+        // 팝빌이 첨부파일 관리를 위해 할당하는 식별번호
+        // 첨부파일 목록 확인(getFiles API) 함수의 리턴 값 중 attachedFile 필드값 기재.
+        $FileID= '';
 
         try {
             $result = $this->PopbillStatement->DeleteFile($testCorpNum, $itemCode, $mgtKey, $FileID);
@@ -1106,6 +1146,34 @@ class StatementController extends Controller
     }
 
     /**
+     * 전자명세서에 첨부된 파일목록을 확인합니다.
+     * - 응답항목 중 파일아이디(AttachedFile) 항목은 파일삭제(DeleteFile API) 호출시 이용할 수 있습니다.
+     * - https://docs.popbill.com/statement/phplaravel/api#GetFiles
+     */
+    public function GetFiles(){
+
+        // 팝빌회원 사업자번호, '-'제외 10자리
+        $testCorpNum = '1234567890';
+
+        // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
+        $itemCode = '121';
+
+        // 문서번호
+        $mgtKey = '20220405-PHP7-002';
+
+        try {
+            $result = $this->PopbillStatement->GetFiles($testCorpNum, $itemCode, $mgtKey);
+        }
+        catch(PopbillException $pe) {
+            $code = $pe->getCode();
+            $message = $pe->getMessage();
+            return view('PResponse', ['code' => $code, 'message' => $message]);
+        }
+
+        return view('GetFiles', ['Result' => $result] );
+    }
+
+    /**
      * "승인대기", "발행완료" 상태의 전자명세서와 관련된 발행 안내 메일을 재전송 합니다.
      * - https://docs.popbill.com/statement/phplaravel/api#SendEmail
      */
@@ -1118,10 +1186,10 @@ class StatementController extends Controller
         $itemCode = '121';
 
         // 문서번호
-        $mgtKey = '20210801-001';
+        $mgtKey = '20220405-PHP7-001';
 
         // 수신자 이메일주소
-        $receiver = 'test@test.com';
+        $receiver = '';
 
         try {
             $result = $this->PopbillStatement->SendEmail($testCorpNum, $itemCode, $mgtKey, $receiver);
@@ -1151,16 +1219,16 @@ class StatementController extends Controller
         $itemCode = '121';
 
         // 문서번호
-        $mgtKey = '20210801-001';
+        $mgtKey = '20220405-PHP7-001';
 
         // 발신번호
-        $sender = '07043042991';
+        $sender = '';
 
         // 수신번호
-        $receiver = '010111222';
+        $receiver = '';
 
         // 메시지 내용, 90byte 초과시 길이가 조정되어 전송됨
-        $contents = '메세지 전송 내용입니다. 메세지의 길이가 90Byte를 초과하는 길이가 조정되어 전송되오니 참고하여 테스트하시기 바랍니다';
+        $contents = '전자명세서 문자메시지 전송 테스트입니다.';
 
         try {
             $result = $this->PopbillStatement->SendSMS($testCorpNum, $itemCode, $mgtKey, $sender,
@@ -1190,13 +1258,13 @@ class StatementController extends Controller
         $itemCode = '121';
 
         // 문서번호
-        $mgtKey = '20210801-001';
+        $mgtKey = '20220405-PHP7-001';
 
         // 발신번호
-        $sender = '07043042991';
+        $sender = '';
 
         // 수신팩스번호
-        $receiver = '070111222';
+        $receiver = '';
 
         try {
             $result = $this->PopbillStatement->SendFAX($testCorpNum, $itemCode, $mgtKey, $sender, $receiver);
@@ -1215,7 +1283,7 @@ class StatementController extends Controller
      * 전자명세서를 팩스로 전송하는 함수로, 팝빌에 데이터를 저장하는 과정이 없습니다.
      * - 팝빌 사이트 [문자·팩스] > [팩스] > [전송내역] 메뉴에서 전송결과를 확인 할 수 있습니다.
      * - 함수 호출시 포인트가 과금됩니다.
-     * - 팩스 발행 요청시 작성한 문서번호는 팩스전송 파일명으로 사용됩니다.
+     * - 선팩스 전송 요청시 작성한 문서번호는 팩스전송 파일명으로 사용됩니다.
      * - 팩스 전송결과를 확인하기 위해서는 선팩스 전송 요청 시 반환받은 접수번호를 이용하여 팩스 API의 전송결과 확인 (GetFaxDetail) API를 이용하면 됩니다.
      * - https://docs.popbill.com/statement/phplaravel/api#FAXSend
      */
@@ -1225,16 +1293,16 @@ class StatementController extends Controller
         $testCorpNum = '1234567890';
 
         // 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
-        $mgtKey = '20210801-005';
+        $mgtKey = '20220405-PHP7-003';
 
         // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
         $itemCode = '121';
 
         // 팩스전송 발신번호
-        $sendNum = '07043042991';
+        $sendNum = '';
 
         // 팩스수신번호
-        $receiveNum = '070111222';
+        $receiveNum = '';
 
         // 전자명세서 객체 생성
         $Statement = new Statement();
@@ -1242,13 +1310,13 @@ class StatementController extends Controller
         /************************************************************
          *                       전자명세서 정보
          ************************************************************/
-        // [필수] 기재상 작성일자
-        $Statement->writeDate = '20210801';
+        // 기재상 작성일자
+        $Statement->writeDate = '20220405';
 
-        // [필수] (영수, 청구) 중 기재
+        // {영수, 청구, 없음} 중 기재
         $Statement->purposeType = '영수';
 
-        // [필수]  과세형태, (과세, 영세, 면세) 중 기재
+        //  과세형태, (과세, 영세, 면세) 중 기재
         $Statement->taxType = '과세';
 
         // 맞춤양식코드, 미기재시 기본양식으로 처리
@@ -1271,9 +1339,9 @@ class StatementController extends Controller
         $Statement->senderBizClass = '공급자 업종';
         $Statement->senderBizType = '공급자 업태';
         $Statement->senderContactName = '공급자 담당자명';
-        $Statement->senderTEL = '070-7070-0707';
-        $Statement->senderHP = '010-000-2222';
-        $Statement->senderEmail = 'test@test.com';
+        $Statement->senderTEL = '';
+        $Statement->senderHP = '';
+        $Statement->senderEmail = '';
 
         /************************************************************
          *                         공급받는자 정보
@@ -1286,26 +1354,37 @@ class StatementController extends Controller
         $Statement->receiverBizClass = '공급받는자 업종';
         $Statement->receiverBizType = '공급받는자 업태';
         $Statement->receiverContactName = '공급받는자 담당자명';
-        $Statement->receiverTEL = '010-0000-1111';
-        $Statement->receiverHP = '010-1111-2222';
+        $Statement->receiverTEL = '';
+        $Statement->receiverHP = '';
 
         // 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
         // 실제 거래처의 메일주소가 기재되지 않도록 주의
-        $Statement->receiverEmail = 'test@test.com';
+        $Statement->receiverEmail = '';
 
         /************************************************************
          *                       전자명세서 기재정보
          ************************************************************/
-        $Statement->supplyCostTotal = '200000' ;    // [필수] 공급가액 합계
-        $Statement->taxTotal = '20000';       // [필수] 세액 합계
-        $Statement->totalAmount = '220000';      // [필수] 합계금액 (공급가액 합계+세액합계)
+        $Statement->supplyCostTotal = '200000' ;    // 공급가액 합계
+        $Statement->taxTotal = '20000';       // 세액 합계
+        $Statement->totalAmount = '220000';      // 합계금액 (공급가액 합계+세액합계)
         $Statement->serialNum = '123';       // 기재상 일련번호 항목
         $Statement->remark1 = '비고1';
         $Statement->remark2 = '비고2';
         $Statement->remark3 = '비고3';
-        $Statement->businessLicenseYN = False;     //사업자등록증 첨부 여부
-        $Statement->bankBookYN = False;       //통장사본 첨부 여부
-        $Statement->smssendYN = False;       //발행시 안내문자 전송여부
+
+        // 사업자등록증 이미지 첨부여부 (true / false 중 택 1)
+        // └ true = 첨부 , false = 미첨부(기본값)
+        // - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
+        $Statement->businessLicenseYN = False;
+
+        // 통장사본 이미지 첨부여부 (true / false 중 택 1)
+        // └ true = 첨부 , false = 미첨부(기본값)
+        // - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
+        $Statement->bankBookYN = False;
+
+        // 문자 자동전송 여부 (true / false 중 택 1)
+        // └ true = 전송 , false = 미전송(기본값)
+        $Statement->smssendYN = False;
 
         /************************************************************
          *                       상세항목(품목) 정보
@@ -1313,7 +1392,7 @@ class StatementController extends Controller
         $Statement->detailList = array();
         $Statement->detailList[0] = new StatementDetail();
         $Statement->detailList[0]->serialNum = '1';     //품목 일련번호 1부터 순차 기재
-        $Statement->detailList[0]->purchaseDT = '20210801';   //거래일자 yyyyMMdd
+        $Statement->detailList[0]->purchaseDT = '20220405';   //거래일자 yyyyMMdd
         $Statement->detailList[0]->itemName = '품명';
         $Statement->detailList[0]->spec = '규격';
         $Statement->detailList[0]->unit = '단위';
@@ -1330,7 +1409,7 @@ class StatementController extends Controller
 
         $Statement->detailList[1] = new StatementDetail();
         $Statement->detailList[1]->serialNum = '2';     //품목 일련번호 순차기재
-        $Statement->detailList[1]->purchaseDT = '20210801';   //거래일자 yyyyMMdd
+        $Statement->detailList[1]->purchaseDT = '20220405';   //거래일자 yyyyMMdd
         $Statement->detailList[1]->itemName = '품명';
         $Statement->detailList[1]->spec = '규격';
         $Statement->detailList[1]->unit = '단위';
@@ -1348,7 +1427,8 @@ class StatementController extends Controller
         /************************************************************
          * 전자명세서 추가속성
          * - 추가속성에 관한 자세한 사항은 "[전자명세서 API 연동매뉴얼] >
-         *   5.2. 기본양식 추가속성 테이블"을 참조하시기 바랍니다.
+         *   기본양식 추가속성 테이블"을 참조하시기 바랍니다.
+         * [https://docs.popbill.com/statement/propertyBag?lang=phplaravel]
          ************************************************************/
         $Statement->propertyBag = array(
             'Balance' => '50000',
@@ -1369,30 +1449,6 @@ class StatementController extends Controller
     }
 
     /**
-     * 전자명세서에 첨부할 인감, 사업자등록증, 통장사본을 등록하는 페이지의 팝업 URL을 반환합니다.
-     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-     * - https://docs.popbill.com/statement/phplaravel/api#GetSealURL
-     */
-    public function GetSealURL(){
-
-        // 팝빌 회원 사업자번호, '-' 제외 10자리
-        $testCorpNum = '1234567890';
-
-        // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
-
-        try {
-            $url = $this->PopbillStatement->GetSealURL($testCorpNum, $testUserID);
-        }
-        catch(PopbillException $pe) {
-            $code = $pe->getCode();
-            $message = $pe->getMessage();
-            return view('PResponse', ['code' => $code, 'message' => $message]);
-        }
-        return view('ReturnValue', ['filedName' => "인감 및 첨부문서 등록 URL" , 'value' => $url]);
-  }
-
-    /**
      * 하나의 전자명세서에 다른 전자명세서를 첨부합니다.
      * - https://docs.popbill.com/statement/phplaravel/api#AttachStatement
      */
@@ -1405,13 +1461,13 @@ class StatementController extends Controller
         $itemCode = '121';
 
         // 문서번호
-        $mgtKey = '20210801-001';
+        $mgtKey = '20220405-PHP7-001';
 
         // 첨부할 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
         $subItemCode = '121';
 
         // 첨부할 명세서 문서번호
-        $subMgtKey = '20210801-002';
+        $subMgtKey = '20220405-PHP7-002';
 
         try {
             $result = $this->PopbillStatement->AttachStatement($testCorpNum, $itemCode, $mgtKey, $subItemCode, $subMgtKey);
@@ -1439,13 +1495,13 @@ class StatementController extends Controller
         $itemCode = '121';
 
         // 문서번호
-        $mgtKey = '20210801-001';
+        $mgtKey = '20220405-PHP7-001';
 
         // 첨부해제할 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
         $subItemCode = '121';
 
         // 첨부해제할 명세서 문서번호
-        $subMgtKey = '20210801-002';
+        $subMgtKey = '20220405-PHP7-002';
 
         try {
             $result = $this->PopbillStatement->DetachStatement($testCorpNum, $itemCode, $mgtKey, $subItemCode, $subMgtKey);
@@ -1611,7 +1667,7 @@ class StatementController extends Controller
 
     /**
      * 파트너의 잔여포인트를 확인합니다.
-     * - 과금방식이 연동과금인 경우 연동회원 잔여포인트(GetBalance API)를 이용하시기 바랍니다.
+     * - 과금방식이 연동과금인 경우 연동회원 잔여포인트 확인(GetBalance API) 함수를 이용하시기 바랍니다.
      * - https://docs.popbill.com/statement/phplaravel/api#GetPartnerBalance
      */
     public function GetPartnerBalance(){
@@ -1714,8 +1770,7 @@ class StatementController extends Controller
         // 사업자번호, "-"제외 10자리
         $testCorpNum = '1234567890';
 
-        // 파트너 링크아이디
-        // /config/popbill.php 선언된 파트너 링크아이디
+        // 연동신청 시 팝빌에서 발급받은 링크아이디
         $LinkID = config('popbill.LinkID');
 
         try {
@@ -1783,13 +1838,13 @@ class StatementController extends Controller
         $joinForm->BizClass = '종목';
 
         // 담당자명
-        $joinForm->ContactName = '담당자상명';
+        $joinForm->ContactName = '담당자성명';
 
         // 담당자 이메일
-        $joinForm->ContactEmail = 'tester@test.com';
+        $joinForm->ContactEmail = '';
 
         // 담당자 연락처
-        $joinForm->ContactTEL = '07043042991';
+        $joinForm->ContactTEL = '';
 
         // 아이디, 6자 이상 20자미만
         $joinForm->ID = 'userid_phpdd';
@@ -1893,16 +1948,10 @@ class StatementController extends Controller
         $ContactInfo->personName = '담당자_수정';
 
         // 연락처
-        $ContactInfo->tel = '070-4304-2991';
-
-        // 핸드폰번호
-        $ContactInfo->hp = '010-1234-1234';
+        $ContactInfo->tel = '';
 
         // 이메일주소
-        $ContactInfo->email = 'test@test.com';
-
-        // 팩스
-        $ContactInfo->fax = '070-111-222';
+        $ContactInfo->email = '';
 
         // 담당자 권한, 1 : 개인권한, 2 : 읽기권한, 3: 회사권한
         $ContactInfo->searchRole = 3;
@@ -1990,16 +2039,10 @@ class StatementController extends Controller
         $ContactInfo->id = 'testkorea';
 
         // 담당자 연락처
-        $ContactInfo->tel = '070-4304-2991';
-
-        // 핸드폰 번호
-        $ContactInfo->hp = '010-1234-1234';
+        $ContactInfo->tel = '';
 
         // 이메일 주소
-        $ContactInfo->email = 'test@test.com';
-
-        // 팩스번호
-        $ContactInfo->fax = '070-111-222';
+        $ContactInfo->email = '';
 
         // 담당자 권한, 1 : 개인권한, 2 : 읽기권한, 3: 회사권한
         $ContactInfo->searchRole = 3;

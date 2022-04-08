@@ -87,7 +87,6 @@ class FaxController extends Controller
 
     /**
      * 팩스 1건을 전송합니다. (최대 전송파일 개수: 20개)
-     * - 팩스전송 문서 파일포맷 안내 : https://docs.popbill.com/fax/format?lang=phplaravel
      * - https://docs.popbill.com/fax/phplaravel/api#SendFAX
      */
     public function SendFAX(){
@@ -99,7 +98,8 @@ class FaxController extends Controller
         $testUserID = 'testkorea';
 
         // 팩스전송 발신번호
-        $Sender = '07043042992';
+        // 팝빌에 등록되지 않은 번호를 입력하는 경우 '원발신번호'로 팩스 전송됨
+        $Sender = '07043042991';
 
         // 팩스전송 발신자명
         $SenderName = '발신자명';
@@ -109,23 +109,25 @@ class FaxController extends Controller
             // 팩스 수신번호
             'rcv' => '070111222',
             // 수신자명
-            'rcvnm' => '팝빌담당자'
+            'rcvnm' => '수신자명'
         );
 
         // 팩스전송파일, 해당파일에 읽기 권한이 설정되어 있어야 함. 최대 20개.
-        $Files = array('/Users/John/Desktop/tax_image.png');
+        $Files = array('/test.pdf');
 
         // 예약전송일시(yyyyMMddHHmmss) ex) 20151212230000, null인경우 즉시전송
         $reserveDT = null;
 
-        // 광고팩스 전송여부
+        // 광고팩스 전송여부 , true / false 중 택 1
+        // └ true = 광고 , false = 일반
+        // └ 미입력 시 기본값 false 처리
         $adsYN = false;
 
         // 팩스제목
         $title = '팩스 단건전송 제목';
 
         // 전송요청번호
-        // 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
+        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
         // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         $requestNum = '';
 
@@ -143,7 +145,6 @@ class FaxController extends Controller
 
     /**
     * 동일한 팩스파일을 다수의 수신자에게 전송하기 위해 팝빌에 접수합니다. (최대 전송파일 개수 : 20개) (최대 1,000건)
-    * - 팩스전송 문서 파일포맷 안내 : https://docs.popbill.com/fax/format?lang=phplaravel
     * - https://docs.popbill.com/fax/phplaravel/api#SendFAX
     */
     public function SendFAX_Multi(){
@@ -176,19 +177,21 @@ class FaxController extends Controller
         );
 
         // 팩스전송파일, 해당파일에 읽기 권한이 설정되어 있어야 함. 최대 20개.
-        $Files = array('/Users/John/Desktop/tax_image.png');
+        $Files = array('/test.pdf');
 
         // 예약전송일시(yyyyMMddHHmmss) ex)20151212230000, null인경우 즉시전송
         $reserveDT = null;
 
-        // 광고팩스 전송여부
+        // 광고팩스 전송여부 , true / false 중 택 1
+        // └ true = 광고 , false = 일반
+        // └ 미입력 시 기본값 false 처리
         $adsYN = false;
 
         // 팩스 제목
         $title = '팩스 동보전송 제목';
 
         // 전송요청번호
-        // 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
+        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
         // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         $requestNum = '';
 
@@ -207,7 +210,6 @@ class FaxController extends Controller
 
     /**
      * 전송할 파일의 바이너리 데이터를 팩스 1건 전송합니다. (최대 전송파일 개수: 20개)
-     * - 팩스전송 문서 파일포맷 안내 : https://docs.popbill.com/fax/format?lang=phplaravel
      * - https://docs.popbill.com/fax/phplaravel/api#SendFAXBInary
      */
     public function SendFAXBinary(){
@@ -219,7 +221,7 @@ class FaxController extends Controller
         $testUserID = 'testkorea';
 
         // 팩스전송 발신번호
-        $Sender = '07043042992';
+        $Sender = '07043042991';
 
         // 팩스전송 발신자명
         $SenderName = '발신자명';
@@ -237,14 +239,14 @@ class FaxController extends Controller
             //파일명
             'fileName' => 'test.pdf',
             //fileData - BLOB 데이터 입력
-            'fileData' => file_get_contents('/home/php/Laravel_WorkSpace/test.pdf') //file_get_contenst-바이너리데이터 추출
+            'fileData' => file_get_contents('/test.pdf') //file_get_contenst-바이너리데이터 추출
         );
 
         $FileDatas[] = array(
             //파일명
-            'fileName' => 'test2.PNG',
+            'fileName' => 'test2.pdf',
             //fileData - BLOB 데이터 입력
-            'fileData' => file_get_contents('/home/php/Laravel_WorkSpace/test2.PNG') //file_get_contenst-바이너리데이터 추출
+            'fileData' => file_get_contents('/test2.pdf') //file_get_contenst-바이너리데이터 추출
         );
 
         // 예약전송일시(yyyyMMddHHmmss) ex) 20151212230000, null인경우 즉시전송
@@ -257,7 +259,7 @@ class FaxController extends Controller
         $title = '팩스 단건전송 제목';
 
         // 전송요청번호
-        // 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
+        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
         // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         $requestNum = '';
 
@@ -275,7 +277,6 @@ class FaxController extends Controller
 
     /**
     * 동일한 파일의 바이너리 데이터를 다수의 수신자에게 전송하기 위해 팝빌에 접수합니다. (최대 전송파일 개수 : 20개) (최대 1,000건)
-    * - 팩스전송 문서 파일포맷 안내 : https://docs.popbill.com/fax/format?lang=phplaravel
     * - https://docs.popbill.com/fax/phplaravel/api#SendFAXBinary
     */
     public function SendFAXBinary_Multi(){
@@ -312,27 +313,29 @@ class FaxController extends Controller
             //파일명
             'fileName' => 'test.pdf',
             //바이너리데이터
-            'fileData' => file_get_contents('/home/php/Laravel_WorkSpace/test.pdf') //file_get_contenst-바이너리데이터 추출
+            'fileData' => file_get_contents('/test.pdf') //file_get_contenst-바이너리데이터 추출
         );
 
         $FileDatas[] = array(
             //파일명
-            'fileName' => 'test2.PNG',
+            'fileName' => 'test2.pdf',
             //바이너리데이터
-            'fileData' => file_get_contents('/home/php/Laravel_WorkSpace/test2.PNG') //file_get_contenst-바이너리데이터 추출
+            'fileData' => file_get_contents('/test2.pdf') //file_get_contenst-바이너리데이터 추출
         );
 
         // 예약전송일시(yyyyMMddHHmmss) ex)20151212230000, null인경우 즉시전송
         $reserveDT = null;
 
-        // 광고팩스 전송여부
+        // 광고팩스 전송여부 , true / false 중 택 1
+        // └ true = 광고 , false = 일반
+        // └ 미입력 시 기본값 false 처리
         $adsYN = false;
 
         // 팩스 제목
         $title = '팩스 동보전송 제목';
 
         // 전송요청번호
-        // 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
+        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
         // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         $requestNum = '';
 
@@ -353,6 +356,7 @@ class FaxController extends Controller
      * 팝빌에서 반환받은 접수번호를 통해 팩스 1건을 재전송합니다.
      * - 발신/수신 정보 미입력시 기존과 동일한 정보로 팩스가 전송되고, 접수일 기준 최대 60일이 경과되지 않는 건만 재전송이 가능합니다.
      * - 팩스 재전송 요청시 포인트가 차감됩니다. (전송실패시 환불처리)
+     * - 변환실패 사유로 전송실패한 팩스 접수건은 재전송이 불가합니다.
      * - https://docs.popbill.com/fax/phplaravel/api#ResendFAX
      */
     public function ResendFAX(){
@@ -364,7 +368,7 @@ class FaxController extends Controller
         $testUserID = 'testkorea';
 
         // 팩스 접수번호
-        $ReceiptNum = '021010316355100002';
+        $ReceiptNum = '022040516355100002';
 
         // 팩스전송 발신번호, 공백처리시 기존전송정보로 재전송
         $Sender = '07043042991';
@@ -392,9 +396,8 @@ class FaxController extends Controller
         $title = '팩스 재전송 제목';
 
         // 재전송 팩스의 전송요청번호
-        // 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
+        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
         // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
-        // 재전송 팩스의 전송상태확인(GetSendDetailRN) / 예약전송취소(CancelReserveRN) 에 이용됩니다.
         $requestNum = '';
 
         try {
@@ -412,6 +415,7 @@ class FaxController extends Controller
      * 파트너가 할당한 전송요청 번호를 통해 팩스 1건을 재전송합니다.
      * - 발신/수신 정보 미입력시 기존과 동일한 정보로 팩스가 전송되고, 접수일 기준 최대 60일이 경과되지 않는 건만 재전송이 가능합니다.
      * - 팩스 재전송 요청시 포인트가 차감됩니다. (전송실패시 환불처리)
+     * - 변환실패 사유로 전송실패한 팩스 접수건은 재전송이 불가합니다.
      * - https://docs.popbill.com/fax/phplaravel/api#ResendFAXRN
      */
     public function ResendFAXRN(){
@@ -451,9 +455,8 @@ class FaxController extends Controller
         $originalFAXrequestNum = '';
 
         // 재전송 팩스의 전송요청번호
-        // 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
+        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
         // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
-        // 재전송 팩스의 전송상태확인(GetSendDetailRN) / 예약전송취소(CancelReserveRN) 에 이용됩니다.
         $requestNum = '';
 
         try {
@@ -472,6 +475,7 @@ class FaxController extends Controller
      * 동일한 팩스파일을 다수의 수신자에게 전송하기 위해 팝빌에 접수합니다. (최대 전송파일 개수: 20개) (최대 1,000건)
      * - 발신/수신 정보 미입력시 기존과 동일한 정보로 팩스가 전송되고, 접수일 기준 최대 60일이 경과되지 않는 건만 재전송이 가능합니다.
      * - 팩스 재전송 요청시 포인트가 차감됩니다. (전송실패시 환불처리)
+     * - 변환실패 사유로 전송실패한 팩스 접수건은 재전송이 불가합니다.
      * - https://docs.popbill.com/fax/phplaravel/api#ResendFAX
      */
     public function ResendFAX_Multi(){
@@ -515,9 +519,8 @@ class FaxController extends Controller
         $originalFAXrequestNum = '';
 
         // 재전송 팩스의 전송요청번호
-        // 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
+        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
         // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
-        // 재전송 팩스의 전송상태확인(GetSendDetailRN) / 예약전송취소(CancelReserveRN) 에 이용됩니다.
         $requestNum = '';
 
         try {
@@ -536,6 +539,7 @@ class FaxController extends Controller
      * 파트너가 할당한 전송요청 번호를 통해 다수건의 팩스를 재전송합니다. (최대 전송파일 개수: 20개) (최대 1,000건)
      * - 발신/수신 정보 미입력시 기존과 동일한 정보로 팩스가 전송되고, 접수일 기준 최대 60일이 경과되지 않는 건만 재전송이 가능합니다.
      * - 팩스 재전송 요청시 포인트가 차감됩니다. (전송실패시 환불처리)
+     * - 변환실패 사유로 전송실패한 팩스 접수건은 재전송이 불가합니다.
      * - https://docs.popbill.com/fax/phplaravel/api#ResendFAXRN
      */
     public function ResendFAXRN_Multi(){
@@ -579,9 +583,8 @@ class FaxController extends Controller
         $originalFAXrequestNum = '';
 
         // 재전송 팩스의 전송요청번호
-        // 파트너가 전송 건에 대해 관리번호를 구성하여 관리하는 경우 사용.
+        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
         // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
-        // 재전송 팩스의 전송상태확인(GetSendDetailRN) / 예약전송취소(CancelReserveRN) 에 이용됩니다.
         $requestNum = '';
 
         try {
@@ -605,7 +608,7 @@ class FaxController extends Controller
         $testCorpNum = '1234567890';
 
         // 팩스예약전송 접수번호
-        $ReceiptNum = '018062617574300001';
+        $ReceiptNum = '022040517574300001';
 
         try {
             $result = $this->PopbillFax->CancelReserve($testCorpNum ,$ReceiptNum);
@@ -630,7 +633,7 @@ class FaxController extends Controller
         $testCorpNum = '1234567890';
 
         // 예약팩스전송 요청시 할당한 전송요청번호
-        $requestNum = '20210801-01';
+        $requestNum = '';
 
         try {
             $result = $this->PopbillFax->CancelReserveRN($testCorpNum ,$requestNum);
@@ -654,7 +657,7 @@ class FaxController extends Controller
         $testCorpNum = '1234567890';
 
         // 팩스전송 접수번호
-        $ReceiptNum = '021102113573800005';
+        $ReceiptNum = '022040513573800005';
 
         try {
             $result = $this->PopbillFax->GetFaxDetail($testCorpNum, $ReceiptNum);
@@ -677,7 +680,7 @@ class FaxController extends Controller
         $testCorpNum = '1234567890';
 
         // 팩스전송 요청시 할당한 전송요청번호
-        $requestNum = '20180929-001';
+        $requestNum = '';
 
         try {
             $result = $this->PopbillFax->GetFaxDetailRN($testCorpNum, $requestNum);
@@ -706,13 +709,20 @@ class FaxController extends Controller
         // 검색종료일자
         $EDate = '20210730';
 
-        // 전송상태값 배열, 1-대기, 2-성공, 3-실패, 4-취소
+        // 전송상태 배열 ("1" , "2" , "3" , "4" 중 선택, 다중 선택 가능)
+        // └ 1 = 대기 , 2 = 성공 , 3 = 실패 , 4 = 취소
+        // - 미입력 시 전체조회
         $State = array(1, 2, 3, 4);
 
-        // 예약전송 조회여부, true(예약전송건 검색)
+        // 예약여부 (false , true 중 택 1)
+        // └ false = 전체조회, true = 예약전송건 조회
+        // - 미입력시 기본값 false 처리
         $ReserveYN = false;
 
-        // 개인조회여부, true(개인조회), false(회사조회)
+        // 개인조회 여부 (false , true 중 택 1)
+        // false = 접수한 팩스 전체 조회 (관리자권한)
+        // true = 해당 담당자 계정으로 접수한 팩스만 조회 (개인권한)
+        // 미입력시 기본값 false 처리
         $SenderOnly = false;
 
         // 페이지 번호, 기본값 1
@@ -724,9 +734,8 @@ class FaxController extends Controller
         // 정렬방향, D-내림차순, A-오름차순
         $Order = 'D';
 
-        // 조회 검색어.
-        // 팩스 전송시 입력한 발신자명 또는 수신자명 기재.
-        // 조회 검색어를 포함한 발신자명 또는 수신자명을 검색합니다.
+        // 조회하고자 하는 발신자명 또는 수신자명
+        // - 미입력시 전체조회
         $QString = '';
 
         try {
@@ -740,7 +749,7 @@ class FaxController extends Controller
     }
 
     /**
-     * 팝빌 사이트와 동일한 팩스 전송내역 확인 페이지의 팝업 URL을 반환합니다.
+     * 팩스 전송내역 확인 페이지의 팝업 URL을 반환합니다.
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://docs.popbill.com/fax/phplaravel/api#GetSentListURL
      */
@@ -773,7 +782,7 @@ class FaxController extends Controller
         $testCorpNum = '1234567890';
 
         // 팩스전송 접수번호
-        $ReceiptNum = '019021418123700001';
+        $ReceiptNum = '022040518123700001';
 
         // 팝빌 회원 아이디
         $testUserID = 'testkorea';
@@ -791,7 +800,7 @@ class FaxController extends Controller
 
     /**
      * 연동회원의 잔여포인트를 확인합니다.
-     * - 과금방식이 파트너과금인 경우 파트너 잔여포인트(GetPartnerBalance API)를 통해 확인하시기 바랍니다.
+     * - 과금방식이 파트너과금인 경우 파트너 잔여포인트 확인(GetPartnerBalance API) 함수를 통해 확인하시기 바랍니다.
      * - https://docs.popbill.com/fax/phplaravel/api#GetBalance
      */
     public function GetBalance(){
@@ -885,7 +894,7 @@ class FaxController extends Controller
 
     /**
      * 파트너의 잔여포인트를 확인합니다.
-     * - 과금방식이 연동과금인 경우 연동회원 잔여포인트(GetBalance API)를 이용하시기 바랍니다.
+     * - 과금방식이 연동과금인 경우 연동회원 잔여포인트 확인(GetBalance API) 함수를 이용하시기 바랍니다.
      * - https://docs.popbill.com/fax/phplaravel/api#GetPartnerBalance
      */
     public function GetPartnerBalance(){
@@ -982,8 +991,7 @@ class FaxController extends Controller
         // 사업자번호, "-"제외 10자리
         $testCorpNum = '1234567890';
 
-        // 파트너 링크아이디
-        // ./config/popbill.php에 선언된 파트너 링크아이디
+        // 연동신청 시 팝빌에서 발급받은 링크아이디
         $LinkID = config('popbill.LinkID');
 
         try {
@@ -1075,13 +1083,13 @@ class FaxController extends Controller
         $joinForm->BizClass = '종목';
 
         // 담당자명
-        $joinForm->ContactName = '담당자상명';
+        $joinForm->ContactName = '담당자성명';
 
         // 담당자 이메일
-        $joinForm->ContactEmail = 'tester@test.com';
+        $joinForm->ContactEmail = '';
 
         // 담당자 연락처
-        $joinForm->ContactTEL = '07043042991';
+        $joinForm->ContactTEL = '';
 
         // 아이디, 6자 이상 20자미만
         $joinForm->ID = 'userid_phpdd';
@@ -1185,16 +1193,10 @@ class FaxController extends Controller
         $ContactInfo->personName = '담당자_수정';
 
         // 연락처
-        $ContactInfo->tel = '070-4304-2991';
-
-        // 핸드폰번호
-        $ContactInfo->hp = '010-1234-1234';
+        $ContactInfo->tel = '';
 
         // 이메일주소
-        $ContactInfo->email = 'test@test.com';
-
-        // 팩스
-        $ContactInfo->fax = '070-111-222';
+        $ContactInfo->email = '';
 
         // 담당자 권한, 1 : 개인권한, 2 : 읽기권한, 3: 회사권한
         $ContactInfo->searchRole = 3;
@@ -1281,16 +1283,10 @@ class FaxController extends Controller
         $ContactInfo->id = 'testkorea';
 
         // 담당자 연락처
-        $ContactInfo->tel = '070-4304-2991';
-
-        // 핸드폰 번호
-        $ContactInfo->hp = '010-1234-1234';
+        $ContactInfo->tel = '';
 
         // 이메일 주소
-        $ContactInfo->email = 'test@test.com';
-
-        // 팩스번호
-        $ContactInfo->fax = '070-111-222';
+        $ContactInfo->email = '';
 
         // 담당자 권한, 1 : 개인권한, 2 : 읽기권한, 3: 회사권한
         $ContactInfo->searchRole = 3;

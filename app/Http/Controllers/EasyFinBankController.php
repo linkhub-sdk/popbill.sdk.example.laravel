@@ -56,24 +56,24 @@ class EasyFinBankController extends Controller
         // 계좌정보 클래스 생성
         $BankAccountInfo = new EasyFinBankAccountForm();
 
-        // [필수] 기관코드
+        // 기관코드
         // 산업은행-0002 / 기업은행-0003 / 국민은행-0004 /수협은행-0007 / 농협은행-0011 / 우리은행-0020
         // SC은행-0023 / 대구은행-0031 / 부산은행-0032 / 광주은행-0034 / 제주은행-0035 / 전북은행-0037
         // 경남은행-0039 / 새마을금고-0045 / 신협은행-0048 / 우체국-0071 / KEB하나은행-0081 / 신한은행-0088 /씨티은행-0027
-        $BankAccountInfo->BankCode = '0039';
+        $BankAccountInfo->BankCode = '';
 
-        // [필수] 계좌번호 하이픈('-') 제외
+        // 계좌번호 하이픈('-') 제외
         $BankAccountInfo->AccountNumber = '';
 
-        // [필수] 계좌비밀번호
+        // 계좌비밀번호
         $BankAccountInfo->AccountPWD = '';
 
-        // [필수] 계좌유형, "법인" 또는 "개인" 입력
+        // 계좌유형, "법인" 또는 "개인" 입력
         $BankAccountInfo->AccountType = '';
 
-        // [필수] 예금주 식별정보 (‘-‘ 제외)
-        // 계좌유형이 “법인”인 경우 : 사업자번호(10자리)
-        // 계좌유형이 “개인”인 경우 : 예금주 생년월일 (6자리-YYMMDD)
+        // 예금주 식별정보 ('-' 제외)
+        // 계좌유형이 "법인"인 경우 : 사업자번호(10자리)
+        // 계좌유형이 "개인"인 경우 : 예금주 생년월일 (6자리-YYMMDD)
         $BankAccountInfo->IdentityNumber = '';
 
         // 계좌 별칭
@@ -88,7 +88,8 @@ class EasyFinBankController extends Controller
         // 조회전용 계정 비밀번호 (대구은행, 신협, 신한은행 필수
         $BankAccountInfo->FastPWD = '';
 
-        // 결제기간(개월), 1~12 입력가능, 미기재시 기본값(1) 처리
+        // 정액제 이용할 개월수, 1~12 입력가능
+        // - 미입력시 기본값 1개월 처리
         // - 파트너 과금방식의 경우 입력값에 관계없이 1개월 처리
         $BankAccountInfo->UsePeriod = '';
 
@@ -123,12 +124,13 @@ class EasyFinBankController extends Controller
         // 경남은행-0039 / 새마을금고-0045 / 신협은행-0048 / 우체국-0071 / KEB하나은행-0081 / 신한은행-0088 /씨티은행-0027
         $bankCode = '';
 
-        // 계좌번호
+        // 계좌번호 하이픈('-') 제외
         $accountNumber = '';
 
-        // 해지유형, “일반”, “중도” 중 선택 기재
-        // 일반해지 – 이용중인 정액제 사용기간까지 이용후 정지
-        // 중도해지 – 요청일 기준으로 정지, 정액제 잔여기간은 일할로 계산되어 포인트 환불 (무료 이용기간 중 중도해지 시 전액 환불)
+        // 해지유형, "일반", "중도" 중 택 1
+        // 일반(일반해지) – 이용중인 정액제 기간 만료 후 해지
+        // 중도(중도해지) – 해지 요청일 기준으로 정지되고 팝빌 담당자가 승인시 해지
+        // └ 중도일 경우, 정액제 잔여기간은 일할로 계산되어 포인트 환불 (무료 이용기간 중 해지하면 전액 환불)
         $closeType = '';
 
         try {
@@ -159,7 +161,7 @@ class EasyFinBankController extends Controller
         // 경남은행-0039 / 새마을금고-0045 / 신협은행-0048 / 우체국-0071 / KEB하나은행-0081 / 신한은행-0088 /씨티은행-0027
         $bankCode = '';
 
-        // 계좌번호
+        // 계좌번호 하이픈('-') 제외
         $accountNumber = '';
 
         try {
@@ -184,19 +186,19 @@ class EasyFinBankController extends Controller
         // 팝빌회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
 
-        // [필수] 기관코드
+        // 기관코드
         // 산업은행-0002 / 기업은행-0003 / 국민은행-0004 /수협은행-0007 / 농협은행-0011 / 우리은행-0020
         // SC은행-0023 / 대구은행-0031 / 부산은행-0032 / 광주은행-0034 / 제주은행-0035 / 전북은행-0037
         // 경남은행-0039 / 새마을금고-0045 / 신협은행-0048 / 우체국-0071 / KEB하나은행-0081 / 신한은행-0088 /씨티은행-0027
         $BankCode = '';
 
-        // [필수]계좌번호
+        // 계좌번호 하이픈('-') 제외
         $AccountNumber = '';
 
         // 계좌정보 클래스 생성
         $UpdateInfo = new UpdateEasyFinBankAccountForm();
 
-        // [필수] 계좌비밀번호
+        // 계좌비밀번호
         $UpdateInfo->AccountPWD = '';
 
         // 계좌 별칭
@@ -230,6 +232,7 @@ class EasyFinBankController extends Controller
     /**
      * 등록된 계좌를 삭제합니다.
      * - 정액제가 아닌 종량제 이용 시에만 등록된 계좌를 삭제할 수 있습니다.
+     * - 정액제 이용 시 정액제 해지요청(CloseBankAccount API) 함수를 사용하여 정액제를 해제할 수 있습니다.
      * - https://docs.popbill.com/easyfinbank/phplaravel/api#DeleteBankAccount
      */
      public function DeleteBankAccount(){
@@ -243,7 +246,7 @@ class EasyFinBankController extends Controller
         // 경남은행-0039 / 새마을금고-0045 / 신협은행-0048 / 우체국-0071 / KEB하나은행-0081 / 신한은행-0088 /씨티은행-0027
         $bankCode = '';
 
-        // 계좌번호
+        // 계좌번호 하이픈('-') 제외
         $accountNumber = '';
 
         try {
@@ -296,7 +299,7 @@ class EasyFinBankController extends Controller
         // 경남은행-0039 / 새마을금고-0045 / 신협은행-0048 / 우체국-0071 / KEB하나은행-0081 / 신한은행-0088 /씨티은행-0027
         $bankCode = '';
 
-        // 계좌번호, 하이픈('-') 제외
+        // 계좌번호 하이픈('-') 제외
         $accountNumber = '';
 
         try {
@@ -342,16 +345,16 @@ class EasyFinBankController extends Controller
         $testCorpNum = '1234567890';
 
         // 기관코드
-        $BankCode = '0039';
+        $BankCode = '';
 
-        // 계좌번호
-        $AccountNumber = '2070064402404';
+        // 계좌번호 하이픈('-') 제외
+        $AccountNumber = '';
 
         // 시작일자, 형식(yyyyMMdd)
-        $SDate = '20210701';
+        $SDate = '20220401';
 
         // 종료일자, 형식(yyyyMMdd)
-        $EDate = '20210729';
+        $EDate = '20220405';
 
         try {
             $jobID = $this->PopbillEasyFinBank->RequestJob($testCorpNum, $BankCode, $AccountNumber, $SDate, $EDate);
@@ -365,7 +368,13 @@ class EasyFinBankController extends Controller
     }
 
     /**
-     * RequestJob(수집 요청)를 통해 반환 받은 작업아이디의 상태를 확인합니다.
+     * 수집 요청(RequestJob API) 함수를 통해 반환 받은 작업 아이디의 상태를 확인합니다.
+     * - 거래 내역 조회(Search API) 함수 또는 거래 요약 정보 조회(Summary API) 함수를 사용하기 전에
+     *   수집 작업의 진행 상태, 수집 작업의 성공 여부를 확인해야 합니다.
+     * - 작업 상태(jobState) = 3(완료)이고 수집 결과 코드(errorCode) = 1(수집성공)이면
+     *   거래 내역 조회(Search) 또는 거래 요약 정보 조회(Summary) 를 해야합니다.
+     * - 작업 상태(jobState)가 3(완료)이지만 수집 결과 코드(errorCode)가 1(수집성공)이 아닌 경우에는
+     *   오류메시지(errorReason)로 수집 실패에 대한 원인을 파악할 수 있습니다.
      * - https://docs.popbill.com/easyfinbank/phplaravel/api#GetJobState
      */
     public function GetJobState(){
@@ -374,7 +383,7 @@ class EasyFinBankController extends Controller
         $testCorpNum = '1234567890';
 
         // 수집 요청시 반환받은 작업아이디
-        $jobID = '021121815000000001';
+        $jobID = '022040516000000001';
 
         try {
             $result = $this->PopbillEasyFinBank->GetJobState($testCorpNum, $jobID);
@@ -389,7 +398,7 @@ class EasyFinBankController extends Controller
     }
 
     /**
-     * RequestJob(수집 요청)를 통해 반환 받은 작업아이디의 목록을 확인합니다.
+     * 수집 요청(RequestJob API) 함수를 통해 반환 받은 작업아이디의 목록을 확인합니다.
      * - 수집 요청 후 1시간이 경과한 수집 요청건은 상태정보가 반환되지 않습니다.
      * - https://docs.popbill.com/easyfinbank/phplaravel/api#ListActiveJob
      */
@@ -411,7 +420,7 @@ class EasyFinBankController extends Controller
 
 
     /*
-     * GetJobState(수집 상태 확인)를 통해 상태 정보가 확인된 작업아이디를 활용하여 계좌 거래 내역을 조회합니다.
+     * 수집 상태 확인(GetJobState API) 함수를 통해 상태 정보가 확인된 작업아이디를 활용하여 계좌 거래 내역을 조회합니다.
      * - https://docs.popbill.com/easyfinbank/phplaravel/api#Search
      */
     public function Search(){
@@ -419,13 +428,18 @@ class EasyFinBankController extends Controller
         // 팝빌회원 사업자번호, '-'제외 10자리
         $testCorpNum = '1234567890';
 
-        // 수집 요청(RequestJob) 호출시 반환받은 작업아이디
-        $JobID = '020072916000000001';
+        // 수집 요청(RequestJob API) 함수 호출시 반환받은 작업아이디
+        $JobID = '022040516000000001';
 
-        // 거래유형 배열, I-입금, O-출금
+        // 거래유형 배열 ("I" 와 "O" 중 선택, 다중 선택 가능)
+        // └ I = 입금 , O = 출금
+        // - 미입력 시 전체조회
         $TradeType = array ('I', 'O' );
 
-        // 조회 검색어, 입금/출금액, 메모, 적요 like 검색
+        // "입·출금액" / "메모" / "비고" 중 검색하고자 하는 값 입력
+        // - 메모 = 거래내역 메모저장(SaveMemo API) 함수를 사용하여 저장한 값
+        // - 비고 = EasyFinBankSearchDetail의 remark1, remark2, remark3 값
+        // - 미입력시 전체조회
         $SearchString = "";
 
         // 페이지 번호
@@ -450,7 +464,8 @@ class EasyFinBankController extends Controller
     }
 
     /*
-     * GetJobState(수집 상태 확인)를 통해 상태 정보가 확인된 작업아이디를 활용하여 계좌 거래내역의 요약 정보를 조회합니다.
+     * 수집 상태 확인(GetJobState API) 함수를 통해 상태 정보가 확인된 작업아이디를 활용하여 계좌 거래내역의 요약 정보를 조회합니다.
+     * - 요약 정보 : 입·출 금액 합계, 입·출 거래 건수
      * - https://docs.popbill.com/easyfinbank/phplaravel/api#Summary
      */
     public function Summary(){
@@ -459,12 +474,17 @@ class EasyFinBankController extends Controller
         $testCorpNum = '1234567890';
 
         // 수집 요청(RequestJob) 호출시 반환받은 작업아이디
-        $JobID = '021121816000000001';
+        $JobID = '022040516000000001';
 
-        // 거래유형 배열, I-입금, O-출금
+        // 거래유형 배열 ("I" 와 "O" 중 선택, 다중 선택 가능)
+        // └ I = 입금 , O = 출금
+        // - 미입력 시 전체조회
         $TradeType = array ('I', 'O' );
 
-        // 조회 검색어, 입금/출금액, 메모, 적요 like 검색
+        // "입·출금액" / "메모" / "비고" 중 검색하고자 하는 값 입력
+        // - 메모 = 거래내역 메모저장(SaveMemo API) 함수를 사용하여 저장한 값
+        // - 비고 = EasyFinBankSearchDetail의 remark1, remark2, remark3 값
+        // - 미입력시 전체조회
         $SearchString = "";
 
         try {
@@ -487,11 +507,12 @@ class EasyFinBankController extends Controller
         // 팝빌회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
 
-        // 거래내역 아이디, SeachAPI 응답항목 중 tid
-        $TID = "02112181100000000120191210000003";
+        // 메모를 저장할 거래내역 아이디
+        // └ 거래내역 조회(Seach API) 함수의 반환값인 EasyFinBankSearchDetail 의 tid를 통해 확인 가능
+        $TID = "";
 
         // 메모
-        $Memo = "0191230-PHPLaravel";
+        $Memo = "MemoTEST";
 
         try {
             $result =  $this->PopbillEasyFinBank->SaveMemo($testCorpNum, $TID, $Memo);
@@ -561,10 +582,10 @@ class EasyFinBankController extends Controller
         $testCorpNum = '1234567890';
 
         // 기관코드
-        $BankCode = '0048';
+        $BankCode = '';
 
-        // 계좌번호
-        $AccountNumber = '131020538645';
+        // 계좌번호 하이픈('-') 제외
+        $AccountNumber = '';
 
         try {
             $result = $this->PopbillEasyFinBank->GetFlatRateState($testCorpNum, $BankCode, $AccountNumber);
@@ -579,7 +600,7 @@ class EasyFinBankController extends Controller
 
     /**
      * 연동회원의 잔여포인트를 확인합니다.
-     * - 과금방식이 파트너과금인 경우 파트너 잔여포인트(GetPartnerBalance API) 를 통해 확인하시기 바랍니다.
+     * - 과금방식이 파트너과금인 경우 파트너 잔여포인트 확인(GetPartnerBalance API) 함수를 통해 확인하시기 바랍니다.
      * - https://docs.popbill.com/easyfinbank/phplaravel/api#GetBalance
      */
     public function GetBalance(){
@@ -673,7 +694,7 @@ class EasyFinBankController extends Controller
 
     /**
      * 파트너의 잔여포인트를 확인합니다.
-     * - 과금방식이 연동과금인 경우 연동회원 잔여포인트(GetBalance API)를 이용하시기 바랍니다.
+     * - 과금방식이 연동과금인 경우 연동회원 잔여포인트 확인(GetBalance API) 함수를 이용하시기 바랍니다.
      * - https://docs.popbill.com/easyfinbank/phplaravel/api#GetPartnerBalance
      */
     public function GetPartnerBalance(){
@@ -725,8 +746,7 @@ class EasyFinBankController extends Controller
         // 사업자번호, "-"제외 10자리
         $testCorpNum = '1234567890';
 
-        // 파트너 링크아이디
-        // ./config/popbill.php에 선언된 파트너 링크아이디
+        // 연동신청시 팝빌에서 발급받은 링크아이디
         $LinkID = config('popbill.LinkID');
 
         try {
@@ -794,13 +814,13 @@ class EasyFinBankController extends Controller
         $joinForm->BizClass = '종목';
 
         // 담당자명
-        $joinForm->ContactName = '담당자상명';
+        $joinForm->ContactName = '담당자성명';
 
         // 담당자 이메일
-        $joinForm->ContactEmail = 'tester@test.com';
+        $joinForm->ContactEmail = '';
 
         // 담당자 연락처
-        $joinForm->ContactTEL = '07043042991';
+        $joinForm->ContactTEL = '';
 
         // 아이디, 6자 이상 20자미만
         $joinForm->ID = 'userid_phpdd';
@@ -928,16 +948,10 @@ class EasyFinBankController extends Controller
         $ContactInfo->personName = '담당자_수정';
 
         // 연락처
-        $ContactInfo->tel = '070-4304-2991';
-
-        // 핸드폰번호
-        $ContactInfo->hp = '010-1234-1234';
+        $ContactInfo->tel = '';
 
         // 이메일주소
-        $ContactInfo->email = 'test@test.com';
-
-        // 팩스
-        $ContactInfo->fax = '070-111-222';
+        $ContactInfo->email = '';
 
         // 담당자 권한, 1 : 개인권한, 2 : 읽기권한, 3: 회사권한
         $ContactInfo->searchRole = 3;
@@ -1024,16 +1038,10 @@ class EasyFinBankController extends Controller
         $ContactInfo->id = 'testkorea';
 
         // 담당자 연락처
-        $ContactInfo->tel = '070-4304-2991';
-
-        // 핸드폰 번호
-        $ContactInfo->hp = '010-1234-1234';
+        $ContactInfo->tel = '';
 
         // 이메일 주소
-        $ContactInfo->email = 'test@test.com';
-
-        // 팩스번호
-        $ContactInfo->fax = '070-111-222';
+        $ContactInfo->email = '';
 
         // 담당자 권한, 1 : 개인권한, 2 : 읽기권한, 3: 회사권한
         $ContactInfo->searchRole = 3;

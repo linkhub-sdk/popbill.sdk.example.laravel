@@ -53,10 +53,10 @@ class AccountCheckController extends Controller
         // 팝빌회원 아이디
         $testUesrID = "testkorea";
 
-        // 기관코드
+        // 조회할 기관코드
         $bankCode = "";
 
-        // 계좌번호
+        // 조회할 기관의 계좌번호 (하이픈 '-' 제외 8자리 이상 14자리 이하)
         $accountNumber = "";
 
         try {
@@ -83,18 +83,19 @@ class AccountCheckController extends Controller
         //팝빌회원 아이디
         $testUserID = "testkorea";
 
-        // 기관코드
+        // 조회할 기관코드
         $bankCode = "";
 
-        // 계좌번호
+        //  조회할 기관의 계좌번호 (하이픈 '-' 제외 8자리 이상 14자리 이하)
         $accountNumber = "";
 
         //등록번호 유형, P-개인, B-사업자
         $identityNumType = "";
 
         // 등록번호
-        // └ 등록번호 유형 값이 "B"인 경우 사업자번호(10 자리)입력 ('-' 제외)
+        // └ 등록번호 유형 값이 "B"인 경우 사업자번호(10 자리) 입력
         // └ 등록번호 유형 값이 "P"인 경우 생년월일(6 자리) 입력 (형식 : YYMMDD)
+        // 하이픈 '-' 제외하고 입력
         $identityNum = "";
 
         try {
@@ -110,7 +111,7 @@ class AccountCheckController extends Controller
 
     /**
      * 연동회원의 잔여포인트를 확인합니다.
-     * - 과금방식이 파트너과금인 경우 파트너 잔여포인트(GetPartnerBalance API) 를 통해 확인하시기 바랍니다.
+     * - 과금방식이 파트너과금인 경우 파트너 잔여포인트 확인(GetPartnerBalance API) 함수를 통해 확인하시기 바랍니다.
      * - https://docs.popbill.com/accountcheck/phplaravel/api#GetBalance
      */
     public function GetBalance(){
@@ -214,7 +215,8 @@ class AccountCheckController extends Controller
         // 팝빌회원 아이디
         $testUserID = 'testkorea';
 
-        // 서비스 유형, 성명 / 실명 중 택 1
+        // 서비스 유형 , "성명" / "실명" 중 택 1
+        // └ 성명 = 예금주성명조회, 실명 = 예금주실명조회
         $serviceType = '실명';
 
         try {
@@ -230,7 +232,7 @@ class AccountCheckController extends Controller
 
     /**
      * 파트너의 잔여포인트를 확인합니다.
-     * - 과금방식이 연동과금인 경우 연동회원 잔여포인트(GetBalance API)를 이용하시기 바랍니다.
+     * - 과금방식이 연동과금인 경우 연동회원 잔여포인트 확인(GetBalance API) 함수를 이용하시기 바랍니다.
      * - https://docs.popbill.com/accountcheck/phplaravel/api#GetPartnerBalance
      */
     public function GetPartnerBalance(){
@@ -286,7 +288,8 @@ class AccountCheckController extends Controller
         // 팝빌회원 아이디
         $testUserID = 'testkorea';
 
-        // 서비스 유형, 성명 / 실명 중 택 1
+        // 서비스 유형 , "성명" / "실명" 중 택 1
+        // └ 성명 = 예금주성명조회, 실명 = 예금주실명조회
         $serviceType = '성명';
 
         try {
@@ -309,8 +312,7 @@ class AccountCheckController extends Controller
         // 사업자번호, "-"제외 10자리
         $testCorpNum = '1234567890';
 
-        // 파트너 링크아이디
-        // ./config/popbill.php에 선언된 파트너 링크아이디
+        // 연동신청시 팝빌에서 발급받은 링크아이디
         $LinkID = config('popbill.LinkID');
 
         try {
@@ -332,7 +334,7 @@ class AccountCheckController extends Controller
      */
     public function CheckID(){
 
-        // 조회할 아이디
+        // 중복여부를 확인할 아이디
         $testUserID = 'testkorea';
 
         try {
@@ -378,13 +380,13 @@ class AccountCheckController extends Controller
         $joinForm->BizClass = '종목';
 
         // 담당자명
-        $joinForm->ContactName = '담당자상명';
+        $joinForm->ContactName = '담당자성명';
 
         // 담당자 이메일
-        $joinForm->ContactEmail = 'tester@test.com';
+        $joinForm->ContactEmail = '';
 
         // 담당자 연락처
-        $joinForm->ContactTEL = '07043042991';
+        $joinForm->ContactTEL = '';
 
         // 아이디, 6자 이상 20자미만
         $joinForm->ID = 'userid_phpdd';
@@ -488,16 +490,10 @@ class AccountCheckController extends Controller
         $ContactInfo->personName = '담당자_수정';
 
         // 연락처
-        $ContactInfo->tel = '070-4304-2991';
-
-        // 핸드폰번호
-        $ContactInfo->hp = '010-1234-1234';
+        $ContactInfo->tel = '';
 
         // 이메일주소
-        $ContactInfo->email = 'test@test.com';
-
-        // 팩스
-        $ContactInfo->fax = '070-111-222';
+        $ContactInfo->email = '';
 
         // 담당자 권한, 1 : 개인권한, 2 : 읽기권한, 3: 회사권한
         $ContactInfo->searchRole = 3;
@@ -520,6 +516,7 @@ class AccountCheckController extends Controller
      * - https://docs.popbill.com/accountcheck/phplaravel/api#GetContactInfo
      */
     public function GetContactInfo(){
+
         // 팝빌회원 사업자번호, '-'제외 10자리
         $testCorpNum = '1234567890';
 
@@ -584,16 +581,10 @@ class AccountCheckController extends Controller
         $ContactInfo->id = 'testkorea';
 
         // 담당자 연락처
-        $ContactInfo->tel = '070-4304-2991';
-
-        // 핸드폰 번호
-        $ContactInfo->hp = '010-1234-1234';
+        $ContactInfo->tel = '';
 
         // 이메일 주소
-        $ContactInfo->email = 'test@test.com';
-
-        // 팩스번호
-        $ContactInfo->fax = '070-111-222';
+        $ContactInfo->email = '';
 
         // 담당자 권한, 1 : 개인권한, 2 : 읽기권한, 3: 회사권한
         $ContactInfo->searchRole = 3;
