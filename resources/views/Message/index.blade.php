@@ -10,10 +10,11 @@
     <p class="heading1">팝빌 문자메시지 SDK PHP Laravel Example.</p>
     <br/>
     <fieldset class="fieldset1">
-        <legend>발신번호 사전등록</legend>
+        <legend>발신번호 관리</legend>
         <ul>
-            <li><a href="Message/GetSenderNumberMgtURL">GetSenderNumberMgtURL</a> (문자 발신번호 관리 팝업 URL)</li>
-            <li><a href="Message/GetSenderNumberList">GetSenderNumberList</a> (문자 발신번호 목록 확인)</li>
+            <li><a href="Message/CheckSenderNumber">CheckSenderNumber</a> (발신번호 등록여부 확인)</li>
+            <li><a href="Message/GetSenderNumberMgtURL">GetSenderNumberMgtURL</a> (발신번호 관리 팝업 URL)</li>
+            <li><a href="Message/GetSenderNumberList">GetSenderNumberList</a> (발신번호 목록 확인)</li>
         </ul>
     </fieldset>
     <fieldset class="fieldset1">
