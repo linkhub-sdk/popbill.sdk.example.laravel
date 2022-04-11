@@ -14,6 +14,8 @@
         <ul>
             <li><a href="Cashbill/CheckMgtKeyInUse">CheckMgtKeyInUse</a> (문서번호 확인)</li>
             <li><a href="Cashbill/RegistIssue">RegistIssue</a> (즉시발행)</li>
+            <li><a href="Cashbill/BulkSubmit">BulkSubmit</a> (초대량 발행 접수)</li>
+            <li><a href="Cashbill/GetBulkResult">GetBulkResult</a> (초대량 접수결과 확인)</li>
             <li><a href="Cashbill/Register">Register</a> (임시저장)</li>
             <li><a href="Cashbill/Update">Update</a> (수정)</li>
             <li><a href="Cashbill/Issue">Issue</a> (발행)</li>
