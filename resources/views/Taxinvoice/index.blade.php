@@ -40,6 +40,7 @@
             <li><a href="Taxinvoice/GetInfo">GetInfo</a> (상태 확인)</li>
             <li><a href="Taxinvoice/GetInfos">GetInfos</a> (상태 대량 확인)</li>
             <li><a href="Taxinvoice/GetDetailInfo">GetDetailInfo</a> (상세정보 확인)</li>
+            <li><a href="Taxinvoice/GetXML">GetXML</a> (상세정보 확인(XML))</li>
             <li><a href="Taxinvoice/Search">Search</a> (목록 조회)</li>
             <li><a href="Taxinvoice/GetLogs">GetLogs</a> (상태 변경이력 확인)</li>
             <li><a href="Taxinvoice/GetURL">GetURL</a> (세금계산서 문서함 관련 URL)</li>

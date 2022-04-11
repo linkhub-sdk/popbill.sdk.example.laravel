@@ -1758,6 +1758,36 @@ class TaxinvoiceController extends Controller
     }
 
     /**
+     * 전자세금계산서 1건의 상세정보를 XML로 반환합니다.
+     * - https://docs.popbill.com/taxinvoice/php/api#GetXML
+     */
+    public function GetXML() {
+
+        // 팝빌 회원 사업자 번호, '-'제외 10자리
+        $testCorpNum = '1234567890';
+
+        // 발행유형, ENumMgtKeyType::SELL:매출, ENumMgtKeyType::BUY:매입, ENumMgtKeyType::TRUSTEE:위수탁
+        $mgtKeyType = TIENumMgtKeyType::SELL;
+
+        // 문서번호
+        $mgtKey = '20220405-PHP7-002';
+
+        // 팝빌회원 아이디
+        $userID = 'testkorea';
+
+        try {
+            $result =  $this->PopbillTaxinvoice->GetXML($testCorpNum, $mgtKeyType, $mgtKey, $userID);
+        }
+        catch(PopbillException $pe) {
+            $code = $pe->getCode();
+            $message = $pe->getMessage();
+            return view('PResponse', ['code' => $code, 'message' => $message]);
+        }
+
+        return view('Taxinvoice/GetXML', ['Result' => $result] );
+    }
+
+    /**
      * 검색조건에 해당하는 세금계산서를 조회합니다. (조회기간 단위 : 최대 6개월)
      * - https://docs.popbill.com/taxinvoice/phplaravel/api#Search
      */
