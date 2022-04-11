@@ -2700,6 +2700,27 @@ class TaxinvoiceController extends Controller
     }
 
     /**
+     * 팝빌 인증서버에 등록된 공동인증서의 정보를 확인합니다.
+     * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetTaxCertInfo
+     */
+    public function GetTaxCertInfo(){
+
+        // 팝빌 회원 사업자번호, '-' 제외 10자리
+        $testCorpNum = '1234567890';
+
+        try {
+            $taxinvoiceCertificate = $this->PopbillTaxinvoice->GetTaxCertInfo($testCorpNum);
+        }
+        catch(PopbillException $pe) {
+            $code = $pe->getCode();
+            $message = $pe->getMessage();
+            return view('PResponse', ['code' => $code, 'message' => $message]);
+        }
+
+        return view('Taxinvoice/GetTaxCertInfo', ['TaxinvoiceCertificate' => $taxinvoiceCertificate ] );
+    }
+
+    /**
      * 연동회원의 잔여포인트를 확인합니다.
      * - 과금방식이 파트너과금인 경우 파트너 잔여포인트(GetPartnerBalance API) 함수를 통해 확인하시기 바랍니다.
      * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetBalance
@@ -3172,7 +3193,7 @@ class TaxinvoiceController extends Controller
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
-            $message = $pe->getM
+            $message = $pe->getMessage();
         }
 
         return view('PResponse', ['code' => $code, 'message' => $message]);

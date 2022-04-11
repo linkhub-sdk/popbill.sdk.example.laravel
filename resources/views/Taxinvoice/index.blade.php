@@ -79,11 +79,12 @@
         </ul>
     </fieldset>
     <fieldset class="fieldset1">
-        <legend>공인인증서 관리</legend>
+        <legend>공동인증서 관리</legend>
         <ul>
-            <li><a href="Taxinvoice/GetTaxCertURL">GetTaxCertURL</a> (공인인증서 등록 URL)</li>
-            <li><a href="Taxinvoice/GetCertificateExpireDate">GetCertificateExpireDate</a> (공인인증서 만료일 확인)</li>
-            <li><a href="Taxinvoice/CheckCertValidation">CheckCertValidation</a> (공인인증서 유효성 확인)</li>
+            <li><a href="Taxinvoice/GetTaxCertURL">GetTaxCertURL</a> (공동인증서 등록 URL)</li>
+            <li><a href="Taxinvoice/GetCertificateExpireDate">GetCertificateExpireDate</a> (공동인증서 만료일 확인)</li>
+            <li><a href="Taxinvoice/CheckCertValidation">CheckCertValidation</a> (공동인증서 유효성 확인)</li>
+            <li><a href="Taxinvoice/GetTaxCertInfo">GetTaxCertInfo</a> (인증서 정보 확인)</li>
         </ul>
     </fieldset>
     <fieldset class="fieldset1">
