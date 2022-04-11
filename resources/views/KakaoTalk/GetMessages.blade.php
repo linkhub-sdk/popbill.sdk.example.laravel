@@ -15,6 +15,7 @@
           <li>templateCode (템플릿 코드) : {{ $Result->templateCode ? $Result->templateCode : '' }} </li>
           <li>plusFriendID (카카오톡 검색용 아이디) : {{ $Result->plusFriendID }} </li>
           <li>sendNum (발신번호) : {{ $Result->sendNum }} </li>
+          <li>altSubject ([동보]대체문자 제목) : {{ $Result->altSubject }} </li>
           <li>altContent ([동보]대체문자 내용) : {{ $Result->altContent }} </li>
           <li>altSendType (대체문자 전송유형) : {{ $Result->altSendType }} </li>
           <li>reserveDT (예약일시) : {{ $Result->reserveDT }} </li>
@@ -52,7 +53,8 @@
             <li> content (알림톡/친구톡 내용) : {{ $msgInfo->content }} </li>
             <li> result (전송결과 코드) : {{ $msgInfo->result }} </li>
             <li> resultDT (전송결과 수신일시) : {{ $msgInfo->resultDT }} </li>
-            <li> altContent (대체문자 내용) : {{ $msgInfo->content }} </li>
+            <li> altSubject (대체문자 제목) : {{ $msgInfo->altSubject }} </li>
+            <li> altContent (대체문자 내용) : {{ $msgInfo->altContent }} </li>
             <li> altContentType (대체문자 전송유형) : {{ $msgInfo->altContentType }} </li>
             <li> altSendDT (대체문자 전송일시) : {{ $msgInfo->altSendDT }} </li>
             <li> altResult (대체문자 전송결과 코드) : {{ $msgInfo->altResult }} </li>

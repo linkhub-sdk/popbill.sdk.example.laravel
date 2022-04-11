@@ -257,6 +257,10 @@ class KakaoTalkController extends Controller
         $content .= '팝빌 파트너센터 : 1600-8536'.PHP_EOL;
         $content .= 'support@linkhub.co.kr'.PHP_EOL;
 
+        // 대체문자 제목
+        // - 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
+        $altSubject = '대체문자 제목';
+
         // 대체문자 유형(altSendType)이 "A"일 경우, 대체문자로 전송할 내용 (최대 2000byte)
         // └ 팝빌이 메시지 길이에 따라 단문(90byte 이하) 또는 장문(90byte 초과)으로 전송처리
         $altContent = '대체문자 내용';
@@ -299,7 +303,7 @@ class KakaoTalkController extends Controller
 
         try {
             $receiptNum = $this->PopbillKakao->SendATS($testCorpNum, $templateCode, $sender, $content,
-                $altContent, $altSendType, $receivers, $reserveDT, $testUserID, $requestNum, $buttons);
+                $altContent, $altSendType, $receivers, $reserveDT, $testUserID, $requestNum, $buttons, $altSubject);
         } catch(PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -336,6 +340,10 @@ class KakaoTalkController extends Controller
         $content .= '문의사항 있으시면 파트너센터로 편하게 연락주시기 바랍니다.'.PHP_EOL.PHP_EOL;
         $content .= '팝빌 파트너센터 : 1600-8536'.PHP_EOL;
         $content .= 'support@linkhub.co.kr'.PHP_EOL;
+
+        // 대체문자 제목
+        // - 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
+        $altSubject = '대체문자 제목';
 
         // 대체문자 유형(altSendType)이 "A"일 경우, 대체문자로 전송할 내용 (최대 2000byte)
         // └ 팝빌이 메시지 길이에 따라 단문(90byte 이하) 또는 장문(90byte 초과)으로 전송처리
@@ -382,7 +390,7 @@ class KakaoTalkController extends Controller
 
         try {
             $receiptNum = $this->PopbillKakao->SendATS($testCorpNum, $templateCode, $sender,
-                $content, $altContent, $altSendType, $receivers, $reserveDT, $testUserID, $requestNum, $buttons);
+                $content, $altContent, $altSendType, $receivers, $reserveDT, $testUserID, $requestNum, $buttons, $altSubject);
         } catch(PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -426,6 +434,12 @@ class KakaoTalkController extends Controller
         // null = 미전송, C = 알림톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
         $altSendType = 'A';
 
+        // 대체문자 제목
+        // - 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
+        // - 수신정보 배열에 대체문자 제목이 입력되지 않은 경우 적용.
+        // - 모든 수신자에게 다른 제목을 보낼 경우 464번 라인에 있는 altsjt 를 이용.
+        $altSubject = '대체문자 제목';
+
         // 예약전송일시, yyyyMMddHHmmss
         $reserveDT = null;
 
@@ -443,10 +457,15 @@ class KakaoTalkController extends Controller
                 'rcvnm' => '수신자명',
                 // 알림톡 내용, 최대 1000자
                 'msg' => $content,
+                // 대체문자 제목
+                // - 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
+                // - 모든 수신자에게 동일한 제목을 보낼 경우 배열의 모든 원소에 동일한 값을 입력하거나
+                //   값을 입력하지 않고 441번 라인에 있는 altSubject 를 이용
+                'altsjt' => '대체문자 제목'.$i,
                 // 대체문자 내용
                 'altmsg' => '대체문자 내용'.$i,
                 // 파트너 지정키, 대량전송시, 수신자 구별용 메모.
-                'interOPRefKey' => '20220404-'.$i
+                'interOPRefKey' => '20220405-'.$i
             );
 
             // 수신자별 개별 버튼내용 전송하는 경우
@@ -511,7 +530,7 @@ class KakaoTalkController extends Controller
 
         try {
             $receiptNum = $this->PopbillKakao->SendATS($testCorpNum, $templateCode,
-                $sender, '', '', $altSendType, $receivers, $reserveDT, $testUserID, $requestNum, $buttons);
+                $sender, '', '', $altSendType, $receivers, $reserveDT, $testUserID, $requestNum, $buttons, $altSubject);
         } catch(PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -542,6 +561,10 @@ class KakaoTalkController extends Controller
 
         // 친구톡 내용, 최대 1000자
         $content = '친구톡 내용';
+
+        // 대체문자 제목
+        // - 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
+        $altSubject = '대체문자 제목';
 
         // 대체문자 유형(altSendType)이 "A"일 경우, 대체문자로 전송할 내용 (최대 2000byte)
         // └ 팝빌이 메시지 길이에 따라 단문(90byte 이하) 또는 장문(90byte 초과)으로 전송처리
@@ -585,7 +608,7 @@ class KakaoTalkController extends Controller
         $reserveDT = null;
 
         try {
-            $receiptNum = $this->PopbillKakao->SendFTS($testCorpNum, $plusFriendID, $sender, $content, $altContent, $altSendType, $adsYN, $receivers, $buttons, $reserveDT, $testUserID, $requestNum);
+            $receiptNum = $this->PopbillKakao->SendFTS($testCorpNum, $plusFriendID, $sender, $content, $altContent, $altSendType, $adsYN, $receivers, $buttons, $reserveDT, $testUserID, $requestNum, $altSubject);
         } catch(PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -617,6 +640,10 @@ class KakaoTalkController extends Controller
 
         // 친구톡 내용, 최대 1000자
         $content = '친구톡 동일내용 대량전송';
+
+        // 대체문자 제목
+        // - 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
+        $altSubject = '대체문자 제목';
 
         // 대체문자 내용
         $altContent = '대체문자 내용';
@@ -661,7 +688,7 @@ class KakaoTalkController extends Controller
         $reserveDT = null;
 
         try {
-            $receiptNum = $this->PopbillKakao->SendFTS($testCorpNum, $plusFriendID, $sender, $content, $altContent, $altSendType, $adsYN, $receivers, $buttons, $reserveDT, $testUserID, $requestNum);
+            $receiptNum = $this->PopbillKakao->SendFTS($testCorpNum, $plusFriendID, $sender, $content, $altContent, $altSendType, $adsYN, $receivers, $buttons, $reserveDT, $testUserID, $requestNum, $altSubject);
         } catch(PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -695,6 +722,12 @@ class KakaoTalkController extends Controller
         // null = 미전송, C = 친구톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
         $altSendType = 'C';
 
+        // 대체문자 제목
+        // - 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
+        // - 수신정보 배열에 대체문자 제목이 입력되지 않은 경우 적용.
+        // - 모든 수신자에게 다른 제목을 보낼 경우 754번 라인에 있는 altsjt 를 이용.
+        $altSubject = '대체문자 제목';
+
         // 광고성 메시지 여부 ( true , false 중 택 1)
         // └ true = 광고 , false = 일반
         // - 미입력 시 기본값 false 처리
@@ -714,10 +747,15 @@ class KakaoTalkController extends Controller
                 'rcvnm' => '수신자명',
                 // 친구톡 내용, 최대 1000자
                 'msg' => '친구톡 메시지 내용'.$i,
+                // 대체문자 제목
+                // - 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
+                // - 모든 수신자에게 동일한 제목을 보낼 경우 배열의 모든 원소에 동일한 값을 입력하거나
+                //   값을 입력하지 않고 729번 라인에 있는 altSubject 를 이용
+                'altsjt' => '대체문자 제목'.$i,
                 // 대체문자
                 'altmsg' => '대체문자 내용'.$i,
                 // 파트너 지정키, 대량전송시, 수신자 구별용 메모.
-                'interOPRefKey' => '20220404-'.$i
+                'interOPRefKey' => '20220405-'.$i
             );
 
             // // 수신자별 개별 버튼내용 전송하는 경우
@@ -812,9 +850,13 @@ class KakaoTalkController extends Controller
         // 친구톡 내용, 최대 400자
         $content = '친구톡 내용';
 
+        // 대체문자 제목
+        // - 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
+        $altSubject = '대체문자 제목';
+
         // 대체문자 유형(altSendType)이 "A"일 경우, 대체문자로 전송할 내용 (최대 2000byte)
         // └ 팝빌이 메시지 길이에 따라 단문(90byte 이하) 또는 장문(90byte 초과)으로 전송처리
-        $altContent = '대체문자 내용';
+        $altContent = '대체문자 내용대체문자 내용대체문자 내용대체문자 내용대체문자 내용대체문자 내용대체문자 내용대체문자 내용대체문자 내용대체문자 내용대체문자 내용대체문자 내용';
 
         // 대체문자 유형 (null , "C" , "A" 중 택 1)
         // null = 미전송, C = 친구톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
@@ -864,7 +906,7 @@ class KakaoTalkController extends Controller
 
         try {
             $receiptNum = $this->PopbillKakao->SendFMS($testCorpNum, $plusFriendID, $sender,
-                $content, $altContent, $altSendType, $adsYN, $receivers, $buttons, $reserveDT, $files, $imageURL, $testUserID, $requestNum);
+                $content, $altContent, $altSendType, $adsYN, $receivers, $buttons, $reserveDT, $files, $imageURL, $testUserID, $requestNum, $altSubject);
         } catch(PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -905,6 +947,10 @@ class KakaoTalkController extends Controller
         // 대체문자 유형 (null , "C" , "A" 중 택 1)
         // null = 미전송, C = 친구톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
         $altSendType = 'A';
+
+        // 대체문자 제목
+        // 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
+        $altSubject = '대체문자 제목';
 
         // 광고성 메시지 여부 ( true , false 중 택 1)
         // └ true = 광고 , false = 일반
@@ -952,7 +998,7 @@ class KakaoTalkController extends Controller
 
         try {
             $receiptNum = $this->PopbillKakao->SendFMS($testCorpNum, $plusFriendID, $sender,
-                $content, $altContent, $altSendType, $adsYN, $receivers, $buttons, $reserveDT, $files, $imageURL, $testUserID, $requestNum);
+                $content, $altContent, $altSendType, $adsYN, $receivers, $buttons, $reserveDT, $files, $imageURL, $testUserID, $requestNum, $altSubject);
         } catch(PopbillException $pe) {
           $code = $pe->getCode();
           $message = $pe->getMessage();
@@ -981,11 +1027,17 @@ class KakaoTalkController extends Controller
         $plusFriendID = '@팝빌';
 
         // 팝빌에 사전 등록된 발신번호
-        $sender = '07043042991';
+        $sender = '';
 
         // 대체문자 유형 (null , "C" , "A" 중 택 1)
         // null = 미전송, C = 친구톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
         $altSendType = 'A';
+
+        // 대체문자 제목
+        // - 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
+        // - 수신정보 배열에 대체문자 제목이 입력되지 않은 경우 적용.
+        // - 모든 수신자에게 다른 제목을 보낼 경우 1065번 라인에 있는 altsjt 를 이용.
+        $altSubject = '대체문자 제목';
 
         // 광고성 메시지 여부 ( true , false 중 택 1)
         // └ true = 광고 , false = 일반
@@ -1006,6 +1058,11 @@ class KakaoTalkController extends Controller
                 'rcvnm' => '수신자명',
                 // 친구톡 내용, 최대 1000자
                 'msg' => '친구톡 메시지 내용'.$i,
+                // 대체문자 제목
+                // - 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
+                // - 모든 수신자에게 동일한 제목을 보낼 경우 배열의 모든 원소에 동일한 값을 입력하거나
+                //   값을 입력하지 않고 1040번 라인에 있는 altSubject 를 이용
+                'altsjt' => '대체문자 제목'.$i,
                 // 대체문자
                 'altmsg' => '대체문자 내용'.$i,
                 // 파트너 지정키, 대량전송시, 수신자 구별용 메모.
@@ -1080,7 +1137,7 @@ class KakaoTalkController extends Controller
 
         try {
             $receiptNum = $this->PopbillKakao->SendFMS($testCorpNum, $plusFriendID, $sender,
-                '', '', $altSendType, $adsYN, $receivers, $buttons, $reserveDT, $files, $imageURL, $testUserID, $requestNum);
+                '', '', $altSendType, $adsYN, $receivers, $buttons, $reserveDT, $files, $imageURL, $testUserID, $requestNum, $altSubject);
         } catch(PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();

@@ -126,7 +126,7 @@ class FaxController extends Controller
 
         // 팩스전송 발신번호
         // 팝빌에 등록되지 않은 번호를 입력하는 경우 '원발신번호'로 팩스 전송됨
-        $Sender = '07043042991';
+        $Sender = '';
 
         // 팩스전송 발신자명
         $SenderName = '발신자명';
@@ -183,7 +183,7 @@ class FaxController extends Controller
         $testUserID = 'testkorea';
 
         // 팩스전송 발신번호
-        $Sender = '07043042991';
+        $Sender = '';
 
         // 팩스전송 발신자명
         $SenderName = '발신자명';
@@ -248,7 +248,7 @@ class FaxController extends Controller
         $testUserID = 'testkorea';
 
         // 팩스전송 발신번호
-        $Sender = '07043042991';
+        $Sender = '';
 
         // 팩스전송 발신자명
         $SenderName = '발신자명';
@@ -315,7 +315,7 @@ class FaxController extends Controller
         $testUserID = 'testkorea';
 
         // 팩스전송 발신번호
-        $Sender = '07043042991';
+        $Sender = '';
 
         // 팩스전송 발신자명
         $SenderName = '발신자명';
@@ -398,7 +398,7 @@ class FaxController extends Controller
         $ReceiptNum = '022040516355100002';
 
         // 팩스전송 발신번호, 공백처리시 기존전송정보로 재전송
-        $Sender = '07043042991';
+        $Sender = '';
 
         // 팩스전송 발신자명, 공백처리시 기존전송정보로 재전송
         $SenderName = '발신자명';
@@ -454,7 +454,7 @@ class FaxController extends Controller
         $testUserID = 'testkorea';
 
         // 팩스전송 발신번호, 공백처리시 기존전송정보로 재전송
-        $Sender = '07043042991';
+        $Sender = '';
 
         // 팩스전송 발신자명, 공백처리시 기존전송정보로 재전송
         $SenderName = '발신자명';
@@ -514,7 +514,7 @@ class FaxController extends Controller
         $testUserID = 'testkorea';
 
         // 팩스전송 발신번호, 공백처리시 기존전송정보로 재전송
-        $Sender = '07043042991';
+        $Sender = '';
 
         // 팩스전송 발신자명, 공백처리시 기존전송정보로 재전송
         $SenderName = '발신자명';
@@ -578,7 +578,7 @@ class FaxController extends Controller
         $testUserID = 'testkorea';
 
         // 팩스전송 발신번호, 공백처리시 기존전송정보로 재전송
-        $Sender = '07043042991';
+        $Sender = '';
 
         // 팩스전송 발신자명, 공백처리시 기존전송정보로 재전송
         $SenderName = '발신자명';
@@ -731,10 +731,10 @@ class FaxController extends Controller
         $testCorpNum = '1234567890';
 
         // 검색시작일자
-        $SDate = '20210701';
+        $SDate = '20220401';
 
         // 검색종료일자
-        $EDate = '20210730';
+        $EDate = '20220430';
 
         // 전송상태 배열 ("1" , "2" , "3" , "4" 중 선택, 다중 선택 가능)
         // └ 1 = 대기 , 2 = 성공 , 3 = 실패 , 4 = 취소

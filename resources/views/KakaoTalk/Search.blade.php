@@ -34,6 +34,7 @@
               <li> altSendDT (대체문자 전송일시) : {{ $msgInfo->altSendDT }} </li>
               <li> altResult (대체문자 전송결과 코드) : {{ $msgInfo->altResult }} </li>
               <li> altResultDT (대체문자 전송결과 수신일시) : {{ $msgInfo->altResultDT }} </li>
+              <li> altSubject (대체문자 제목) : {{ $msgInfo->altSubject }} </li>
               <li> altContent (대체문자 내용) : {{ $msgInfo->altContent }} </li>
               <li> reserveDT (예약일시) : {{ $msgInfo->reserveDT }} </li>
               <li> receiptNum (접수번호) : {{ $msgInfo->receiptNum }} </li>
