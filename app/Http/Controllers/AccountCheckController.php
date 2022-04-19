@@ -22,16 +22,16 @@ class AccountCheckController extends Controller
         // 예금주조회 서비스 클래스 초기화
         $this->PopbillAccountCheck = new PopbillAccountCheck(config('popbill.LinkID'), config('popbill.SecretKey'));
 
-        // 연동환경 설정값, 개발용(true), 상업용(false)
+        // 연동환경 설정값, true-개발용, false-상업용
         $this->PopbillAccountCheck->IsTest(config('popbill.IsTest'));
 
-        // 인증토큰의 IP제한기능 사용여부, 권장(true)
+        // 인증토큰의 IP제한기능 사용여부, true-사용, false-미사용, 기본값(true)
         $this->PopbillAccountCheck->IPRestrictOnOff(config('popbill.IPRestrictOnOff'));
 
         // 팝빌 API 서비스 고정 IP 사용여부, true-사용, false-미사용, 기본값(false)
         $this->PopbillAccountCheck->UseStaticIP(config('popbill.UseStaticIP'));
 
-        // 로컬서버 시간 사용 여부 true(기본값) - 사용, false(미사용)
+        // 로컬서버 시간 사용 여부, true-사용, false-미사용, 기본값(true)
         $this->PopbillAccountCheck->UseLocalTimeYN(config('popbill.UseLocalTimeYN'));
     }
 
@@ -216,7 +216,6 @@ class AccountCheckController extends Controller
         $testUserID = 'testkorea';
 
         // 서비스 유형 , "성명" / "실명" 중 택 1
-        // └ 성명 = 예금주성명조회, 실명 = 예금주실명조회
         $serviceType = '실명';
 
         try {
@@ -289,7 +288,6 @@ class AccountCheckController extends Controller
         $testUserID = 'testkorea';
 
         // 서비스 유형 , "성명" / "실명" 중 택 1
-        // └ 성명 = 예금주성명조회, 실명 = 예금주실명조회
         $serviceType = '성명';
 
         try {

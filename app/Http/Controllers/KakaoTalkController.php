@@ -24,16 +24,16 @@ class KakaoTalkController extends Controller
         // 카카오톡 서비스 클래스 초기화
         $this->PopbillKakao = new PopbillKakao(config('popbill.LinkID'), config('popbill.SecretKey'));
 
-        // 연동환경 설정값, 개발용(true), 상업용(false)
+        // 연동환경 설정값, true-개발용, false-상업용
         $this->PopbillKakao->IsTest(config('popbill.IsTest'));
 
-        // 인증토큰의 IP제한기능 사용여부, 권장(true)
+        // 인증토큰의 IP제한기능 사용여부, true-사용, false-미사용, 기본값(true)
         $this->PopbillKakao->IPRestrictOnOff(config('popbill.IPRestrictOnOff'));
 
         // 팝빌 API 서비스 고정 IP 사용여부, true-사용, false-미사용, 기본값(false)
         $this->PopbillKakao->UseStaticIP(config('popbill.UseStaticIP'));
 
-        // 로컬서버 시간 사용 여부 true(기본값) - 사용, false(미사용)
+        // 로컬서버 시간 사용 여부, true-사용, false-미사용, 기본값(true)
         $this->PopbillKakao->UseLocalTimeYN(config('popbill.UseLocalTimeYN'));
     }
 
@@ -828,9 +828,9 @@ class KakaoTalkController extends Controller
 
     /**
      * 이미지가 첨부된 1건의 친구톡 전송을 팝빌에 접수합니다.
-         * - 친구톡의 경우 야간 전송은 제한됩니다. (20:00 ~ 익일 08:00)
-         * - 전송실패시 사전에 지정한 변수 'altSendType' 값으로 대체문자를 전송할 수 있고, 이 경우 문자(SMS/LMS) 요금이 과금됩니다.
-         * - 대체문자의 경우, 포토문자(MMS) 형식은 지원하고 있지 않습니다.
+     * - 친구톡의 경우 야간 전송은 제한됩니다. (20:00 ~ 익일 08:00)
+     * - 전송실패시 사전에 지정한 변수 'altSendType' 값으로 대체문자를 전송할 수 있고, 이 경우 문자(SMS/LMS) 요금이 과금됩니다.
+     * - 대체문자의 경우, 포토문자(MMS) 형식은 지원하고 있지 않습니다.
      * - https://docs.popbill.com/kakao/phplaravel/api#SendFMS
      */
     public function SendFMS_one(){

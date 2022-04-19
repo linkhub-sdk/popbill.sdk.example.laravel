@@ -22,16 +22,16 @@ class ClosedownController extends Controller
         // 휴폐업조회 서비스 클래스 초기화
         $this->PopbillClosedown = new PopbillClosedown(config('popbill.LinkID'), config('popbill.SecretKey'));
 
-        // 연동환경 설정값, 개발용(true), 상업용(false)
+        // 연동환경 설정값, true-개발용, false-상업용
         $this->PopbillClosedown->IsTest(config('popbill.IsTest'));
 
-        // 인증토큰의 IP제한기능 사용여부, 권장(true)
+        // 인증토큰의 IP제한기능 사용여부, true-사용, false-미사용, 기본값(true)
         $this->PopbillClosedown->IPRestrictOnOff(config('popbill.IPRestrictOnOff'));
 
         // 팝빌 API 서비스 고정 IP 사용여부, true-사용, false-미사용, 기본값(false)
         $this->PopbillClosedown->UseStaticIP(config('popbill.UseStaticIP'));
 
-        // 로컬서버 시간 사용 여부 true(기본값) - 사용, false(미사용)
+        // 로컬서버 시간 사용 여부, true-사용, false-미사용, 기본값(true)
         $this->PopbillClosedown->UseLocalTimeYN(config('popbill.UseLocalTimeYN'));
     }
 

@@ -23,16 +23,16 @@ class CashbillController extends Controller
         // 현금영수증 서비스 클래스 초기화
         $this->PopbillCashbill = new PopbillCashbill(config('popbill.LinkID'), config('popbill.SecretKey'));
 
-        // 연동환경 설정값, 개발용(true), 상업용(false)
+        // 연동환경 설정값, true-개발용, false-상업용
         $this->PopbillCashbill->IsTest(config('popbill.IsTest'));
 
-        // 인증토큰의 IP제한기능 사용여부, 권장(true)
+        // 인증토큰의 IP제한기능 사용여부, true-사용, false-미사용, 기본값(true)
         $this->PopbillCashbill->IPRestrictOnOff(config('popbill.IPRestrictOnOff'));
 
         // 팝빌 API 서비스 고정 IP 사용여부, true-사용, false-미사용, 기본값(false)
         $this->PopbillCashbill->UseStaticIP(config('popbill.UseStaticIP'));
 
-        // 로컬서버 시간 사용 여부 true(기본값) - 사용, false(미사용)
+        // 로컬서버 시간 사용 여부, true-사용, false-미사용, 기본값(true)
         $this->PopbillCashbill->UseLocalTimeYN(config('popbill.UseLocalTimeYN'));
     }
 
@@ -1308,6 +1308,10 @@ class CashbillController extends Controller
         return view('PResponse', ['code' => $code, 'message' => $message]);
     }
 
+    /**
+     * 팝빌 사이트를 통해 발행하여 문서번호가 부여되지 않은 현금영수증에 문서번호를 할당합니다.
+     * - https://docs.popbill.com/cashbill/phplaravel/api#AssignMgtKey
+     */
     public function AssignMgtKey(){
 
         // 팝빌 회원 사업자번호, '-' 제외 10자리

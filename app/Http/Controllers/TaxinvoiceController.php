@@ -27,16 +27,16 @@ class TaxinvoiceController extends Controller
         // 세금계산서 서비스 클래스 초기화
         $this->PopbillTaxinvoice = new PopbillTaxinvoice(config('popbill.LinkID'), config('popbill.SecretKey'));
 
-        // 연동환경 설정값, 개발용(true), 상업용(false)
+        // 연동환경 설정값, true-개발용, false-상업용
         $this->PopbillTaxinvoice->IsTest(config('popbill.IsTest'));
 
-        // 인증토큰의 IP제한기능 사용여부, 권장(true)
+        // 인증토큰의 IP제한기능 사용여부, true-사용, false-미사용, 기본값(true)
         $this->PopbillTaxinvoice->IPRestrictOnOff(config('popbill.IPRestrictOnOff'));
 
         // 팝빌 API 서비스 고정 IP 사용여부, true-사용, false-미사용, 기본값(false)
         $this->PopbillTaxinvoice->UseStaticIP(config('popbill.UseStaticIP'));
 
-        // 로컬서버 시간 사용 여부 true(기본값) - 사용, false(미사용)
+        // 로컬서버 시간 사용 여부, true-사용, false-미사용, 기본값(true)
         $this->PopbillTaxinvoice->UseLocalTimeYN(config('popbill.UseLocalTimeYN'));
     }
 
@@ -1759,14 +1759,14 @@ class TaxinvoiceController extends Controller
 
     /**
      * 전자세금계산서 1건의 상세정보를 XML로 반환합니다.
-     * - https://docs.popbill.com/taxinvoice/php/api#GetXML
+     * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetXML
      */
     public function GetXML() {
 
         // 팝빌 회원 사업자 번호, '-'제외 10자리
         $testCorpNum = '1234567890';
 
-        // 발행유형, ENumMgtKeyType::SELL:매출, ENumMgtKeyType::BUY:매입, ENumMgtKeyType::TRUSTEE:위수탁
+        // 발행유형, TIENumMgtKeyType::SELL:매출, TIENumMgtKeyType::BUY:매입, TIENumMgtKeyType::TRUSTEE:위수탁
         $mgtKeyType = TIENumMgtKeyType::SELL;
 
         // 문서번호
@@ -2307,7 +2307,6 @@ class TaxinvoiceController extends Controller
 
     /**
      * 세금계산서에 첨부된 파일목록을 확인합니다.
-     * - 응답항목 중 파일아이디(AttachedFile) 항목은 파일삭제(DeleteFile API) 호출시 이용할 수 있습니다.
      * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetFiles
      */
     public function GetFiles(){
@@ -2638,7 +2637,7 @@ class TaxinvoiceController extends Controller
 
     /**
      * 연동회원의 국세청 전송 옵션 설정 상태를 확인합니다.
-     * - 팝빌 국세청 전송 정책 [https://docs.popbill.com/taxinvoice/ntsSendPolicy?lang=laravel]
+     * - 팝빌 국세청 전송 정책 [https://docs.popbill.com/taxinvoice/ntsSendPolicy?lang=phplaravel]
      * - 국세청 전송 옵션 설정은 팝빌 사이트 [전자세금계산서] > [환경설정] > [세금계산서 관리] 메뉴에서 설정할 수 있으며, API로 설정은 불가능 합니다.
      * - https://docs.popbill.com/taxinvoice/phplaravel/api#GetSendToNTSConfig
      */
