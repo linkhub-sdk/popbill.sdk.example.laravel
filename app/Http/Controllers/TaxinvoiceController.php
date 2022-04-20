@@ -1243,7 +1243,7 @@ class TaxinvoiceController extends Controller
         $testUserID = 'testkorea';
 
         try {
-            $result = $this->PopbillTaxinvoice->Issue($testCorpNum, $mgtKeyType, $mgtKey, $memo, $EmailSubject, $forceIssue,. $testUserID);
+            $result = $this->PopbillTaxinvoice->Issue($testCorpNum, $mgtKeyType, $mgtKey, $memo, $EmailSubject, $forceIssue, $testUserID);
             $code = $result->code;
             $message = $result->message;
             $ntsConfirmNum = $result->ntsConfirmNum;
