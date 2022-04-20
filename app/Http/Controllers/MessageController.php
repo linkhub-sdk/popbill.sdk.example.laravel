@@ -44,7 +44,7 @@ class MessageController extends Controller
 
     /**
      * 문자 발신번호 등록여부를 확인합니다.
-    * - 발신번호 상태가 '승인'인 경우에만 리턴값 'Response'의 변수 'code'가 1로 반환됩니다.
+    * - 발신번호 상태가 '승인'인 경우에만 code가 1로 반환됩니다.
      * - https://docs.popbill.com/message/phplaravel/api#CheckSenderNumber
      */
     public function CheckSenderNumber(){
