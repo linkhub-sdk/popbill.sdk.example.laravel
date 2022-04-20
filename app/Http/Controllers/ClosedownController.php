@@ -48,13 +48,13 @@ class ClosedownController extends Controller
     public function CheckCorpNum(){
 
         // 팝빌회원 사업자번호
-        $MemberCorpNum = "1234567890";
+        $testCorpNum = "1234567890";
 
         // 조회 사업자번호
         $CheckCorpNum = "6798700433";
 
         try {
-            $result = $this->PopbillClosedown->checkCorpNum($MemberCorpNum, $CheckCorpNum);
+            $result = $this->PopbillClosedown->checkCorpNum($testCorpNum, $CheckCorpNum);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
@@ -71,7 +71,7 @@ class ClosedownController extends Controller
     public function CheckCorpNums(){
 
         //팝빌회원 사업자번호
-        $MemberCorpNum = "1234567890";
+        $testCorpNum = "1234567890";
 
         // 조회할 사업자번호 배열, 최대 1000건
         $CorpNumList = array(
@@ -80,7 +80,7 @@ class ClosedownController extends Controller
         );
 
         try {
-            $result = $this->PopbillClosedown->checkCorpNums($MemberCorpNum, $CorpNumList);
+            $result = $this->PopbillClosedown->checkCorpNums($testCorpNum, $CorpNumList);
         } catch(PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -120,8 +120,8 @@ class ClosedownController extends Controller
         // 팝빌 회원 사업자 번호, "-"제외 10자리
         $testCorpNum = '1234567890';
 
-        // 팝빌 회원 아이디
-        $testUserID = '';
+        // 팝빌회원 아이디
+        $testUserID = 'testkorea';
 
         try {
             $url = $this->PopbillClosedown->GetChargeURL($testCorpNum, $testUserID);
@@ -258,7 +258,7 @@ class ClosedownController extends Controller
         $testCorpNum = '1234567890';
 
         // 팝빌회원 아이디
-        $testUserID = '';
+        $testUserID = 'testkorea';
 
         try {
             $result = $this->PopbillClosedown->GetChargeInfo($testCorpNum,$testUserID);
@@ -302,7 +302,7 @@ class ClosedownController extends Controller
      */
     public function CheckID(){
 
-        // 조회할 아이디
+        // 중복여부를 확인할 아이디
         $testUserID = 'testkorea';
 
         try {
@@ -384,8 +384,11 @@ class ClosedownController extends Controller
         // 팝빌회원 사업자번호, '-'제외 10자리
         $testCorpNum = '1234567890';
 
+        // 팝빌회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $CorpInfo = $this->PopbillClosedown->GetCorpInfo($testCorpNum);
+            $CorpInfo = $this->PopbillClosedown->GetCorpInfo($testCorpNum, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
@@ -423,8 +426,11 @@ class ClosedownController extends Controller
         // 종목
         $CorpInfo->bizClass = '종목';
 
+        // 팝빌회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result =  $this->PopbillClosedown->UpdateCorpInfo($testCorpNum, $CorpInfo);
+            $result =  $this->PopbillClosedown->UpdateCorpInfo($testCorpNum, $CorpInfo, $testUserID);
             $code = $result->code;
             $message = $result->message;
         }
@@ -514,8 +520,11 @@ class ClosedownController extends Controller
         // 팝빌회원 사업자번호, '-'제외 10자리
         $testCorpNum = '1234567890';
 
+        // 팝빌회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $ContactList = $this->PopbillClosedown->ListContact($testCorpNum);
+            $ContactList = $this->PopbillClosedown->ListContact($testCorpNum, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();

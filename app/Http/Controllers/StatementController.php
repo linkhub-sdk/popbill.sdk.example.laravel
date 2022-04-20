@@ -262,6 +262,9 @@ class StatementController extends Controller
         // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
         $itemCode = '121';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         // 전자명세서 객체 생성
         $Statement = new Statement();
 
@@ -396,7 +399,7 @@ class StatementController extends Controller
         );
 
         try {
-            $result = $this->PopbillStatement->Register($testCorpNum, $Statement);
+            $result = $this->PopbillStatement->Register($testCorpNum, $Statement, $testUserID);
             $code = $result->code;
             $message = $result->message;
         }
@@ -423,6 +426,9 @@ class StatementController extends Controller
 
         // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
         $itemCode = '121';
+
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
 
         // 전자명세서 객체 생성
         $Statement = new Statement();
@@ -558,7 +564,7 @@ class StatementController extends Controller
         );
 
         try {
-            $result = $this->PopbillStatement->Update($testCorpNum, $itemCode, $mgtKey, $Statement);
+            $result = $this->PopbillStatement->Update($testCorpNum, $itemCode, $mgtKey, $Statement, $testUserID);
             $code = $result->code;
             $message = $result->message;
         }
@@ -591,8 +597,11 @@ class StatementController extends Controller
         // 메모
         $memo = '전자명세서 발행 메모';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillStatement->Issue($testCorpNum, $itemCode, $MgtKey, $memo);
+            $result = $this->PopbillStatement->Issue($testCorpNum, $itemCode, $MgtKey, $memo, $testUserID);
             $code = $result->code;
             $message = $result->message;
         }
@@ -623,8 +632,11 @@ class StatementController extends Controller
         // 메모
         $memo = '전자명세서 발행취소 메모';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillStatement->CancelIssue($testCorpNum, $itemCode, $MgtKey, $memo);
+            $result = $this->PopbillStatement->CancelIssue($testCorpNum, $itemCode, $MgtKey, $memo, $testUserID);
             $code = $result->code;
             $message = $result->message;
         }
@@ -653,8 +665,11 @@ class StatementController extends Controller
         // 문서번호
         $MgtKey = '20220405-PHP7-002';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillStatement->Delete($testCorpNum, $itemCode, $MgtKey);
+            $result = $this->PopbillStatement->Delete($testCorpNum, $itemCode, $MgtKey, $testUserID);
             $code = $result->code;
             $message = $result->message;
         }
@@ -681,8 +696,11 @@ class StatementController extends Controller
         // 문서번호
         $mgtKey = '20220405-PHP7-001';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillStatement->GetInfo($testCorpNum, $itemCode, $mgtKey);
+            $result = $this->PopbillStatement->GetInfo($testCorpNum, $itemCode, $mgtKey, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
@@ -711,8 +729,11 @@ class StatementController extends Controller
             '20220405-PHP7-002'
         );
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $resultList = $this->PopbillStatement->GetInfos($testCorpNum, $itemCode, $MgtKeyList);
+            $resultList = $this->PopbillStatement->GetInfos($testCorpNum, $itemCode, $MgtKeyList, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
@@ -738,8 +759,11 @@ class StatementController extends Controller
         // 문서번호
         $mgtKey = '20220405-PHP7-001';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillStatement->GetDetailInfo($testCorpNum, $itemCode, $mgtKey);
+            $result = $this->PopbillStatement->GetDetailInfo($testCorpNum, $itemCode, $mgtKey, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
@@ -881,8 +905,11 @@ class StatementController extends Controller
         // 전자명세서 문서번호
         $mgtKey = '20220405-PHP7-001';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $url = $this->PopbillStatement->GetPopUpURL($testCorpNum, $itemCode, $mgtKey);
+            $url = $this->PopbillStatement->GetPopUpURL($testCorpNum, $itemCode, $mgtKey, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
@@ -908,8 +935,11 @@ class StatementController extends Controller
         // 전자명세서 문서번호
         $mgtKey = '20220405-PHP7-001';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $url = $this->PopbillStatement->GetViewURL($testCorpNum, $itemCode, $mgtKey);
+            $url = $this->PopbillStatement->GetViewURL($testCorpNum, $itemCode, $mgtKey, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
@@ -936,8 +966,11 @@ class StatementController extends Controller
         // 전자명세서 문서번호
         $mgtKey = '20220405-PHP7-001';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $url = $this->PopbillStatement->GetPrintURL($testCorpNum, $itemCode, $mgtKey);
+            $url = $this->PopbillStatement->GetPrintURL($testCorpNum, $itemCode, $mgtKey, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
@@ -964,8 +997,11 @@ class StatementController extends Controller
         // 문서번호
         $mgtKey = '20220405-PHP7-001';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $url = $this->PopbillStatement->GetEPrintURL($testCorpNum, $itemCode, $mgtKey);
+            $url = $this->PopbillStatement->GetEPrintURL($testCorpNum, $itemCode, $mgtKey, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
@@ -995,8 +1031,11 @@ class StatementController extends Controller
             '20220405-PHP7-002'
         );
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $url = $this->PopbillStatement->GetMassPrintURL($testCorpNum, $itemCode, $mgtKeyList);
+            $url = $this->PopbillStatement->GetMassPrintURL($testCorpNum, $itemCode, $mgtKeyList, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
@@ -1022,8 +1061,11 @@ class StatementController extends Controller
         // 전자명세서 문서번호
         $mgtKey = '20220405-PHP7-001';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $url = $this->PopbillStatement->GetMailURL($testCorpNum, $itemCode, $mgtKey);
+            $url = $this->PopbillStatement->GetMailURL($testCorpNum, $itemCode, $mgtKey, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
@@ -1099,8 +1141,11 @@ class StatementController extends Controller
         // 첨부파일 경로, 해당 파일에 읽기 권한이 설정되어 있어야 합니다.
         $filePath = '/image.jpg';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillStatement->AttachFile($testCorpNum, $itemCode, $mgtKey, $filePath);
+            $result = $this->PopbillStatement->AttachFile($testCorpNum, $itemCode, $mgtKey, $filePath, $testUserID);
             $code = $result->code;
             $message = $result->message;
         }
@@ -1132,8 +1177,11 @@ class StatementController extends Controller
         // 첨부파일 목록 확인(getFiles API) 함수의 리턴 값 중 attachedFile 필드값 기재.
         $FileID= '';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillStatement->DeleteFile($testCorpNum, $itemCode, $mgtKey, $FileID);
+            $result = $this->PopbillStatement->DeleteFile($testCorpNum, $itemCode, $mgtKey, $FileID, $testUserID);
             $code = $result->code;
             $message = $result->message;
         }
@@ -1161,8 +1209,11 @@ class StatementController extends Controller
         // 문서번호
         $mgtKey = '20220405-PHP7-002';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillStatement->GetFiles($testCorpNum, $itemCode, $mgtKey);
+            $result = $this->PopbillStatement->GetFiles($testCorpNum, $itemCode, $mgtKey, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
@@ -1191,8 +1242,11 @@ class StatementController extends Controller
         // 수신자 이메일주소
         $receiver = '';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillStatement->SendEmail($testCorpNum, $itemCode, $mgtKey, $receiver);
+            $result = $this->PopbillStatement->SendEmail($testCorpNum, $itemCode, $mgtKey, $receiver, $testUserID);
             $code = $result->code;
             $message = $result->message;
         }
@@ -1230,9 +1284,12 @@ class StatementController extends Controller
         // 메시지 내용, 90byte 초과시 길이가 조정되어 전송됨
         $contents = '전자명세서 문자메시지 전송 테스트입니다.';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
             $result = $this->PopbillStatement->SendSMS($testCorpNum, $itemCode, $mgtKey, $sender,
-                $receiver, $contents);
+                $receiver, $contents, $testUserID);
             $code = $result->code;
             $message = $result->message;
         }
@@ -1266,8 +1323,11 @@ class StatementController extends Controller
         // 수신팩스번호
         $receiver = '';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillStatement->SendFAX($testCorpNum, $itemCode, $mgtKey, $sender, $receiver);
+            $result = $this->PopbillStatement->SendFAX($testCorpNum, $itemCode, $mgtKey, $sender, $receiver, $testUserID);
             $code = $result->code;
             $message = $result->message;
         }
@@ -1303,6 +1363,9 @@ class StatementController extends Controller
 
         // 팩스수신번호
         $receiveNum = '';
+
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
 
         // 전자명세서 객체 생성
         $Statement = new Statement();
@@ -1437,7 +1500,7 @@ class StatementController extends Controller
         );
 
         try {
-            $receiptNum = $this->PopbillStatement->FAXSend($testCorpNum, $Statement, $sendNum, $receiveNum);
+            $receiptNum = $this->PopbillStatement->FAXSend($testCorpNum, $Statement, $sendNum, $receiveNum, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
@@ -1469,8 +1532,11 @@ class StatementController extends Controller
         // 첨부할 명세서 문서번호
         $subMgtKey = '20220405-PHP7-002';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillStatement->AttachStatement($testCorpNum, $itemCode, $mgtKey, $subItemCode, $subMgtKey);
+            $result = $this->PopbillStatement->AttachStatement($testCorpNum, $itemCode, $mgtKey, $subItemCode, $subMgtKey, $testUserID);
             $code = $result->code;
             $message = $result->message;
         }
@@ -1503,8 +1569,11 @@ class StatementController extends Controller
         // 첨부해제할 명세서 문서번호
         $subMgtKey = '20220405-PHP7-002';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillStatement->DetachStatement($testCorpNum, $itemCode, $mgtKey, $subItemCode, $subMgtKey);
+            $result = $this->PopbillStatement->DetachStatement($testCorpNum, $itemCode, $mgtKey, $subItemCode, $subMgtKey, $testUserID);
             $code = $result->code;
             $message = $result->message;
         }
@@ -1525,8 +1594,11 @@ class StatementController extends Controller
         // 팝빌회원 사업자번호, '-'제외 10자리
         $testCorpNum = '1234567890';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillStatement->ListEmailConfig($testCorpNum);
+            $result = $this->PopbillStatement->ListEmailConfig($testCorpNum, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
@@ -1559,8 +1631,11 @@ class StatementController extends Controller
         // 전송 여부 (True = 전송, False = 미전송)
         $sendYN = True;
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillStatement->UpdateEmailConfig($testCorpNum, $emailType, $sendYN);
+            $result = $this->PopbillStatement->UpdateEmailConfig($testCorpNum, $emailType, $sendYN, $testUserID);
             $code = $result->code;
             $message = $result->message;
         }
@@ -1748,6 +1823,7 @@ class StatementController extends Controller
 
         // 팝빌회원 아이디
         $testUserID = 'testkorea';
+
         try {
             $result = $this->PopbillStatement->GetChargeInfo( $testCorpNum, $itemCode, $testUserID );
         }
@@ -1874,8 +1950,11 @@ class StatementController extends Controller
         // 팝빌회원 사업자번호, '-'제외 10자리
         $testCorpNum = '1234567890';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $CorpInfo = $this->PopbillStatement->GetCorpInfo($testCorpNum);
+            $CorpInfo = $this->PopbillStatement->GetCorpInfo($testCorpNum, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
@@ -1913,8 +1992,11 @@ class StatementController extends Controller
         // 종목
         $CorpInfo->bizClass = '종목';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result =  $this->PopbillStatement->UpdateCorpInfo($testCorpNum, $CorpInfo);
+            $result =  $this->PopbillStatement->UpdateCorpInfo($testCorpNum, $CorpInfo, $testUserID);
             $code = $result->code;
             $message = $result->message;
         }
@@ -1956,8 +2038,11 @@ class StatementController extends Controller
         // 담당자 권한, 1 : 개인권한, 2 : 읽기권한, 3: 회사권한
         $ContactInfo->searchRole = 3;
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillStatement->RegistContact($testCorpNum, $ContactInfo);
+            $result = $this->PopbillStatement->RegistContact($testCorpNum, $ContactInfo, $testUserID);
             $code = $result->code;
             $message = $result->message;
         }
@@ -2005,8 +2090,11 @@ class StatementController extends Controller
         // 팝빌회원 사업자번호, '-'제외 10자리
         $testCorpNum = '1234567890';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $ContactList = $this->PopbillStatement->ListContact($testCorpNum);
+            $ContactList = $this->PopbillStatement->ListContact($testCorpNum, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();

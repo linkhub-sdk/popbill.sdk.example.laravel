@@ -102,8 +102,11 @@ class MessageController extends Controller
         // 팝빌회원 사업자번호, "-"제외 10자리
         $testCorpNum = '1234567890';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillMessaging->GetSenderNumberList($testCorpNum);
+            $result = $this->PopbillMessaging->GetSenderNumberList($testCorpNum, $testUserID);
         } catch(PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -140,8 +143,11 @@ class MessageController extends Controller
             'msg' => '안녕하세요.' // 메시지 내용
         );
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $receiptNum = $this->PopbillMessaging->SendSMS($testCorpNum, '', '', $Messages, $reserveDT, $adsYN, '', '', '', $requestNum);
+            $receiptNum = $this->PopbillMessaging->SendSMS($testCorpNum, '', '', $Messages, $reserveDT, $adsYN, $testUserID, '', '', $requestNum);
         } catch(PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -181,8 +187,12 @@ class MessageController extends Controller
                 'msg' => '개별 메시지 내용'  // 개별 메시지 내용
             );
         }
+
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $receiptNum = $this->PopbillMessaging->SendSMS($testCorpNum,'','', $Messages, $reserveDT, $adsYN, '', '', '', $requestNum);
+            $receiptNum = $this->PopbillMessaging->SendSMS($testCorpNum,'','', $Messages, $reserveDT, $adsYN, $testUserID, '', '', $requestNum);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
@@ -221,8 +231,11 @@ class MessageController extends Controller
             'sjt' => '메시지 제목'  // 메시지 제목
         );
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $receiptNum = $this->PopbillMessaging->SendLMS($testCorpNum, '', '', '', $Messages, $reserveDT, $adsYN, '', '', '', $requestNum);
+            $receiptNum = $this->PopbillMessaging->SendLMS($testCorpNum, '', '', '', $Messages, $reserveDT, $adsYN, $testUserID, '', '', $requestNum);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
@@ -263,95 +276,18 @@ class MessageController extends Controller
                 'sjt' => '개발 메시지 제목'  // 개별 메시지 내용
             );
         }
+
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $receiptNum = $this->PopbillMessaging->SendLMS($testCorpNum, '', '', '', $Messages, $reserveDT, $adsYN, '', '', '', $requestNum);
+            $receiptNum = $this->PopbillMessaging->SendLMS($testCorpNum, '', '', '', $Messages, $reserveDT, $adsYN, $testUserID, '', '', $requestNum);
         } catch(PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
         return view('ReturnValue', ['filedName' => 'LMS 대량전송 접수번호(receiptNum)', 'value' => $receiptNum]);
-    }
-
-    /**
-     * 메시지 길이(90byte)에 따라 단문/장문(SMS/LMS)을 자동으로 인식하여 1건의 메시지를 전송을 팝빌에 접수합니다.
-     * - https://docs.popbill.com/message/phplaravel/api#SendXMS
-     */
-    public function SendXMS(){
-
-        // 팝빌 회원 사업자번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
-
-        // 예약전송일시(yyyyMMddHHmmss) ex)20151212230000, null인경우 즉시전송
-        $reserveDT = null;
-
-        // 광고문자 전송여부
-        $adsYN = false;
-
-        // 전송요청번호
-        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
-        // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
-        $requestNum = '';
-
-        $Messages[] = array(
-            'snd' => '',  // 발신번호, 팝빌에 등록되지 않은 발신번호 기재시 오류처리
-            'sndnm' => '발신자명',   // 발신자명
-            'rcv' => '',   // 수신번호
-            'rcvnm' => '수신자성명',  // 수신자성명
-            'msg' => '장문 메시지 내용 장문으로 보내는 기준은 메시지 길이을 기준으로 90byte이상입니다. 2000byte에서 길이가 조정됩니다.' // 메시지 내용
-        );
-
-        try {
-            $receiptNum = $this->PopbillMessaging->SendXMS($testCorpNum, '', '', '', $Messages, $reserveDT, $adsYN, '', '', '', $requestNum);
-        } catch(PopbillException $pe) {
-            $code = $pe->getCode();
-            $message = $pe->getMessage();
-            return view('PResponse', ['code' => $code, 'message' => $message]);
-        }
-        return view('ReturnValue', ['filedName' => 'XMS 단건전송 접수번호(receiptNum)', 'value' => $receiptNum]);
-    }
-
-    /**
-     * 메시지 길이(90byte)에 따라 단문/장문(SMS/LMS)을 자동으로 인식하여 다수건의 메시지 전송을 팝빌에 접수합니다. (최대 1,000건)
-     *  - https://docs.popbill.com/message/phplaravel/api#SendXMS
-     */
-    public function SendXMS_Multi(){
-
-        // 팝빌 회원 사업자번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
-
-        // 문자전송정보 배열, 최대 1000건
-        $Messages = array();
-        for ( $i = 0; $i < 100; $i++ ) {
-            $Messages[] = array(
-                'snd' => '',    // 발신번호, 팝빌에 등록되지 않은 발신번호 기재시 오류처리
-                'sndnm' => '발신자명',     // 발신자명
-                'rcv' => '',     // 수신번호
-                'rcvnm' => '수신자성명',     // 수신자성명
-                'sjt' => '개별 메시지 제목', // 개별전송 메시지 제목
-                'msg' => '개별 메시지 내용'  // 개별전송 메시지 내용
-            );
-        }
-
-        // 예약전송일시(yyyyMMddHHmmss) ex)20161108200000, null인경우 즉시전송
-        $reserveDT = null;
-
-        // 광고문자 전송여부
-        $adsYN = false;
-
-        // 전송요청번호
-        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
-        // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
-        $requestNum = '';
-
-        try {
-            $receiptNum = $this->PopbillMessaging->SendXMS($testCorpNum, '', '', '', $Messages, $reserveDT, $adsYN, '', '', '', $requestNum);
-        } catch(PopbillException $pe) {
-            $code = $pe->getCode();
-            $message = $pe->getMessage();
-            return view('PResponse', ['code' => $code, 'message' => $message]);
-        }
-        return view('ReturnValue', ['filedName' => 'XMS 대량전송 접수번호(receiptNum)', 'value' => $receiptNum]);
     }
 
     /**
@@ -386,8 +322,11 @@ class MessageController extends Controller
         // 최대 300KByte, JPEG 파일포맷 전송가능
         $Files = array('/image.jpg');
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $receiptNum = $this->PopbillMessaging->SendMMS($testCorpNum,'','','',$Messages, $Files, $reserveDT, $adsYN, '', '', '', $requestNum);
+            $receiptNum = $this->PopbillMessaging->SendMMS($testCorpNum,'','','',$Messages, $Files, $reserveDT, $adsYN, $testUserID, '', '', $requestNum);
         } catch(PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -434,14 +373,104 @@ class MessageController extends Controller
         // 최대 300KByte, JPEG 파일포맷 전송가능
         $Files = array('/image.jpg');
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $receiptNum = $this->PopbillMessaging->SendMMS($testCorpNum, '', '', '', $Messages, $Files, $reserveDT, $adsYN, '', '', '', $requestNum);
+            $receiptNum = $this->PopbillMessaging->SendMMS($testCorpNum, '', '', '', $Messages, $Files, $reserveDT, $adsYN, $testUserID, '', '', $requestNum);
         } catch(PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
         return view('ReturnValue', ['filedName' => 'MMS 대량전송 접수번호(receiptNum)', 'value' => $receiptNum]);
+    }
+
+    /**
+     * 메시지 길이(90byte)에 따라 단문/장문(SMS/LMS)을 자동으로 인식하여 1건의 메시지를 전송을 팝빌에 접수합니다.
+     * - https://docs.popbill.com/message/phplaravel/api#SendXMS
+     */
+    public function SendXMS(){
+
+        // 팝빌 회원 사업자번호, "-"제외 10자리
+        $testCorpNum = '1234567890';
+
+        // 예약전송일시(yyyyMMddHHmmss) ex)20151212230000, null인경우 즉시전송
+        $reserveDT = null;
+
+        // 광고문자 전송여부
+        $adsYN = false;
+
+        // 전송요청번호
+        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
+        // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
+        $requestNum = '';
+
+        $Messages[] = array(
+            'snd' => '',  // 발신번호, 팝빌에 등록되지 않은 발신번호 기재시 오류처리
+            'sndnm' => '발신자명',   // 발신자명
+            'rcv' => '',   // 수신번호
+            'rcvnm' => '수신자성명',  // 수신자성명
+            'msg' => '장문 메시지 내용 장문으로 보내는 기준은 메시지 길이을 기준으로 90byte이상입니다. 2000byte에서 길이가 조정됩니다.' // 메시지 내용
+        );
+
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
+        try {
+            $receiptNum = $this->PopbillMessaging->SendXMS($testCorpNum, '', '', '', $Messages, $reserveDT, $adsYN, $testUserID, '', '', $requestNum);
+        } catch(PopbillException $pe) {
+            $code = $pe->getCode();
+            $message = $pe->getMessage();
+            return view('PResponse', ['code' => $code, 'message' => $message]);
+        }
+        return view('ReturnValue', ['filedName' => 'XMS 단건전송 접수번호(receiptNum)', 'value' => $receiptNum]);
+    }
+
+    /**
+     * 메시지 길이(90byte)에 따라 단문/장문(SMS/LMS)을 자동으로 인식하여 다수건의 메시지 전송을 팝빌에 접수합니다. (최대 1,000건)
+     *  - https://docs.popbill.com/message/phplaravel/api#SendXMS
+     */
+    public function SendXMS_Multi(){
+
+        // 팝빌 회원 사업자번호, "-"제외 10자리
+        $testCorpNum = '1234567890';
+
+        // 문자전송정보 배열, 최대 1000건
+        $Messages = array();
+        for ( $i = 0; $i < 100; $i++ ) {
+            $Messages[] = array(
+                'snd' => '',    // 발신번호, 팝빌에 등록되지 않은 발신번호 기재시 오류처리
+                'sndnm' => '발신자명',     // 발신자명
+                'rcv' => '',     // 수신번호
+                'rcvnm' => '수신자성명',     // 수신자성명
+                'sjt' => '개별 메시지 제목', // 개별전송 메시지 제목
+                'msg' => '개별 메시지 내용'  // 개별전송 메시지 내용
+            );
+        }
+
+        // 예약전송일시(yyyyMMddHHmmss) ex)20161108200000, null인경우 즉시전송
+        $reserveDT = null;
+
+        // 광고문자 전송여부
+        $adsYN = false;
+
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
+        // 전송요청번호
+        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
+        // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
+        $requestNum = '';
+
+        try {
+            $receiptNum = $this->PopbillMessaging->SendXMS($testCorpNum, '', '', '', $Messages, $reserveDT, $adsYN, $testUserID, '', '', $requestNum);
+        } catch(PopbillException $pe) {
+            $code = $pe->getCode();
+            $message = $pe->getMessage();
+            return view('PResponse', ['code' => $code, 'message' => $message]);
+        }
+        return view('ReturnValue', ['filedName' => 'XMS 대량전송 접수번호(receiptNum)', 'value' => $receiptNum]);
     }
 
     /**
@@ -456,8 +485,11 @@ class MessageController extends Controller
         // 예약문자전송 요청시 발급받은 접수번호
         $ReceiptNum = '022040511000000020';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillMessaging->CancelReserve($testCorpNum ,$ReceiptNum);
+            $result = $this->PopbillMessaging->CancelReserve($testCorpNum ,$ReceiptNum, $testUserID);
             $code = $result->code;
             $message = $result->message;
         } catch(PopbillException $pe) {
@@ -479,8 +511,11 @@ class MessageController extends Controller
         // 예약문자전송 요청시 할당한 전송요청번호
         $requestNum = '';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillMessaging->CancelReserveRN($testCorpNum ,$requestNum);
+            $result = $this->PopbillMessaging->CancelReserveRN($testCorpNum ,$requestNum, $testUserID);
             $code = $result->code;
             $message = $result->message;
         } catch(PopbillException $pe) {
@@ -502,8 +537,11 @@ class MessageController extends Controller
         // 문자전송 요청 시 발급받은 접수번호(receiptNum)
         $ReceiptNum = '022040511000000020';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillMessaging->GetMessages($testCorpNum, $ReceiptNum);
+            $result = $this->PopbillMessaging->GetMessages($testCorpNum, $ReceiptNum, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
@@ -526,8 +564,11 @@ class MessageController extends Controller
         // 문자전송 요청 시 할당한 전송요청번호(requestNum)
         $requestNum = '';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillMessaging->GetMessagesRN($testCorpNum, $requestNum);
+            $result = $this->PopbillMessaging->GetMessagesRN($testCorpNum, $requestNum, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
@@ -551,8 +592,11 @@ class MessageController extends Controller
 
         array_push($ReceiptNumList, '022040511000000020');
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillMessaging->GetStates($testCorpNum, $ReceiptNumList);
+            $result = $this->PopbillMessaging->GetStates($testCorpNum, $ReceiptNumList, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
@@ -608,12 +652,15 @@ class MessageController extends Controller
         // 정렬방향, D-내림차순, A-오름차순
         $Order = 'D';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         // 조회하고자 하는 발신자명 또는 수신자명
         // - 미입력시 전체조회
         $QString = '';
 
         try {
-            $result = $this->PopbillMessaging->Search( $testCorpNum, $SDate, $EDate, $State, $Item, $ReserveYN, $SenderYN, $Page, $PerPage, $Order, '', $QString );
+            $result = $this->PopbillMessaging->Search( $testCorpNum, $SDate, $EDate, $State, $Item, $ReserveYN, $SenderYN, $Page, $PerPage, $Order, $testUserID, $QString );
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
@@ -992,8 +1039,11 @@ class MessageController extends Controller
         // 팝빌회원 사업자번호, '-'제외 10자리
         $testCorpNum = '1234567890';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $CorpInfo = $this->PopbillMessaging->GetCorpInfo($testCorpNum);
+            $CorpInfo = $this->PopbillMessaging->GetCorpInfo($testCorpNum, $testUserID);
         } catch(PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -1030,8 +1080,11 @@ class MessageController extends Controller
         // 종목
         $CorpInfo->bizClass = '종목';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result =  $this->PopbillMessaging->UpdateCorpInfo($testCorpNum, $CorpInfo);
+            $result =  $this->PopbillMessaging->UpdateCorpInfo($testCorpNum, $CorpInfo, $testUserID);
             $code = $result->code;
             $message = $result->message;
         } catch(PopbillException $pe) {
@@ -1072,8 +1125,11 @@ class MessageController extends Controller
         // 담당자 권한, 1 : 개인권한, 2 : 읽기권한, 3: 회사권한
         $ContactInfo->searchRole = 3;
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillMessaging->RegistContact($testCorpNum, $ContactInfo);
+            $result = $this->PopbillMessaging->RegistContact($testCorpNum, $ContactInfo, $testUserID);
             $code = $result->code;
             $message = $result->message;
         } catch(PopbillException $pe) {
@@ -1120,8 +1176,11 @@ class MessageController extends Controller
         // 팝빌회원 사업자번호, '-'제외 10자리
         $testCorpNum = '1234567890';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $ContactList = $this->PopbillMessaging->ListContact($testCorpNum);
+            $ContactList = $this->PopbillMessaging->ListContact($testCorpNum, $testUserID);
         } catch(PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();

@@ -51,7 +51,7 @@ class AccountCheckController extends Controller
         $MemberCorpNum = "1234567890";
 
         // 팝빌회원 아이디
-        $testUesrID = "testkorea";
+        $testUserID = "testkorea";
 
         // 조회할 기관코드
         $bankCode = "";
@@ -60,7 +60,7 @@ class AccountCheckController extends Controller
         $accountNumber = "";
 
         try {
-            $result = $this->PopbillAccountCheck->checkAccountInfo($MemberCorpNum, $bankCode, $accountNumber, $testUesrID);
+            $result = $this->PopbillAccountCheck->checkAccountInfo($MemberCorpNum, $bankCode, $accountNumber, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
@@ -141,7 +141,7 @@ class AccountCheckController extends Controller
         $testCorpNum = '1234567890';
 
         // 팝빌 회원 아이디
-        $testUserID = '';
+        $testUserID = 'testkorea';
 
         try {
             $url = $this->PopbillAccountCheck->GetChargeURL($testCorpNum, $testUserID);
@@ -414,8 +414,11 @@ class AccountCheckController extends Controller
         // 팝빌회원 사업자번호, '-'제외 10자리
         $testCorpNum = '1234567890';
 
+        // 팝빌회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $CorpInfo = $this->PopbillAccountCheck->GetCorpInfo($testCorpNum);
+            $CorpInfo = $this->PopbillAccountCheck->GetCorpInfo($testCorpNum, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
@@ -453,8 +456,11 @@ class AccountCheckController extends Controller
         // 종목
         $CorpInfo->bizClass = '종목';
 
+        // 팝빌회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result =  $this->PopbillAccountCheck->UpdateCorpInfo($testCorpNum, $CorpInfo);
+            $result =  $this->PopbillAccountCheck->UpdateCorpInfo($testCorpNum, $CorpInfo, $testUserID);
             $code = $result->code;
             $message = $result->message;
         }
@@ -496,8 +502,11 @@ class AccountCheckController extends Controller
         // 담당자 권한, 1 : 개인권한, 2 : 읽기권한, 3: 회사권한
         $ContactInfo->searchRole = 3;
 
+        // 팝빌회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillAccountCheck->RegistContact($testCorpNum, $ContactInfo);
+            $result = $this->PopbillAccountCheck->RegistContact($testCorpNum, $ContactInfo, $testUserID);
             $code = $result->code;
             $message = $result->message;
         }
@@ -545,8 +554,11 @@ class AccountCheckController extends Controller
         // 팝빌회원 사업자번호, '-'제외 10자리
         $testCorpNum = '1234567890';
 
+        // 팝빌회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-        $ContactList = $this->PopbillAccountCheck->ListContact($testCorpNum);
+        $ContactList = $this->PopbillAccountCheck->ListContact($testCorpNum, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();

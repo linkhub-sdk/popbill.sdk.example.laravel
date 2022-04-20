@@ -100,8 +100,11 @@ class FaxController extends Controller
         // 팝빌회원 사업자번호, "-"제외 10자리
         $testCorpNum = '1234567890';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillFax->GetSenderNumberList($testCorpNum);
+            $result = $this->PopbillFax->GetSenderNumberList($testCorpNum, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
@@ -637,8 +640,11 @@ class FaxController extends Controller
         // 팩스예약전송 접수번호
         $ReceiptNum = '022040517574300001';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillFax->CancelReserve($testCorpNum ,$ReceiptNum);
+            $result = $this->PopbillFax->CancelReserve($testCorpNum ,$ReceiptNum, $testUserID);
             $code = $result->code;
             $message = $result->message;
         }
@@ -662,8 +668,11 @@ class FaxController extends Controller
         // 예약팩스전송 요청시 할당한 전송요청번호
         $requestNum = '';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillFax->CancelReserveRN($testCorpNum ,$requestNum);
+            $result = $this->PopbillFax->CancelReserveRN($testCorpNum ,$requestNum, $testUserID);
             $code = $result->code;
             $message = $result->message;
         }
@@ -686,8 +695,11 @@ class FaxController extends Controller
         // 팩스전송 접수번호
         $ReceiptNum = '022040513573800005';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillFax->GetFaxDetail($testCorpNum, $ReceiptNum);
+            $result = $this->PopbillFax->GetFaxDetail($testCorpNum, $ReceiptNum, $testUserID);
         } catch(PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -709,8 +721,11 @@ class FaxController extends Controller
         // 팩스전송 요청시 할당한 전송요청번호
         $requestNum = '';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillFax->GetFaxDetailRN($testCorpNum, $requestNum);
+            $result = $this->PopbillFax->GetFaxDetailRN($testCorpNum, $requestNum, $testUserID);
         } catch(PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -761,12 +776,15 @@ class FaxController extends Controller
         // 정렬방향, D-내림차순, A-오름차순
         $Order = 'D';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         // 조회하고자 하는 발신자명 또는 수신자명
         // - 미입력시 전체조회
         $QString = '';
 
         try {
-            $result = $this->PopbillFax->Search($testCorpNum, $SDate, $EDate, $State, $ReserveYN, $SenderOnly, $Page, $PerPage, $Order, '', $QString);
+            $result = $this->PopbillFax->Search($testCorpNum, $SDate, $EDate, $State, $ReserveYN, $SenderOnly, $Page, $PerPage, $Order, $testUserID, $QString);
         } catch(PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -1040,7 +1058,7 @@ class FaxController extends Controller
      */
     public function CheckID(){
 
-        // 조회할 아이디
+        // 중복여부를 확인할 아이디
         $testUserID = 'testkorea';
 
         try {
@@ -1054,30 +1072,6 @@ class FaxController extends Controller
         }
 
         return view('PResponse', ['code' => $code, 'message' => $message]);
-    }
-
-    /**
-     * 팝빌 사이트에 로그인 상태로 접근할 수 있는 페이지의 팝업 URL을 반환합니다.
-     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-     * - https://docs.popbill.com/fax/phplaravel/api#GetAccessURL
-     */
-    public function GetAccessURL(){
-
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
-
-        // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
-
-        try {
-            $url = $this->PopbillFax->GetAccessURL($testCorpNum, $testUserID);
-        } catch(PopbillException $pe) {
-            $code = $pe->getCode();
-            $message = $pe->getMessage();
-            return view('PResponse', ['code' => $code, 'message' => $message]);
-        }
-        return view('ReturnValue', ['filedName' => "팝빌 로그인 URL" , 'value' => $url]);
-
     }
 
     /**
@@ -1138,6 +1132,29 @@ class FaxController extends Controller
     }
 
     /**
+     * 팝빌 사이트에 로그인 상태로 접근할 수 있는 페이지의 팝업 URL을 반환합니다.
+     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * - https://docs.popbill.com/fax/phplaravel/api#GetAccessURL
+     */
+    public function GetAccessURL(){
+
+        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        $testCorpNum = '1234567890';
+
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
+        try {
+            $url = $this->PopbillFax->GetAccessURL($testCorpNum, $testUserID);
+        } catch(PopbillException $pe) {
+            $code = $pe->getCode();
+            $message = $pe->getMessage();
+            return view('PResponse', ['code' => $code, 'message' => $message]);
+        }
+        return view('ReturnValue', ['filedName' => "팝빌 로그인 URL" , 'value' => $url]);
+    }
+
+    /**
      * 연동회원의 회사정보를 확인합니다.
      * - https://docs.popbill.com/fax/phplaravel/api#GetCorpInfo
      */
@@ -1146,8 +1163,11 @@ class FaxController extends Controller
         // 팝빌회원 사업자번호, '-'제외 10자리
         $testCorpNum = '1234567890';
 
+        // 팝빌회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $CorpInfo = $this->PopbillFax->GetCorpInfo($testCorpNum);
+            $CorpInfo = $this->PopbillFax->GetCorpInfo($testCorpNum, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
@@ -1276,8 +1296,11 @@ class FaxController extends Controller
         // 팝빌회원 사업자번호, '-'제외 10자리
         $testCorpNum = '1234567890';
 
+        // 팝빌회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $ContactList = $this->PopbillFax->ListContact($testCorpNum);
+            $ContactList = $this->PopbillFax->ListContact($testCorpNum, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();

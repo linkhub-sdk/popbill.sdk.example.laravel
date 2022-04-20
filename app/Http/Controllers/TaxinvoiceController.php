@@ -381,6 +381,9 @@ class TaxinvoiceController extends Controller
         // 지연발행 강제 여부
         $fourceIssue = false;
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         // 세금계산서 객체정보 배열
         $taxinvoiceList = array();
 
@@ -617,7 +620,7 @@ class TaxinvoiceController extends Controller
         }
 
         try {
-            $result = $this->PopbillTaxinvoice->BulkSubmit($testCorpNum, $submitID, $taxinvoiceList, $fourceIssue);
+            $result = $this->PopbillTaxinvoice->BulkSubmit($testCorpNum, $submitID, $taxinvoiceList, $fourceIssue, $testUserID);
             $code = $result->code;
             $message = $result->message;
             $receiptID = $result->receiptID;
@@ -643,8 +646,11 @@ class TaxinvoiceController extends Controller
         // 초대량 발행 접수시 기재한 제출 아이디
         $submitID = '20220405-PHP7-BULK';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillTaxinvoice->GetBulkResult($testCorpNum, $submitID);
+            $result = $this->PopbillTaxinvoice->GetBulkResult($testCorpNum, $submitID, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
@@ -673,6 +679,9 @@ class TaxinvoiceController extends Controller
         // 세금계산서 문서번호
         // - 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
         $invoicerMgtKey = '20220405-PHP7-002';
+
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
 
         /************************************************************
          *                        세금계산서 정보
@@ -914,7 +923,7 @@ class TaxinvoiceController extends Controller
         $writeSpecification = false;
 
         try {
-            $result = $this->PopbillTaxinvoice->Register($testCorpNum, $Taxinvoice);
+            $result = $this->PopbillTaxinvoice->Register($testCorpNum, $Taxinvoice, $testUserID, $writeSpecification);
             $code = $result->code;
             $message = $result->message;
         }
@@ -940,6 +949,9 @@ class TaxinvoiceController extends Controller
 
         // 세금계산서 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
         $mgtKey = '20220405-PHP7-002';
+
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
 
         /************************************************************
          *                        세금계산서 정보
@@ -1175,8 +1187,13 @@ class TaxinvoiceController extends Controller
         $Taxinvoice->addContactList[1]->email = '';                 // 이메일주소
         $Taxinvoice->addContactList[1]->contactName = '링크허브';   // 담당자명
 
+        // 거래명세서 동시작성여부 (true / false 중 택 1)
+        // └ true = 사용 , false = 미사용
+        // - 미입력 시 기본값 false 처리
+        $writeSpecification = false;
+
         try {
-            $result = $this->PopbillTaxinvoice->Update($testCorpNum, $mgtKeyType, $mgtKey, $Taxinvoice);
+            $result = $this->PopbillTaxinvoice->Update($testCorpNum, $mgtKeyType, $mgtKey, $Taxinvoice, $testUserID);
             $code = $result->code;
             $message = $result->message;
         }
@@ -1211,6 +1228,9 @@ class TaxinvoiceController extends Controller
         // 메모
         $memo = '발행 메모입니다';
 
+        // 발행 안내메일 제목, 미기재시 기본제목으로 전송
+        $EmailSubject = null;
+
         // 지연발행 강제여부  (true / false 중 택 1)
         // └ true = 가능 , false = 불가능
         // - 미입력 시 기본값 false 처리
@@ -1219,11 +1239,11 @@ class TaxinvoiceController extends Controller
         //   true로 선언하여 발행(Issue API)를 호출하시면 됩니다.
         $forceIssue = false;
 
-        // 발행 안내메일 제목, 미기재시 기본제목으로 전송
-        $EmailSubject = null;
+        // 팝빌회원 아이디
+        $testUserID = 'testkorea';
 
         try {
-            $result = $this->PopbillTaxinvoice->Issue($testCorpNum, $mgtKeyType, $mgtKey, $memo, $EmailSubject, $forceIssue);
+            $result = $this->PopbillTaxinvoice->Issue($testCorpNum, $mgtKeyType, $mgtKey, $memo, $EmailSubject, $forceIssue,. $testUserID);
             $code = $result->code;
             $message = $result->message;
             $ntsConfirmNum = $result->ntsConfirmNum;
@@ -1256,8 +1276,11 @@ class TaxinvoiceController extends Controller
         // 메모
         $memo = '발행 취소메모입니다';
 
+        // 팝빌회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillTaxinvoice->CancelIssue($testCorpNum, $mgtKeyType, $mgtKey, $memo);
+            $result = $this->PopbillTaxinvoice->CancelIssue($testCorpNum, $mgtKeyType, $mgtKey, $memo, $testUserID);
             $code = $result->code;
             $message = $result->message;
         }
@@ -1537,8 +1560,11 @@ class TaxinvoiceController extends Controller
         // 메모
         $memo = '역발행 요청 메모입니다';
 
+        // 팝빌회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillTaxinvoice->Request($testCorpNum, $mgtKeyType, $mgtKey, $memo);
+            $result = $this->PopbillTaxinvoice->Request($testCorpNum, $mgtKeyType, $mgtKey, $memo, $testUserID);
             $code = $result->code;
             $message = $result->message;
         }
@@ -1570,8 +1596,11 @@ class TaxinvoiceController extends Controller
         // 메모
         $memo = '역발행 요청 취소메모입니다';
 
+        // 팝빌회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillTaxinvoice->CanCelRequest($testCorpNum, $mgtKeyType, $mgtKey, $memo);
+            $result = $this->PopbillTaxinvoice->CanCelRequest($testCorpNum, $mgtKeyType, $mgtKey, $memo, $testUserID);
             $code = $result->code;
             $message = $result->message;
         }
@@ -1601,8 +1630,11 @@ class TaxinvoiceController extends Controller
         // 메모
         $memo = '역)발행 요청 거부메모입니다';
 
+        // 팝빌회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillTaxinvoice->Refuse($testCorpNum, $mgtKeyType, $mgtKey, $memo);
+            $result = $this->PopbillTaxinvoice->Refuse($testCorpNum, $mgtKeyType, $mgtKey, $memo, $testUserID);
             $code = $result->code;
             $message = $result->message;
         }
@@ -1630,8 +1662,11 @@ class TaxinvoiceController extends Controller
         // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
         $mgtKeyType = TIENumMgtKeyType::SELL;
 
+        // 팝빌회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillTaxinvoice->Delete($testCorpNum, $mgtKeyType, $mgtKey);
+            $result = $this->PopbillTaxinvoice->Delete($testCorpNum, $mgtKeyType, $mgtKey, $testUserID);
             $code = $result->code;
             $message = $result->message;
         }
@@ -1659,8 +1694,11 @@ class TaxinvoiceController extends Controller
         // 문서번호
         $mgtKey = '20220405-PHP7-002';
 
+        // 팝빌회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillTaxinvoice->SendToNTS($testCorpNum, $mgtKeyType, $mgtKey);
+            $result = $this->PopbillTaxinvoice->SendToNTS($testCorpNum, $mgtKeyType, $mgtKey, $testUserID);
             $code = $result->code;
             $message = $result->message;
         }
@@ -1990,8 +2028,11 @@ class TaxinvoiceController extends Controller
         // 문서번호
         $mgtKey = '20220405-PHP7-001';
 
+        // 팝빌회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $url = $this->PopbillTaxinvoice->GetPopUpURL($testCorpNum, $mgtKeyType, $mgtKey);
+            $url = $this->PopbillTaxinvoice->GetPopUpURL($testCorpNum, $mgtKeyType, $mgtKey, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
@@ -2018,8 +2059,11 @@ class TaxinvoiceController extends Controller
         // 문서번호
         $mgtKey = '20220405-PHP7-001';
 
+        // 팝빌회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $url = $this->PopbillTaxinvoice->GetViewURL($testCorpNum, $mgtKeyType, $mgtKey);
+            $url = $this->PopbillTaxinvoice->GetViewURL($testCorpNum, $mgtKeyType, $mgtKey, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
@@ -2046,8 +2090,11 @@ class TaxinvoiceController extends Controller
         // 문서번호
         $mgtKey = '20220405-PHP7-001';
 
+        // 팝빌회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $url = $this->PopbillTaxinvoice->GetPrintURL($testCorpNum, $mgtKeyType, $mgtKey);
+            $url = $this->PopbillTaxinvoice->GetPrintURL($testCorpNum, $mgtKeyType, $mgtKey, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
@@ -2073,8 +2120,11 @@ class TaxinvoiceController extends Controller
         // 문서번호
         $mgtKey = '20220405-PHP7-001';
 
+        // 팝빌회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $url = $this->PopbillTaxinvoice->GetOldPrintURL($testCorpNum, $mgtKeyType, $mgtKey);
+            $url = $this->PopbillTaxinvoice->GetOldPrintURL($testCorpNum, $mgtKeyType, $mgtKey, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
@@ -2100,8 +2150,11 @@ class TaxinvoiceController extends Controller
         // 문서번호
         $mgtKey = '20220405-PHP7-001';
 
+        // 팝빌회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $url = $this->PopbillTaxinvoice->GetEPrintURL($testCorpNum, $mgtKeyType, $mgtKey);
+            $url = $this->PopbillTaxinvoice->GetEPrintURL($testCorpNum, $mgtKeyType, $mgtKey, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
@@ -2129,8 +2182,12 @@ class TaxinvoiceController extends Controller
             '20220405-PHP7-001',
             '20220405-PHP7-002'
         );
+
+        // 팝빌회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $url = $this->PopbillTaxinvoice->GetMassPrintURL($testCorpNum, $mgtKeyType, $MgtKeyList);
+            $url = $this->PopbillTaxinvoice->GetMassPrintURL($testCorpNum, $mgtKeyType, $MgtKeyList, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
@@ -2156,8 +2213,11 @@ class TaxinvoiceController extends Controller
         // 문서번호
         $mgtKey = '20220405-PHP7-001';
 
+        // 팝빌회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $url = $this->PopbillTaxinvoice->GetMailURL($testCorpNum, $mgtKeyType, $mgtKey);
+            $url = $this->PopbillTaxinvoice->GetMailURL($testCorpNum, $mgtKeyType, $mgtKey, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
@@ -2183,8 +2243,11 @@ class TaxinvoiceController extends Controller
         // 문서번호
         $mgtKey = '20220405-PHP7-001';
 
+        // 팝빌회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $url = $this->PopbillTaxinvoice->GetPDFURL($testCorpNum, $mgtKeyType, $mgtKey);
+            $url = $this->PopbillTaxinvoice->GetPDFURL($testCorpNum, $mgtKeyType, $mgtKey, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
@@ -2259,8 +2322,11 @@ class TaxinvoiceController extends Controller
         // 첨부파일 경로, 해당 파일에 읽기 권한이 설정되어 있어야 합니다.
         $filePath = '/image.jpg';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillTaxinvoice->AttachFile($testCorpNum, $mgtKeyType, $mgtKey, $filePath);
+            $result = $this->PopbillTaxinvoice->AttachFile($testCorpNum, $mgtKeyType, $mgtKey, $filePath, $testUserID);
             $code = $result->code;
             $message = $result->message;
         }
@@ -2292,8 +2358,11 @@ class TaxinvoiceController extends Controller
         // 첨부파일 목록 확인(getFiles API) 함수의 리턴 값 중 attachedFile 필드값 기재.
         $FileID = '';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillTaxinvoice->DeleteFile($testCorpNum, $mgtKeyType, $mgtKey, $FileID);
+            $result = $this->PopbillTaxinvoice->DeleteFile($testCorpNum, $mgtKeyType, $mgtKey, $FileID, $testUserID);
             $code = $result->code;
             $message = $result->message;
         }
@@ -2352,8 +2421,11 @@ class TaxinvoiceController extends Controller
         // 실제 거래처의 메일주소가 기재되지 않도록 주의
         $receiver = '';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillTaxinvoice->SendEmail($testCorpNum, $mgtKeyType, $mgtKey, $receiver);
+            $result = $this->PopbillTaxinvoice->SendEmail($testCorpNum, $mgtKeyType, $mgtKey, $receiver, $testUserID);
             $code = $result->code;
             $message = $result->message;
         }
@@ -2391,8 +2463,11 @@ class TaxinvoiceController extends Controller
         // 메시지 내용, 90byte 초과시 길이가 조정되어 전송됨.
         $contents = '문자 메시지 내용입니다. 세금계산서가 발행되었습니다.';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillTaxinvoice->SendSMS($testCorpNum , $mgtKeyType, $mgtKey, $sender, $receiver, $contents);
+            $result = $this->PopbillTaxinvoice->SendSMS($testCorpNum , $mgtKeyType, $mgtKey, $sender, $receiver, $contents, $testUserID);
             $code = $result->code;
             $message = $result->message;
         }
@@ -2426,8 +2501,11 @@ class TaxinvoiceController extends Controller
         // 수신팩스번호
         $receiver = '';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillTaxinvoice->SendFAX($testCorpNum, $mgtKeyType, $mgtKey, $sender, $receiver);
+            $result = $this->PopbillTaxinvoice->SendFAX($testCorpNum, $mgtKeyType, $mgtKey, $sender, $receiver, $testUserID);
             $code = $result->code;
             $message = $result->message;
         }
@@ -2460,8 +2538,11 @@ class TaxinvoiceController extends Controller
         // 첨부할 명세서 문서번호
         $subMgtKey = '20220405-PHP7-001';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillTaxinvoice->AttachStatement($testCorpNum, $mgtKeyType, $mgtKey, $subItemCode, $subMgtKey);
+            $result = $this->PopbillTaxinvoice->AttachStatement($testCorpNum, $mgtKeyType, $mgtKey, $subItemCode, $subMgtKey, $testUserID);
             $code = $result->code;
             $message = $result->message;
         }
@@ -2494,8 +2575,11 @@ class TaxinvoiceController extends Controller
         // 첨부해제할 명세서 문서번호
         $subMgtKey = '20220405-PHP7-001';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillTaxinvoice->DetachStatement($testCorpNum, $mgtKeyType, $mgtKey, $subItemCode, $subMgtKey);
+            $result = $this->PopbillTaxinvoice->DetachStatement($testCorpNum, $mgtKeyType, $mgtKey, $subItemCode, $subMgtKey, $testUserID);
             $code = $result->code;
             $message = $result->message;
         }
@@ -2547,8 +2631,11 @@ class TaxinvoiceController extends Controller
         // 사업자번호별 중복없는 고유번호 할당
         $mgtKey = '20220405-PHP7-006';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillTaxinvoice->AssignMgtKey($testCorpNum, $mgtKeyType, $itemKey, $mgtKey);
+            $result = $this->PopbillTaxinvoice->AssignMgtKey($testCorpNum, $mgtKeyType, $itemKey, $mgtKey, $testUserID);
             $code = $result->code;
             $message = $result->message;
         }
@@ -2569,8 +2656,11 @@ class TaxinvoiceController extends Controller
         // 팝빌회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillTaxinvoice->ListEmailConfig($testCorpNum);
+            $result = $this->PopbillTaxinvoice->ListEmailConfig($testCorpNum, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
@@ -2622,8 +2712,11 @@ class TaxinvoiceController extends Controller
         // 전송 여부 (True = 전송, False = 미전송)
         $sendYN = True;
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillTaxinvoice->UpdateEmailConfig($testCorpNum, $emailType, $sendYN);
+            $result = $this->PopbillTaxinvoice->UpdateEmailConfig($testCorpNum, $emailType, $sendYN, $testUserID);
             $code = $result->code;
             $message = $result->message;
         }
@@ -2715,8 +2808,11 @@ class TaxinvoiceController extends Controller
         // 팝빌 회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillTaxinvoice->CheckCertValidation($testCorpNum);
+            $result = $this->PopbillTaxinvoice->CheckCertValidation($testCorpNum, $testUserID);
             $code = $result->code;
             $message = $result->message;
         }
@@ -2737,8 +2833,11 @@ class TaxinvoiceController extends Controller
         // 팝빌 회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $taxinvoiceCertificate = $this->PopbillTaxinvoice->GetTaxCertInfo($testCorpNum);
+            $taxinvoiceCertificate = $this->PopbillTaxinvoice->GetTaxCertInfo($testCorpNum, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
@@ -2919,8 +3018,11 @@ class TaxinvoiceController extends Controller
         // 팝빌회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillTaxinvoice->GetChargeInfo($testCorpNum);
+            $result = $this->PopbillTaxinvoice->GetChargeInfo($testCorpNum, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
@@ -3043,8 +3145,11 @@ class TaxinvoiceController extends Controller
         // 팝빌회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $CorpInfo = $this->PopbillTaxinvoice->GetCorpInfo($testCorpNum);
+            $CorpInfo = $this->PopbillTaxinvoice->GetCorpInfo($testCorpNum, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
@@ -3082,8 +3187,11 @@ class TaxinvoiceController extends Controller
         // 종목
         $CorpInfo->bizClass = '종목';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result =  $this->PopbillTaxinvoice->UpdateCorpInfo($testCorpNum, $CorpInfo);
+            $result =  $this->PopbillTaxinvoice->UpdateCorpInfo($testCorpNum, $CorpInfo, $testUserID);
             $code = $result->code;
             $message = $result->message;
         }
@@ -3125,8 +3233,11 @@ class TaxinvoiceController extends Controller
         // 담당자 권한, 1 : 개인권한, 2 : 읽기권한, 3: 회사권한
         $ContactInfo->searchRole = 3;
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillTaxinvoice->RegistContact($testCorpNum, $ContactInfo);
+            $result = $this->PopbillTaxinvoice->RegistContact($testCorpNum, $ContactInfo, $testUserID);
             $code = $result->code;
             $message = $result->message;
         }
@@ -3174,8 +3285,11 @@ class TaxinvoiceController extends Controller
         // 팝빌회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $ContactList = $this->PopbillTaxinvoice->ListContact($testCorpNum);
+            $ContactList = $this->PopbillTaxinvoice->ListContact($testCorpNum, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();

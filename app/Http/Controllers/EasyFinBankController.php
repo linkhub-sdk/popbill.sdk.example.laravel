@@ -96,76 +96,11 @@ class EasyFinBankController extends Controller
         // 메모
         $BankAccountInfo->Memo = '';
 
-        try {
-            $result =  $this->PopbillEasyFinBank->RegistBankAccount($testCorpNum, $BankAccountInfo);
-            $code = $result->code;
-            $message = $result->message;
-        }
-        catch(PopbillException $pe) {
-            $code = $pe->getCode();
-            $message = $pe->getMessage();
-        }
-
-        return view('PResponse', ['code' => $code, 'message' => $message]);
-    }
-
-    /**
-     * 계좌의 정액제 해지를 요청합니다.
-     * - https://docs.popbill.com/easyfinbank/phplaravel/api#CloseBankAccount
-     */
-    public function CloseBankAccount(){
-
-        // 팝빌회원 사업자번호, '-' 제외 10자리
-        $testCorpNum = '1234567890';
-
-        // 기관코드
-        // 산업은행-0002 / 기업은행-0003 / 국민은행-0004 /수협은행-0007 / 농협은행-0011 / 우리은행-0020
-        // SC은행-0023 / 대구은행-0031 / 부산은행-0032 / 광주은행-0034 / 제주은행-0035 / 전북은행-0037
-        // 경남은행-0039 / 새마을금고-0045 / 신협은행-0048 / 우체국-0071 / KEB하나은행-0081 / 신한은행-0088 /씨티은행-0027
-        $bankCode = '';
-
-        // 계좌번호 하이픈('-') 제외
-        $accountNumber = '';
-
-        // 해지유형, "일반", "중도" 중 택 1
-        // 일반(일반해지) – 이용중인 정액제 기간 만료 후 해지
-        // 중도(중도해지) – 해지 요청일 기준으로 정지되고 팝빌 담당자가 승인시 해지
-        // └ 중도일 경우, 정액제 잔여기간은 일할로 계산되어 포인트 환불 (무료 이용기간 중 해지하면 전액 환불)
-        $closeType = '';
+        // 팝빌회원 아이디
+        $testUserID = 'testkorea';
 
         try {
-            $result =  $this->PopbillEasyFinBank->CloseBankAccount($testCorpNum, $bankCode, $accountNumber, $closeType);
-            $code = $result->code;
-            $message = $result->message;
-        }
-        catch(PopbillException $pe) {
-            $code = $pe->getCode();
-            $message = $pe->getMessage();
-        }
-
-        return view('PResponse', ['code' => $code, 'message' => $message]);
-    }
-
-    /**
-     * 신청한 정액제 해지요청을 취소합니다.
-     * - https://docs.popbill.com/easyfinbank/phplaravel/api#RevokeCloseBankAccount
-     */
-    public function RevokeCloseBankAccount(){
-
-        // 팝빌회원 사업자번호, '-' 제외 10자리
-        $testCorpNum = '1234567890';
-
-        // 기관코드
-        // 산업은행-0002 / 기업은행-0003 / 국민은행-0004 /수협은행-0007 / 농협은행-0011 / 우리은행-0020
-        // SC은행-0023 / 대구은행-0031 / 부산은행-0032 / 광주은행-0034 / 제주은행-0035 / 전북은행-0037
-        // 경남은행-0039 / 새마을금고-0045 / 신협은행-0048 / 우체국-0071 / KEB하나은행-0081 / 신한은행-0088 /씨티은행-0027
-        $bankCode = '';
-
-        // 계좌번호 하이픈('-') 제외
-        $accountNumber = '';
-
-        try {
-            $result =  $this->PopbillEasyFinBank->RevokeCloseBankAccount($testCorpNum, $bankCode, $accountNumber);
+            $result =  $this->PopbillEasyFinBank->RegistBankAccount($testCorpNum, $BankAccountInfo, $testUserID);
             $code = $result->code;
             $message = $result->message;
         }
@@ -216,8 +151,164 @@ class EasyFinBankController extends Controller
         // 메모
         $UpdateInfo->Memo = '';
 
+        // 팝빌회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result =  $this->PopbillEasyFinBank->UpdateBankAccount($testCorpNum, $BankCode, $AccountNumber, $UpdateInfo);
+            $result =  $this->PopbillEasyFinBank->UpdateBankAccount($testCorpNum, $BankCode, $AccountNumber, $UpdateInfo, $testUserID);
+            $code = $result->code;
+            $message = $result->message;
+        }
+        catch(PopbillException $pe) {
+            $code = $pe->getCode();
+            $message = $pe->getMessage();
+        }
+
+        return view('PResponse', ['code' => $code, 'message' => $message]);
+    }
+
+    /**
+     * 팝빌에 등록된 계좌 정보를 확인합니다.
+     * - https://docs.popbill.com/easyfinbank/phplaravel/api#GetBankAccountInfo
+     */
+    public function GetBankAccountInfo(){
+
+        // 팝빌회원 사업자번호, '-'제외 10자리
+        $testCorpNum = '1234567890';
+
+        // 기관코드
+        // 산업은행-0002 / 기업은행-0003 / 국민은행-0004 /수협은행-0007 / 농협은행-0011 / 우리은행-0020
+        // SC은행-0023 / 대구은행-0031 / 부산은행-0032 / 광주은행-0034 / 제주은행-0035 / 전북은행-0037
+        // 경남은행-0039 / 새마을금고-0045 / 신협은행-0048 / 우체국-0071 / KEB하나은행-0081 / 신한은행-0088 /씨티은행-0027
+        $bankCode = '';
+
+        // 계좌번호 하이픈('-') 제외
+        $accountNumber = '';
+
+        // 팝빌회원 아이디
+        $testUserID = 'testkorea';
+
+        try {
+            $result = $this->PopbillEasyFinBank->GetBankAccountInfo($testCorpNum, $bankCode, $accountNumber, $testUserID);
+        }
+        catch(PopbillException $pe) {
+            $code = $pe->getCode();
+            $message = $pe->getMessage();
+            return view('PResponse', ['code' => $code, 'message' => $message]);
+        }
+        return view('EasyFinBank/GetBankAccountInfo', ['bankAccountInfo' => $result ] );
+    }
+
+    /**
+     * 팝빌에 등록된 은행계좌 목록을 반환한다.
+     * - https://docs.popbill.com/easyfinbank/phplaravel/api#ListBankAccount
+     */
+    public function ListBankAccount(){
+
+        // 팝빌회원 사업자번호, '-'제외 10자리
+        $testCorpNum = '1234567890';
+
+        // 팝빌회원 아이디
+        $testUserID = 'testkorea';
+
+        try {
+            $result = $this->PopbillEasyFinBank->ListBankAccount($testCorpNum, $testUserID);
+        }
+        catch(PopbillException $pe) {
+            $code = $pe->getCode();
+            $message = $pe->getMessage();
+            return view('PResponse', ['code' => $code, 'message' => $message]);
+        }
+        return view('EasyFinBank/ListBankAccount', ['Result' => $result ] );
+    }
+
+    /*
+     * 계좌 등록, 수정 및 삭제할 수 있는 계좌 관리 팝업 URL을 반환합니다.
+     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * - https://docs.popbill.com/easyfinbank/phplaravel/api#GetBankAccountMgtURL
+     */
+    public function GetBankAccountMgtURL(){
+
+        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        $testCorpNum = '1234567890';
+
+        // 팝빌회원 아이디
+        $testUserID = 'testkorea';
+
+        try {
+            $url = $this->PopbillEasyFinBank->GetBankAccountMgtURL($testCorpNum, $testUserID);
+        }
+        catch(PopbillException $pe) {
+            $code = $pe->getCode();
+            $message = $pe->getMessage();
+            return view('PResponse', ['code' => $code, 'message' => $message]);
+        }
+        return view('ReturnValue', ['filedName' => "계좌 관리 팝업 URL" , 'value' => $url]);
+    }
+
+    /**
+     * 계좌의 정액제 해지를 요청합니다.
+     * - https://docs.popbill.com/easyfinbank/phplaravel/api#CloseBankAccount
+     */
+    public function CloseBankAccount(){
+
+        // 팝빌회원 사업자번호, '-' 제외 10자리
+        $testCorpNum = '1234567890';
+
+        // 기관코드
+        // 산업은행-0002 / 기업은행-0003 / 국민은행-0004 /수협은행-0007 / 농협은행-0011 / 우리은행-0020
+        // SC은행-0023 / 대구은행-0031 / 부산은행-0032 / 광주은행-0034 / 제주은행-0035 / 전북은행-0037
+        // 경남은행-0039 / 새마을금고-0045 / 신협은행-0048 / 우체국-0071 / KEB하나은행-0081 / 신한은행-0088 /씨티은행-0027
+        $bankCode = '';
+
+        // 계좌번호 하이픈('-') 제외
+        $accountNumber = '';
+
+        // 해지유형, "일반", "중도" 중 택 1
+        // 일반(일반해지) – 이용중인 정액제 기간 만료 후 해지
+        // 중도(중도해지) – 해지 요청일 기준으로 정지되고 팝빌 담당자가 승인시 해지
+        // └ 중도일 경우, 정액제 잔여기간은 일할로 계산되어 포인트 환불 (무료 이용기간 중 해지하면 전액 환불)
+        $closeType = '';
+
+        // 팝빌회원 아이디
+        $testUserID = 'testkorea';
+
+        try {
+            $result =  $this->PopbillEasyFinBank->CloseBankAccount($testCorpNum, $bankCode, $accountNumber, $closeType, $testUserID);
+            $code = $result->code;
+            $message = $result->message;
+        }
+        catch(PopbillException $pe) {
+            $code = $pe->getCode();
+            $message = $pe->getMessage();
+        }
+
+        return view('PResponse', ['code' => $code, 'message' => $message]);
+    }
+
+    /**
+     * 신청한 정액제 해지요청을 취소합니다.
+     * - https://docs.popbill.com/easyfinbank/phplaravel/api#RevokeCloseBankAccount
+     */
+    public function RevokeCloseBankAccount(){
+
+        // 팝빌회원 사업자번호, '-' 제외 10자리
+        $testCorpNum = '1234567890';
+
+        // 기관코드
+        // 산업은행-0002 / 기업은행-0003 / 국민은행-0004 /수협은행-0007 / 농협은행-0011 / 우리은행-0020
+        // SC은행-0023 / 대구은행-0031 / 부산은행-0032 / 광주은행-0034 / 제주은행-0035 / 전북은행-0037
+        // 경남은행-0039 / 새마을금고-0045 / 신협은행-0048 / 우체국-0071 / KEB하나은행-0081 / 신한은행-0088 /씨티은행-0027
+        $bankCode = '';
+
+        // 계좌번호 하이픈('-') 제외
+        $accountNumber = '';
+
+        // 팝빌회원 아이디
+        $testUserID = 'testkorea';
+
+        try {
+            $result =  $this->PopbillEasyFinBank->RevokeCloseBankAccount($testCorpNum, $bankCode, $accountNumber, $testUserID);
             $code = $result->code;
             $message = $result->message;
         }
@@ -249,8 +340,11 @@ class EasyFinBankController extends Controller
         // 계좌번호 하이픈('-') 제외
         $accountNumber = '';
 
+        // 팝빌회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result =  $this->PopbillEasyFinBank->DeleteBankAccount($testCorpNum, $bankCode, $accountNumber);
+            $result =  $this->PopbillEasyFinBank->DeleteBankAccount($testCorpNum, $bankCode, $accountNumber, $testUserID);
             $code = $result->code;
             $message = $result->message;
         }
@@ -260,77 +354,6 @@ class EasyFinBankController extends Controller
         }
 
         return view('PResponse', ['code' => $code, 'message' => $message]);
-    }
-
-    /*
-     * 계좌 등록, 수정 및 삭제할 수 있는 계좌 관리 팝업 URL을 반환합니다.
-     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-     * - https://docs.popbill.com/easyfinbank/phplaravel/api#GetBankAccountMgtURL
-     */
-    public function GetBankAccountMgtURL(){
-
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
-
-        try {
-            $url = $this->PopbillEasyFinBank->GetBankAccountMgtURL($testCorpNum);
-        }
-        catch(PopbillException $pe) {
-            $code = $pe->getCode();
-            $message = $pe->getMessage();
-            return view('PResponse', ['code' => $code, 'message' => $message]);
-        }
-        return view('ReturnValue', ['filedName' => "계좌 관리 팝업 URL" , 'value' => $url]);
-    }
-
-
-    /**
-     * 팝빌에 등록된 계좌 정보를 확인합니다.
-     * - https://docs.popbill.com/easyfinbank/phplaravel/api#GetBankAccountInfo
-     */
-    public function GetBankAccountInfo(){
-
-        // 팝빌회원 사업자번호, '-'제외 10자리
-        $testCorpNum = '1234567890';
-
-        // 기관코드
-        // 산업은행-0002 / 기업은행-0003 / 국민은행-0004 /수협은행-0007 / 농협은행-0011 / 우리은행-0020
-        // SC은행-0023 / 대구은행-0031 / 부산은행-0032 / 광주은행-0034 / 제주은행-0035 / 전북은행-0037
-        // 경남은행-0039 / 새마을금고-0045 / 신협은행-0048 / 우체국-0071 / KEB하나은행-0081 / 신한은행-0088 /씨티은행-0027
-        $bankCode = '';
-
-        // 계좌번호 하이픈('-') 제외
-        $accountNumber = '';
-
-        try {
-            $result = $this->PopbillEasyFinBank->GetBankAccountInfo($testCorpNum, $bankCode, $accountNumber);
-        }
-        catch(PopbillException $pe) {
-            $code = $pe->getCode();
-            $message = $pe->getMessage();
-            return view('PResponse', ['code' => $code, 'message' => $message]);
-        }
-        return view('EasyFinBank/GetBankAccountInfo', ['bankAccountInfo' => $result ] );
-    }
-
-    /**
-     * 팝빌에 등록된 은행계좌 목록을 반환한다.
-     * - https://docs.popbill.com/easyfinbank/phplaravel/api#ListBankAccount
-     */
-    public function ListBankAccount(){
-
-        // 팝빌회원 사업자번호, '-'제외 10자리
-        $testCorpNum = '1234567890';
-
-        try {
-            $result = $this->PopbillEasyFinBank->ListBankAccount($testCorpNum);
-        }
-        catch(PopbillException $pe) {
-            $code = $pe->getCode();
-            $message = $pe->getMessage();
-            return view('PResponse', ['code' => $code, 'message' => $message]);
-        }
-        return view('EasyFinBank/ListBankAccount', ['Result' => $result ] );
     }
 
     /*
@@ -356,8 +379,11 @@ class EasyFinBankController extends Controller
         // 종료일자, 형식(yyyyMMdd)
         $EDate = '20220405';
 
+        // 팝빌회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $jobID = $this->PopbillEasyFinBank->RequestJob($testCorpNum, $BankCode, $AccountNumber, $SDate, $EDate);
+            $jobID = $this->PopbillEasyFinBank->RequestJob($testCorpNum, $BankCode, $AccountNumber, $SDate, $EDate, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
@@ -385,8 +411,11 @@ class EasyFinBankController extends Controller
         // 수집 요청시 반환받은 작업아이디
         $jobID = '022040516000000001';
 
+        // 팝빌회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillEasyFinBank->GetJobState($testCorpNum, $jobID);
+            $result = $this->PopbillEasyFinBank->GetJobState($testCorpNum, $jobID, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
@@ -407,8 +436,11 @@ class EasyFinBankController extends Controller
         // 팝빌회원 사업자번호, '-'제외 10자리
         $testCorpNum = '1234567890';
 
+        // 팝빌회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillEasyFinBank->ListActiveJob($testCorpNum);
+            $result = $this->PopbillEasyFinBank->ListActiveJob($testCorpNum, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
@@ -451,9 +483,12 @@ class EasyFinBankController extends Controller
         // 정렬방향, D-내림차순, A-오름차순
         $Order = "D";
 
+        // 팝빌회원 아이디
+        $testUserID = 'testkorea';
+
         try {
             $result = $this->PopbillEasyFinBank->Search ( $testCorpNum, $JobID, $TradeType, $SearchString,
-            $Page, $PerPage, $Order);
+            $Page, $PerPage, $Order, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
@@ -487,8 +522,11 @@ class EasyFinBankController extends Controller
         // - 미입력시 전체조회
         $SearchString = "";
 
+        // 팝빌회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillEasyFinBank->Summary ( $testCorpNum, $JobID, $TradeType, $SearchString);
+            $result = $this->PopbillEasyFinBank->Summary ( $testCorpNum, $JobID, $TradeType, $SearchString, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
@@ -514,8 +552,11 @@ class EasyFinBankController extends Controller
         // 메모
         $Memo = "MemoTEST";
 
+        // 팝빌회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result =  $this->PopbillEasyFinBank->SaveMemo($testCorpNum, $TID, $Memo);
+            $result =  $this->PopbillEasyFinBank->SaveMemo($testCorpNum, $TID, $Memo, $testUserID);
             $code = $result->code;
             $message = $result->message;
         }
@@ -528,30 +569,6 @@ class EasyFinBankController extends Controller
     }
 
     /**
-     * 팝빌 계좌조회 API 서비스 과금정보를 확인합니다.
-     * - https://docs.popbill.com/easyfinbank/phplaravel/api#GetChargeInfo
-     */
-
-    public function GetChargeInfo(){
-
-        // 팝빌회원 사업자번호, '-'제외 10자리
-        $testCorpNum = '1234567890';
-
-        // 팝빌회원 아이디
-        $testUserID = 'testkorea';
-
-        try {
-            $result = $this->PopbillEasyFinBank->GetChargeInfo($testCorpNum,$testUserID);
-        }
-        catch(PopbillException $pe) {
-            $code = $pe->getCode();
-            $message = $pe->getMessage();
-            return view('PResponse', ['code' => $code, 'message' => $message]);
-        }
-        return view('GetChargeInfo', ['Result' => $result]);
-    }
-
-    /**
      * 계좌조회 정액제 서비스 신청 페이지의 팝업 URL을 반환합니다.
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://docs.popbill.com/easyfinbank/phplaravel/api#GetFlatRatePopUpURL
@@ -561,8 +578,11 @@ class EasyFinBankController extends Controller
         // 팝빌 회원 사업자 번호, "-"제외 10자리
         $testCorpNum = '1234567890';
 
+        // 팝빌회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $url = $this->PopbillEasyFinBank->GetFlatRatePopUpURL($testCorpNum);
+            $url = $this->PopbillEasyFinBank->GetFlatRatePopUpURL($testCorpNum, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
@@ -587,8 +607,11 @@ class EasyFinBankController extends Controller
         // 계좌번호 하이픈('-') 제외
         $AccountNumber = '';
 
+        // 팝빌회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillEasyFinBank->GetFlatRateState($testCorpNum, $BankCode, $AccountNumber);
+            $result = $this->PopbillEasyFinBank->GetFlatRateState($testCorpNum, $BankCode, $AccountNumber, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
@@ -738,6 +761,29 @@ class EasyFinBankController extends Controller
     }
 
     /**
+     * 팝빌 계좌조회 API 서비스 과금정보를 확인합니다.
+     * - https://docs.popbill.com/easyfinbank/phplaravel/api#GetChargeInfo
+     */
+    public function GetChargeInfo(){
+
+        // 팝빌회원 사업자번호, '-'제외 10자리
+        $testCorpNum = '1234567890';
+
+        // 팝빌회원 아이디
+        $testUserID = 'testkorea';
+
+        try {
+            $result = $this->PopbillEasyFinBank->GetChargeInfo($testCorpNum,$testUserID);
+        }
+        catch(PopbillException $pe) {
+            $code = $pe->getCode();
+            $message = $pe->getMessage();
+            return view('PResponse', ['code' => $code, 'message' => $message]);
+        }
+        return view('GetChargeInfo', ['Result' => $result]);
+    }
+
+    /**
      *  사업자번호를 조회하여 연동회원 가입여부를 확인합니다.
      * - https://docs.popbill.com/easyfinbank/phplaravel/api#CheckIsMember
      */
@@ -768,7 +814,7 @@ class EasyFinBankController extends Controller
      */
     public function CheckID(){
 
-        // 조회할 아이디
+        // 중복여부를 확인할 아이디
         $testUserID = 'testkorea';
 
         try {
@@ -874,8 +920,11 @@ class EasyFinBankController extends Controller
         // 팝빌회원 사업자번호, '-'제외 10자리
         $testCorpNum = '1234567890';
 
+        // 팝빌회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $CorpInfo = $this->PopbillEasyFinBank->GetCorpInfo($testCorpNum);
+            $CorpInfo = $this->PopbillEasyFinBank->GetCorpInfo($testCorpNum, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
@@ -913,8 +962,11 @@ class EasyFinBankController extends Controller
         // 종목
         $CorpInfo->bizClass = '종목';
 
+        // 팝빌회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result =  $this->PopbillEasyFinBank->UpdateCorpInfo($testCorpNum, $CorpInfo);
+            $result =  $this->PopbillEasyFinBank->UpdateCorpInfo($testCorpNum, $CorpInfo, $testUserID);
             $code = $result->code;
             $message = $result->message;
         }
@@ -956,8 +1008,11 @@ class EasyFinBankController extends Controller
         // 담당자 권한, 1 : 개인권한, 2 : 읽기권한, 3: 회사권한
         $ContactInfo->searchRole = 3;
 
+        // 팝빌회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillEasyFinBank->RegistContact($testCorpNum, $ContactInfo);
+            $result = $this->PopbillEasyFinBank->RegistContact($testCorpNum, $ContactInfo, $testUserID);
             $code = $result->code;
             $message = $result->message;
         }
@@ -1004,8 +1059,11 @@ class EasyFinBankController extends Controller
         // 팝빌회원 사업자번호, '-'제외 10자리
         $testCorpNum = '1234567890';
 
+        // 팝빌회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $ContactList = $this->PopbillEasyFinBank->ListContact($testCorpNum);
+            $ContactList = $this->PopbillEasyFinBank->ListContact($testCorpNum, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
