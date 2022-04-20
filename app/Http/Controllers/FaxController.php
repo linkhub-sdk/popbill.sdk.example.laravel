@@ -545,8 +545,8 @@ class FaxController extends Controller
         // 팩스 제목
         $title = '팩스 재전송 제목';
 
-        // 원본 팩스 전송시 할당한 전송요청번호(requestNum)
-        $originalFAXrequestNum = '';
+        // 팩스 접수번호
+        $ReceiptNum = '022040516355100002';
 
         // 재전송 팩스의 전송요청번호
         // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
@@ -554,8 +554,8 @@ class FaxController extends Controller
         $requestNum = '';
 
         try {
-            $receiptNum = $this->PopbillFax->ResendFAXRN($testCorpNum, $requestNum, $Sender,
-                $SenderName, $Receivers, $originalFAXrequestNum, $reserveDT, $testUserID, $title, $requestNum);
+            $receiptNum = $this->PopbillFax->ResendFAX($testCorpNum, $ReceiptNum, $Sender,
+                $SenderName, $Receivers, $reserveDT, $testUserID, $title, $requestNum);
         } catch(PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();

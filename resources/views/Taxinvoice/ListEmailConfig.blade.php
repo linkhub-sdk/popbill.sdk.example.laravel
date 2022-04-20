@@ -10,9 +10,8 @@
       <br/>
       <fieldset class="fieldset1">
         <legend>{{\Request::fullUrl()}}</legend>
+          <ul>
           @foreach ($Result as $index => $object)
-          <fieldset class="fieldset2">
-            <ul>
               @if ($object->emailType == "TAX_ISSUE")
                 <li>[정발행] TAX_ISSUE (공급받는자에게 전자세금계산서 발행 메일 전송 여부) : {{ $object->sendYN ? 'true' : 'false' }}</li>
               @elseif ($object->emailType == "TAX_ISSUE_INVOICER")
@@ -44,9 +43,8 @@
               @elseif ($object->emailType == "ETC_CERT_EXPIRATION")
                 <li>[정기발송] ETC_CERT_EXPIRATION (팝빌에서 이용중인 공인인증서의 갱신 메일 전송 여부) : {{ $object->sendYN ? 'true' : 'false' }}</li>
               @endif
-            </ul>
-          </fieldset>
           @endforeach
+          </ul>
       </fieldset>
      </div>
   </body>

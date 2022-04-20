@@ -41,7 +41,6 @@
             <li><a href="Cashbill/Search">Search</a> (목록 조회)</li>
             <li><a href="Cashbill/GetLogs">GetLogs</a> (상태 변경이력 확인)</li>
             <li><a href="Cashbill/GetURL">GetURL</a> (현금영수증 문서함 관련 URL)</li>
-            <li><a href="Cashbill/GetPDFURL">GetPDFURL</a> (현금영수증 PDF 다운로드 URL)</li>
         </ul>
     </fieldset>
     <fieldset class="fieldset1">

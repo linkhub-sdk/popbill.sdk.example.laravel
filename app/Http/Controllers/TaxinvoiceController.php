@@ -113,11 +113,11 @@ class TaxinvoiceController extends Controller
         // 거래명세서 동시작성여부 (true / false 중 택 1)
         // └ true = 사용 , false = 미사용
         // - 미입력 시 기본값 false 처리
-        $WriteSpecification = false;
+        $writeSpecification = false;
 
         // {writeSpecification} = true인 경우, 거래명세서 문서번호 할당
         // - 미입력시 기본값 세금계산서 문서번호와 동일하게 할당
-        $DealInvoiceKey = null;
+        $dealInvoiceMgtKey = null;
 
 
         /************************************************************
@@ -1981,7 +1981,7 @@ class TaxinvoiceController extends Controller
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('GetLogs', ['Result' => $result] );
+        return view('Taxinvoice/GetLogs', ['Result' => $result] );
     }
 
     /**

@@ -1154,7 +1154,7 @@ class StatementController extends Controller
             $message = $pe->getMessage();
         }
 
-        return view('PResponse', ['code' => $code, 'message' => $message])
+        return view('PResponse', ['code' => $code, 'message' => $message]);
     }
 
     /**

@@ -76,7 +76,7 @@
             @endforeach
           @endif
 
-          @if (count($Statement->propertyBag) > 0)
+          @if ($Statement->propertyBag != null)
             <fieldset class="fieldset2">
               <legend>propertyBag [추가속성 정보]</legend>
               <ul>
