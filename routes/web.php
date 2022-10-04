@@ -43,6 +43,10 @@ Route::get('/KakaoTalk/{APIName}','KakaoTalkController@RouteHandelerFunc');
 Route::get('/CloseDown', function () { return view('CloseDown/index'); });
 Route::get('/CloseDown/{APIName}','ClosedownController@RouteHandelerFunc');
 
+// 기업정보조회 Route Mapping
+Route::get('/BizInfoCheck', function () { return view('BizInfoCheck/index'); });
+Route::get('/BizInfoCheck/{APIName}','BizInfoCheckController@RouteHandelerFunc');
+
 // 홈택스 전자세금계산서 Route Mapping
 Route::get('/HTTaxinvoice', function () { return view('HTTaxinvoice/index'); });
 Route::get('/HTTaxinvoice/{APIName}','HTTaxinvoiceController@RouteHandelerFunc');
