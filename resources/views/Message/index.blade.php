@@ -52,6 +52,8 @@
             <ul>
                 <li><a href="Message/CancelReserve">CancelReserve</a> (예약문자 메시지 예약취소)</li>
                 <li><a href="Message/CancelReserveRN">CancelReserveRN</a> (예약문자 메시지 예약취소 - 요청번호 할당)</li>
+                <li><a href="Message/CancelReservebyRCV">CancelReservebyRCV</a> (예약문자 메시지 예약취소 - 수신번호 추가)</li>
+                <li><a href="Message/CancelReserveRNbyRCV">CancelReserveRNbyRCV</a> (예약문자 메시지 예약취소 - 요청번호 할당, 수신번호 추가)</li>
             </ul>
         </fieldset>
 

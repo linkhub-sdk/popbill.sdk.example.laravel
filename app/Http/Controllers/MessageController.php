@@ -524,6 +524,64 @@ class MessageController extends Controller
         }
         return view('PResponse', ['code' => $code, 'message' => $message]);
     }
+    /**
+     * 팝빌에서 반환받은 접수번호와 수신번호를 통해 예약접수된 문자 메시지 전송을 취소합니다. (예약시간 10분 전까지 가능)
+     * - https://docs.popbill.com/message/phplaravel/api#CancelReservebyRCV
+     */
+    public function CancelReservebyRCV(){
+
+        // 팝빌 회원 사업자번호, "-"제외 10자리
+        $testCorpNum = '1234567890';
+
+        // 예약문자전송 요청시 발급받은 접수번호
+        $ReceiptNum = '022102116000000028';
+
+        // 예약문자전송 요청시 입력한 수신번호
+        $receiveNum = '01012341234';
+
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+        
+
+        try {
+            $result = $this->PopbillMessaging->CancelReservebyRCV($testCorpNum ,$ReceiptNum, $receiveNum, $testUserID);
+            $code = $result->code;
+            $message = $result->message;
+        } catch(PopbillException $pe) {
+            $code = $pe->getCode();
+            $message = $pe->getMessage();
+        }
+        return view('PResponse', ['code' => $code, 'message' => $message]);
+    }
+
+    /**
+     * 파트너가 할당한 전송요청 번호와 수신번호를 통해 예약접수된 문자 전송을 취소합니다. (예약시간 10분 전까지 가능)
+     * - https://docs.popbill.com/message/phplaravel/api#CancelReserveRNbyRCV
+     */
+    public function CancelReserveRNbyRCV(){
+
+        // 팝빌 회원 사업자번호, "-"제외 10자리
+        $testCorpNum = '1234567890';
+
+        // 예약문자전송 요청시 할당한 전송요청번호
+        $requestNum = '20221021_001';
+
+        // 예약문자전송 요청시 입력한 수신번호
+        $receiveNum = '01012341234';
+
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
+        try {
+            $result = $this->PopbillMessaging->CancelReserveRNbyRCV($testCorpNum ,$requestNum, $receiveNum, $testUserID);
+            $code = $result->code;
+            $message = $result->message;
+        } catch(PopbillException $pe) {
+            $code = $pe->getCode();
+            $message = $pe->getMessage();
+        }
+        return view('PResponse', ['code' => $code, 'message' => $message]);
+    }
 
     /**
      * 팝빌에서 반환받은 접수번호를 통해 문자 전송상태 및 결과를 확인합니다.
