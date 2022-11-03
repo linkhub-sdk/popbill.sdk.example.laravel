@@ -19,7 +19,6 @@
             <li><a href="Cashbill/Register">Register</a> (임시저장)</li>
             <li><a href="Cashbill/Update">Update</a> (수정)</li>
             <li><a href="Cashbill/Issue">Issue</a> (발행)</li>
-            <li><a href="Cashbill/CancelIssue">CancelIssue</a> (발행취소)</li>
             <li><a href="Cashbill/Delete">Delete</a> (삭제)</li>
         </ul>
     </fieldset>

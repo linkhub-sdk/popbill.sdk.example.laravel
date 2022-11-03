@@ -72,7 +72,6 @@ class CashbillController extends Controller
     /**
      * 작성된 현금영수증 데이터를 팝빌에 저장과 동시에 발행하여 "발행완료" 상태로 처리합니다.
      * - 현금영수증 국세청 전송 정책 : https://docs.popbill.com/cashbill/ntsSendPolicy?lang=phplaravel
-     * - "발행완료"된 현금영수증은 국세청 전송 이전에 발행취소(CancelIssue API) 함수로 국세청 신고 대상에서 제외할 수 있습니다.
      * - https://docs.popbill.com/cashbill/phplaravel/api#RegistIssue
      */
     public function RegistIssue(){
@@ -588,40 +587,8 @@ class CashbillController extends Controller
     }
 
     /**
-     * 국세청 전송 이전 "발행완료" 상태의 현금영수증을 "발행취소"하고 국세청 전송 대상에서 제외합니다.
-     * - 삭제(Delete API) 함수를 호출하여 "발행취소" 상태의 현금영수증을 삭제하면, 문서번호 재사용이 가능합니다.
-     * - https://docs.popbill.com/cashbill/phplaravel/api#CancelIssue
-     */
-    public function CancelIssue(){
-
-        // 팝빌 회원 사업자번호, '-' 제외 10자리
-        $testCorpNum = '1234567890';
-
-        // 문서번호
-        $mgtKey = '20220405-PHP7-001';
-
-        // 메모
-        $memo = '현금영수증 발행취소메모';
-
-        // 팝빌회원 아이디
-        $testUserID = 'testkorea';
-
-        try {
-            $result = $this->PopbillCashbill->CancelIssue($testCorpNum, $mgtKey, $memo, $testUserID);
-            $code = $result->code;
-            $message = $result->message;
-        }
-        catch(PopbillException $pe) {
-            $code = $pe->getCode();
-            $message = $pe->getMessage();
-        }
-
-        return view('PResponse', ['code' => $code, 'message' => $message]);
-    }
-
-    /**
      * 삭제 가능한 상태의 현금영수증을 삭제합니다.
-     * - 삭제 가능한 상태: "임시저장", "발행취소", "전송실패"
+     * - 삭제 가능한 상태: "전송실패"
      * - 현금영수증을 삭제하면 사용된 문서번호(mgtKey)를 재사용할 수 있습니다.
      * - https://docs.popbill.com/cashbill/phplaravel/api#Delete
      */
@@ -652,7 +619,6 @@ class CashbillController extends Controller
     /**
      * 취소 현금영수증 데이터를 팝빌에 저장과 동시에 발행하여 "발행완료" 상태로 처리합니다.
      * - 현금영수증 국세청 전송 정책 : https://docs.popbill.com/cashbill/ntsSendPolicy?lang=phplaravel
-     * - "발행완료"된 취소 현금영수증은 국세청 전송 이전에 발행취소(cancelIssue API) 함수로 국세청 신고 대상에서 제외할 수 있습니다.
      * - https://docs.popbill.com/cashbill/phplaravel/api#RevokeRegistIssue
      */
     public function RevokeRegistIssue(){
@@ -709,7 +675,6 @@ class CashbillController extends Controller
      * 작성된 (부분)취소 현금영수증 데이터를 팝빌에 저장과 동시에 발행하여 "발행완료" 상태로 처리합니다.
      * - 취소 현금영수증의 금액은 원본 금액을 넘을 수 없습니다.
      * - 현금영수증 국세청 전송 정책 : https://docs.popbill.com/cashbill/ntsSendPolicy?lang=phplaravel
-     * - "발행완료"된 취소 현금영수증은 국세청 전송 이전에 발행취소(cancelIssue API) 함수로 국세청 신고 대상에서 제외할 수 있습니다.
      * - https://docs.popbill.com/cashbill/phplaravel/api#RevokeRegistIssue
      */
     public function RevokeRegistIssue_part(){
@@ -974,10 +939,7 @@ class CashbillController extends Controller
         // 상태코드 배열 (2,3번째 자리에 와일드카드(*) 사용 가능)
         // - 미입력시 전체조회
         $State = array(
-            '100',
-            '2**',
-            '3**',
-            '4**'
+            '3**'
         );
 
         // 문서형태 배열 ("N" , "C" 중 선택, 다중 선택 가능)
