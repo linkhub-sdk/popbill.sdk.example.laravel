@@ -25,6 +25,7 @@
               <li> itemKey (팝빌번호) : {{ $cbInfo->itemKey }}</li>
               <li> mgtKey (문서번호) : {{ $cbInfo->mgtKey }}</li>
               <li> tradeDate (거래일자) : {{ $cbInfo->tradeDate }}</li>
+              <li> tradeDT (거래일시) : {{ $cbInfo->tradeDT }}</li>
               <li> tradeType (문서형태) : {{ $cbInfo->tradeType }}</li>
               <li> tradeUsage (거래구분) : {{ $cbInfo->tradeUsage }}</li>
               <li> tradeOpt (거래유형) : {{ $cbInfo->tradeOpt }}</li>

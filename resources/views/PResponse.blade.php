@@ -24,6 +24,8 @@
             @endisset
             @isset($tradeDate)
             <li>tradeDate (거래일자) : {{ $tradeDate }}</li>
+            @isset($tradeDT)
+            <li>tradeDT (거래일시) : {{ $tradeDT }}</li>
             @endisset
             @isset($invoiceNum)
             <li>invoiceNum (팝빌 승인번호) : {{ $invoiceNum }}</li>

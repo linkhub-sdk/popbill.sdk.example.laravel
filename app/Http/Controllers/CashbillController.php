@@ -103,6 +103,10 @@ class CashbillController extends Controller
         // 거래구분, {소득공제용, 지출증빙용} 중 기재
         $Cashbill->tradeUsage = '소득공제용';
 
+        // 거래일시, 날짜(yyyyMMddHHmmss)
+        // 당일, 전일만 가능
+        $Cashbill->tradeDT = '20221103000000';
+
         // 거래유형, {일반, 도서공연, 대중교통} 중 기재
         // - 미입력시 기본값 "일반" 처리
         $Cashbill->tradeOpt = '일반';
@@ -195,12 +199,12 @@ class CashbillController extends Controller
 
         // 제출아이디, 대량 발행 접수를 구별하는 식별키
         // └ 최대 36자리 영문, 숫자, '-' 조합으로 구성
-        $submitID = "20220405-PHP7-BULK";
+        $submitID = "20221102-PHP7-BULK";
 
         // 최대 100건
         $cashbillList = array();
 
-        for($i=0; $i<100; $i++) {
+        for($i=0; $i<2; $i++) {
             // 현금영수증 객체 생성
             $Cashbill = new Cashbill();
 
@@ -210,6 +214,10 @@ class CashbillController extends Controller
             // 문서형태, {승인거래, 취소거래} 중 기재
             $Cashbill->tradeType = '승인거래';
 
+            // 거래일시, 날짜(yyyyMMddHHmmss)
+            // 당일, 전일만 가능
+            $Cashbill->tradeDT = '20221103000000';
+            
             // 거래구분, (소득공제용, 지출증빙용) 중 기재
             $Cashbill->tradeUsage = '소득공제용';
 
@@ -316,7 +324,7 @@ class CashbillController extends Controller
         $testCorpNum = '1234567890';
 
         // 초대량 발행 접수시 기재한 제출아이디
-        $submitID = '20220405-PHP7-BULK';
+        $submitID = '0221103-3a242d86ba184393bd2f2417861d';
 
         // 팝빌회원 아이디
         $testUserID = 'testkorea';
@@ -331,259 +339,6 @@ class CashbillController extends Controller
         }
 
         return view('Cashbill/GetBulkResult', ['Result' => $result]);
-    }
-
-    /**
-     * 1건의 현금영수증을 [임시저장]합니다.
-     * - [임시저장] 상태의 현금영수증은 발행(Issue API) 함수를 호출해야만 국세청에 전송됩니다.
-     */
-    public function Register(){
-
-        // 팝빌 회원 사업자번호, '-' 제외 10자리
-        $testCorpNum = '1234567890';
-
-        // 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
-        $mgtKey = '20220405-PHP7-002';
-
-        // 현금영수증 객체 생성
-        $Cashbill = new Cashbill();
-
-        // 현금영수증 문서번호,
-        $Cashbill->mgtKey = $mgtKey;
-
-        // 문서형태, (승인거래, 취소거래) 중 기재
-        $Cashbill->tradeType = '승인거래';
-
-        // 거래구분, (소득공제용, 지출증빙용) 중 기재
-        $Cashbill->tradeUsage = '소득공제용';
-
-        // 거래유형, (일반, 도서공연, 대중교통) 중 기재
-        $Cashbill->tradeOpt = '일반';
-
-        // 취소거래시 기재, 원본 현금영수증 국세청 승인번호 - 상태확인(getInfo API) 함수를 통해 confirmNum 값 기재
-        $Cashbill->orgConfirmNum = "";
-
-        // 취소거래시 기재, 원본 현금영수증 거래일자 - 상태확인(getInfo API) 함수를 통해 tradeDate 값 기재
-        $Cashbill->orgTradeDate = "";
-
-        // 과세형태, (과세, 비과세) 중 기재
-        $Cashbill->taxationType = '과세';
-
-        // 거래금액, ','콤마 불가 숫자만 가능
-        $Cashbill->totalAmount = '11000';
-
-        // 공급가액, ','콤마 불가 숫자만 가능
-        $Cashbill->supplyCost = '10000';
-
-        // 부가세, ','콤마 불가 숫자만 가능
-        $Cashbill->tax = '1000';
-
-        // 봉사료, ','콤마 불가 숫자만 가능
-        $Cashbill->serviceFee = '0';
-
-        // 가맹점 사업자번호
-        $Cashbill->franchiseCorpNum = $testCorpNum;
-
-        // 가맹점 종사업장 식별번호
-        $Cashbill->franchiseTaxRegID = '';
-
-        // 가맹점 상호
-        $Cashbill->franchiseCorpName = '발행자 상호';
-
-        // 가맹점 대표자 성명
-        $Cashbill->franchiseCEOName = '발행자 대표자명';
-
-        // 가맹점 주소
-        $Cashbill->franchiseAddr = '발행자 주소';
-
-        // 가맹점 전화번호
-        $Cashbill->franchiseTEL = '070-1234-1234';
-
-        // 식별번호, 거래구분에 따라 작성
-        // └ 소득공제용 - 주민등록/휴대폰/카드번호(현금영수증 카드)/자진발급용 번호(010-000-1234) 기재가능
-        // └ 지출증빙용 - 사업자번호/주민등록/휴대폰/카드번호(현금영수증 카드) 기재가능
-        // └ 주민등록번호 13자리, 휴대폰번호 10~11자리, 카드번호 13~19자리, 사업자번호 10자리 입력 가능
-        $Cashbill->identityNum = '01011112222';
-
-        // 주문자명
-        $Cashbill->customerName = '고객명';
-
-        // 주문상품명
-        $Cashbill->itemName = '상품명';
-
-        // 주문번호
-        $Cashbill->orderNumber = '주문번호';
-
-        // 주문자 이메일
-        // 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
-        // 실제 거래처의 메일주소가 기재되지 않도록 주의
-        $Cashbill->email = '';
-
-        // 발행시 알림문자 전송여부
-        $Cashbill->smssendYN = false;
-
-        // 주문자 휴대폰
-        // - {smssendYN} 의 값이 true 인 경우 아래 휴대폰번호로 안내 문자 전송
-        $Cashbill->hp = '';
-
-        // 팝빌회원 아이디
-        $testUserID = 'testkorea';
-
-        try {
-            $result = $this->PopbillCashbill->Register($testCorpNum, $Cashbill, $testUserID);
-            $code = $result->code;
-            $message = $result->message;
-        }
-        catch(PopbillException $pe) {
-            $code = $pe->getCode();
-            $message = $pe->getMessage();
-        }
-
-        return view('PResponse', ['code' => $code, 'message' => $message]);
-    }
-
-    /**
-     * 1건의 현금영수증을 [수정]합니다.
-     * - [임시저장] 상태의 현금영수증만 수정할 수 있습니다.
-     */
-    public function Update(){
-
-        // 팝빌 회원 사업자번호, '-' 제외 10자리
-        $testCorpNum = '1234567890';
-
-        // 문서번호
-        $mgtKey = '20220405-PHP7-002';
-
-        // 현금영수증 객체 생성
-        $Cashbill = new Cashbill();
-
-        // 현금영수증 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
-        $Cashbill->mgtKey = $mgtKey;
-
-        // 문서형태, (승인거래, 취소거래) 중 기재
-        $Cashbill->tradeType = '승인거래';
-
-        // 거래구분, (소득공제용, 지출증빙용) 중 기재
-        $Cashbill->tradeUsage = '소득공제용';
-
-        // 거래유형, (일반, 도서공연, 대중교통) 중 기재
-        $Cashbill->tradeOpt = '일반';
-
-        // 취소거래시 기재, 원본 현금영수증 국세청 승인번호 - 상태확인(getInfo API) 함수를 통해 confirmNum 값 기재
-        $Cashbill->orgConfirmNum = "";
-
-        // 취소거래시 기재, 원본 현금영수증 거래일자 - 상태확인(getInfo API) 함수를 통해 tradeDate 값 기재
-        $Cashbill->orgTradeDate = "";
-
-        // 과세형태, (과세, 비과세) 중 기재
-        $Cashbill->taxationType = '과세';
-
-        // 거래금액, ','콤마 불가 숫자만 가능
-        $Cashbill->totalAmount = '11000';
-
-        // 공급가액, ','콤마 불가 숫자만 가능
-        $Cashbill->supplyCost = '10000';
-
-        // 부가세, ','콤마 불가 숫자만 가능
-        $Cashbill->tax = '1000';
-
-        // 봉사료, ','콤마 불가 숫자만 가능
-        $Cashbill->serviceFee = '0';
-
-        // 가맹점 사업자번호
-        $Cashbill->franchiseCorpNum = $testCorpNum;
-
-        // 가맹점 종사업장 식별번호
-        $Cashbill->franchiseTaxRegID = '';
-
-        // 가맹점 상호
-        $Cashbill->franchiseCorpName = '발행자 상호_수정';
-
-        // 가맹점 대표자 성명
-        $Cashbill->franchiseCEOName = '발행자 대표자명';
-
-        // 가맹점 주소
-        $Cashbill->franchiseAddr = '발행자 주소';
-
-        // 가맹점 전화번호
-        $Cashbill->franchiseTEL = '070-1234-1234';
-
-        // 식별번호, 거래구분에 따라 작성
-        // └ 소득공제용 - 주민등록/휴대폰/카드번호(현금영수증 카드)/자진발급용 번호(010-000-1234) 기재가능
-        // └ 지출증빙용 - 사업자번호/주민등록/휴대폰/카드번호(현금영수증 카드) 기재가능
-        // └ 주민등록번호 13자리, 휴대폰번호 10~11자리, 카드번호 13~19자리, 사업자번호 10자리 입력 가능
-        $Cashbill->identityNum = '01011112222';
-
-        // 주문자명
-        $Cashbill->customerName = '고객명';
-
-        // 주문상품명
-        $Cashbill->itemName = '상품명';
-
-        // 주문번호
-        $Cashbill->orderNumber = '주문번호';
-
-        // 주문자 이메일
-        // 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
-        // 실제 거래처의 메일주소가 기재되지 않도록 주의
-        $Cashbill->email = '';
-
-        // 발행시 알림문자 전송여부
-        $Cashbill->smssendYN = false;
-
-        // 주문자 휴대폰
-        // - {smssendYN} 의 값이 true 인 경우 아래 휴대폰번호로 안내 문자 전송
-        $Cashbill->hp = '';
-
-        // 팝빌회원 아이디
-        $testUserID = 'testkorea';
-
-        try {
-            $result = $this->PopbillCashbill->Update($testCorpNum, $mgtKey, $Cashbill, $testUserID);
-            $code = $result->code;
-            $message = $result->message;
-        }
-        catch(PopbillException $pe) {
-            $code = $pe->getCode();
-            $message = $pe->getMessage();
-        }
-        return view('PResponse', ['code' => $code, 'message' => $message]);
-    }
-
-    /**
-     * 1건의 [임시저장] 현금영수증을 [발행]합니다.
-     * - 현금영수증 국세청 전송 정책 : https://docs.popbill.com/cashbill/ntsSendPolicy?lang=phplaravel
-     * - https://docs.popbill.com/cashbill/phplaravel/api#CBIssue
-     */
-    public function Issue(){
-
-        // 팝빌 회원 사업자번호, '-' 제외 10자리
-        $testCorpNum = '1234567890';
-
-        // 문서번호
-        $mgtKey = '20220405-PHP7-002';
-
-        // 메모
-        $memo = '현금영수증 발행메모';
-
-        // 팝빌회원 아이디
-        $testUserID = 'testkorea';
-
-        try {
-            $result = $this->PopbillCashbill->Issue($testCorpNum, $mgtKey, $memo, $testUserID);
-            $code = $result->code;
-            $message = $result->message;
-            $confirmNum = $result->confirmNum;
-            $tradeDate = $result->tradeDate;
-        }
-        catch(PopbillException $pe) {
-            $code = $pe->getCode();
-            $message = $pe->getMessage();
-            $confirmNum = null;
-            $tradeDate = null;
-        }
-
-        return view('PResponse', ['code' => $code, 'message' => $message, 'confirmNum' => $confirmNum, 'tradeDate' => $tradeDate]);
     }
 
     /**
@@ -627,13 +382,13 @@ class CashbillController extends Controller
         $testCorpNum = '1234567890';
 
         // 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
-        $mgtKey = '20220405-PHP7-005';
+        $mgtKey = '20221103-PHP7-012';
 
         // 원본현금영수증 승인번호, 문서정보 확인(GetInfo API)을 통해 확인가능.
-        $orgConfirmNum = 'TB0000016';
+        $orgConfirmNum = 'TB0000068';
 
         // 원본현금영수증 거래일자, 작성형식(yyyyMMdd) 문서정보 확인(GetInfo API)을 통해 확인가능.
-        $orgTradeDate = '20220404';
+        $orgTradeDate = '20221102';
 
         // 안내 문자 전송여부 , true / false 중 택 1
         // └ true = 전송 , false = 미전송
@@ -660,15 +415,17 @@ class CashbillController extends Controller
             $message = $result->message;
             $confirmNum = $result->confirmNum;
             $tradeDate = $result->tradeDate;
+            $tradeDT = $result->tradeDT;
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             $confirmNum = null;
             $tradeDate = null;
+            $tradeDT = null;
         }
 
-        return view('PResponse', ['code' => $code, 'message' => $message, 'confirmNum' => $confirmNum, 'tradeDate' => $tradeDate]);
+        return view('PResponse', ['code' => $code, 'message' => $message, 'confirmNum' => $confirmNum, 'tradeDate' => $tradeDate, 'tradeDT' => $tradeDT]);
     }
 
     /**
@@ -686,13 +443,13 @@ class CashbillController extends Controller
         $testUserID = 'testkorea';
 
         // 문서번호, 사업자별로 중복없이 1~24자리 영문, 숫자, '-', '_' 조합으로 구성
-        $mgtKey = '20220405-PHP7-006';
+        $mgtKey = '20221103-PHP7-012';
 
         // 원본현금영수증 승인번호, 문서정보 확인(GetInfo API) 함수를 통해 확인가능.
-        $orgConfirmNum = 'TB0000016';
+        $orgConfirmNum = 'TB0000068';
 
         // 원본현금영수증 거래일자, 문서정보 확인(GetInfo API) 함수를 통해 확인가능.
-        $orgTradeDate = '20220404';
+        $orgTradeDate = '20221102';
 
         // 안내 문자 전송여부 , true / false 중 택 1
         // └ true = 전송 , false = 미전송
@@ -726,118 +483,33 @@ class CashbillController extends Controller
         // - 취소할 거래금액 입력
         $totalAmount = '4400';
 
+        // 현금영수증 발행 안내메일 제목
+        $emailSubject = null;
+
+        // 거래일시, 날짜(yyyyMMddHHmmss)
+        // 당일, 전일만 가능
+        $tradeDT = '20221103000000';
+
         try {
             $result = $this->PopbillCashbill->RevokeRegistIssue($testCorpNum, $mgtKey, $orgConfirmNum,
             $orgTradeDate, $smssendYN, $memo, $testUserID, $isPartCancel, $cancelType,
-            $supplyCost, $tax, $serviceFee, $totalAmount);
+            $supplyCost, $tax, $serviceFee, $totalAmount, $emailSubject, $tradeDT);
 
             $code = $result->code;
             $message = $result->message;
             $confirmNum = $result->confirmNum;
             $tradeDate = $result->tradeDate;
+            $tradeDT = $result->tradeDT;
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             $confirmNum = null;
             $tradeDate = null;
+            $tradeDT = null;
         }
 
-        return view('PResponse', ['code' => $code, 'message' => $message, 'confirmNum' => $confirmNum, 'tradeDate' => $tradeDate]);
-    }
-
-    /**
-     * 1건의 취소현금영수증을 [임시저장]합니다.
-     * - [임시저장] 상태의 현금영수증은 발행(Issue API)을 호출해야만 국세청에 전송됩니다.
-     */
-    public function RevokeRegister(){
-
-        // 팝빌 회원 사업자번호, '-' 제외 10자리
-        $testCorpNum = '1234567890';
-
-        // 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
-        $mgtKey = '20220405-PHP7-003';
-
-        // 원본 현금영수증 국세청 승인번호 - 상태확인(getInfo API) 함수를 통해 confirmNum 값 기재
-        $orgConfirmNum = "TB0000016";
-
-        // 원본 현금영수증 거래일자 - 상태확인(getInfo API) 함수를 통해 tradeDate 값 기재
-        $orgTradeDate = "20220404";
-
-        try {
-            $result = $this->PopbillCashbill->RevokeRegister($testCorpNum, $mgtKey, $orgConfirmNum, $orgTradeDate);
-            $code = $result->code;
-            $message = $result->message;
-        }
-        catch(PopbillException $pe) {
-            $code = $pe->getCode();
-            $message = $pe->getMessage();
-        }
-        return view('PResponse', ['code' => $code, 'message' => $message]);
-    }
-
-    /**
-     * 1건의 (부분)취소현금영수증을 [임시저장]합니다.
-     * - [임시저장] 상태의 현금영수증은 발행(Issue API) 함수를 호출해야만 국세청에 전송됩니다.
-     */
-    public function RevokeRegister_part(){
-
-        // 팝빌회원 사업자번호, '-' 제외 10자리
-        $testCorpNum = '1234567890';
-
-        // 팝빌회원 아이디
-        $testUserID = 'testkorea';
-
-        // 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
-        $mgtKey = '20220405-PHP7-004';
-
-        // 원본 현금영수증 국세청 승인번호 - 상태확인(getInfo API) 함수를 통해 confirmNum 값 기재
-        $orgConfirmNum = "TB0000016";
-
-        // 원본 현금영수증 거래일자 - 상태확인(getInfo API) 함수를 통해 tradeDate 값 기재
-        $orgTradeDate = "20220404";
-
-        // 안내 문자 전송여부 , true / false 중 택 1
-        // └ true = 전송 , false = 미전송
-        // └ 원본 현금영수증의 구매자(고객)의 휴대폰번호 문자 전송
-        $smssendYN = false;
-
-        // 현금영수증 취소유형 - true 기재
-        $isPartCancel = true;
-
-        // 취소사유 , 1 / 2 / 3 중 택 1
-        // └ 1 = 거래취소 , 2 = 오류발급취소 , 3 = 기타
-        // └ 미입력시 기본값 1 처리
-        $cancelType = 1;
-
-        // [취소] 공급가액
-        // - 취소할 공급가액 입력
-        $supplyCost = '4000';
-
-        // [취소] 부가세
-        // - 취소할 부가세 입력
-        $tax = '400';
-
-        // [취소] 봉사료
-        // - 취소할 봉사료 입력
-        $serviceFee = '0';
-
-        // [취소] 거래금액 (공급가액+부가세+봉사료)
-        // - 취소할 거래금액 입력
-        $totalAmount = '4400';
-
-        try {
-            $result = $this->PopbillCashbill->RevokeRegister($testCorpNum, $mgtKey, $orgConfirmNum, $orgTradeDate,
-                $smssendYN, $testUserID, $isPartCancel, $cancelType, $supplyCost, $tax, $serviceFee, $totalAmount);
-            $code = $result->code;
-            $message = $result->message;
-        }
-        catch(PopbillException $pe) {
-            $code = $pe->getCode();
-            $message = $pe->getMessage();
-        }
-
-        return view('PResponse', ['code' => $code, 'message' => $message]);
+        return view('PResponse', ['code' => $code, 'message' => $message, 'confirmNum' => $confirmNum, 'tradeDate' => $tradeDate, 'tradeDT' => $tradeDT]);
     }
 
     /**
@@ -1004,31 +676,6 @@ class CashbillController extends Controller
         }
 
         return view('Cashbill/Search', ['Result' => $result] );
-    }
-
-    /**
-     * 현금영수증의 상태에 대한 변경이력을 확인합니다.
-     * - https://docs.popbill.com/cashbill/phplaravel/api#GetLogs
-     */
-    public function GetLogs(){
-
-        // 팝빌회원, 사업자번호
-        $testCorpNum = '1234567890';
-
-        // 문서번호
-        $mgtKey = '20220405-PHP7-002';
-
-        try {
-            $result = $this->PopbillCashbill->GetLogs($testCorpNum, $mgtKey);
-        }
-        catch(PopbillException $pe) {
-            $code = $pe->getCode();
-            $message = $pe->getMessage();
-            return view('PResponse', ['code' => $code, 'message' => $message]);
-        }
-
-        return view('GetLogs', ['Result' => $result] );
-
     }
 
     /**

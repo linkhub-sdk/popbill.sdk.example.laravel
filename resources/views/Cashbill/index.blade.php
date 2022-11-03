@@ -16,9 +16,6 @@
             <li><a href="Cashbill/RegistIssue">RegistIssue</a> (즉시발행)</li>
             <li><a href="Cashbill/BulkSubmit">BulkSubmit</a> (초대량 발행 접수)</li>
             <li><a href="Cashbill/GetBulkResult">GetBulkResult</a> (초대량 접수결과 확인)</li>
-            <li><a href="Cashbill/Register">Register</a> (임시저장)</li>
-            <li><a href="Cashbill/Update">Update</a> (수정)</li>
-            <li><a href="Cashbill/Issue">Issue</a> (발행)</li>
             <li><a href="Cashbill/Delete">Delete</a> (삭제)</li>
         </ul>
     </fieldset>
@@ -27,8 +24,6 @@
         <ul>
             <li><a href="Cashbill/RevokeRegistIssue">RevokeRegistIssue</a> (즉시발행 - 전체금액)</li>
             <li><a href="Cashbill/RevokeRegistIssue_part">RevokeRegistIssue_part</a> (즉시발행 - 부분금액)</li>
-            <li><a href="Cashbill/RevokeRegister">RevokeRegister</a> (임시저장 - 전체금액)</li>
-            <li><a href="Cashbill/RevokeRegister_part">RevokeRegister_part</a> (임시저장 - 부분금액)</li>
         </ul>
     </fieldset>
     <fieldset class="fieldset1">
@@ -38,7 +33,6 @@
             <li><a href="Cashbill/GetInfos">GetInfos</a> (상태 대량 확인)</li>
             <li><a href="Cashbill/GetDetailInfo">GetDetailInfo</a> (상세정보 확인)</li>
             <li><a href="Cashbill/Search">Search</a> (목록 조회)</li>
-            <li><a href="Cashbill/GetLogs">GetLogs</a> (상태 변경이력 확인)</li>
             <li><a href="Cashbill/GetURL">GetURL</a> (현금영수증 문서함 관련 URL)</li>
         </ul>
     </fieldset>

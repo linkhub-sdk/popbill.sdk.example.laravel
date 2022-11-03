@@ -15,6 +15,7 @@
           <li>orgConfirmNum (원본 현금영수증 국세청승인번호) : {{ $CashbillInfo->orgConfirmNum }} </li>
           <li>orgTradeDate (원본 현금영수증 거래일자) : {{ $CashbillInfo->orgTradeDate }} </li>
           <li>tradeDate (거래일자) : {{ $CashbillInfo->tradeDate }} </li>
+          <li>tradeDT (거래일시) : {{ $CashbillInfo->tradeDT }} </li>
           <li>tradeType (문서형태) : {{ $CashbillInfo->tradeType }} </li>
           <li>tradeUsage (거래구분) : {{ $CashbillInfo->tradeUsage }} </li>
           <li>tradeOpt (거래유형) : {{ $CashbillInfo->tradeOpt }} </li>
