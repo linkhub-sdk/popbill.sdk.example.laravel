@@ -43,7 +43,7 @@ class ClosedownController extends Controller
 
     /**
      * 사업자번호 1건에 대한 휴폐업정보를 확인합니다.
-     * - https://docs.popbill.com/closedown/phplaravel/api#CheckCorpNum
+     * - https://developers.popbill.com/reference/closedown/php/api/check#CheckCorpNum
      */
     public function CheckCorpNum(){
 
@@ -66,7 +66,7 @@ class ClosedownController extends Controller
 
     /**
      * 다수건의 사업자번호에 대한 휴폐업정보를 확인합니다. (최대 1,000건)
-     * - https://docs.popbill.com/closedown/phplaravel/api#CheckCorpNums
+     * - https://developers.popbill.com/reference/closedown/php/api/check#CheckCorpNums
      */
     public function CheckCorpNums(){
 
@@ -92,7 +92,7 @@ class ClosedownController extends Controller
     /**
      * 연동회원의 잔여포인트를 확인합니다.
      * - 과금방식이 파트너과금인 경우 파트너 잔여포인트 확인(GetPartnerBalance API) 함수를 통해 확인하시기 바랍니다.
-     * - https://docs.popbill.com/closedown/phplaravel/api#GetBalance
+     * - https://developers.popbill.com/reference/closedown/php/api/point#GetBalance
      */
     public function GetBalance(){
 
@@ -113,7 +113,7 @@ class ClosedownController extends Controller
     /**
      * 연동회원 포인트 충전을 위한 페이지의 팝업 URL을 반환합니다.
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-     * - https://docs.popbill.com/closedown/phplaravel/api#GetChargeURL
+     * - https://developers.popbill.com/reference/closedown/php/api/point#GetChargeURL
      */
     public function GetChargeURL(){
 
@@ -136,7 +136,7 @@ class ClosedownController extends Controller
     /**
      * 연동회원 포인트 결제내역 확인을 위한 페이지의 팝업 URL을 반환합니다.
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-     * - https://docs.popbill.com/closedown/phplaravel/api#GetPaymentURL
+     * - https://developers.popbill.com/reference/closedown/php/api/point#GetPaymentURL
      */
     public function GetPaymentURL(){
 
@@ -161,7 +161,7 @@ class ClosedownController extends Controller
     /**
      * 연동회원 포인트 사용내역 확인을 위한 페이지의 팝업 URL을 반환합니다.
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-     * - https://docs.popbill.com/closedown/phplaravel/api#GetUseHistoryURL
+     * - https://developers.popbill.com/reference/closedown/php/api/point#GetUseHistoryURL
      */
     public function GetUseHistoryURL(){
 
@@ -185,7 +185,7 @@ class ClosedownController extends Controller
 
     /**
      * 휴폐업 조회시 과금되는 포인트 단가를 확인합니다.
-     * - https://docs.popbill.com/closedown/phplaravel/api#GetUnitCost
+     * - https://developers.popbill.com/reference/closedown/php/api/point#GetUnitCost
      */
     public function GetUnitCost(){
 
@@ -206,7 +206,7 @@ class ClosedownController extends Controller
     /**
      * 파트너의 잔여포인트를 확인합니다.
      * - 과금방식이 연동과금인 경우 연동회원 잔여포인트 확인(GetBalance API) 함수를 이용하시기 바랍니다.
-     * - https://docs.popbill.com/closedown/phplaravel/api#GetPartnerBalance
+     * - https://developers.popbill.com/reference/closedown/php/api/point#GetPartnerBalance
      */
     public function GetPartnerBalance(){
 
@@ -227,7 +227,7 @@ class ClosedownController extends Controller
     /**
      * 파트너 포인트 충전을 위한 페이지의 팝업 URL을 반환합니다.
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-     * - https://docs.popbill.com/closedown/phplaravel/api#GetPartnerURL
+     * - https://developers.popbill.com/reference/closedown/php/api/point#GetPartnerURL
      */
     public function GetPartnerURL(){
 
@@ -250,7 +250,7 @@ class ClosedownController extends Controller
 
     /**
      * 휴폐업조회 API 서비스 과금정보를 확인합니다.
-     * - https://docs.popbill.com/closedown/phplaravel/api#GetChargeInfo
+     * - https://developers.popbill.com/reference/closedown/php/api/point#GetChargeInfo
      */
     public function GetChargeInfo(){
 
@@ -273,7 +273,7 @@ class ClosedownController extends Controller
 
     /**
      *  사업자번호를 조회하여 연동회원 가입여부를 확인합니다.
-     * - https://docs.popbill.com/closedown/phplaravel/api#CheckIsMember
+     * - https://developers.popbill.com/reference/closedown/php/api/member#CheckIsMember
      */
     public function CheckIsMember(){
 
@@ -298,7 +298,7 @@ class ClosedownController extends Controller
 
     /**
      * 사용하고자 하는 아이디의 중복여부를 확인합니다.
-     * - https://docs.popbill.com/closedown/phplaravel/api#CheckID
+     * - https://developers.popbill.com/reference/closedown/php/api/member#CheckID
      */
     public function CheckID(){
 
@@ -320,7 +320,7 @@ class ClosedownController extends Controller
 
     /**
      * 사용자를 연동회원으로 가입처리합니다.
-     * - https://docs.popbill.com/closedown/phplaravel/api#JoinMember
+     * - https://developers.popbill.com/reference/closedown/php/api/member#JoinMember
      */
     public function JoinMember(){
 
@@ -377,7 +377,7 @@ class ClosedownController extends Controller
 
     /**
      * 연동회원의 회사정보를 확인합니다.
-     * - https://docs.popbill.com/closedown/phplaravel/api#GetCorpInfo
+     * - https://developers.popbill.com/reference/closedown/php/api/member#JoinMember
      */
     public function GetCorpInfo(){
 
@@ -401,7 +401,7 @@ class ClosedownController extends Controller
 
     /**
      * 연동회원의 회사정보를 수정합니다
-     * - https://docs.popbill.com/closedown/phplaravel/api#UpdateCorpInfo
+     * - https://developers.popbill.com/reference/closedown/php/api/member#UpdateCorpInfo
      */
     public function UpdateCorpInfo(){
 
@@ -444,7 +444,7 @@ class ClosedownController extends Controller
 
     /**
      * 연동회원 사업자번호에 담당자(팝빌 로그인 계정)를 추가합니다.
-     * - https://docs.popbill.com/closedown/phplaravel/api#RegistContact
+     * - https://developers.popbill.com/reference/closedown/php/api/member#RegistContact
      */
     public function RegistContact(){
 
@@ -487,7 +487,7 @@ class ClosedownController extends Controller
 
     /**
      * 연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 정보을 확인합니다.
-     * - https://docs.popbill.com/closedown/phplaravel/api#GetContactInfo
+     * - https://developers.popbill.com/reference/closedown/php/api/member#GetContactInfo
      */
     public function GetContactInfo(){
         // 팝빌회원 사업자번호, '-'제외 10자리
@@ -513,7 +513,7 @@ class ClosedownController extends Controller
 
     /**
      * 연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 목록을 확인합니다.
-     * - https://docs.popbill.com/closedown/phplaravel/api#ListContact
+     * - https://developers.popbill.com/reference/closedown/php/api/member#ListContact
      */
     public function ListContact(){
 
@@ -537,7 +537,7 @@ class ClosedownController extends Controller
 
     /**
      * 연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 정보를 수정합니다.
-     * - https://docs.popbill.com/closedown/phplaravel/api#UpdateContact
+     * - https://developers.popbill.com/reference/closedown/php/api/member#UpdateContact
      */
     public function UpdateContact(){
 
@@ -581,7 +581,7 @@ class ClosedownController extends Controller
     /**
      * 팝빌 사이트에 로그인 상태로 접근할 수 있는 페이지의 팝업 URL을 반환합니다.
      * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-     * - https://docs.popbill.com/closedown/phplaravel/api#GetAccessURL
+     * - https://developers.popbill.com/reference/closedown/php/api/member#GetAccessURL
      */
     public function GetAccessURL(){
 

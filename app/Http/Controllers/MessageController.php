@@ -45,7 +45,7 @@ class MessageController extends Controller
     /**
      * 문자 발신번호 등록여부를 확인합니다.
     * - 발신번호 상태가 '승인'인 경우에만 code가 1로 반환됩니다.
-     * - https://docs.popbill.com/message/phplaravel/api#CheckSenderNumber
+     * - https://developers.popbill.com/reference/sms/php/api/sendnum#CheckSenderNumber
      */
     public function CheckSenderNumber(){
 
@@ -72,7 +72,7 @@ class MessageController extends Controller
     /**
      * 발신번호를 등록하고 내역을 확인하는 문자 발신번호 관리 페이지 팝업 URL을 반환합니다.
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-     * - https://docs.popbill.com/message/phplaravel/api#GetSenderNumberMgtURL
+     * - https://developers.popbill.com/reference/sms/php/api/sendnum#GetSenderNumberMgtURL
      */
     public function GetSenderNumberMgtURL(){
 
@@ -95,7 +95,7 @@ class MessageController extends Controller
 
     /**
      * 팝빌에 등록한 연동회원의 문자 발신번호 목록을 확인합니다.
-     * - https://docs.popbill.com/message/phplaravel/api#GetSenderNumberList
+     * - https://developers.popbill.com/reference/sms/php/api/sendnum#GetSenderNumberList
      */
     public function GetSenderNumberList(){
 
@@ -117,7 +117,7 @@ class MessageController extends Controller
 
     /**
      * 최대 90byte의 단문(SMS) 메시지 1건 전송을 팝빌에 접수합니다.
-     * - https://docs.popbill.com/message/phplaravel/api#SendSMS
+     * - https://developers.popbill.com/reference/sms/php/api/send#SendSMS
      */
     public function SendSMS(){
 
@@ -159,7 +159,7 @@ class MessageController extends Controller
     /**
      * 최대 90byte의 단문(SMS) 메시지 다수건 전송을 팝빌에 접수합니다. (최대 1,000건)
      * - 모든 수신자에게 동일한 내용을 전송하거나(동보전송), 수신자마다 개별 내용을 전송할 수 있습니다(대량전송).
-     * - https://docs.popbill.com/message/phplaravel/api#SendSMS
+     * - https://developers.popbill.com/reference/sms/php/api/send#SendSMS
      */
     public function SendSMS_Multi(){
 
@@ -204,7 +204,7 @@ class MessageController extends Controller
 
     /**
      * 최대 2,000byte의 장문(LMS) 메시지 1건 전송을 팝빌에 접수합니다.
-     * - https://docs.popbill.com/message/phplaravel/api#SendLMS
+     * - https://developers.popbill.com/reference/sms/php/api/send#SendLMS
      */
     public function SendLMS(){
 
@@ -248,7 +248,7 @@ class MessageController extends Controller
     /**
     * 최대 2,000byte의 장문(LMS) 메시지 다수건 전송을 팝빌에 접수합니다. (최대 1,000건)
     * - 모든 수신자에게 동일한 내용을 전송하거나(동보전송), 수신자마다 개별 내용을 전송할 수 있습니다(대량전송).
-    * - https://docs.popbill.com/message/phplaravel/api#SendLMS
+    * - https://developers.popbill.com/reference/sms/php/api/send#SendLMS
     */
     public function SendLMS_Multi(){
 
@@ -293,7 +293,7 @@ class MessageController extends Controller
     /**
      * 최대 2,000byte의 메시지와 이미지로 구성된 포토문자(MMS) 1건 전송을 팝빌에 접수합니다.
      * - 이미지 파일 포맷/규격 : 최대 300Kbyte(JPEG, JPG), 가로/세로 1,000px 이하 권장
-     * - https://docs.popbill.com/message/phplaravel/api#SendMMS
+     * - https://developers.popbill.com/reference/sms/php/api/send#SendMMS
      */
     public function SendMMS(){
 
@@ -340,7 +340,7 @@ class MessageController extends Controller
     * 최대 2,000byte의 메시지와 이미지로 구성된 포토문자(MMS) 다수건 전송을 팝빌에 접수합니다. (최대 1,000건)
     *  - 모든 수신자에게 동일한 내용을 전송하거나(동보전송), 수신자마다 개별 내용을 전송할 수 있습니다(대량전송).
     *  - 이미지 파일 포맷/규격 : 최대 300Kbyte(JPEG), 가로/세로 1,000px 이하 권장
-    * - https://docs.popbill.com/message/phplaravel/api#SendMMS
+    *  - https://developers.popbill.com/reference/sms/php/api/send#SendMMS
     */
     public function SendMMS_Multi(){
 
@@ -388,7 +388,7 @@ class MessageController extends Controller
 
     /**
      * 메시지 길이(90byte)에 따라 단문/장문(SMS/LMS)을 자동으로 인식하여 1건의 메시지를 전송을 팝빌에 접수합니다.
-     * - https://docs.popbill.com/message/phplaravel/api#SendXMS
+     * - https://developers.popbill.com/reference/sms/php/api/send#SendXMS
      */
     public function SendXMS(){
 
@@ -429,7 +429,7 @@ class MessageController extends Controller
 
     /**
      * 메시지 길이(90byte)에 따라 단문/장문(SMS/LMS)을 자동으로 인식하여 다수건의 메시지 전송을 팝빌에 접수합니다. (최대 1,000건)
-     *  - https://docs.popbill.com/message/phplaravel/api#SendXMS
+     *  - https://developers.popbill.com/reference/sms/php/api/send#SendXMS
      */
     public function SendXMS_Multi(){
 
@@ -475,7 +475,7 @@ class MessageController extends Controller
 
     /**
      * 팝빌에서 반환받은 접수번호를 통해 예약접수된 문자 메시지 전송을 취소합니다. (예약시간 10분 전까지 가능)
-     * - https://docs.popbill.com/message/phplaravel/api#CancelReserve
+     * - https://developers.popbill.com/reference/sms/php/api/send#CancelReserve
      */
     public function CancelReserve(){
 
@@ -501,7 +501,7 @@ class MessageController extends Controller
 
     /**
      * 파트너가 할당한 전송요청 번호를 통해 예약접수된 문자 전송을 취소합니다. (예약시간 10분 전까지 가능)
-     * - https://docs.popbill.com/message/phplaravel/api#CancelReserveRN
+     * - https://developers.popbill.com/reference/sms/php/api/send#CancelReserveRN
      */
     public function CancelReserveRN(){
 
@@ -526,7 +526,7 @@ class MessageController extends Controller
     }
     /**
      * 팝빌에서 반환받은 접수번호와 수신번호를 통해 예약접수된 문자 메시지 전송을 취소합니다. (예약시간 10분 전까지 가능)
-     * - https://docs.popbill.com/message/phplaravel/api#CancelReservebyRCV
+     * - https://developers.popbill.com/reference/sms/php/api/send#CancelReservebyRCV
      */
     public function CancelReservebyRCV(){
 
@@ -556,7 +556,7 @@ class MessageController extends Controller
 
     /**
      * 파트너가 할당한 전송요청 번호와 수신번호를 통해 예약접수된 문자 전송을 취소합니다. (예약시간 10분 전까지 가능)
-     * - https://docs.popbill.com/message/phplaravel/api#CancelReserveRNbyRCV
+     * - https://developers.popbill.com/reference/sms/php/api/send#CancelReserveRNbyRCV
      */
     public function CancelReserveRNbyRCV(){
 
@@ -585,7 +585,7 @@ class MessageController extends Controller
 
     /**
      * 팝빌에서 반환받은 접수번호를 통해 문자 전송상태 및 결과를 확인합니다.
-     * - https://docs.popbill.com/message/phplaravel/api#GetMessages
+     * - https://developers.popbill.com/reference/sms/php/api/info#GetMessages
      */
     public function GetMessages(){
 
@@ -612,7 +612,7 @@ class MessageController extends Controller
 
     /**
      * 파트너가 할당한 전송요청 번호를 통해 문자 전송상태 및 결과를 확인합니다.
-     * - https://docs.popbill.com/message/phplaravel/api#GetMessagesRN
+     * - https://developers.popbill.com/reference/sms/php/api/info#GetMessagesRN
      */
     public function GetMessagesRN(){
 
@@ -637,37 +637,9 @@ class MessageController extends Controller
     }
 
     /**
-     * 문자전송에 대한 전송결과 요약정보를 확인합니다.
-     * - https://docs.popbill.com/message/phplaravel/api#GetStates
-     */
-    public function GetStates(){
-
-        // 팝빌회원 사업자번호, '-'제외 10자리
-        $testCorpNum = '1234567890';
-
-        // 문자전송 요청 시 발급받은 접수번호 배열(receiptNum)
-        $ReceiptNumList = array();
-
-        array_push($ReceiptNumList, '022040511000000020');
-
-        // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
-
-        try {
-            $result = $this->PopbillMessaging->GetStates($testCorpNum, $ReceiptNumList, $testUserID);
-        }
-        catch(PopbillException $pe) {
-            $code = $pe->getCode();
-            $message = $pe->getMessage();
-            return view('PResponse', ['code' => $code, 'message' => $message]);
-        }
-        return view('Message/GetStates', ['Result' => $result] );
-    }
-
-    /**
      * 검색조건에 해당하는 문자 전송내역을 조회합니다. (조회기간 단위 : 최대 2개월)
      * - 문자 접수일시로부터 6개월 이내 접수건만 조회할 수 있습니다.
-     * - https://docs.popbill.com/message/phplaravel/api#Search
+     * - https://developers.popbill.com/reference/sms/php/api/info#Search
      */
     public function Search(){
 
@@ -732,7 +704,7 @@ class MessageController extends Controller
     /**
      * 문자 전송내역 확인 페이지의 팝업 URL을 반환합니다.
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-     * - https://docs.popbill.com/message/phplaravel/api#GetSentListURL
+     * - https://developers.popbill.com/reference/sms/php/api/info#GetSentListURL
      */
     public function GetSentListURL(){
 
@@ -755,7 +727,7 @@ class MessageController extends Controller
 
     /**
      * 전용 080 번호에 등록된 수신거부 목록을 반환합니다.
-     * - https://docs.popbill.com/message/phplaravel/api#GetAutoDenyList
+     * - https://developers.popbill.com/reference/sms/php/api/info#GetAutoDenyList
      */
     public function GetAutoDenyList(){
 
@@ -776,7 +748,7 @@ class MessageController extends Controller
     /**
      * 연동회원의 잔여포인트를 확인합니다.
      * - 과금방식이 파트너과금인 경우 파트너 잔여포인트 확인(GetPartnerBalance API) 함수를 통해 확인하시기 바랍니다.
-     * - https://docs.popbill.com/message/phplaravel/api#GetBalance
+     * - https://developers.popbill.com/reference/sms/php/api/point#GetBalance
      */
     public function GetBalance(){
 
@@ -798,7 +770,7 @@ class MessageController extends Controller
     /**
      * 연동회원 포인트 충전을 위한 페이지의 팝업 URL을 반환합니다.
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-     * - https://docs.popbill.com/message/phplaravel/api#GetChargeURL
+     * - https://developers.popbill.com/reference/sms/php/api/point#GetChargeURL
      */
     public function GetChargeURL(){
 
@@ -821,7 +793,7 @@ class MessageController extends Controller
     /**
      * 연동회원 포인트 결제내역 확인을 위한 페이지의 팝업 URL을 반환합니다.
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-     * - https://docs.popbill.com/message/phplaravel/api#GetPaymentURL
+     * - https://developers.popbill.com/reference/sms/php/api/point#GetPaymentURL
      */
     public function GetPaymentURL(){
 
@@ -845,7 +817,7 @@ class MessageController extends Controller
     /**
      * 연동회원 포인트 사용내역 확인을 위한 페이지의 팝업 URL을 반환합니다.
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-     * - https://docs.popbill.com/message/phplaravel/api#GetUseHistoryURL
+     * - https://developers.popbill.com/reference/sms/php/api/point#GetUseHistoryURL
      */
     public function GetUseHistoryURL(){
 
@@ -869,7 +841,7 @@ class MessageController extends Controller
     /**
      * 파트너의 잔여포인트를 확인합니다.
      * - 과금방식이 연동과금인 경우 연동회원 잔여포인트 확인(GetBalance API) 함수를 이용하시기 바랍니다.
-     * - https://docs.popbill.com/message/phplaravel/api#GetPartnerBalance
+     * - https://developers.popbill.com/reference/sms/php/api/point#GetPartnerBalance
      */
     public function GetPartnerBalance(){
 
@@ -890,7 +862,7 @@ class MessageController extends Controller
     /**
      * 파트너 포인트 충전을 위한 페이지의 팝업 URL을 반환합니다.
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-     * - https://docs.popbill.com/message/phplaravel/api#GetPartnerURL
+     * - https://developers.popbill.com/reference/sms/php/api/point#GetPartnerURL
      */
     public function GetPartnerURL(){
 
@@ -913,7 +885,7 @@ class MessageController extends Controller
 
     /**
     * 문자 전송시 과금되는 포인트 단가를 확인합니다.
-    * - https://docs.popbill.com/message/phplaravel/api#GetUnitCost
+    * - https://developers.popbill.com/reference/sms/php/api/point#GetUnitCost
     */
     public function GetUnitCost(){
 
@@ -936,7 +908,7 @@ class MessageController extends Controller
 
     /**
      * 팝빌 문자 API 서비스 과금정보를 확인합니다.
-     * - https://docs.popbill.com/message/phplaravel/api#GetChargeInfo
+     * - https://developers.popbill.com/reference/sms/php/api/point#GetChargeInfo
      */
     public function GetChargeInfo(){
 
@@ -963,7 +935,7 @@ class MessageController extends Controller
 
     /**
      * 사업자번호를 조회하여 연동회원 가입여부를 확인합니다.
-     * - https://docs.popbill.com/message/phplaravel/api#CheckIsMember
+     * - https://developers.popbill.com/reference/sms/php/api/member#CheckIsMember
      */
     public function CheckIsMember(){
 
@@ -988,7 +960,7 @@ class MessageController extends Controller
 
     /**
      * 사용하고자 하는 아이디의 중복여부를 확인합니다.
-     * - https://docs.popbill.com/message/phplaravel/api#CheckID
+     * - https://developers.popbill.com/reference/sms/php/api/member#CheckID
      */
     public function CheckID(){
 
@@ -1010,7 +982,7 @@ class MessageController extends Controller
 
     /**
      * 사용자를 연동회원으로 가입처리합니다.
-     * - https://docs.popbill.com/message/phplaravel/api#JoinMember
+     * - https://developers.popbill.com/reference/sms/php/api/member#JoinMember
      */
     public function JoinMember(){
 
@@ -1068,7 +1040,7 @@ class MessageController extends Controller
     /**
      * 팝빌 사이트에 로그인 상태로 접근할 수 있는 페이지의 팝업 URL을 반환합니다.
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-     * - https://docs.popbill.com/message/phplaravel/api#GetAccessURL
+     * - https://developers.popbill.com/reference/sms/php/api/member#GetAccessURL
      */
     public function GetAccessURL(){
 
@@ -1090,7 +1062,7 @@ class MessageController extends Controller
 
     /**
      * 연동회원의 회사정보를 확인합니다.
-     * - https://docs.popbill.com/message/phplaravel/api#GetCorpInfo
+     * - https://developers.popbill.com/reference/sms/php/api/member#GetCorpInfo
      */
     public function GetCorpInfo(){
 
@@ -1113,7 +1085,7 @@ class MessageController extends Controller
 
     /**
      * 연동회원의 회사정보를 수정합니다.
-     * - https://docs.popbill.com/message/phplaravel/api#UpdateCorpInfo
+     * - https://developers.popbill.com/reference/sms/php/api/member#UpdateCorpInfo
      */
     public function UpdateCorpInfo(){
 
@@ -1155,7 +1127,7 @@ class MessageController extends Controller
 
     /**
      * 연동회원 사업자번호에 담당자(팝빌 로그인 계정)를 추가합니다.
-     * - https://docs.popbill.com/message/phplaravel/api#RegistContact
+     * - https://developers.popbill.com/reference/sms/php/api/member#RegistContact
      */
     public function RegistContact(){
 
@@ -1200,7 +1172,7 @@ class MessageController extends Controller
 
     /**
      * 연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 정보을 확인합니다.
-     * - https://docs.popbill.com/message/phplaravel/api#GetContactInfo
+     * - https://developers.popbill.com/reference/sms/php/api/member#GetContactInfo
      */
     public function GetContactInfo(){
 
@@ -1227,7 +1199,7 @@ class MessageController extends Controller
 
     /**
      * 연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 목록을 확인합니다.
-     * - https://docs.popbill.com/message/phplaravel/api#ListContact
+     * - https://developers.popbill.com/reference/sms/php/api/member#ListContact
      */
     public function ListContact(){
 
@@ -1250,7 +1222,7 @@ class MessageController extends Controller
 
     /**
      * 연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 정보를 수정합니다.
-     * - https://docs.popbill.com/message/phplaravel/api#UpdateContact
+     * - https://developers.popbill.com/reference/sms/php/api/member#UpdateContact
      */
     public function UpdateContact(){
 

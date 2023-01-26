@@ -46,7 +46,7 @@ class KakaoTalkController extends Controller
     /**
      * 카카오톡 채널을 등록하고 내역을 확인하는 카카오톡 채널 관리 페이지 팝업 URL을 반환합니다.
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-     * - https://docs.popbill.com/kakao/phplaravel/api#GetPlusFriendMgtURL
+     * - https://developers.popbill.com/reference/kakaotalk/php/api/channel#GetPlusFriendMgtURL
      */
     public function GetPlusFriendMgtURL(){
 
@@ -68,7 +68,7 @@ class KakaoTalkController extends Controller
 
     /**
      * 팝빌에 등록한 연동회원의 카카오톡 채널 목록을 확인합니다.
-     * - https://docs.popbill.com/kakao/phplaravel/api#ListPlusFriendID
+     * - https://developers.popbill.com/reference/kakaotalk/php/api/channel#ListPlusFriendID
      */
     public function ListPlusFriendID(){
 
@@ -90,7 +90,7 @@ class KakaoTalkController extends Controller
     /**
      * 카카오톡 발신번호 등록여부를 확인합니다.
     * - 발신번호 상태가 '승인'인 경우에만 code가 1로 반환됩니다.
-     * - https://docs.popbill.com/kakao/phplaravel/api#CheckSenderNumber
+     * - https://developers.popbill.com/reference/kakaotalk/php/api/sendnum#CheckSenderNumber
      */
     public function CheckSenderNumber(){
 
@@ -117,7 +117,7 @@ class KakaoTalkController extends Controller
     /**
      * 발신번호를 등록하고 내역을 확인하는 카카오톡 발신번호 관리 페이지 팝업 URL을 반환합니다.
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-     * - https://docs.popbill.com/kakao/phplaravel/api#GetSenderNumberMgtURL
+     * - https://developers.popbill.com/reference/kakaotalk/php/api/sendnum#GetSenderNumberMgtURL
      */
     public function GetSenderNumberMgtURL(){
 
@@ -140,7 +140,7 @@ class KakaoTalkController extends Controller
 
     /**
      * 팝빌에 등록한 연동회원의 카카오톡 발신번호 목록을 확인합니다.
-     * - https://docs.popbill.com/kakao/phplaravel/api#GetSenderNumberList
+     * - https://developers.popbill.com/reference/kakaotalk/php/api/sendnum#GetSenderNumberList
      */
     public function GetSenderNumberList(){
 
@@ -161,7 +161,7 @@ class KakaoTalkController extends Controller
     /**
      * 알림톡 템플릿을 신청하고 승인심사 결과를 확인하며 등록 내역을 확인하는 알림톡 템플릿 관리 페이지 팝업 URL을 반환합니다.
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-     * - https://docs.popbill.com/kakao/phplaravel/api#GetATSTemplateMgtURL
+     * - https://developers.popbill.com/reference/kakaotalk/php/api/template#GetATSTemplateMgtURL
      */
     public function GetATSTemplateMgtURL(){
 
@@ -184,7 +184,7 @@ class KakaoTalkController extends Controller
 
     /**
      * 승인된 알림톡 템플릿 정보를 확인합니다.
-     * - https://docs.popbill.com/kakao/phplaravel/api#GetATSTemplate
+     * - https://developers.popbill.com/reference/kakaotalk/php/api/template#GetATSTemplate
      */
     public function GetATSTemplate(){
 
@@ -209,7 +209,7 @@ class KakaoTalkController extends Controller
 
     /**
     * 승인된 알림톡 템플릿 목록을 확인합니다.
-    * - https://docs.popbill.com/kakao/phplaravel/api#ListATSTemplate
+    * - https://developers.popbill.com/reference/kakaotalk/php/api/template#ListATSTemplate
     */
     public function ListATSTemplate(){
 
@@ -232,7 +232,7 @@ class KakaoTalkController extends Controller
      * 승인된 템플릿의 내용을 작성하여 1건의 알림톡 전송을 팝빌에 접수합니다.
      * - 사전에 승인된 템플릿의 내용과 알림톡 전송내용(content)이 다를 경우 전송실패 처리됩니다.
      * - 전송실패 시 사전에 지정한 변수 'altSendType' 값으로 대체문자를 전송할 수 있고 이 경우 문자(SMS/LMS) 요금이 과금됩니다.
-     * - https://docs.popbill.com/kakao/phplaravel/api#SendATS
+     * - https://developers.popbill.com/reference/kakaotalk/php/api/send#SendATS
      */
     public function SendATS_one(){
 
@@ -316,7 +316,7 @@ class KakaoTalkController extends Controller
      * 승인된 템플릿 내용을 작성하여 다수건의 알림톡 전송을 팝빌에 접수하며, 모든 수신자에게 동일 내용을 전송합니다. (최대 1,000건)
      * - 사전에 승인된 템플릿의 내용과 알림톡 전송내용(content)이 다를 경우 전송실패 처리됩니다.
      * - 전송실패시 사전에 지정한 변수 'altSendType' 값으로 대체문자를 전송할 수 있고, 이 경우 문자(SMS/LMS) 요금이 과금됩니다.
-     * - https://docs.popbill.com/kakao/phplaravel/api#SendATS
+     * - https://developers.popbill.com/reference/kakaotalk/php/api/send#SendATS
      */
     public function SendATS_same(){
 
@@ -404,7 +404,7 @@ class KakaoTalkController extends Controller
      * 승인된 템플릿의 내용을 작성하여 다수건의 알림톡 전송을 팝빌에 접수하며, 수신자 별로 개별 내용을 전송합니다. (최대 1,000건)
      * - 사전에 승인된 템플릿의 내용과 알림톡 전송내용(content)이 다를 경우 전송실패 처리됩니다.
      * - 전송실패 시 사전에 지정한 변수 'altSendType' 값으로 대체문자를 전송할 수 있고, 이 경우 문자(SMS/LMS) 요금이 과금됩니다.
-     * - https://docs.popbill.com/kakao/phplaravel/api#SendATS
+     * - https://developers.popbill.com/reference/kakaotalk/php/api/send#SendATS
      */
     public function SendATS_multi(){
 
@@ -543,7 +543,7 @@ class KakaoTalkController extends Controller
      * 텍스트로 구성된 1건의 친구톡 전송을 팝빌에 접수합니다.
      * - 친구톡의 경우 야간 전송은 제한됩니다. (20:00 ~ 익일 08:00)
      * - 전송실패시 사전에 지정한 변수 'altSendType' 값으로 대체문자를 전송할 수 있고, 이 경우 문자(SMS/LMS) 요금이 과금됩니다.
-     * - https://docs.popbill.com/kakao/phplaravel/api#SendFTS
+     * - https://developers.popbill.com/reference/kakaotalk/php/api/send#SendFTS
      */
     public function SendFTS_one(){
 
@@ -622,7 +622,7 @@ class KakaoTalkController extends Controller
      * 텍스트로 구성된 다수건의 친구톡 전송을 팝빌에 접수하며, 모든 수신자에게 동일 내용을 전송합니다. (최대 1,000건)
      * - 친구톡의 경우 야간 전송은 제한됩니다. (20:00 ~ 익일 08:00)
      * - 전송실패시 사전에 지정한 변수 'altSendType' 값으로 대체문자를 전송할 수 있고, 이 경우 문자(SMS/LMS) 요금이 과금됩니다.
-     * - https://docs.popbill.com/kakao/phplaravel/api#SendFTS
+     * - https://developers.popbill.com/reference/kakaotalk/php/api/send#SendFTS
      */
     public function SendFTS_same(){
 
@@ -702,7 +702,7 @@ class KakaoTalkController extends Controller
      * 텍스트로 구성된 다수건의 친구톡 전송을 팝빌에 접수하며, 수신자 별로 개별 내용을 전송합니다. (최대 1,000건)
      * - 친구톡의 경우 야간 전송은 제한됩니다. (20:00 ~ 익일 08:00)
      * - 전송실패시 사전에 지정한 변수 'altSendType' 값으로 대체문자를 전송할 수 있고, 이 경우 문자(SMS/LMS) 요금이 과금됩니다.
-     * - https://docs.popbill.com/kakao/phplaravel/api#SendFTS
+     * - https://developers.popbill.com/reference/kakaotalk/php/api/send#SendFTS
      */
     public function SendFTS_multi(){
 
@@ -831,7 +831,7 @@ class KakaoTalkController extends Controller
      * - 친구톡의 경우 야간 전송은 제한됩니다. (20:00 ~ 익일 08:00)
      * - 전송실패시 사전에 지정한 변수 'altSendType' 값으로 대체문자를 전송할 수 있고, 이 경우 문자(SMS/LMS) 요금이 과금됩니다.
      * - 대체문자의 경우, 포토문자(MMS) 형식은 지원하고 있지 않습니다.
-     * - https://docs.popbill.com/kakao/phplaravel/api#SendFMS
+     * - https://developers.popbill.com/reference/kakaotalk/php/api/send#SendFMS
      */
     public function SendFMS_one(){
 
@@ -921,7 +921,7 @@ class KakaoTalkController extends Controller
      * - 친구톡의 경우 야간 전송은 제한됩니다. (20:00 ~ 익일 08:00)
      * - 전송실패시 사전에 지정한 변수 'altSendType' 값으로 대체문자를 전송할 수 있고, 이 경우 문자(SMS/LMS) 요금이 과금됩니다.
      * - 대체문자의 경우, 포토문자(MMS) 형식은 지원하고 있지 않습니다.
-     * - https://docs.popbill.com/kakao/phplaravel/api#SendFMS
+     * - https://developers.popbill.com/reference/kakaotalk/php/api/send#SendFMS
      */
     public function SendFMS_same(){
 
@@ -1013,7 +1013,7 @@ class KakaoTalkController extends Controller
      * - 친구톡의 경우 야간 전송은 제한됩니다. (20:00 ~ 익일 08:00)
      * - 전송실패시 사전에 지정한 변수 'altSendType' 값으로 대체문자를 전송할 수 있고, 이 경우 문자(SMS/LMS) 요금이 과금됩니다.
      * - 대체문자의 경우, 포토문자(MMS) 형식은 지원하고 있지 않습니다.
-     * - https://docs.popbill.com/kakao/phplaravel/api#SendFMS
+     * - https://developers.popbill.com/reference/kakaotalk/php/api/send#SendFMS
      */
     public function SendFMS_multi(){
 
@@ -1148,7 +1148,7 @@ class KakaoTalkController extends Controller
 
     /**
      * 팝빌에서 반환받은 접수번호를 통해 예약접수된 카카오톡을 전송 취소합니다. (예약시간 10분 전까지 가능)
-     * - https://docs.popbill.com/kakao/phplaravel/api#CancelReserve
+     * - https://developers.popbill.com/reference/kakaotalk/php/api/send#CancelReserve
      */
     public function CancelReserve(){
 
@@ -1175,7 +1175,7 @@ class KakaoTalkController extends Controller
 
     /**
      * 파트너가 할당한 전송요청 번호를 통해 예약접수된 카카오톡을 전송 취소합니다. (예약시간 10분 전까지 가능)
-     * - https://docs.popbill.com/kakao/phplaravel/api#CancelReserveRN
+     * - https://developers.popbill.com/reference/kakaotalk/php/api/send#CancelReserveRN
      */
     public function CancelReserveRN(){
 
@@ -1202,7 +1202,7 @@ class KakaoTalkController extends Controller
 
     /**
     * 팝빌에서 반환받은 접수번호를 통해 알림톡/친구톡 전송상태 및 결과를 확인합니다.
-    * - https://docs.popbill.com/kakao/phplaravel/api#GetMessages
+    * - https://developers.popbill.com/reference/kakaotalk/php/api/info#GetMessages
     */
     public function GetMessages(){
 
@@ -1228,7 +1228,7 @@ class KakaoTalkController extends Controller
 
     /**
      * 파트너가 할당한 전송요청 번호를 통해 알림톡/친구톡 전송상태 및 결과를 확인합니다.
-     * - https://docs.popbill.com/kakao/phplaravel/api#GetMessagesRN
+     * - https://developers.popbill.com/reference/kakaotalk/php/api/info#GetMessagesRN
      */
     public function GetMessagesRN(){
 
@@ -1255,7 +1255,7 @@ class KakaoTalkController extends Controller
     /**
      * 검색조건에 해당하는 카카오톡 전송내역을 조회합니다. (조회기간 단위 : 최대 2개월)
      * - 카카오톡 접수일시로부터 6개월 이내 접수건만 조회할 수 있습니다.
-     * - https://docs.popbill.com/kakao/phplaravel/api#Search
+     * - https://developers.popbill.com/reference/kakaotalk/php/api/info#Search
      */
     public function Search(){
 
@@ -1319,7 +1319,7 @@ class KakaoTalkController extends Controller
     /**
      * 카카오톡 전송내역을 확인하는 페이지의 팝업 URL을 반환합니다.
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-     * - https://docs.popbill.com/kakao/phplaravel/api#GetSentListURL
+     * - https://developers.popbill.com/reference/kakaotalk/php/api/info#GetSentListURL
      */
     public function GetSentListURL(){
 
@@ -1342,7 +1342,7 @@ class KakaoTalkController extends Controller
     /**
      * 연동회원의 잔여포인트를 확인합니다.
      * - 과금방식이 파트너과금인 경우 파트너 잔여포인트 확인(GetPartnerBalance API) 함수를 통해 확인하시기 바랍니다.
-     * - https://docs.popbill.com/kakao/phplaravel/api#GetBalance
+     * - https://developers.popbill.com/reference/kakaotalk/php/api/point#GetBalance
      */
     public function GetBalance(){
 
@@ -1363,7 +1363,7 @@ class KakaoTalkController extends Controller
     /**
      * 연동회원 포인트 충전을 위한 페이지의 팝업 URL을 반환합니다.
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-     * - https://docs.popbill.com/kakao/phplaravel/api#GetChargeURL
+     * - https://developers.popbill.com/reference/kakaotalk/php/api/point#GetChargeURL
      */
     public function GetChargeURL(){
 
@@ -1387,7 +1387,7 @@ class KakaoTalkController extends Controller
     /**
      * 연동회원 포인트 결제내역 확인을 위한 페이지의 팝업 URL을 반환합니다.
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-     * - https://docs.popbill.com/kakao/phplaravel/api#GetPaymentURL
+     * - https://developers.popbill.com/reference/kakaotalk/php/api/point#GetPaymentURL
      */
     public function GetPaymentURL(){
 
@@ -1411,7 +1411,7 @@ class KakaoTalkController extends Controller
     /**
      * 연동회원 포인트 사용내역 확인을 위한 페이지의 팝업 URL을 반환합니다.
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-     * - https://docs.popbill.com/kakao/phplaravel/api#GetUseHistoryURL
+     * - https://developers.popbill.com/reference/kakaotalk/php/api/point#GetUseHistoryURL
      */
     public function GetUseHistoryURL(){
 
@@ -1435,7 +1435,7 @@ class KakaoTalkController extends Controller
     /**
      * 파트너의 잔여포인트를 확인합니다.
      * - 과금방식이 연동과금인 경우 연동회원 잔여포인트 확인(GetBalance API) 함수를 이용하시기 바랍니다.
-     * - https://docs.popbill.com/kakao/phplaravel/api#GetPartnerBalance
+     * - https://developers.popbill.com/reference/kakaotalk/php/api/point#GetPartnerBalance
      */
     public function GetPartnerBalance(){
 
@@ -1457,7 +1457,7 @@ class KakaoTalkController extends Controller
     /**
      * 파트너 포인트 충전을 위한 페이지의 팝업 URL을 반환합니다.
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-     * - https://docs.popbill.com/kakao/phplaravel/api#GetPartnerURL
+     * - https://developers.popbill.com/reference/kakaotalk/php/api/point#GetPartnerURL
      */
     public function GetPartnerURL(){
 
@@ -1481,7 +1481,7 @@ class KakaoTalkController extends Controller
 
     /**
      * 카카오톡 전송시 과금되는 포인트 단가를 확인합니다.
-     * - https://docs.popbill.com/kakao/phplaravel/api#GetUnitCost
+     * - https://developers.popbill.com/reference/kakaotalk/php/api/point#GetUnitCost
      */
     public function GetUnitCost(){
 
@@ -1504,7 +1504,7 @@ class KakaoTalkController extends Controller
 
     /**
      * 팝빌 카카오톡 API 서비스 과금정보를 확인합니다.
-     * - https://docs.popbill.com/kakao/phplaravel/api#GetChargeInfo
+     * - https://developers.popbill.com/reference/kakaotalk/php/api/point#GetChargeInfo
      */
     public function GetChargeInfo(){
 
@@ -1530,7 +1530,7 @@ class KakaoTalkController extends Controller
 
     /**
      *  사업자번호를 조회하여 연동회원 가입여부를 확인합니다.
-     * - https://docs.popbill.com/kakao/phplaravel/api#CheckIsMember
+     * - https://developers.popbill.com/reference/kakaotalk/php/api/member#CheckIsMember
      */
     public function CheckIsMember(){
 
@@ -1555,7 +1555,7 @@ class KakaoTalkController extends Controller
 
     /**
      * 사용하고자 하는 아이디의 중복여부를 확인합니다.
-     * - https://docs.popbill.com/kakao/phplaravel/api#CheckID
+     * - https://developers.popbill.com/reference/kakaotalk/php/api/member#CheckID
      */
     public function CheckID(){
 
@@ -1577,7 +1577,7 @@ class KakaoTalkController extends Controller
 
     /**
      * 사용자를 연동회원으로 가입처리합니다.
-     * - https://docs.popbill.com/kakao/phplaravel/api#JoinMember
+     * - https://developers.popbill.com/reference/kakaotalk/php/api/member#JoinMember
      */
     public function JoinMember(){
 
@@ -1635,7 +1635,7 @@ class KakaoTalkController extends Controller
     /**
      * 팝빌 사이트에 로그인 상태로 접근할 수 있는 페이지의 팝업 URL을 반환합니다.
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-     * - https://docs.popbill.com/kakao/phplaravel/api#GetAccessURL
+     * - https://developers.popbill.com/reference/kakaotalk/php/api/member#GetAccessURL
      */
     public function GetAccessURL(){
 
@@ -1657,7 +1657,7 @@ class KakaoTalkController extends Controller
 
     /**
      * 연동회원의 회사정보를 확인합니다.
-     * - https://docs.popbill.com/kakao/phplaravel/api#GetCorpInfo
+     * - https://developers.popbill.com/reference/kakaotalk/php/api/member#GetCorpInfo
      */
     public function GetCorpInfo(){
 
@@ -1681,7 +1681,7 @@ class KakaoTalkController extends Controller
 
     /**
      * 연동회원의 회사정보를 수정합니다.
-     * - https://docs.popbill.com/kakao/phplaravel/api#UpdateCorpInfo
+     * - https://developers.popbill.com/reference/kakaotalk/php/api/member#UpdateCorpInfo
      */
     public function UpdateCorpInfo(){
 
@@ -1724,7 +1724,7 @@ class KakaoTalkController extends Controller
 
     /**
      * 연동회원 사업자번호에 담당자(팝빌 로그인 계정)를 추가합니다.
-     * - https://docs.popbill.com/kakao/phplaravel/api#RegistContact
+     * - https://developers.popbill.com/reference/kakaotalk/php/api/member#RegistContact
      */
     public function RegistContact(){
 
@@ -1770,7 +1770,7 @@ class KakaoTalkController extends Controller
 
     /**
      * 연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 정보을 확인합니다.
-     * - https://docs.popbill.com/kakao/phplaravel/api#GetContactInfo
+     * - https://developers.popbill.com/reference/kakaotalk/php/api/member#GetContactInfo
      */
     public function GetContactInfo(){
 
@@ -1797,7 +1797,7 @@ class KakaoTalkController extends Controller
 
     /**
      * 연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 목록을 확인합니다.
-     * - https://docs.popbill.com/kakao/phplaravel/api#ListContact
+     * - https://developers.popbill.com/reference/kakaotalk/php/api/member#ListContact
      */
     public function ListContact(){
 
@@ -1821,7 +1821,7 @@ class KakaoTalkController extends Controller
 
     /**
      * 연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 정보를 수정합니다.
-     * - https://docs.popbill.com/kakao/phplaravel/api#UpdateContact
+     * - https://developers.popbill.com/reference/kakaotalk/php/api/member#UpdateContact
      */
     public function UpdateContact(){
 

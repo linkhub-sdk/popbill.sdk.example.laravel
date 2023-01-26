@@ -43,7 +43,7 @@ class BizInfoCheckController extends Controller
 
     /**
      * 사업자번호 1건에 대한 기업정보를 확인합니다.
-     * - https://docs.popbill.com/bizinfocheck/phplaravel/api#CheckBizInfo
+     * - https://developers.popbill.com/reference/bizinfocheck/php/api/check#CheckBizInfo
      */
     public function CheckBizInfo(){
 
@@ -67,7 +67,7 @@ class BizInfoCheckController extends Controller
     /**
      * 연동회원의 잔여포인트를 확인합니다.
      * - 과금방식이 파트너과금인 경우 파트너 잔여포인트 확인(GetPartnerBalance API) 함수를 통해 확인하시기 바랍니다.
-     * - https://docs.popbill.com/bizinfocheck/phplaravel/api#GetBalance
+     * - https://developers.popbill.com/reference/bizinfocheck/php/api/point#GetBalance
      */
     public function GetBalance(){
 
@@ -88,7 +88,7 @@ class BizInfoCheckController extends Controller
     /**
      * 연동회원 포인트 충전을 위한 페이지의 팝업 URL을 반환합니다.
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-     * - https://docs.popbill.com/bizinfocheck/phplaravel/api#GetChargeURL
+     * - https://developers.popbill.com/reference/bizinfocheck/php/api/point#GetChargeURL
      */
     public function GetChargeURL(){
 
@@ -111,7 +111,7 @@ class BizInfoCheckController extends Controller
     /**
      * 연동회원 포인트 결제내역 확인을 위한 페이지의 팝업 URL을 반환합니다.
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-     * - https://docs.popbill.com/bizinfocheck/phplaravel/api#GetPaymentURL
+     * - https://developers.popbill.com/reference/bizinfocheck/php/api/point#GetPaymentURL
      */
     public function GetPaymentURL(){
 
@@ -136,7 +136,7 @@ class BizInfoCheckController extends Controller
     /**
      * 연동회원 포인트 사용내역 확인을 위한 페이지의 팝업 URL을 반환합니다.
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-     * - https://docs.popbill.com/bizinfocheck/phplaravel/api#GetUseHistoryURL
+     * - https://developers.popbill.com/reference/bizinfocheck/php/api/point#GetUseHistoryURL
      */
     public function GetUseHistoryURL(){
 
@@ -160,7 +160,7 @@ class BizInfoCheckController extends Controller
 
     /**
      * 기업정보 조회시 과금되는 포인트 단가를 확인합니다.
-     * - https://docs.popbill.com/bizinfocheck/phplaravel/api#GetUnitCost
+     * - https://developers.popbill.com/reference/bizinfocheck/php/api/point#GetUnitCost
      */
     public function GetUnitCost(){
 
@@ -181,7 +181,7 @@ class BizInfoCheckController extends Controller
     /**
      * 파트너의 잔여포인트를 확인합니다.
      * - 과금방식이 연동과금인 경우 연동회원 잔여포인트 확인(GetBalance API) 함수를 이용하시기 바랍니다.
-     * - https://docs.popbill.com/bizinfocheck/phplaravel/api#GetPartnerBalance
+     * - https://developers.popbill.com/reference/bizinfocheck/php/api/point#GetPartnerBalance
      */
     public function GetPartnerBalance(){
 
@@ -202,7 +202,7 @@ class BizInfoCheckController extends Controller
     /**
      * 파트너 포인트 충전을 위한 페이지의 팝업 URL을 반환합니다.
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-     * - https://docs.popbill.com/bizinfocheck/phplaravel/api#GetPartnerURL
+     * - https://developers.popbill.com/reference/bizinfocheck/php/api/point#GetPartnerURL
      */
     public function GetPartnerURL(){
 
@@ -225,7 +225,7 @@ class BizInfoCheckController extends Controller
 
     /**
      * 기업정보조회 API 서비스 과금정보를 확인합니다.
-     * - https://docs.popbill.com/bizinfocheck/phplaravel/api#GetChargeInfo
+     * - https://developers.popbill.com/reference/bizinfocheck/php/api/point#GetChargeInfo
      */
     public function GetChargeInfo(){
 
@@ -248,7 +248,7 @@ class BizInfoCheckController extends Controller
 
     /**
      *  사업자번호를 조회하여 연동회원 가입여부를 확인합니다.
-     * - https://docs.popbill.com/bizinfocheck/phplaravel/api#CheckIsMember
+     * - https://developers.popbill.com/reference/bizinfocheck/php/api/member#CheckIsMember
      */
     public function CheckIsMember(){
 
@@ -273,7 +273,7 @@ class BizInfoCheckController extends Controller
 
     /**
      * 사용하고자 하는 아이디의 중복여부를 확인합니다.
-     * - https://docs.popbill.com/bizinfocheck/phplaravel/api#CheckID
+     * - https://developers.popbill.com/reference/bizinfocheck/php/api/member#CheckID
      */
     public function CheckID(){
 
@@ -295,7 +295,7 @@ class BizInfoCheckController extends Controller
 
     /**
      * 사용자를 연동회원으로 가입처리합니다.
-     * - https://docs.popbill.com/bizinfocheck/phplaravel/api#JoinMember
+     * - https://developers.popbill.com/reference/bizinfocheck/php/api/member#JoinMember
      */
     public function JoinMember(){
 
@@ -352,7 +352,7 @@ class BizInfoCheckController extends Controller
 
     /**
      * 연동회원의 회사정보를 확인합니다.
-     * - https://docs.popbill.com/bizinfocheck/phplaravel/api#GetCorpInfo
+     * - https://developers.popbill.com/reference/bizinfocheck/php/api/member#GetCorpInfo
      */
     public function GetCorpInfo(){
 
@@ -376,7 +376,7 @@ class BizInfoCheckController extends Controller
 
     /**
      * 연동회원의 회사정보를 수정합니다
-     * - https://docs.popbill.com/bizinfocheck/phplaravel/api#UpdateCorpInfo
+     * - https://developers.popbill.com/reference/bizinfocheck/php/api/member#UpdateCorpInfo
      */
     public function UpdateCorpInfo(){
 
@@ -419,7 +419,7 @@ class BizInfoCheckController extends Controller
 
     /**
      * 연동회원 사업자번호에 담당자(팝빌 로그인 계정)를 추가합니다.
-     * - https://docs.popbill.com/bizinfocheck/phplaravel/api#RegistContact
+     * - https://developers.popbill.com/reference/bizinfocheck/php/api/member#RegistContact
      */
     public function RegistContact(){
 
@@ -462,7 +462,7 @@ class BizInfoCheckController extends Controller
 
     /**
      * 연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 정보을 확인합니다.
-     * - https://docs.popbill.com/bizinfocheck/phplaravel/api#GetContactInfo
+     * - https://developers.popbill.com/reference/bizinfocheck/php/api/member#GetContactInfo
      */
     public function GetContactInfo(){
         // 팝빌회원 사업자번호, '-'제외 10자리
@@ -488,7 +488,7 @@ class BizInfoCheckController extends Controller
 
     /**
      * 연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 목록을 확인합니다.
-     * - https://docs.popbill.com/bizinfocheck/phplaravel/api#ListContact
+     * - https://developers.popbill.com/reference/bizinfocheck/php/api/member#ListContact
      */
     public function ListContact(){
 
@@ -512,7 +512,7 @@ class BizInfoCheckController extends Controller
 
     /**
      * 연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 정보를 수정합니다.
-     * - https://docs.popbill.com/bizinfocheck/phplaravel/api#UpdateContact
+     * - https://developers.popbill.com/reference/bizinfocheck/php/api/member#UpdateContact
      */
     public function UpdateContact(){
 
@@ -556,7 +556,7 @@ class BizInfoCheckController extends Controller
     /**
      * 팝빌 사이트에 로그인 상태로 접근할 수 있는 페이지의 팝업 URL을 반환합니다.
      * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-     * - https://docs.popbill.com/bizinfocheck/phplaravel/api#GetAccessURL
+     * - https://developers.popbill.com/reference/bizinfocheck/php/api/member#GetAccessURL
      */
     public function GetAccessURL(){
 
