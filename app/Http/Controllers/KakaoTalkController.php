@@ -248,6 +248,9 @@ class KakaoTalkController extends Controller
         $templateCode = '019020000163';
 
         // 팝빌에 사전 등록된 발신번호
+        // altSendType = 'C' / 'A' 일 경우, 대체문자를 전송할 발신번호
+        // altSendType = '' 일 경우, null 또는 공백 처리
+        // ※ 대체문자를 전송하는 경우에는 사전에 등록된 발신번호 입력 필수
         $sender = '';
 
         // 알림톡 내용, 최대 1000자
@@ -332,6 +335,9 @@ class KakaoTalkController extends Controller
         $templateCode = '019020000163';
 
         // 팝빌에 사전 등록된 발신번호
+        // altSendType = 'C' / 'A' 일 경우, 대체문자를 전송할 발신번호
+        // altSendType = '' 일 경우, null 또는 공백 처리
+        // ※ 대체문자를 전송하는 경우에는 사전에 등록된 발신번호 입력 필수
         $sender = '';
 
         // 알림톡 내용, 최대 1000자
@@ -428,6 +434,9 @@ class KakaoTalkController extends Controller
         $content .= 'support@linkhub.co.kr'.PHP_EOL;
 
         // 팝빌에 사전 등록된 발신번호
+        // altSendType = 'C' / 'A' 일 경우, 대체문자를 전송할 발신번호
+        // altSendType = '' 일 경우, null 또는 공백 처리
+        // ※ 대체문자를 전송하는 경우에는 사전에 등록된 발신번호 입력 필수
         $sender = '';
 
         // 대체문자 유형 (null , "C" , "A" 중 택 1)
@@ -557,6 +566,9 @@ class KakaoTalkController extends Controller
         $plusFriendID = '@팝빌';
 
         // 팝빌에 사전 등록된 발신번호
+        // altSendType = 'C' / 'A' 일 경우, 대체문자를 전송할 발신번호
+        // altSendType = '' 일 경우, null 또는 공백 처리
+        // ※ 대체문자를 전송하는 경우에는 사전에 등록된 발신번호 입력 필수
         $sender = '';
 
         // 친구톡 내용, 최대 1000자
@@ -636,6 +648,9 @@ class KakaoTalkController extends Controller
         $plusFriendID = '@팝빌';
 
         // 팝빌에 사전 등록된 발신번호
+        // altSendType = 'C' / 'A' 일 경우, 대체문자를 전송할 발신번호
+        // altSendType = '' 일 경우, null 또는 공백 처리
+        // ※ 대체문자를 전송하는 경우에는 사전에 등록된 발신번호 입력 필수
         $sender = '';
 
         // 친구톡 내용, 최대 1000자
@@ -716,6 +731,9 @@ class KakaoTalkController extends Controller
         $plusFriendID = '@팝빌';
 
         // 팝빌에 사전 등록된 발신번호
+        // altSendType = 'C' / 'A' 일 경우, 대체문자를 전송할 발신번호
+        // altSendType = '' 일 경우, null 또는 공백 처리
+        // ※ 대체문자를 전송하는 경우에는 사전에 등록된 발신번호 입력 필수
         $sender = '';
 
         // 대체문자 유형 (null , "C" , "A" 중 택 1)
@@ -845,6 +863,9 @@ class KakaoTalkController extends Controller
         $plusFriendID = '@팝빌';
 
         // 팝빌에 사전 등록된 발신번호
+        // altSendType = 'C' / 'A' 일 경우, 대체문자를 전송할 발신번호
+        // altSendType = '' 일 경우, null 또는 공백 처리
+        // ※ 대체문자를 전송하는 경우에는 사전에 등록된 발신번호 입력 필수
         $sender = '07043042991';
 
         // 친구톡 내용, 최대 400자
@@ -935,6 +956,9 @@ class KakaoTalkController extends Controller
         $plusFriendID = '@팝빌';
 
         // 팝빌에 사전 등록된 발신번호
+        // altSendType = 'C' / 'A' 일 경우, 대체문자를 전송할 발신번호
+        // altSendType = '' 일 경우, null 또는 공백 처리
+        // ※ 대체문자를 전송하는 경우에는 사전에 등록된 발신번호 입력 필수
         $sender = '';
 
         // 친구톡 내용, 최대 400자
@@ -1027,6 +1051,9 @@ class KakaoTalkController extends Controller
         $plusFriendID = '@팝빌';
 
         // 팝빌에 사전 등록된 발신번호
+        // altSendType = 'C' / 'A' 일 경우, 대체문자를 전송할 발신번호
+        // altSendType = '' 일 경우, null 또는 공백 처리
+        // ※ 대체문자를 전송하는 경우에는 사전에 등록된 발신번호 입력 필수
         $sender = '';
 
         // 대체문자 유형 (null , "C" , "A" 중 택 1)
@@ -1194,6 +1221,66 @@ class KakaoTalkController extends Controller
             $message = $result->message;
         }
         catch(PopbillException $pe) {
+            $code = $pe->getCode();
+            $message = $pe->getMessage();
+        }
+        return view('PResponse', ['code' => $code, 'message' => $message]);
+    }
+
+    /**
+     * 팝빌에서 반환받은 접수번호와 수신번호를 통해 예약접수된 문자 메시지 전송을 취소합니다. (예약시간 10분 전까지 가능)
+     * - https://developers.popbill.com/reference/kakaotalk/php/api/send#CancelReservebyRCV
+     */
+    public function CancelReservebyRCV(){
+
+        // 팝빌 회원 사업자번호, "-"제외 10자리
+        $testCorpNum = '1234567890';
+
+        // 예약문자전송 요청시 발급받은 접수번호
+        $ReceiptNum = '022102017000000019';
+
+        // 예약문자전송 요청시 입력한 수신번호
+        $ReceiveNum = '01011112222';
+
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
+        try {
+            $result = $this->PopbillKakao->CancelReservebyRCV($testCorpNum ,$ReceiptNum, $ReceiveNum, $testUserID);
+            $code = $result->code;
+            $message = $result->message;
+        }
+        catch (PopbillException $pe) {
+            $code = $pe->getCode();
+            $message = $pe->getMessage();
+        }
+        return view('PResponse', ['code' => $code, 'message' => $message]);
+    }
+
+    /**
+     * 파트너가 할당한 전송요청 번호와 수신번호를 통해 예약접수된 문자 전송을 취소합니다. (예약시간 10분 전까지 가능)
+     * - https://developers.popbill.com/reference/kakaotalk/php/api/send#CancelReserveRNbyRCV
+     */
+    public function CancelReserveRNbyRCV(){
+
+        // 팝빌 회원 사업자번호, "-"제외 10자리
+        $testCorpNum = '1234567890';
+
+        // 예약문자전송 요청시 할당한 전송요청번호
+        $requestNum = '';
+
+        // 예약문자전송 요청시 입력한 수신번호
+        $ReceiveNum = '010222333';
+
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
+        try {
+            $result = $this->PopbillKakao->CancelReserveRNbyRCV($testCorpNum ,$requestNum, $ReceiveNum, $testUserID);
+            $code = $result->code;
+            $message = $result->message;
+        }
+        catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
         }

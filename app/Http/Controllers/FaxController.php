@@ -196,14 +196,18 @@ class FaxController extends Controller
             // 팩스 수신번호
             'rcv' => '070111222',
             // 팩스 수신자명
-            'rcvnm' => '팝빌담당자'
+            'rcvnm' => '팝빌담당자',
+            // 파트너 지정키, 보전송시 수신자 구별용 메모
+            'interOPRefKey' => '20230127-01'
         );
 
         $Receivers[] = array(
             // 팩스 수신번호
             'rcv' => '070333444',
             // 팩스 수신자명
-            'rcvnm' => '수신담당자'
+            'rcvnm' => '수신담당자',
+            // 파트너 지정키, 보전송시 수신자 구별용 메모
+            'interOPRefKey' => '20230127-01'
         );
 
         // 팩스전송파일, 해당파일에 읽기 권한이 설정되어 있어야 함. 최대 20개.
@@ -328,14 +332,18 @@ class FaxController extends Controller
             // 팩스 수신번호
             'rcv' => '070111222',
             // 팩스 수신자명
-            'rcvnm' => '팝빌담당자'
+            'rcvnm' => '팝빌담당자',
+            // 파트너 지정키, 보전송시 수신자 구별용 메모
+            'interOPRefKey' => '20230127-01'
         );
 
         $Receivers[] = array(
             // 팩스 수신번호
             'rcv' => '070333444',
             // 팩스 수신자명
-            'rcvnm' => '수신담당자'
+            'rcvnm' => '수신담당자',
+            // 파트너 지정키, 보전송시 수신자 구별용 메모
+            'interOPRefKey' => '20230127-01'
         );
 
         // 파일정보 배열, 최대 20개.
@@ -530,13 +538,17 @@ class FaxController extends Controller
             // 팩스 수신번호
             'rcv' => '070111222',
             // 팩스 수신자명
-            'rcvnm' => '팝빌담당자'
+            'rcvnm' => '팝빌담당자',
+            // 파트너 지정키, 보전송시 수신자 구별용 메모
+            'interOPRefKey' => '20230127-01'
         );
         $Receivers[] = array(
             // 팩스 수신번호
             'rcv' => '070333444',
             // 팩스 수신자명
-            'rcvnm' => '수신담당자'
+            'rcvnm' => '수신담당자',
+            // 파트너 지정키, 보전송시 수신자 구별용 메모
+            'interOPRefKey' => '20230127-01'
         );
 
         // 예약전송일시(yyyyMMddHHmmss) ex)20151212230000, null인경우 즉시전송
@@ -594,13 +606,17 @@ class FaxController extends Controller
             // 팩스 수신번호
             'rcv' => '070111222',
             // 팩스 수신자명
-            'rcvnm' => '팝빌담당자'
+            'rcvnm' => '팝빌담당자',
+            // 파트너 지정키, 보전송시 수신자 구별용 메모
+            'interOPRefKey' => '20230127-01'
         );
         $Receivers[] = array(
             // 팩스 수신번호
             'rcv' => '070333444',
             // 팩스 수신자명
-            'rcvnm' => '수신담당자'
+            'rcvnm' => '수신담당자',
+            // 파트너 지정키, 보전송시 수신자 구별용 메모
+            'interOPRefKey' => '20230127-01'
         );
 
         // 예약전송일시(yyyyMMddHHmmss) ex)20151212230000, null인경우 즉시전송
@@ -991,8 +1007,13 @@ class FaxController extends Controller
         // 팝빌 회원 사업자 번호, "-"제외 10자리
         $testCorpNum = '1234567890';
 
+        // 수신번호 유형 : "일반" / "지능" 중 택 1
+        // └ 일반망 : 지능망을 제외한 번호
+        // └ 지능망 : 030*, 050*, 070*, 080*, 대표번호
+        $receiveNumType = '일반';
+
         try {
-            $unitCost= $this->PopbillFax->GetUnitCost($testCorpNum);
+            $unitCost= $this->PopbillFax->GetUnitCost($testCorpNum, $receiveNumType);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
@@ -1015,8 +1036,13 @@ class FaxController extends Controller
         // 팝빌회원 아이디
         $testUserID = 'testkorea';
 
+        // 수신번호 유형 : "일반" / "지능" 중 택 1
+        // └ 일반망 : 지능망을 제외한 번호
+        // └ 지능망 : 030*, 050*, 070*, 080*, 대표번호
+        $receiveNumType = '지능';
+
         try {
-            $result = $this->PopbillFax->GetChargeInfo($testCorpNum, $testUserID);
+            $result = $this->PopbillFax->GetChargeInfo($testCorpNum, $testUserID, $receiveNumType);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();

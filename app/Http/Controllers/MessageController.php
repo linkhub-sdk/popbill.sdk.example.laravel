@@ -184,7 +184,8 @@ class MessageController extends Controller
                 'sndnm' => '발신자명',   // 발신자명
                 'rcv' => '',   // 수신번호
                 'rcvnm' => '수신자성명'.$i, // 수신자성명
-                'msg' => '개별 메시지 내용'  // 개별 메시지 내용
+                'msg' => '개별 메시지 내용',  // 개별 메시지 내용
+                'interOPRefKey' => '20230127'.$i    // 파트너 지정키, 동보전송시 수신자 구별용 메모
             );
         }
 
@@ -273,7 +274,8 @@ class MessageController extends Controller
                 'rcv' => '',   // 수신번호
                 'rcvnm' => '수신자성명'.$i, // 수신자 성명
                 'msg' => '개별 메시지 내용',  // 개별 메시지 내용. 장문은 2000byte로 길이가 조정되어 전송됨.
-                'sjt' => '개발 메시지 제목'  // 개별 메시지 내용
+                'sjt' => '개발 메시지 제목',  // 개별 메시지 내용
+                'interOPRefKey' => '20230127'.$i    // 파트너 지정키, 동보전송시 수신자 구별용 메모
             );
         }
 
@@ -366,7 +368,8 @@ class MessageController extends Controller
                 'rcv' => '',   // 수신번호
                 'rcvnm' => '수신자성명'.$i, // 수신자성명
                 'msg' => '개별 메시지 내용',  // 개별 메시지 내용
-                'sjt' => '개발 메시지 제목'  // 개별 메시지 제목
+                'sjt' => '개발 메시지 제목',  // 개별 메시지 제목
+                'interOPRefKey' => '20230127'.$i    // 파트너 지정키, 동보전송시 수신자 구별용 메모
             );
         }
 
@@ -445,7 +448,8 @@ class MessageController extends Controller
                 'rcv' => '',     // 수신번호
                 'rcvnm' => '수신자성명',     // 수신자성명
                 'sjt' => '개별 메시지 제목', // 개별전송 메시지 제목
-                'msg' => '개별 메시지 내용'  // 개별전송 메시지 내용
+                'msg' => '개별 메시지 내용',  // 개별전송 메시지 내용
+                'interOPRefKey' => '20230127'.$i    // 파트너 지정키, 동보전송시 수신자 구별용 메모
             );
         }
 
@@ -743,6 +747,26 @@ class MessageController extends Controller
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
         return view('Message/GetAutoDenyList', ['Result' => $result] );
+    }
+
+    /**
+     * 팝빌회원에 등록된 080 수신거부 번호 정보를 확인합니다.
+     * - https://developers.popbill.com/reference/sms/php/api/info#CheckAutoDenyNumber
+     */
+    public function CheckAutoDenyNumber(){
+
+        // 팝빌회원 사업자번호, "-"제외 10자리
+        $testCorpNum = '1234567890';
+
+        try {
+            $result = $this->PopbillMessaging->CheckAutoDenyNumber($testCorpNum);
+        }
+        catch(PopbillException $pe) {
+            $code = $pe->getCode();
+            $message = $pe->getMessage();
+            return view('PResponse', ['code' => $code, 'message' => $message]);
+        }
+        return view('Message/CheckAutoDenyNumber', ['Result' => $result] );
     }
 
     /**

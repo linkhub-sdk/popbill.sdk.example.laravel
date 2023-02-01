@@ -19,6 +19,9 @@
                         <li> template (템플릿 내용) : {{ $Result->template }} </li>
                         <li> ads (광고메시지 내용) : {{ $Result->ads }} </li>
                         <li> appendix (부가메시지 내용) : {{ $Result->appendix }} </li>
+                        <li> secureYN (보안템플릿 여부) : {{ $Result->secureYN }} </li>
+                        <li> state (채널 상태) : {{ $Result->state }} </li>
+                        <li> stateDT (채널 상태 일시) : {{ $Result->stateDT }} </li>
                         @if (empty($Result->btns) == false)
                         @foreach ($Result->btns as $indexKey => $btnInfo)
                         <fieldset class="fieldset2">

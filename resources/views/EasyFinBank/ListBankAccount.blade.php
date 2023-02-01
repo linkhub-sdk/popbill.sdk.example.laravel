@@ -30,7 +30,6 @@
               <li>useRestrictYN (정액제 서비스 사용제한 여부) : {{ $bankAccountInfo->useRestrictYN }}</li>
               <li>closeOnExpired (정액제 서비스 만료 시 해지 여부) : {{ $bankAccountInfo->closeOnExpired }}</li>
               <li>unPaidYN (미수금 보유 여부) : {{ $bankAccountInfo->unPaidYN }}</li>
-
             </ul>
           </fieldset>
           @endforeach

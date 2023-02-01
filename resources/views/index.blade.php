@@ -21,7 +21,6 @@
             <li><a href="BizInfoCheck">BizInfoCheckService</a> - 기업정보조회 API</li>
             <li><a href="EasyFinBank">EasyFinBankService</a> - 계좌조회 API</li>
             <li><a href="AccountCheck">AccountChekService</a> - 예금주조회 API</li>
-
             <li><a href="Message">MessageService</a> - 문자메시지 API</li>
             <li><a href="Fax">FaxService</a> - 팩스 API</li>
             <li><a href="KakaoTalk">KakaoService</a> - 카카오톡 API</li>

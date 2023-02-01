@@ -18,6 +18,7 @@
             <li>perPage (페이지당 목록개수) : {{ $Result->perPage }} </li>
             <li>pageCount (페이지 개수) : {{ $Result->pageCount }} </li>
             <li>lastScrapDT (최종 조회일시) : {{ $Result->lastScrapDT }} </li>
+            <li>balance (현재 잔액) : {{ $Result->balance }} </li>
           </ul>
           @foreach ($Result->list as $indexKey => $tradeInfo)
           <fieldset class="fieldset2">
@@ -33,6 +34,7 @@
               <li>remark1 (비고1) : {{ $tradeInfo->remark1 }}</li>
               <li>remark2 (비고2) : {{ $tradeInfo->remark2 }}</li>
               <li>remark3 (비고3) : {{ $tradeInfo->remark3 }}</li>
+              <li>regDT (등록일시) : {{ $tradeInfo->regDT }}</li>
               <li>memo (메모) : {{ $tradeInfo->memo }}</li>
             </ul>
           </fieldset>

@@ -67,6 +67,7 @@
             <li><a href="Message/Search">Search</a> (문자전송 목록 조회)</li>
             <li><a href="Message/GetSentListURL">GetSentListURL</a> (문자 전송내역 팝업 URL)</li>
             <li><a href="Message/GetAutoDenyList">GetAutoDenyList</a> (080 수신거부 목록 확인)</li>
+            <li><a href="Message/CheckAutoDenyNumber">CheckAutoDenyNumber</a> (080 수신거부 번호 확인)</li>
         </ul>
     </fieldset>
     <fieldset class="fieldset1">

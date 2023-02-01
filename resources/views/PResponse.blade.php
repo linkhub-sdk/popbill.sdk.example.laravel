@@ -24,6 +24,7 @@
             @endisset
             @isset($tradeDate)
             <li>tradeDate (거래일자) : {{ $tradeDate }}</li>
+            @endisset
             @isset($tradeDT)
             <li>tradeDT (거래일시) : {{ $tradeDT }}</li>
             @endisset

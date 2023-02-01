@@ -28,9 +28,11 @@
                         <legend>발행 결과 [{{ $indexKey+1 }}]</legend>
                         <ul>
                             <li>code (응답코드) : {{ $issueResult->code }}</li>
+                            <li>message (응답메시지) : {{ $issueResult->message }}</li>
                             <li>mgtKey (문서번호) : {{ $issueResult->mgtKey }}</li>
                             <li>confirmNum (국세청 승인번호) : {{ $issueResult->confirmNum }}</li>
                             <li>tradeDate (거래일자) : {{ $issueResult->tradeDate }}</li>
+                            <li>issueDT (발행일시) : {{ $issueResult->issueDT }}</li>
                         </ul>
                     </fieldset>
                     @endforeach

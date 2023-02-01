@@ -28,7 +28,9 @@
                         <legend>발행 결과 [{{ $indexKey+1 }}]</legend>
                         <ul>
                             <li>invoicerMgtKey (공급자 문서번호) : {{ $issueResult->invoicerMgtKey }}</li>
+                            <li>trusteeMgtKey (수탁자 문서번호) : {{ $issueResult->trusteeMgtKey }}</li>
                             <li>code (응답코드) : {{ $issueResult->code }}</li>
+                            <li>message (응답메시지) : {{ $issueResult->message }}</li>
                             <li>ntsconfirmNum (국세청승인번호) : {{ $issueResult->ntsconfirmNum }}</li>
                             <li>issueDT (발행일시) : {{ $issueResult->issueDT }}</li>
                         </ul>
