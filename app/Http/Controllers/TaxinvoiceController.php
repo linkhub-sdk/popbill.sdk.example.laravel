@@ -15,7 +15,8 @@ use Linkhub\Popbill\TIENumMgtKeyType;
 use Linkhub\Popbill\Taxinvoice;
 use Linkhub\Popbill\TaxinvoiceDetail;
 use Linkhub\Popbill\TaxinvoiceAddContact;
-
+use Linkhub\Popbill\RefundForm;
+use Linkhub\Popbill\PaymentForm;
 
 class TaxinvoiceController extends Controller
 {
@@ -24,7 +25,7 @@ class TaxinvoiceController extends Controller
         // 통신방식 설정
         define('LINKHUB_COMM_MODE', config('popbill.LINKHUB_COMM_MODE'));
 
-        // 세금계산서 서비스 클래스 초기화
+        // 세금계산서 서비스 클래스 초기화`
         $this->PopbillTaxinvoice = new PopbillTaxinvoice(config('popbill.LinkID'), config('popbill.SecretKey'));
 
         // 연동환경 설정값, true-개발용, false-상업용
@@ -2869,6 +2870,228 @@ class TaxinvoiceController extends Controller
         }
 
         return view('ReturnValue', ['filedName' => "연동회원 잔여포인트" , 'value' => $remainPoint]);
+    }
+
+    /**
+     * 연동회원의 포인트 사용내역을 확인합니다.
+     * https://developers.popbill.com/reference/taxinvoice/php/api/point#GetUseHistory
+     */
+    public function GetUseHistory(){
+
+        // 팝빌회원 사업자번호 (하이픈 '-' 제외 10 자리)
+        $testCorpNum = "1234567890";
+
+        // 시작일자, 날짜형식(yyyyMMdd)
+        $SDate = "20220901";
+
+        // 종료일자, 날짜형식(yyyyMMdd)
+        $EDate = "20220930";
+
+        // 페이지번호
+        $Page = 1;
+
+        // 페이지당 검색개수, 최대 1000건
+        $PerPage = 30;
+
+        // 정렬방향, A-오름차순, D-내림차순
+        $Order = "D";
+
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
+        try	{
+            $result = $this->PopbillTaxinvoice->GetUseHistory($testCorpNum, $SDate, $EDate, $Page, $PerPage, $Order, $testUserID);
+        }
+        catch(PopbillException $pe) {
+            $code = $pe->getCode();
+            $message = $pe->getMessage();
+            return view('PResponse', ['code' => $code, 'message' => $message]);
+        }
+        return view('Taxinvoice/UseHistoryResult', ['Result' => $result]);
+    }
+
+    /**
+     * 포인트 결제내역을 확인합니다.
+     * https://developers.popbill.com/reference/taxinvoice/php/api/point#GetPaymentHistory
+     */
+    public function GetPaymentHistory(){
+
+        // 팝빌회원 사업자번호 (하이픈 '-' 제외 10 자리)
+        $testCorpNum = "1234567890";
+
+        // 시작일자, 날짜형식(yyyyMMdd)
+        $SDate = "20220901";
+
+        // 종료일자, 날짜형식(yyyyMMdd)
+        $EDate = "20220930";
+
+        // 페이지번호
+        $Page = 1;
+
+        // 페이지당 검색개수, 최대 1000건
+        $PerPage = 30;
+
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
+        try	{
+            $result = $this->PopbillTaxinvoice->GetPaymentHistory($testCorpNum, $SDate, $EDate, $Page, $PerPage, $testUserID);
+        }
+        catch(PopbillException $pe) {
+            $code = $pe->getCode();
+            $message = $pe->getMessage();
+            return view('PResponse', ['code' => $code, 'message' => $message]);
+        }
+        return view('Taxinvoice/PaymentHistoryResult', ['Result' => $result]);
+    }
+
+    /**
+     * 환불 신청내역을 확인합니다.
+     * https://developers.popbill.com/reference/taxinvoice/php/api/point#GetRefundHistory
+     */
+    public function GetRefundHistory(){
+
+        // 팝빌회원 사업자번호 (하이픈 '-' 제외 10 자리)
+        $testCorpNum = "1234567890";
+
+        // 페이지번호
+        $Page = 1;
+
+        // 페이지당 검색개수, 최대 1000건
+        $PerPage = 30;
+
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
+        try	{
+            $result = $this->PopbillTaxinvoice->GetRefundHistory($testCorpNum, $Page, $PerPage, $testUserID);
+        }
+        catch(PopbillException $pe) {
+            $code = $pe->getCode();
+            $message = $pe->getMessage();
+            return view('PResponse', ['code' => $code, 'message' => $message]);
+        }
+        return view('Taxinvoice/RefundHistoryResult', ['Result' => $result]);
+    }
+
+    /**
+     * 환불을 신청합니다.
+     * https://developers.popbill.com/reference/taxinvoice/php/api/point#Refund
+     */
+    public function Refund(){
+
+        // 팝빌 회원 사업자번호, '-' 제외 10자리
+        $testCorpNum = '1234567890';
+
+        $RefundForm = new RefundForm();
+
+        // 담당자명
+        $RefundForm->contactname = '담당자명';
+
+        // 담당자 연락처
+        $RefundForm->tel = '01011112222';
+
+        // 환불 신청 포인트
+        $RefundForm->requestpoint = '100';
+
+        // 계좌은행
+        $RefundForm->accountbank = '국민';
+
+        // 계좌번호
+        $RefundForm->accountnum = '123123123-123';
+
+        // 예금주
+        $RefundForm->accountname = '테스트';
+
+        // 환불사유
+        $RefundForm->reason = '환불사유';
+
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
+        try	{
+            $result = $this->PopbillTaxinvoice->Refund($testCorpNum, $RefundForm, $testUserID);
+            $code = $result->code;
+            $message = $result->message;
+        }
+        catch(PopbillException $pe) {
+            $code = $pe->getCode();
+            $message = $pe->getMessage();
+        }
+        return view('PResponse', ['code' => $code, 'message' => $message]);
+    }
+
+    /**
+     * 무통장 입금을 신청합니다.
+     * https://developers.popbill.com/reference/taxinvoice/php/api/point#PaymentRequest
+     */
+    public function PaymentRequest(){
+
+        // 팝빌 회원 사업자번호, '-' 제외 10자리
+        $testCorpNum = '1234567890';
+
+        $paymentForm = new PaymentForm();
+
+        // 담당자명
+        // 미입력 시 기본값 적용 - 팝빌 회원 담당자명.
+        $paymentForm->settlerName = '담당자명';
+
+        // 담당자 이메일
+        // 사이트에서 신청하면 자동으로 담당자 이메일.
+        // 미입력 시 공백 처리
+        $paymentForm->settlerEmail = 'test@test.com';
+
+        // 담당자 휴대폰
+        // 무통장 입금 승인 알림톡이 전송됩니다.
+        $paymentForm->notifyHP = '01012341234';
+
+        // 입금자명
+        $paymentForm->paymentName = '입금자명';
+
+        // 결제금액
+        $paymentForm->settleCost = '11000';
+
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
+        try {
+            $result = $this->PopbillTaxinvoice->PaymentRequest($testCorpNum, $paymentForm, $testUserID);
+            $code = $result->code;
+            $message = $result->message;
+            $settleCode = $result->settleCode;
+        }
+        catch(PopbillException $pe) {
+            $code = $pe->getCode();
+            $message = $pe->getMessage();
+            return view('PResponse', ['code' => $code, 'message' => $message]);
+        }
+        return view('Taxinvoice/PaymentResponse', ['Result' => $result]);
+    }
+
+    /**
+     * 무통장 입금신청한 건의 정보를 확인합니다.
+     * https://developers.popbill.com/reference/taxinvoice/php/api/point#GetSettleResult
+     */
+    public function GetSettleResult(){
+
+        // 팝빌회원 사업자번호
+        $testCorpNum = '1234567890';
+
+        // paymentRequest 를 통해 얻은 settleCode.
+        $settleCode = '202210040000000070';
+
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
+        try {
+            $result = $this->PopbillTaxinvoice->GetSettleResult($testCorpNum, $settleCode, $testUserID);
+        }
+        catch(PopbillException $pe) {
+            $code = $pe->getCode();
+            $message = $pe->getMessage();
+            return view('PResponse', ['code' => $code, 'message' => $message]);
+        }
+        return view('Taxinvoice/PaymentHistory', ['Result' => $result]);
     }
 
     /**

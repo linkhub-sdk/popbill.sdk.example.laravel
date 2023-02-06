@@ -19,6 +19,12 @@
         <legend>포인트 관리</legend>
         <ul>
             <li><a href="BizInfoCheck/GetBalance">GetBalance</a> (연동회원 잔여포인트 확인) </li>
+            <li><a href="BizInfoCheck/GetUseHistory">GetUseHistory</a> (연동회원 포인트 사용내역 확인)</li>
+            <li><a href="BizInfoCheck/GetPaymentHistory">GetPaymentHistory</a> (연동회원 포인트 결제내역 확인)</li>
+            <li><a href="BizInfoCheck/GetRefundHistory">GetRefundHistory</a> (연동회원 포인트 환불내역 확인)</li>
+            <li><a href="BizInfoCheck/Refund">Refund</a> (연동회원 포인트 환불신청)</li>
+            <li><a href="BizInfoCheck/PaymentRequest">PaymentRequest</a> (무통장 입금신청)</li>
+            <li><a href="BizInfoCheck/GetSettleResult">GetSettleResult</a> (연동회원 결제내역 정보확인)</li>
             <li><a href="BizInfoCheck/GetChargeURL">GetChargeURL</a> (연동회원 포인트충전 URL) </li>
             <li><a href="BizInfoCheck/GetPaymentURL">GetPaymentURL</a> (연동회원 결재내역 URL)</li>
             <li><a href="BizInfoCheck/GetUseHistoryURL">GetUseHistoryURL</a> (연동회원 사용내역 URL)</li>

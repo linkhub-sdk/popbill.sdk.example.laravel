@@ -669,8 +669,11 @@ class EasyFinBankController extends Controller
         // 정렬방향, A-오름차순, D-내림차순
         $Order = "D";
 
+        // 팝빌회원 아이디
+        $testUserID = 'testkorea';
+
         try	{
-            $result = $this->PopbillEasyFinBank->GetUseHistory($testCorpNum, $SDate, $EDate, $Page, $PerPage, $Order);
+            $result = $this->PopbillEasyFinBank->GetUseHistory($testCorpNum, $SDate, $EDate, $Page, $PerPage, $Order, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
@@ -701,8 +704,11 @@ class EasyFinBankController extends Controller
         // 페이지당 검색개수, 최대 1000건
         $PerPage = 30;
 
+        // 팝빌회원 아이디
+        $testUserID = 'testkorea';
+
         try	{
-            $result = $this->PopbillEasyFinBank->GetPaymentHistory($testCorpNum, $SDate, $EDate, $Page, $PerPage);
+            $result = $this->PopbillEasyFinBank->GetPaymentHistory($testCorpNum, $SDate, $EDate, $Page, $PerPage, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
@@ -727,8 +733,11 @@ class EasyFinBankController extends Controller
         // 페이지당 검색개수, 최대 1000건
         $PerPage = 30;
 
+        // 팝빌회원 아이디
+        $testUserID = 'testkorea';
+
         try	{
-            $result = $this->PopbillEasyFinBank->GetRefundHistory($testCorpNum, $Page, $PerPage);
+            $result = $this->PopbillEasyFinBank->GetRefundHistory($testCorpNum, $Page, $PerPage, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
@@ -815,8 +824,11 @@ class EasyFinBankController extends Controller
         // 결제금액
         $paymentForm->settleCost = '11000';
 
+        // 팝빌회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillEasyFinBank->PaymentRequest($testCorpNum, $paymentForm);
+            $result = $this->PopbillEasyFinBank->PaymentRequest($testCorpNum, $paymentForm, $testUserID);
             $code = $result->code;
             $message = $result->message;
             $settleCode = $result->settleCode;
@@ -841,8 +853,11 @@ class EasyFinBankController extends Controller
         // paymentRequest 를 통해 얻은 settleCode.
         $settleCode = '202210040000000070';
 
+        // 팝빌회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillEasyFinBank->GetSettleResult($testCorpNum, $settleCode);
+            $result = $this->PopbillEasyFinBank->GetSettleResult($testCorpNum, $settleCode, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();

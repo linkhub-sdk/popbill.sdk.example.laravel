@@ -46,6 +46,12 @@
         <legend>포인트 관리</legend>
         <ul>
             <li><a href="Fax/GetBalance">GetBalance</a> (연동회원 잔여포인트 확인)</li>
+            <li><a href="Fax/GetUseHistory">GetUseHistory</a> (연동회원 포인트 사용내역 확인)</li>
+            <li><a href="Fax/GetPaymentHistory">GetPaymentHistory</a> (연동회원 포인트 결제내역 확인)</li>
+            <li><a href="Fax/GetRefundHistory">GetRefundHistory</a> (연동회원 포인트 환불내역 확인)</li>
+            <li><a href="Fax/Refund">Refund</a> (연동회원 포인트 환불신청)</li>
+            <li><a href="Fax/PaymentRequest">PaymentRequest</a> (무통장 입금신청)</li>
+            <li><a href="Fax/GetSettleResult">GetSettleResult</a> (연동회원 결제내역 정보확인)</li>
             <li><a href="Fax/GetChargeURL">GetChargeURL</a> (연동회원 포인트충전 URL)</li>
             <li><a href="Fax/GetPaymentURL">GetPaymentURL</a> (연동회원 결재내역 URL)</li>
             <li><a href="Fax/GetUseHistoryURL">GetUseHistoryURL</a> (연동회원 사용내역 URL)</li>

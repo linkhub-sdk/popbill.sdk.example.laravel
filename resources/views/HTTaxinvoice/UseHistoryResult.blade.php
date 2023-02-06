@@ -19,15 +19,14 @@
                 </ul>
                 @foreach ($Result->list as $indexKey => $tradeInfo)
                 <fieldset class="fieldset2">
-                    <legend>환불신청 내역정보 [{{ $indexKey+1 }}]</legend>
+                    <legend>포인트 결제내역정보 [{{ $indexKey+1 }}]</legend>
                     <ul>
-                        <li>reqDT (신청일자) : {{ $tradeInfo->reqDT }}</li>
-                        <li>requestPoint (환불 신청포인트) : {{ $tradeInfo->requestPoint }}</li>
-                        <li>accountBank (환불계좌 은행명) : {{ $tradeInfo->accountBank }}</li>
-                        <li>accountNum (환불계좌번호) : {{ $tradeInfo->accountNum }}</li>
-                        <li>accountName (환불계좌 예금주명) : {{ $tradeInfo->accountName }}</li>
-                        <li>state (상태) : {{ $tradeInfo->state }}</li>
-                        <li>reason (환불사유) : {{ $tradeInfo->reason }}</li>
+                        <li>itemCode (서비스 코드) : {{ $tradeInfo->itemCode }}</li>
+                        <li>txType (포인트 증감 유형) : {{ $tradeInfo->txType }}</li>
+                        <li>balance (증감 포인트) : {{ $tradeInfo->balance }}</li>
+                        <li>txDT (포인트 증감 일시) : {{ $tradeInfo->txDT }}</li>
+                        <li>userID (담당자 아이디) : {{ $tradeInfo->userID }}</li>
+                        <li>userName (담당자명) : {{ $tradeInfo->userName }}</li>
                     </ul>
                 </fieldset>
                 @endforeach

@@ -156,8 +156,11 @@ class AccountCheckController extends Controller
         // 정렬방향, A-오름차순, D-내림차순
         $Order = "D";
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try	{
-            $result = $this->PopbillAccountCheck->GetUseHistory($testCorpNum, $SDate, $EDate, $Page, $PerPage, $Order);
+            $result = $this->PopbillAccountCheck->GetUseHistory($testCorpNum, $SDate, $EDate, $Page, $PerPage, $Order, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
@@ -188,8 +191,11 @@ class AccountCheckController extends Controller
         // 페이지당 검색개수, 최대 1000건
         $PerPage = 30;
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try	{
-            $result = $this->PopbillAccountCheck->GetPaymentHistory($testCorpNum, $SDate, $EDate, $Page, $PerPage);
+            $result = $this->PopbillAccountCheck->GetPaymentHistory($testCorpNum, $SDate, $EDate, $Page, $PerPage, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
@@ -214,8 +220,11 @@ class AccountCheckController extends Controller
         // 페이지당 검색개수, 최대 1000건
         $PerPage = 30;
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try	{
-            $result = $this->PopbillAccountCheck->GetRefundHistory($testCorpNum, $Page, $PerPage);
+            $result = $this->PopbillAccountCheck->GetRefundHistory($testCorpNum, $Page, $PerPage, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
@@ -302,8 +311,11 @@ class AccountCheckController extends Controller
         // 결제금액
         $paymentForm->settleCost = '11000';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillAccountCheck->PaymentRequest($testCorpNum, $paymentForm);
+            $result = $this->PopbillAccountCheck->PaymentRequest($testCorpNum, $paymentForm, $testUserID);
             $code = $result->code;
             $message = $result->message;
             $settleCode = $result->settleCode;
@@ -328,8 +340,11 @@ class AccountCheckController extends Controller
         // paymentRequest 를 통해 얻은 settleCode.
         $settleCode = '202210040000000070';
 
+        // 팝빌 회원 아이디
+        $testUserID = 'testkorea';
+
         try {
-            $result = $this->PopbillAccountCheck->GetSettleResult($testCorpNum, $settleCode);
+            $result = $this->PopbillAccountCheck->GetSettleResult($testCorpNum, $settleCode, $testUserID);
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
