@@ -20,12 +20,18 @@
         <legend>포인트 관리</legend>
         <ul>
             <li><a href="AccountCheck/GetBalance">GetBalance</a> (연동회원 잔여포인트 확인) </li>
+            <li><a href="AccountCheck/GetUseHistory">GetUseHistory</a> (연동회원 포인트 사용내역 확인) </li>
+            <li><a href="AccountCheck/GetPaymentHistory">GetPaymentHistory</a> (연동회원 포인트 결제내역 확인) </li>
+            <li><a href="AccountCheck/GetRefundHistory">GetRefundHistory</a> (연동회원 포인트 환불내역 확인) </li>
+            <li><a href="AccountCheck/Refund">Refund</a> (연동회원 포인트 환불신청) </li>
+            <li><a href="AccountCheck/PaymentRequest">PaymentRequest</a> (무통장 입금신청) </li>
+            <li><a href="AccountCheck/GetSettleResult">GetSettleResult</a> (연동회원 결제내역 정보확인) </li>
             <li><a href="AccountCheck/GetChargeURL">GetChargeURL</a> (연동회원 포인트충전 URL) </li>
             <li><a href="AccountCheck/GetPaymentURL">GetPaymentURL</a> (연동회원 결재내역 URL)</li>
             <li><a href="AccountCheck/GetUseHistoryURL">GetUseHistoryURL</a> (연동회원 사용내역 URL)</li>
             <li><a href="AccountCheck/GetPartnerBalance">GetPartnerBalance</a> (파트너 잔여포인트 확인) </li>
             <li><a href="AccountCheck/GetPartnerURL">GetPartnerURL</a> (파트너 포인트충전 URL) </li>
-            <li><a href="AccountCheck/GetUnitCost">GetUnitCost</a> (조회단가 확인) </li>
+            <li><a href="AccountCheck/GetUnitCost">GetUnitCost</a> (조회 단가 확인) </li>
             <li><a href="AccountCheck/GetChargeInfo">GetChargeInfo</a> (과금정보 확인) </li>
         </ul>
     </fieldset>
