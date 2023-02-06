@@ -11,7 +11,7 @@
             <fieldset class="fieldset1">
                 <legend>{{\Request::fullUrl()}}</legend>
                 <ul>
-                    <li>code (기관코드) : {{ $Result->code }}</li>
+                    <li>code (기관코드) : {{ $Result->code }}</li> 
                     <li>message (기관코드) : {{ $Result->message }}</li>
                     <li>settleCode (기관코드) : {{ $Result->settleCode }}</li>
                 </ul>

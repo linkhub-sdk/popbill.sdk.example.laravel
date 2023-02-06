@@ -11,6 +11,8 @@ use Linkhub\Popbill\ContactInfo;
 use Linkhub\Popbill\ChargeInfo;
 use Linkhub\Popbill\PopbillException;
 use Linkhub\Popbill\PopbillAccountCheck;
+use Linkhub\Popbill\RefundForm;
+use Linkhub\Popbill\PaymentForm;
 
 class AccountCheckController extends Controller
 {

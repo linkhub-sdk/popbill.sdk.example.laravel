@@ -12,7 +12,7 @@
                 <legend>{{\Request::fullUrl()}}</legend>
                 <ul>
                     <li>code (응답코드) : {{ $Result->code }} </li>
-                    <li>total (총 검색결과 건수) : {{ $Result->total }} </li>
+                    <li>total (총 검색결과 건수) : {{ $Result->total }} </li> 
                     <li>pageNum (페이지 번호) : {{ $Result->pageNum }} </li>
                     <li>perPage (페이지당 목록개수) : {{ $Result->perPage }} </li>
                     <li>pageCount (페이지 개수) : {{ $Result->pageCount }} </li>
