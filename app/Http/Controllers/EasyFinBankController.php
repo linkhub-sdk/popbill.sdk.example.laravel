@@ -377,10 +377,10 @@ class EasyFinBankController extends Controller
         $AccountNumber = '';
 
         // 시작일자, 형식(yyyyMMdd)
-        $SDate = '20220401';
+        $SDate = '20230101';
 
         // 종료일자, 형식(yyyyMMdd)
-        $EDate = '20220405';
+        $EDate = '20230131';
 
         // 팝빌회원 아이디
         $testUserID = 'testkorea';
@@ -627,7 +627,7 @@ class EasyFinBankController extends Controller
     /**
      * 연동회원의 잔여포인트를 확인합니다.
      * - 과금방식이 파트너과금인 경우 파트너 잔여포인트 확인(GetPartnerBalance API) 함수를 통해 확인하시기 바랍니다.
-     * - https://developers.popbill.com/reference/easyfinbank/php/api/point#GetFlatRateState
+     * - https://developers.popbill.com/reference/easyfinbank/php/api/point#GetBalance
      */
     public function GetBalance(){
 
@@ -655,10 +655,10 @@ class EasyFinBankController extends Controller
         $testCorpNum = "1234567890";
 
         // 시작일자, 날짜형식(yyyyMMdd)
-        $SDate = "20220901";
+        $SDate = "20230101";
 
         // 종료일자, 날짜형식(yyyyMMdd)
-        $EDate = "20220930";
+        $EDate = "20230131";
 
         // 페이지번호
         $Page = 1;
@@ -693,10 +693,10 @@ class EasyFinBankController extends Controller
         $testCorpNum = "1234567890";
 
         // 시작일자, 날짜형식(yyyyMMdd)
-        $SDate = "20220901";
+        $SDate = "20230101";
 
         // 종료일자, 날짜형식(yyyyMMdd)
-        $EDate = "20220930";
+        $EDate = "20230131";
 
         // 페이지번호
         $Page = 1;

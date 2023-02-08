@@ -142,10 +142,10 @@ class AccountCheckController extends Controller
         $testCorpNum = "1234567890";
 
         // 시작일자, 날짜형식(yyyyMMdd)
-        $SDate = "20220901";
+        $SDate = "20230101";
 
         // 종료일자, 날짜형식(yyyyMMdd)
-        $EDate = "20220930";
+        $EDate = "20230131";
 
         // 페이지번호
         $Page = 1;
@@ -180,10 +180,10 @@ class AccountCheckController extends Controller
         $testCorpNum = "1234567890";
 
         // 시작일자, 날짜형식(yyyyMMdd)
-        $SDate = "20220901";
+        $SDate = "20230101";
 
         // 종료일자, 날짜형식(yyyyMMdd)
-        $EDate = "20220930";
+        $EDate = "20230131";
 
         // 페이지번호
         $Page = 1;

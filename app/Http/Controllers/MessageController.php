@@ -570,7 +570,7 @@ class MessageController extends Controller
         $testCorpNum = '1234567890';
 
         // 예약문자전송 요청시 할당한 전송요청번호
-        $requestNum = '20221021_001';
+        $requestNum = '20230102_001';
 
         // 예약문자전송 요청시 입력한 수신번호
         $receiveNum = '01012341234';
@@ -653,10 +653,10 @@ class MessageController extends Controller
         $testCorpNum = '1234567890';
 
         // 시작일자
-        $SDate = '20220401';
+        $SDate = '20230101';
 
         // 종료일자
-        $EDate = '20220430';
+        $EDate = '20230131';
 
         // 전송상태 배열 ("1" , "2" , "3" , "4" 중 선택, 다중 선택 가능)
         // └ 1 = 대기 , 2 = 성공 , 3 = 실패 , 4 = 취소
@@ -803,10 +803,10 @@ class MessageController extends Controller
         $testCorpNum = "1234567890";
 
         // 시작일자, 날짜형식(yyyyMMdd)
-        $SDate = "20220901";
+        $SDate = "20230101";
 
         // 종료일자, 날짜형식(yyyyMMdd)
-        $EDate = "20220930";
+        $EDate = "20230131";
 
         // 페이지번호
         $Page = 1;
@@ -841,10 +841,10 @@ class MessageController extends Controller
         $testCorpNum = "1234567890";
 
         // 시작일자, 날짜형식(yyyyMMdd)
-        $SDate = "20220901";
+        $SDate = "20230101";
 
         // 종료일자, 날짜형식(yyyyMMdd)
-        $EDate = "20220930";
+        $EDate = "20230131";
 
         // 페이지번호
         $Page = 1;

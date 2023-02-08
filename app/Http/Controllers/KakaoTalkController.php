@@ -1352,10 +1352,10 @@ class KakaoTalkController extends Controller
         $testCorpNum = '1234567890';
 
         // 시작일자, 날짜형식(yyyyMMdd)
-        $SDate = '20220401';
+        $SDate = '20230101';
 
         // 종료일자, 날짜형식(yyyyMMdd)
-        $EDate = '20220430';
+        $EDate = '20230131';
 
         // 전송상태 배열 ("0" , "1" , "2" , "3" , "4" , "5" 중 선택, 다중 선택 가능)
         // └ 0 = 전송대기 , 1 = 전송중 , 2 = 전송성공 , 3 = 대체문자 전송 , 4 = 전송실패 , 5 = 전송취소
@@ -1459,10 +1459,10 @@ class KakaoTalkController extends Controller
         $testCorpNum = "1234567890";
 
         // 시작일자, 날짜형식(yyyyMMdd)
-        $SDate = "20220901";
+        $SDate = "20230101";
 
         // 종료일자, 날짜형식(yyyyMMdd)
-        $EDate = "20220930";
+        $EDate = "20230131";
 
         // 페이지번호
         $Page = 1;
@@ -1497,10 +1497,10 @@ class KakaoTalkController extends Controller
         $testCorpNum = "1234567890";
 
         // 시작일자, 날짜형식(yyyyMMdd)
-        $SDate = "20220901";
+        $SDate = "20230101";
 
         // 종료일자, 날짜형식(yyyyMMdd)
-        $EDate = "20220930";
+        $EDate = "20230131";
 
         // 페이지번호
         $Page = 1;

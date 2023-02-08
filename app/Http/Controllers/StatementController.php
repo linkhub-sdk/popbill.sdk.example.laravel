@@ -59,7 +59,7 @@ class StatementController extends Controller
         $itemCode = '121';
 
         // 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
-        $mgtKey = '20220405-PHP7-001';
+        $mgtKey = '20230102-PHP7-001';
 
         try {
             $result = $this->PopbillStatement->CheckMgtKeyInUse($testCorpNum ,$itemCode, $mgtKey);
@@ -88,7 +88,7 @@ class StatementController extends Controller
 
         // 전자명세서 문서번호
         // 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
-        $mgtKey = '20220405-PHP7-001';
+        $mgtKey = '20230102-PHP7-001';
 
         // 명세서 종류코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
         $itemCode = '121';
@@ -189,7 +189,7 @@ class StatementController extends Controller
         $Statement->detailList = array();
         $Statement->detailList[0] = new StatementDetail();
         $Statement->detailList[0]->serialNum = '1';     //품목 일련번호 1부터 순차 기재
-        $Statement->detailList[0]->purchaseDT = '20220405';   //거래일자 yyyyMMdd
+        $Statement->detailList[0]->purchaseDT = '20230102';   //거래일자 yyyyMMdd
         $Statement->detailList[0]->itemName = '품명';
         $Statement->detailList[0]->spec = '규격';
         $Statement->detailList[0]->unit = '단위';
@@ -206,7 +206,7 @@ class StatementController extends Controller
 
         $Statement->detailList[1] = new StatementDetail();
         $Statement->detailList[1]->serialNum = '2';     //품목 일련번호 순차기재
-        $Statement->detailList[1]->purchaseDT = '20220405';   //거래일자 yyyyMMdd
+        $Statement->detailList[1]->purchaseDT = '20230102';   //거래일자 yyyyMMdd
         $Statement->detailList[1]->itemName = '품명';
         $Statement->detailList[1]->spec = '규격';
         $Statement->detailList[1]->unit = '단위';
@@ -259,7 +259,7 @@ class StatementController extends Controller
         $testCorpNum = '1234567890';
 
         // 문서번호, 발행자별 고유번호 할당, 1~24자리 영문,숫자 조합으로 중복없이 구성
-        $mgtKey = '20220405-PHP7-002';
+        $mgtKey = '20230102-PHP7-003';
 
         // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
         $itemCode = '121';
@@ -356,7 +356,7 @@ class StatementController extends Controller
         $Statement->detailList = array();
         $Statement->detailList[0] = new StatementDetail();
         $Statement->detailList[0]->serialNum = '1';     //품목 일련번호 1부터 순차 기재
-        $Statement->detailList[0]->purchaseDT = '20220405';   //거래일자 yyyyMMdd
+        $Statement->detailList[0]->purchaseDT = '20230102';   //거래일자 yyyyMMdd
         $Statement->detailList[0]->itemName = '품명';
         $Statement->detailList[0]->spec = '규격';
         $Statement->detailList[0]->unit = '단위';
@@ -373,7 +373,7 @@ class StatementController extends Controller
 
         $Statement->detailList[1] = new StatementDetail();
         $Statement->detailList[1]->serialNum = '2';     //품목 일련번호 순차기재
-        $Statement->detailList[1]->purchaseDT = '20220405';   //거래일자 yyyyMMdd
+        $Statement->detailList[1]->purchaseDT = '20230102';   //거래일자 yyyyMMdd
         $Statement->detailList[1]->itemName = '품명';
         $Statement->detailList[1]->spec = '규격';
         $Statement->detailList[1]->unit = '단위';
@@ -424,7 +424,7 @@ class StatementController extends Controller
 
         // 전자명세서 문서번호
         // 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
-        $mgtKey = '20220405-PHP7-002';
+        $mgtKey = '20230102-PHP7-005';
 
         // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
         $itemCode = '121';
@@ -440,7 +440,7 @@ class StatementController extends Controller
          ************************************************************/
 
         // 기재상 작성일자
-        $Statement->writeDate = '20220405';
+        $Statement->writeDate = '20230102';
 
         // {영수, 청구, 없음} 중 기재
         $Statement->purposeType = '청구';
@@ -521,7 +521,7 @@ class StatementController extends Controller
         $Statement->detailList = array();
         $Statement->detailList[0] = new StatementDetail();
         $Statement->detailList[0]->serialNum = '1';     //품목 일련번호 1부터 순차 기재
-        $Statement->detailList[0]->purchaseDT = '20220405';   //거래일자 yyyyMMdd
+        $Statement->detailList[0]->purchaseDT = '20230102';   //거래일자 yyyyMMdd
         $Statement->detailList[0]->itemName = '품명';
         $Statement->detailList[0]->spec = '규격';
         $Statement->detailList[0]->unit = '단위';
@@ -538,7 +538,7 @@ class StatementController extends Controller
 
         $Statement->detailList[1] = new StatementDetail();
         $Statement->detailList[1]->serialNum = '2';     //품목 일련번호 순차기재
-        $Statement->detailList[1]->purchaseDT = '20220405';   //거래일자 yyyyMMdd
+        $Statement->detailList[1]->purchaseDT = '20230102';   //거래일자 yyyyMMdd
         $Statement->detailList[1]->itemName = '품명';
         $Statement->detailList[1]->spec = '규격';
         $Statement->detailList[1]->unit = '단위';
@@ -594,7 +594,7 @@ class StatementController extends Controller
         $itemCode = '121';
 
         // 전자명세서 문서번호
-        $MgtKey = '20220405-PHP7-002';
+        $MgtKey = '20230102-PHP7-002';
 
         // 메모
         $memo = '전자명세서 발행 메모';
@@ -633,7 +633,7 @@ class StatementController extends Controller
         $itemCode = '121';
 
         // 문서번호
-        $MgtKey = '20220405-PHP7-002';
+        $MgtKey = '20230102-PHP7-002';
 
         // 메모
         $memo = '전자명세서 발행취소 메모';
@@ -669,7 +669,7 @@ class StatementController extends Controller
         $itemCode = '121';
 
         // 문서번호
-        $MgtKey = '20220405-PHP7-002';
+        $MgtKey = '20230102-PHP7-002';
 
         // 팝빌 회원 아이디
         $testUserID = 'testkorea';
@@ -700,7 +700,7 @@ class StatementController extends Controller
         $itemCode = '121';
 
         // 문서번호
-        $mgtKey = '20220405-PHP7-001';
+        $mgtKey = '20230102-PHP7-001';
 
         // 팝빌 회원 아이디
         $testUserID = 'testkorea';
@@ -731,8 +731,8 @@ class StatementController extends Controller
 
         // 조회할 전자명세서 문서번호 배열, 최대 1000건
         $MgtKeyList = array(
-            '20220405-PHP7-001',
-            '20220405-PHP7-002'
+            '20230102-PHP7-001',
+            '20230102-PHP7-002'
         );
 
         // 팝빌 회원 아이디
@@ -763,7 +763,7 @@ class StatementController extends Controller
         $itemCode = '121';
 
         // 문서번호
-        $mgtKey = '20220405-PHP7-001';
+        $mgtKey = '20230102-PHP7-001';
 
         // 팝빌 회원 아이디
         $testUserID = 'testkorea';
@@ -794,10 +794,10 @@ class StatementController extends Controller
         $DType = 'W';
 
         // 시작일자
-        $SDate = '20220401';
+        $SDate = '20230101';
 
         // 종료일자
-        $EDate = '20220430';
+        $EDate = '20230131';
 
         // 전자명세서 상태코드 배열 (2,3번째 자리에 와일드카드(*) 사용 가능)
         // - 미입력시 전체조회
@@ -855,7 +855,7 @@ class StatementController extends Controller
         $itemCode = '121';
 
         // 문서번호
-        $mgtKey = '20220405-PHP7-001';
+        $mgtKey = '20230102-PHP7-001';
 
         try {
             $result = $this->PopbillStatement->GetLogs($testCorpNum, $itemCode, $mgtKey);
@@ -909,7 +909,7 @@ class StatementController extends Controller
         $itemCode = '121';
 
         // 전자명세서 문서번호
-        $mgtKey = '20220405-PHP7-001';
+        $mgtKey = '20230103-PHP7-001';
 
         // 팝빌 회원 아이디
         $testUserID = 'testkorea';
@@ -939,7 +939,7 @@ class StatementController extends Controller
         $itemCode = '121';
 
         // 전자명세서 문서번호
-        $mgtKey = '20220405-PHP7-001';
+        $mgtKey = '20230102-PHP7-001';
 
         // 팝빌 회원 아이디
         $testUserID = 'testkorea';
@@ -970,7 +970,7 @@ class StatementController extends Controller
         $itemCode = '121';
 
         // 전자명세서 문서번호
-        $mgtKey = '20220405-PHP7-001';
+        $mgtKey = '20230102-PHP7-001';
 
         // 팝빌 회원 아이디
         $testUserID = 'testkorea';
@@ -1001,7 +1001,7 @@ class StatementController extends Controller
         $itemCode = '121';
 
         // 문서번호
-        $mgtKey = '20220405-PHP7-001';
+        $mgtKey = '20230102-PHP7-001';
 
         // 팝빌 회원 아이디
         $testUserID = 'testkorea';
@@ -1033,8 +1033,8 @@ class StatementController extends Controller
 
         // 문서번호 배열, 최대 100건
         $mgtKeyList = array (
-            '20220405-PHP7-001',
-            '20220405-PHP7-002'
+            '20230102-PHP7-001',
+            '20230102-PHP7-002'
         );
 
         // 팝빌 회원 아이디
@@ -1065,7 +1065,7 @@ class StatementController extends Controller
         $itemCode = '121';
 
         // 전자명세서 문서번호
-        $mgtKey = '20220405-PHP7-001';
+        $mgtKey = '20230102-PHP7-001';
 
         // 팝빌 회원 아이디
         $testUserID = 'testkorea';
@@ -1142,7 +1142,7 @@ class StatementController extends Controller
         $itemCode= '121';
 
         // 문서번호
-        $mgtKey = '20220405-PHP7-002';
+        $mgtKey = '20230102-PHP7-002';
 
         // 첨부파일 경로, 해당 파일에 읽기 권한이 설정되어 있어야 합니다.
         $filePath = '/image.jpg';
@@ -1177,7 +1177,7 @@ class StatementController extends Controller
         $itemCode = '121';
 
         // 문서번호
-        $mgtKey = '20220405-PHP7-002';
+        $mgtKey = '20230102-PHP7-002';
 
         // 팝빌이 첨부파일 관리를 위해 할당하는 식별번호
         // 첨부파일 목록 확인(getFiles API) 함수의 리턴 값 중 attachedFile 필드값 기재.
@@ -1213,7 +1213,7 @@ class StatementController extends Controller
         $itemCode = '121';
 
         // 문서번호
-        $mgtKey = '20220405-PHP7-002';
+        $mgtKey = '20230102-PHP7-002';
 
         // 팝빌 회원 아이디
         $testUserID = 'testkorea';
@@ -1243,7 +1243,7 @@ class StatementController extends Controller
         $itemCode = '121';
 
         // 문서번호
-        $mgtKey = '20220405-PHP7-001';
+        $mgtKey = '20230102-PHP7-001';
 
         // 수신자 이메일주소
         $receiver = '';
@@ -1279,7 +1279,7 @@ class StatementController extends Controller
         $itemCode = '121';
 
         // 문서번호
-        $mgtKey = '20220405-PHP7-001';
+        $mgtKey = '20230102-PHP7-001';
 
         // 발신번호
         $sender = '';
@@ -1321,7 +1321,7 @@ class StatementController extends Controller
         $itemCode = '121';
 
         // 문서번호
-        $mgtKey = '20220405-PHP7-001';
+        $mgtKey = '20230102-PHP7-001';
 
         // 발신번호
         $sender = '';
@@ -1359,7 +1359,7 @@ class StatementController extends Controller
         $testCorpNum = '1234567890';
 
         // 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
-        $mgtKey = '20220405-PHP7-003';
+        $mgtKey = '20230102-PHP7-003';
 
         // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
         $itemCode = '121';
@@ -1380,7 +1380,7 @@ class StatementController extends Controller
          *                       전자명세서 정보
          ************************************************************/
         // 기재상 작성일자
-        $Statement->writeDate = '20220405';
+        $Statement->writeDate = '20230102';
 
         // {영수, 청구, 없음} 중 기재
         $Statement->purposeType = '영수';
@@ -1461,7 +1461,7 @@ class StatementController extends Controller
         $Statement->detailList = array();
         $Statement->detailList[0] = new StatementDetail();
         $Statement->detailList[0]->serialNum = '1';     //품목 일련번호 1부터 순차 기재
-        $Statement->detailList[0]->purchaseDT = '20220405';   //거래일자 yyyyMMdd
+        $Statement->detailList[0]->purchaseDT = '20230102';   //거래일자 yyyyMMdd
         $Statement->detailList[0]->itemName = '품명';
         $Statement->detailList[0]->spec = '규격';
         $Statement->detailList[0]->unit = '단위';
@@ -1478,7 +1478,7 @@ class StatementController extends Controller
 
         $Statement->detailList[1] = new StatementDetail();
         $Statement->detailList[1]->serialNum = '2';     //품목 일련번호 순차기재
-        $Statement->detailList[1]->purchaseDT = '20220405';   //거래일자 yyyyMMdd
+        $Statement->detailList[1]->purchaseDT = '20230102';   //거래일자 yyyyMMdd
         $Statement->detailList[1]->itemName = '품명';
         $Statement->detailList[1]->spec = '규격';
         $Statement->detailList[1]->unit = '단위';
@@ -1530,13 +1530,13 @@ class StatementController extends Controller
         $itemCode = '121';
 
         // 문서번호
-        $mgtKey = '20220405-PHP7-001';
+        $mgtKey = '20230102-PHP7-001';
 
         // 첨부할 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
         $subItemCode = '121';
 
         // 첨부할 명세서 문서번호
-        $subMgtKey = '20220405-PHP7-002';
+        $subMgtKey = '20230102-PHP7-002';
 
         // 팝빌 회원 아이디
         $testUserID = 'testkorea';
@@ -1567,13 +1567,13 @@ class StatementController extends Controller
         $itemCode = '121';
 
         // 문서번호
-        $mgtKey = '20220405-PHP7-001';
+        $mgtKey = '20230102-PHP7-001';
 
         // 첨부해제할 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
         $subItemCode = '121';
 
         // 첨부해제할 명세서 문서번호
-        $subMgtKey = '20220405-PHP7-002';
+        $subMgtKey = '20230102-PHP7-002';
 
         // 팝빌 회원 아이디
         $testUserID = 'testkorea';
@@ -1684,10 +1684,10 @@ class StatementController extends Controller
         $testCorpNum = "1234567890";
 
         // 시작일자, 날짜형식(yyyyMMdd)
-        $SDate = "20220901";
+        $SDate = "20230101";
 
         // 종료일자, 날짜형식(yyyyMMdd)
-        $EDate = "20220930";
+        $EDate = "20230131";
 
         // 페이지번호
         $Page = 1;
@@ -1722,10 +1722,10 @@ class StatementController extends Controller
         $testCorpNum = "1234567890";
 
         // 시작일자, 날짜형식(yyyyMMdd)
-        $SDate = "20220901";
+        $SDate = "20230101";
 
         // 종료일자, 날짜형식(yyyyMMdd)
-        $EDate = "20220930";
+        $EDate = "20230131";
 
         // 페이지번호
         $Page = 1;

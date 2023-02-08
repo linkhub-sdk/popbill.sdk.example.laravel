@@ -61,10 +61,10 @@ class HTTaxinvoiceController extends Controller
         $DType = 'S';
 
         // 시작일자, 형식(yyyyMMdd)
-        $SDate = '20220401';
+        $SDate = '20230101';
 
         // 종료일자, 형식(yyyyMMdd)
-        $EDate = '20220430';
+        $EDate = '20230131';
 
         // 팝빌회원 아이디
         $testUserID = 'testkorea';
@@ -651,10 +651,10 @@ class HTTaxinvoiceController extends Controller
         $testCorpNum = "1234567890";
 
         // 시작일자, 날짜형식(yyyyMMdd)
-        $SDate = "20220901";
+        $SDate = "20230101";
 
         // 종료일자, 날짜형식(yyyyMMdd)
-        $EDate = "20220930";
+        $EDate = "20230131";
 
         // 페이지번호
         $Page = 1;
@@ -689,10 +689,10 @@ class HTTaxinvoiceController extends Controller
         $testCorpNum = "1234567890";
 
         // 시작일자, 날짜형식(yyyyMMdd)
-        $SDate = "20220901";
+        $SDate = "20230101";
 
         // 종료일자, 날짜형식(yyyyMMdd)
-        $EDate = "20220930";
+        $EDate = "20230131";
 
         // 페이지번호
         $Page = 1;

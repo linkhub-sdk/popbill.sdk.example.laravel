@@ -85,7 +85,7 @@ class CashbillController extends Controller
         $testUserID = 'testkorea';
 
         // 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
-        $mgtKey = '20220405-PHP7-001';
+        $mgtKey = '20230102-PHP7-001';
 
         // 메모
         $memo = '현금영수증 즉시발행 메모';
@@ -201,7 +201,7 @@ class CashbillController extends Controller
 
         // 제출아이디, 대량 발행 접수를 구별하는 식별키
         // └ 최대 36자리 영문, 숫자, '-' 조합으로 구성
-        $submitID = "20221102-PHP7-BULK";
+        $submitID = "20230102-PHP7-BULK";
 
         // 최대 100건
         $cashbillList = array();
@@ -355,7 +355,7 @@ class CashbillController extends Controller
         $testCorpNum = '1234567890';
 
         // 문서번호
-        $mgtKey = '20220405-PHP7-001';
+        $mgtKey = '20230102-PHP7-001';
 
         // 팝빌회원 아이디
         $testUserID = 'testkorea';
@@ -384,13 +384,13 @@ class CashbillController extends Controller
         $testCorpNum = '1234567890';
 
         // 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
-        $mgtKey = '20221103-PHP7-012';
+        $mgtKey = '20230102-PHP7-012';
 
         // 원본현금영수증 승인번호, 문서정보 확인(GetInfo API)을 통해 확인가능.
         $orgConfirmNum = 'TB0000068';
 
         // 원본현금영수증 거래일자, 작성형식(yyyyMMdd) 문서정보 확인(GetInfo API)을 통해 확인가능.
-        $orgTradeDate = '20221102';
+        $orgTradeDate = '20230101';
 
         // 안내 문자 전송여부 , true / false 중 택 1
         // └ true = 전송 , false = 미전송
@@ -445,13 +445,13 @@ class CashbillController extends Controller
         $testUserID = 'testkorea';
 
         // 문서번호, 사업자별로 중복없이 1~24자리 영문, 숫자, '-', '_' 조합으로 구성
-        $mgtKey = '20221103-PHP7-012';
+        $mgtKey = '20230102-PHP7-012';
 
         // 원본현금영수증 승인번호, 문서정보 확인(GetInfo API) 함수를 통해 확인가능.
         $orgConfirmNum = 'TB0000068';
 
         // 원본현금영수증 거래일자, 문서정보 확인(GetInfo API) 함수를 통해 확인가능.
-        $orgTradeDate = '20221102';
+        $orgTradeDate = '20230101';
 
         // 안내 문자 전송여부 , true / false 중 택 1
         // └ true = 전송 , false = 미전송
@@ -526,7 +526,7 @@ class CashbillController extends Controller
         $testCorpNum = '1234567890';
 
         // 문서번호
-        $mgtKey = '20220405-PHP7-001';
+        $mgtKey = '20230102-PHP7-001';
 
         try {
             $result = $this->PopbillCashbill->GetInfo($testCorpNum, $mgtKey);
@@ -553,8 +553,8 @@ class CashbillController extends Controller
 
         // 문서번호 배열, 최대 1000건
         $MgtKeyList = array(
-            '20220405-PHP7-001',
-            '20220405-PHP7-002'
+            '20230102-PHP7-001',
+            '20230102-PHP7-002'
         );
 
         try {
@@ -577,7 +577,7 @@ class CashbillController extends Controller
         $testCorpNum = '1234567890';
 
         // 문서번호
-        $mgtKey = '20220405-PHP7-001';
+        $mgtKey = '20230102-PHP7-001';
 
         try {
             $result = $this->PopbillCashbill->GetDetailInfo($testCorpNum, $mgtKey);
@@ -605,10 +605,10 @@ class CashbillController extends Controller
         $DType = 'R';
 
         // 시작일자
-        $SDate = '20220401';
+        $SDate = '20230101';
 
         // 종료일자
-        $EDate = '20220430';
+        $EDate = '20230131';
 
         // 상태코드 배열 (2,3번째 자리에 와일드카드(*) 사용 가능)
         // - 미입력시 전체조회
@@ -720,7 +720,7 @@ class CashbillController extends Controller
         $testCorpNum = '1234567890';
 
         // 문서번호
-        $mgtKey = '20220405-PHP7-001';
+        $mgtKey = '20230102-PHP7-001';
 
         // 팝빌회원 아이디
         $testUserID = 'testkorea';
@@ -747,7 +747,7 @@ class CashbillController extends Controller
         $testCorpNum = '1234567890';
 
         // 문서번호
-        $mgtKey = '20220405-PHP7-001';
+        $mgtKey = '20230102-PHP7-001';
 
         // 팝빌회원 아이디
         $testUserID = 'testkorea';
@@ -774,7 +774,7 @@ class CashbillController extends Controller
         $testCorpNum = '1234567890';
 
         // 문서번호
-        $mgtKey = '20220405-PHP7-001';
+        $mgtKey = '20230102-PHP7-001';
 
         // 팝빌회원 아이디
         $testUserID = 'testkorea';
@@ -803,8 +803,8 @@ class CashbillController extends Controller
 
         // 문서번호 배열, 최대 100건
         $mgtKeyList = array (
-            '20220405-PHP7-001',
-            '20220405-PHP7-002'
+            '20230102-PHP7-001',
+            '20230102-PHP7-002'
         );
 
         // 팝빌회원 아이디
@@ -832,7 +832,7 @@ class CashbillController extends Controller
         $testCorpNum = '1234567890';
 
         // 문서번호
-        $mgtKey = '20220405-PHP7-001';
+        $mgtKey = '20230102-PHP7-001';
 
         // 팝빌회원 아이디
         $testUserID = 'testkorea';
@@ -883,7 +883,7 @@ class CashbillController extends Controller
         $testCorpNum = '1234567890';
 
         // 문서번호
-        $mgtKey = '20220405-PHP7-001';
+        $mgtKey = '20230102-PHP7-001';
 
         // 수신메일 주소
         $receiver = '';
@@ -916,7 +916,7 @@ class CashbillController extends Controller
         $testCorpNum = '1234567890';
 
         // 문서번호
-        $mgtKey = '20220405-PHP7-001';
+        $mgtKey = '20230102-PHP7-001';
 
         // 발신번호
         $sender = '';
@@ -954,7 +954,7 @@ class CashbillController extends Controller
         $testCorpNum = '1234567890';
 
         // 문서번호
-        $mgtKey = '20220405-PHP7-001';
+        $mgtKey = '20230102-PHP7-001';
 
         // 발신번호
         $sender = '';
@@ -990,7 +990,7 @@ class CashbillController extends Controller
         $itemKey = '022040514332500001';
 
         // 부여할 파트너 문서번호
-        $mgtKey = '20220405-PHP7-007';
+        $mgtKey = '20230102-PHP7-007';
 
         // 팝빌회원 아이디
         $testUserID = 'testkorea';
@@ -1100,10 +1100,10 @@ class CashbillController extends Controller
         $testCorpNum = "1234567890";
 
         // 시작일자, 날짜형식(yyyyMMdd)
-        $SDate = "20220901";
+        $SDate = "20230101";
 
         // 종료일자, 날짜형식(yyyyMMdd)
-        $EDate = "20220930";
+        $EDate = "20230131";
 
         // 페이지번호
         $Page = 1;
@@ -1138,10 +1138,10 @@ class CashbillController extends Controller
         $testCorpNum = "1234567890";
 
         // 시작일자, 날짜형식(yyyyMMdd)
-        $SDate = "20220901";
+        $SDate = "20230101";
 
         // 종료일자, 날짜형식(yyyyMMdd)
-        $EDate = "20220930";
+        $EDate = "20230131";
 
         // 페이지번호
         $Page = 1;
