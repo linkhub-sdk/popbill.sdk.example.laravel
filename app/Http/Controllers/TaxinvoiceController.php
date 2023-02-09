@@ -178,13 +178,13 @@ class TaxinvoiceController extends Controller
         $Taxinvoice->invoicerContactName = '공급자 담당자성명';
 
         // 공급자 담당자 메일주소
-        $Taxinvoice->invoicerEmail = '';
+        $Taxinvoice->invoicerEmail = 'test@test.com';
 
         // 공급자 담당자 연락처
-        $Taxinvoice->invoicerTEL = '';
+        $Taxinvoice->invoicerTEL = '070-7070-0707';
 
         // 공급자 휴대폰 번호
-        $Taxinvoice->invoicerHP = '';
+        $Taxinvoice->invoicerHP = '010-000-2222';
 
         // 발행 안내 문자 전송여부 (true / false 중 택 1)
         // └ true = 전송 , false = 미전송
@@ -232,13 +232,13 @@ class TaxinvoiceController extends Controller
         // 공급받는자 담당자 메일주소
         // 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
         // 실제 거래처의 메일주소가 기재되지 않도록 주의
-        $Taxinvoice->invoiceeEmail1 = '';
+        $Taxinvoice->invoiceeEmail1 = 'test@invoicee.com';
 
         // 공급받는자 담당자 연락처
-        $Taxinvoice->invoiceeTEL1 = '';
+        $Taxinvoice->invoiceeTEL1 = '070-111-222';
 
         // 공급받는자 담당자 휴대폰 번호
-        $Taxinvoice->invoiceeHP1 = '';
+        $Taxinvoice->invoiceeHP1 = '010-1111-2212';
 
         /************************************************************
          *                       세금계산서 기재정보
@@ -341,12 +341,12 @@ class TaxinvoiceController extends Controller
 
         $Taxinvoice->addContactList[] = new TaxinvoiceAddContact();
         $Taxinvoice->addContactList[0]->serialNum = 1;              // 일련번호 1부터 순차기재
-        $Taxinvoice->addContactList[0]->email = '';                 // 이메일주소
+        $Taxinvoice->addContactList[0]->email = 'test2@test.com';                 // 이메일주소
         $Taxinvoice->addContactList[0]->contactName = '팝빌담당자'; // 담당자명
 
         $Taxinvoice->addContactList[] = new TaxinvoiceAddContact();
         $Taxinvoice->addContactList[1]->serialNum = 2;              // 일련번호 1부터 순차기재
-        $Taxinvoice->addContactList[1]->email = '';                 // 이메일주소
+        $Taxinvoice->addContactList[1]->email = 'test2@test.com';                 // 이메일주소
         $Taxinvoice->addContactList[1]->contactName = '링크허브';   // 담당자명
 
         try {
