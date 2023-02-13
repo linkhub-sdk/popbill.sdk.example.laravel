@@ -80,16 +80,16 @@
     <fieldset class="fieldset1">
         <legend>포인트관리</legend>
         <ul>
-            <li><a href="KakaoTalk/GetUnitCost">GetUnitCost</a> (전송단가 확인)</li>
+            <li><a href="KakaoTalk/GetUnitCost">GetUnitCost</a> (전송 단가 확인)</li>
             <li><a href="KakaoTalk/GetChargeInfo">GetChargeInfo</a> (과금정보 확인)</li>
             <li><a href="KakaoTalk/GetBalance">GetBalance</a> (연동회원 잔여포인트 확인)</li>
             <li><a href="KakaoTalk/GetChargeURL">GetChargeURL</a> (연동회원 포인트 충전 팝업 URL)</li>
-            <li><a href="KakaoTalk/PaymentRequest">PaymentRequest</a> (무통장 입금신청)</li>
-            <li><a href="KakaoTalk/GetSettleResult">GetSettleResult</a> (연동회원 결제내역 정보확인)</li>
+            <li><a href="KakaoTalk/PaymentRequest">PaymentRequest</a> (연동회원 무통장 입금신청)</li>
+            <li><a href="KakaoTalk/GetSettleResult">GetSettleResult</a> (연동회원 무통장 입금신청 정보확인)</li>
             <li><a href="KakaoTalk/GetPaymentHistory">GetPaymentHistory</a> (연동회원 포인트 결제내역 확인)</li>
-            <li><a href="KakaoTalk/GetPaymentURL">GetPaymentURL</a> (연동회원 결재내역 URL)</li>
+            <li><a href="KakaoTalk/GetPaymentURL">GetPaymentURL</a> (연동회원 포인트 결제내역 팝업 URL)</li>
             <li><a href="KakaoTalk/GetUseHistory">GetUseHistory</a> (연동회원 포인트 사용내역 확인)</li>
-            <li><a href="KakaoTalk/GetUseHistoryURL">GetUseHistoryURL</a> (연동회원 사용내역 URL)</li>
+            <li><a href="KakaoTalk/GetUseHistoryURL">GetUseHistoryURL</a> (연동회원 포인트 사용내역 팝업 URL)</li>
             <li><a href="KakaoTalk/Refund">Refund</a> (연동회원 포인트 환불신청)</li>
             <li><a href="KakaoTalk/GetRefundHistory">GetRefundHistory</a> (연동회원 포인트 환불내역 확인)</li>
             <li><a href="KakaoTalk/GetPartnerBalance">GetPartnerBalance</a> (파트너 잔여포인트 확인)</li>
