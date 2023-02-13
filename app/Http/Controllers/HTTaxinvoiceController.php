@@ -46,7 +46,7 @@ class HTTaxinvoiceController extends Controller
 
     /**
      * 홈택스에 신고된 전자세금계산서 매입/매출 내역 수집을 팝빌에 요청합니다. (조회기간 단위 : 최대 3개월)
-     * - 주기적으로 자체 DB에 세금계산서 정보를 INSERT 하는 경우, 조회할 일자 유형(DType) 값을 "S"로 하는 것을 권장합니다.
+     * 주기적으로 자체 DB에 세금계산서 정보를 INSERT 하는 경우, 조회할 일자 유형(DType) 값을 "S"로 하는 것을 권장합니다.
      * - https://developers.popbill.com/reference/httaxinvoice/php/api/job#RequestJob
      */
     public function RequestJob(){
@@ -117,7 +117,7 @@ class HTTaxinvoiceController extends Controller
 
     /**
      * 전자세금계산서 매입/매출 내역 수집요청에 대한 상태 목록을 확인합니다.
-     * - 수집 요청 후 1시간이 경과한 수집 요청건은 상태정보가 반환되지 않습니다.
+     * 수집 요청 후 1시간이 경과한 수집 요청건은 상태정보가 반환되지 않습니다.
      * - https://developers.popbill.com/reference/httaxinvoice/php/api/job#ListActiveJob
      */
     public function ListActiveJob(){
@@ -223,7 +223,7 @@ class HTTaxinvoiceController extends Controller
 
     /**
      * 수집 상태 확인(GetJobState API) 함수를 통해 상태 정보가 확인된 작업아이디를 활용하여 수집된 전자세금계산서 매입/매출 내역의 요약 정보를 조회합니다.
-         * - 요약 정보 : 전자세금계산서 수집 건수, 공급가액 합계, 세액 합계, 합계 금액
+     * 요약 정보 : 전자세금계산서 수집 건수, 공급가액 합계, 세액 합계, 합계 금액
      * - https://developers.popbill.com/reference/httaxinvoice/php/api/search#Summary
      */
     public function Summary(){
@@ -347,7 +347,7 @@ class HTTaxinvoiceController extends Controller
 
     /**
      * 수집된 전자세금계산서 1건의 상세내역을 확인하는 페이지의 팝업 URL을 반환합니다.
-     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/httaxinvoice/php/api/search#GetPopUpURL
      */
     public function GetPopUpURL(){
@@ -374,7 +374,7 @@ class HTTaxinvoiceController extends Controller
 
     /**
      * 수집된 전자세금계산서 1건의 상세내역을 인쇄하는 페이지의 URL을 반환합니다.
-     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/httaxinvoice/php/api/search#GetPrintURL
      */
     public function GetPrintURL(){
@@ -401,7 +401,7 @@ class HTTaxinvoiceController extends Controller
 
     /**
      * 홈택스연동 인증정보를 관리하는 페이지의 팝업 URL을 반환합니다.
-     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/httaxinvoice/php/api/cert#GetCertificatePopUpURL
      */
     public function GetCertificatePopUpURL(){
@@ -575,7 +575,7 @@ class HTTaxinvoiceController extends Controller
 
     /**
      * 홈택스연동 정액제 서비스 신청 페이지의 팝업 URL을 반환합니다.
-     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/httaxinvoice/php/api/point#GetFlatRatePopUpURL
      */
     public function GetFlatRatePopUpURL(){
@@ -622,7 +622,7 @@ class HTTaxinvoiceController extends Controller
 
     /**
      * 연동회원의 잔여포인트를 확인합니다.
-     * - 과금방식이 파트너과금인 경우 파트너 잔여포인트 확인(GetPartnerBalance API) 함수를 통해 확인하시기 바랍니다.
+     * 과금방식이 파트너과금인 경우 파트너 잔여포인트 확인(GetPartnerBalance API) 함수를 통해 확인하시기 바랍니다.
      * - https://developers.popbill.com/reference/httaxinvoice/php/api/point#GetBalance
      */
     public function GetBalance(){
@@ -643,7 +643,7 @@ class HTTaxinvoiceController extends Controller
 
     /**
      * 연동회원의 포인트 사용내역을 확인합니다.
-     * https://developers.popbill.com/reference/httaxinvoice/php/api/point#GetUseHistory
+     * - https://developers.popbill.com/reference/httaxinvoice/php/api/point#GetUseHistory
      */
     public function GetUseHistory(){
 
@@ -680,8 +680,8 @@ class HTTaxinvoiceController extends Controller
     }
 
     /**
-     * 포인트 결제내역을 확인합니다.
-     * https://developers.popbill.com/reference/httaxinvoice/php/api/point#GetPaymentHistory
+     * 연동회원의 포인트 결제내역을 확인합니다.
+     * - https://developers.popbill.com/reference/httaxinvoice/php/api/point#GetPaymentHistory
      */
     public function GetPaymentHistory(){
 
@@ -715,8 +715,8 @@ class HTTaxinvoiceController extends Controller
     }
 
     /**
-     * 환불 신청내역을 확인합니다.
-     * https://developers.popbill.com/reference/httaxinvoice/php/api/point#GetRefundHistory
+     * 연동회원의 포인트 환불신청내역을 확인합니다.
+     * - https://developers.popbill.com/reference/httaxinvoice/php/api/point#GetRefundHistory
      */
     public function GetRefundHistory(){
 
@@ -744,8 +744,8 @@ class HTTaxinvoiceController extends Controller
     }
 
     /**
-     * 환불을 신청합니다.
-     * https://developers.popbill.com/reference/httaxinvoice/php/api/point#Refund
+     * 연동회원 포인트를 환불 신청합니다.
+     * - https://developers.popbill.com/reference/httaxinvoice/php/api/point#Refund
      */
     public function Refund(){
 
@@ -791,8 +791,8 @@ class HTTaxinvoiceController extends Controller
     }
 
     /**
-     * 무통장 입금을 신청합니다.
-     * https://developers.popbill.com/reference/httaxinvoice/php/api/point#PaymentRequest
+     * 연동회원 포인트 충전을 위해 무통장입금을 신청합니다.
+     * - https://developers.popbill.com/reference/httaxinvoice/php/api/point#PaymentRequest
      */
     public function PaymentRequest(){
 
@@ -838,8 +838,8 @@ class HTTaxinvoiceController extends Controller
     }
 
     /**
-     * 무통장 입금신청한 건의 정보를 확인합니다.
-     * https://developers.popbill.com/reference/httaxinvoice/php/api/point#GetSettleResult
+     * 연동회원 포인트 무통장 입금신청내역 1건을 확인합니다.
+     * - https://developers.popbill.com/reference/httaxinvoice/php/api/point#GetSettleResult
      */
     public function GetSettleResult(){
 
@@ -865,7 +865,7 @@ class HTTaxinvoiceController extends Controller
 
     /**
      * 연동회원 포인트 충전을 위한 페이지의 팝업 URL을 반환합니다.
-     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/httaxinvoice/php/api/point#GetChargeURL
      */
     public function GetChargeURL(){
@@ -888,7 +888,7 @@ class HTTaxinvoiceController extends Controller
 
     /**
      * 연동회원 포인트 결제내역 확인을 위한 페이지의 팝업 URL을 반환합니다.
-     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/httaxinvoice/php/api/point#GetPaymentURL
      */
     public function GetPaymentURL(){
@@ -908,12 +908,11 @@ class HTTaxinvoiceController extends Controller
         }
 
         return view('ReturnValue', ['filedName' => "연동회원 포인트 결제내역 팝업 URL" , 'value' => $url]);
-
     }
 
     /**
      * 연동회원 포인트 사용내역 확인을 위한 페이지의 팝업 URL을 반환합니다.
-     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/httaxinvoice/php/api/point#GetUseHistoryURL
      */
     public function GetUseHistoryURL(){
@@ -938,7 +937,7 @@ class HTTaxinvoiceController extends Controller
 
     /**
      * 파트너의 잔여포인트를 확인합니다.
-     * - 과금방식이 연동과금인 경우 연동회원 잔여포인트 확인(GetBalance API) 함수를 이용하시기 바랍니다.
+     * 과금방식이 연동과금인 경우 연동회원 잔여포인트 확인(GetBalance API) 함수를 이용하시기 바랍니다.
      * - https://developers.popbill.com/reference/httaxinvoice/php/api/point#GetPartnerBalance
      */
     public function GetPartnerBalance(){
@@ -959,7 +958,7 @@ class HTTaxinvoiceController extends Controller
 
     /**
      * 파트너 포인트 충전을 위한 페이지의 팝업 URL을 반환합니다.
-     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/httaxinvoice/php/api/point#GetPartnerURL
      */
     public function GetPartnerURL(){
@@ -1005,7 +1004,7 @@ class HTTaxinvoiceController extends Controller
     }
 
     /**
-     *  사업자번호를 조회하여 연동회원 가입여부를 확인합니다.
+     * 사업자번호를 조회하여 연동회원 가입여부를 확인합니다.
      * - https://developers.popbill.com/reference/httaxinvoice/php/api/member#CheckIsMember
      */
     public function CheckIsMember(){
@@ -1110,7 +1109,7 @@ class HTTaxinvoiceController extends Controller
 
     /**
      * 팝빌 사이트에 로그인 상태로 접근할 수 있는 페이지의 팝업 URL을 반환합니다.
-     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/httaxinvoice/php/api/member#GetAccessURL
      */
     public function GetAccessURL(){

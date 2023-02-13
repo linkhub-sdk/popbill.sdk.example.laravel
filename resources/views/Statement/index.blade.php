@@ -65,20 +65,20 @@
   <fieldset class="fieldset1">
       <legend>포인트관리</legend>
       <ul>
-          <li><a href="Statement/GetBalance">GetBalance</a> (연동회원 잔여포인트 확인)</li>
-          <li><a href="Statement/GetUseHistory">GetUseHistory</a> (연동회원 포인트 사용내역 확인)</li>
-          <li><a href="Statement/GetPaymentHistory">GetPaymentHistory</a> (연동회원 포인트 결제내역 확인)</li>
-          <li><a href="Statement/GetRefundHistory">GetRefundHistory</a> (연동회원 포인트 환불내역 확인)</li>
-          <li><a href="Statement/Refund">Refund</a> (연동회원 포인트 환불신청)</li>
-          <li><a href="Statement/PaymentRequest">PaymentRequest</a> (무통장 입금신청)</li>
-          <li><a href="Statement/GetSettleResult">GetSettleResult</a> (연동회원 결제내역 정보확인)</li>
-          <li><a href="Statement/GetChargeURL">GetChargeURL</a> (연동회원 포인트충전 URL)</li>
-          <li><a href="Statement/GetPaymentURL">GetPaymentURL</a> (연동회원 결재내역 URL)</li>
-          <li><a href="Statement/GetUseHistoryURL">GetUseHistoryURL</a> (연동회원 사용내역 URL)</li>
-          <li><a href="Statement/GetPartnerBalance">GetPartnerBalance</a> (파트너 잔여포인트 확인)</li>
-          <li><a href="Statement/GetPartnerURL">GetPartnerURL</a> (파트너 포인트충전 URL)</li>
           <li><a href="Statement/GetUnitCost">GetUnitCost</a> (발행 단가 확인)</li>
           <li><a href="Statement/GetChargeInfo">GetChargeInfo</a> (과금정보 확인)</li>
+          <li><a href="Statement/GetBalance">GetBalance</a> (연동회원 잔여포인트 확인)</li>
+          <li><a href="Statement/GetChargeURL">GetChargeURL</a> (연동회원 포인트 충전 팝업 URL)</li>
+          <li><a href="Statement/PaymentRequest">PaymentRequest</a> (연동회원 무통장 입금신청)</li>
+          <li><a href="Statement/GetSettleResult">GetSettleResult</a> (연동회원 무통장 입금신청 정보확인)</li>
+          <li><a href="Statement/GetPaymentHistory">GetPaymentHistory</a> (연동회원 포인트 결제내역 확인)</li>
+          <li><a href="Statement/GetPaymentURL">GetPaymentURL</a> (연동회원 포인트 결제내역 팝업 URL)</li>
+          <li><a href="Statement/GetUseHistory">GetUseHistory</a> (연동회원 포인트 사용내역 확인)</li>
+          <li><a href="Statement/GetUseHistoryURL">GetUseHistoryURL</a> (연동회원 포인트 사용내역 팝업 URL)</li>
+          <li><a href="Statement/Refund">Refund</a> (연동회원 포인트 환불신청)</li>
+          <li><a href="Statement/GetRefundHistory">GetRefundHistory</a> (연동회원 포인트 환불내역 확인)</li>
+          <li><a href="Statement/GetPartnerBalance">GetPartnerBalance</a> (파트너 잔여포인트 확인)</li>
+          <li><a href="Statement/GetPartnerURL">GetPartnerURL</a> (파트너 포인트충전 URL)</li>
       </ul>
   </fieldset>
   <fieldset class="fieldset1">

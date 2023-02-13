@@ -49,7 +49,7 @@ class TaxinvoiceController extends Controller
 
     /**
      * 파트너가 세금계산서 관리 목적으로 할당하는 문서번호의 사용여부를 확인합니다.
-     * - 이미 사용 중인 문서번호는 중복 사용이 불가하고, 세금계산서가 삭제된 경우에만 문서번호의 재사용이 가능합니다.
+     * 이미 사용 중인 문서번호는 중복 사용이 불가하고, 세금계산서가 삭제된 경우에만 문서번호의 재사용이 가능합니다.
      * - https://developers.popbill.com/reference/taxinvoice/php/api/info#CheckMgtKeyInUse
      */
     public function CheckMgtKeyInUse(){
@@ -75,7 +75,6 @@ class TaxinvoiceController extends Controller
 
         return view('ReturnValue', ['filedName' => "문서번호 사용여부 =>".$mgtKey."", 'value' => $result]);
     }
-
 
     /**
      * 작성된 세금계산서 데이터를 팝빌에 저장과 동시에 발행(전자서명)하여 "발행완료" 상태로 처리합니다.
@@ -1260,7 +1259,7 @@ class TaxinvoiceController extends Controller
 
     /**
      * 국세청 전송 이전 "발행완료" 상태의 전자세금계산서를 "발행취소"하고 국세청 신고대상에서 제외합니다.
-     * - Delete(삭제)함수를 호출하여 "발행취소" 상태의 전자세금계산서를 삭제하면, 문서번호 재사용이 가능합니다.
+     * Delete(삭제)함수를 호출하여 "발행취소" 상태의 전자세금계산서를 삭제하면, 문서번호 재사용이 가능합니다.
      * - https://developers.popbill.com/reference/taxinvoice/php/api/issue#CancelIssue
      */
     public function CancelIssue(){

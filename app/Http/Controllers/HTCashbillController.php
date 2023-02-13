@@ -46,7 +46,7 @@ class HTCashbillController extends Controller
 
     /*
      * 홈택스에 신고된 현금영수증 매입/매출 내역 수집을 팝빌에 요청합니다. (조회기간 단위 : 최대 3개월)
-     * - 수집 요청후 반환받은 작업아이디(JobID)의 유효시간은 1시간 입니다.
+     * 수집 요청후 반환받은 작업아이디(JobID)의 유효시간은 1시간 입니다.
      * - https://developers.popbill.com/reference/htcashbill/php/api/job#RequestJob
      */
     public function RequestJob(){
@@ -112,7 +112,7 @@ class HTCashbillController extends Controller
 
     /*
      * 현금영수증 매입/매출 내역 수집요청에 대한 상태 목록을 확인합니다.
-     * - 수집 요청 후 1시간이 경과한 수집 요청건은 상태정보가 반환되지 않습니다.
+     * 수집 요청 후 1시간이 경과한 수집 요청건은 상태정보가 반환되지 않습니다.
      * - https://developers.popbill.com/reference/htcashbill/php/api/job#ListActiveJob
      */
     public function ListActiveJob(){
@@ -186,7 +186,7 @@ class HTCashbillController extends Controller
 
     /**
      * 수집 상태 확인(GetJobState API) 함수를 통해 상태 정보가 확인된 작업아이디를 활용하여 수집된 현금영수증 매입/매출 내역의 요약 정보를 조회합니다.
-     * - 요약 정보 : 현금영수증 수집 건수, 공급가액 합계, 세액 합계, 봉사료 합계, 합계 금액
+     * 요약 정보 : 현금영수증 수집 건수, 공급가액 합계, 세액 합계, 봉사료 합계, 합계 금액
      * - https://developers.popbill.com/reference/htcashbill/php/api/search#Summary
      */
     public function Summary(){
@@ -229,7 +229,7 @@ class HTCashbillController extends Controller
 
     /**
      * 홈택스연동 인증정보를 관리하는 페이지의 팝업 URL을 반환합니다.
-     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/htcashbill/php/api/cert#GetCertificatePopUpURL
      */
     public function GetCertificatePopUpURL(){
@@ -401,10 +401,9 @@ class HTCashbillController extends Controller
         return view('PResponse', ['code' => $code, 'message' => $message]);
     }
 
-
     /**
      * 홈택스연동 정액제 서비스 신청 페이지의 팝업 URL을 반환합니다.
-     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/htcashbill/php/api/point#GetFlatRatePopUpURL
      */
     public function GetFlatRatePopUpURL(){
@@ -451,7 +450,7 @@ class HTCashbillController extends Controller
 
     /**
      * 연동회원의 잔여포인트를 확인합니다.
-     * - 과금방식이 파트너과금인 경우 파트너 잔여포인트 확인(GetPartnerBalance API) 함수를 통해 확인하시기 바랍니다.
+     * 과금방식이 파트너과금인 경우 파트너 잔여포인트 확인(GetPartnerBalance API) 함수를 통해 확인하시기 바랍니다.
      * - https://developers.popbill.com/reference/htcashbill/php/api/point#GetBalance
      */
     public function GetBalance(){
@@ -472,7 +471,7 @@ class HTCashbillController extends Controller
 
     /**
      * 연동회원의 포인트 사용내역을 확인합니다.
-     * https://developers.popbill.com/reference/htcashbill/php/api/point#GetUseHistory
+     * - https://developers.popbill.com/reference/htcashbill/php/api/point#GetUseHistory
      */
     public function GetUseHistory(){
 
@@ -509,8 +508,8 @@ class HTCashbillController extends Controller
     }
 
     /**
-     * 포인트 결제내역을 확인합니다.
-     * https://developers.popbill.com/reference/htcashbill/php/api/point#GetPaymentHistory
+     * 연동회원의 포인트 결제내역을 확인합니다.
+     * - https://developers.popbill.com/reference/htcashbill/php/api/point#GetPaymentHistory
      */
     public function GetPaymentHistory(){
 
@@ -544,8 +543,8 @@ class HTCashbillController extends Controller
     }
 
     /**
-     * 환불 신청내역을 확인합니다.
-     * https://developers.popbill.com/reference/htcashbill/php/api/point#GetRefundHistory
+     * 연동회원의 포인트 환불신청내역을 확인합니다.
+     * - https://developers.popbill.com/reference/htcashbill/php/api/point#GetRefundHistory
      */
     public function GetRefundHistory(){
 
@@ -573,8 +572,8 @@ class HTCashbillController extends Controller
     }
 
     /**
-     * 환불을 신청합니다.
-     * https://developers.popbill.com/reference/htcashbill/php/api/point#Refund
+     * 연동회원 포인트를 환불 신청합니다.
+     * - https://developers.popbill.com/reference/htcashbill/php/api/point#Refund
      */
     public function Refund(){
 
@@ -620,8 +619,8 @@ class HTCashbillController extends Controller
     }
 
     /**
-     * 무통장 입금을 신청합니다.
-     * https://developers.popbill.com/reference/htcashbill/php/api/point#PaymentRequest
+     * 연동회원 포인트 충전을 위해 무통장입금을 신청합니다.
+     * - https://developers.popbill.com/reference/htcashbill/php/api/point#PaymentRequest
      */
     public function PaymentRequest(){
 
@@ -667,8 +666,8 @@ class HTCashbillController extends Controller
     }
 
     /**
-     * 무통장 입금신청한 건의 정보를 확인합니다.
-     * https://developers.popbill.com/reference/htcashbill/php/api/point#GetSettleResult
+     * 연동회원 포인트 무통장 입금신청내역 1건을 확인합니다.
+     * - https://developers.popbill.com/reference/htcashbill/php/api/point#GetSettleResult
      */
     public function GetSettleResult(){
 
@@ -694,7 +693,7 @@ class HTCashbillController extends Controller
 
     /**
      * 연동회원 포인트 충전을 위한 페이지의 팝업 URL을 반환합니다.
-     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/htcashbill/php/api/point#GetChargeURL
      */
     public function GetChargeURL(){
@@ -717,7 +716,7 @@ class HTCashbillController extends Controller
 
     /**
      * 연동회원 포인트 결제내역 확인을 위한 페이지의 팝업 URL을 반환합니다.
-     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/htcashbill/php/api/point#GetPaymentURL
      */
     public function GetPaymentURL(){
@@ -742,7 +741,7 @@ class HTCashbillController extends Controller
 
     /**
      * 연동회원 포인트 사용내역 확인을 위한 페이지의 팝업 URL을 반환합니다.
-     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/htcashbill/php/api/point#GetUseHistoryURL
      */
     public function GetUseHistoryURL(){
@@ -767,7 +766,7 @@ class HTCashbillController extends Controller
 
     /**
      * 파트너의 잔여포인트를 확인합니다.
-     * - 과금방식이 연동과금인 경우 연동회원 잔여포인트 확인(GetBalance API) 함수를 이용하시기 바랍니다.
+     * 과금방식이 연동과금인 경우 연동회원 잔여포인트 확인(GetBalance API) 함수를 이용하시기 바랍니다.
      * - https://developers.popbill.com/reference/htcashbill/php/api/point#GetPartnerBalance
      */
     public function GetPartnerBalance(){
@@ -788,7 +787,7 @@ class HTCashbillController extends Controller
 
     /**
      * 파트너 포인트 충전을 위한 페이지의 팝업 URL을 반환합니다.
-     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/htcashbill/php/api/point#GetPartnerURL
      */
     public function GetPartnerURL(){
@@ -834,7 +833,7 @@ class HTCashbillController extends Controller
     }
 
     /**
-     *  사업자번호를 조회하여 연동회원 가입여부를 확인합니다.
+     * 사업자번호를 조회하여 연동회원 가입여부를 확인합니다.
      * - https://developers.popbill.com/reference/htcashbill/php/api/member#CheckIsMember
      */
     public function CheckIsMember(){
@@ -939,7 +938,7 @@ class HTCashbillController extends Controller
 
     /**
      * 팝빌 사이트에 로그인 상태로 접근할 수 있는 페이지의 팝업 URL을 반환합니다.
-     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/htcashbill/php/api/member#GetAccessURL
      */
     public function GetAccessURL(){

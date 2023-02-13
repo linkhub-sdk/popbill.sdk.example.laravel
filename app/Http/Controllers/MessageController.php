@@ -46,7 +46,7 @@ class MessageController extends Controller
 
     /**
      * 문자 발신번호 등록여부를 확인합니다.
-    * - 발신번호 상태가 '승인'인 경우에만 code가 1로 반환됩니다.
+     * 발신번호 상태가 '승인'인 경우에만 code가 1로 반환됩니다.
      * - https://developers.popbill.com/reference/sms/php/api/sendnum#CheckSenderNumber
      */
     public function CheckSenderNumber(){
@@ -73,7 +73,7 @@ class MessageController extends Controller
 
     /**
      * 발신번호를 등록하고 내역을 확인하는 문자 발신번호 관리 페이지 팝업 URL을 반환합니다.
-     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/sms/php/api/sendnum#GetSenderNumberMgtURL
      */
     public function GetSenderNumberMgtURL(){
@@ -160,7 +160,7 @@ class MessageController extends Controller
 
     /**
      * 최대 90byte의 단문(SMS) 메시지 다수건 전송을 팝빌에 접수합니다. (최대 1,000건)
-     * - 모든 수신자에게 동일한 내용을 전송하거나(동보전송), 수신자마다 개별 내용을 전송할 수 있습니다(대량전송).
+     * 모든 수신자에게 동일한 내용을 전송하거나(동보전송), 수신자마다 개별 내용을 전송할 수 있습니다(대량전송).
      * - https://developers.popbill.com/reference/sms/php/api/send#SendSMS
      */
     public function SendSMS_Multi(){
@@ -250,7 +250,7 @@ class MessageController extends Controller
 
     /**
     * 최대 2,000byte의 장문(LMS) 메시지 다수건 전송을 팝빌에 접수합니다. (최대 1,000건)
-    * - 모든 수신자에게 동일한 내용을 전송하거나(동보전송), 수신자마다 개별 내용을 전송할 수 있습니다(대량전송).
+    * 모든 수신자에게 동일한 내용을 전송하거나(동보전송), 수신자마다 개별 내용을 전송할 수 있습니다(대량전송).
     * - https://developers.popbill.com/reference/sms/php/api/send#SendLMS
     */
     public function SendLMS_Multi(){
@@ -296,7 +296,7 @@ class MessageController extends Controller
 
     /**
      * 최대 2,000byte의 메시지와 이미지로 구성된 포토문자(MMS) 1건 전송을 팝빌에 접수합니다.
-     * - 이미지 파일 포맷/규격 : 최대 300Kbyte(JPEG, JPG), 가로/세로 1,000px 이하 권장
+     * 이미지 파일 포맷/규격 : 최대 300Kbyte(JPEG, JPG), 가로/세로 1,000px 이하 권장
      * - https://developers.popbill.com/reference/sms/php/api/send#SendMMS
      */
     public function SendMMS(){
@@ -342,8 +342,8 @@ class MessageController extends Controller
 
     /**
     * 최대 2,000byte의 메시지와 이미지로 구성된 포토문자(MMS) 다수건 전송을 팝빌에 접수합니다. (최대 1,000건)
-    *  - 모든 수신자에게 동일한 내용을 전송하거나(동보전송), 수신자마다 개별 내용을 전송할 수 있습니다(대량전송).
-    *  - 이미지 파일 포맷/규격 : 최대 300Kbyte(JPEG), 가로/세로 1,000px 이하 권장
+    * 모든 수신자에게 동일한 내용을 전송하거나(동보전송), 수신자마다 개별 내용을 전송할 수 있습니다(대량전송).
+    * 이미지 파일 포맷/규격 : 최대 300Kbyte(JPEG), 가로/세로 1,000px 이하 권장
     *  - https://developers.popbill.com/reference/sms/php/api/send#SendMMS
     */
     public function SendMMS_Multi(){
@@ -434,7 +434,7 @@ class MessageController extends Controller
 
     /**
      * 메시지 길이(90byte)에 따라 단문/장문(SMS/LMS)을 자동으로 인식하여 다수건의 메시지 전송을 팝빌에 접수합니다. (최대 1,000건)
-     *  - https://developers.popbill.com/reference/sms/php/api/send#SendXMS
+     * - https://developers.popbill.com/reference/sms/php/api/send#SendXMS
      */
     public function SendXMS_Multi(){
 
@@ -548,7 +548,6 @@ class MessageController extends Controller
         // 팝빌 회원 아이디
         $testUserID = 'testkorea';
         
-
         try {
             $result = $this->PopbillMessaging->CancelReservebyRCV($testCorpNum ,$ReceiptNum, $receiveNum, $testUserID);
             $code = $result->code;
@@ -644,7 +643,7 @@ class MessageController extends Controller
 
     /**
      * 검색조건에 해당하는 문자 전송내역을 조회합니다. (조회기간 단위 : 최대 2개월)
-     * - 문자 접수일시로부터 6개월 이내 접수건만 조회할 수 있습니다.
+     * 문자 접수일시로부터 6개월 이내 접수건만 조회할 수 있습니다.
      * - https://developers.popbill.com/reference/sms/php/api/info#Search
      */
     public function Search(){
@@ -709,7 +708,7 @@ class MessageController extends Controller
 
     /**
      * 문자 전송내역 확인 페이지의 팝업 URL을 반환합니다.
-     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/sms/php/api/info#GetSentListURL
      */
     public function GetSentListURL(){
@@ -773,7 +772,7 @@ class MessageController extends Controller
 
     /**
      * 연동회원의 잔여포인트를 확인합니다.
-     * - 과금방식이 파트너과금인 경우 파트너 잔여포인트 확인(GetPartnerBalance API) 함수를 통해 확인하시기 바랍니다.
+     * 과금방식이 파트너과금인 경우 파트너 잔여포인트 확인(GetPartnerBalance API) 함수를 통해 확인하시기 바랍니다.
      * - https://developers.popbill.com/reference/sms/php/api/point#GetBalance
      */
     public function GetBalance(){
@@ -795,7 +794,7 @@ class MessageController extends Controller
 
     /**
      * 연동회원의 포인트 사용내역을 확인합니다.
-     * https://developers.popbill.com/reference/sms/php/api/point#GetUseHistory
+     * - https://developers.popbill.com/reference/sms/php/api/point#GetUseHistory
      */
     public function GetUseHistory(){
 
@@ -832,8 +831,8 @@ class MessageController extends Controller
     }
 
     /**
-     * 포인트 결제내역을 확인합니다.
-     * https://developers.popbill.com/reference/sms/php/api/point#GetPaymentHistory
+     * 연동회원의 포인트 결제내역을 확인합니다.
+     * - https://developers.popbill.com/reference/sms/php/api/point#GetPaymentHistory
      */
     public function GetPaymentHistory(){
 
@@ -867,8 +866,8 @@ class MessageController extends Controller
     }
 
     /**
-     * 환불 신청내역을 확인합니다.
-     * https://developers.popbill.com/reference/sms/php/api/point#GetRefundHistory
+     * 연동회원의 포인트 환불신청내역을 확인합니다.
+     * - https://developers.popbill.com/reference/sms/php/api/point#GetRefundHistory
      */
     public function GetRefundHistory(){
 
@@ -896,8 +895,8 @@ class MessageController extends Controller
     }
 
     /**
-     * 환불을 신청합니다.
-     * https://developers.popbill.com/reference/sms/php/api/point#Refund
+     * 연동회원 포인트를 환불 신청합니다.
+     * - https://developers.popbill.com/reference/sms/php/api/point#Refund
      */
     public function Refund(){
 
@@ -943,8 +942,8 @@ class MessageController extends Controller
     }
 
     /**
-     * 무통장 입금을 신청합니다.
-     * https://developers.popbill.com/reference/sms/php/api/point#PaymentRequest
+     * 연동회원 포인트 충전을 위해 무통장입금을 신청합니다.
+     * - https://developers.popbill.com/reference/sms/php/api/point#PaymentRequest
      */
     public function PaymentRequest(){
 
@@ -990,8 +989,8 @@ class MessageController extends Controller
     }
 
     /**
-     * 무통장 입금신청한 건의 정보를 확인합니다.
-     * https://developers.popbill.com/reference/sms/php/api/point#GetSettleResult
+     * 연동회원 포인트 무통장 입금신청내역 1건을 확인합니다.
+     * - https://developers.popbill.com/reference/sms/php/api/point#GetSettleResult
      */
     public function GetSettleResult(){
 
@@ -1017,7 +1016,7 @@ class MessageController extends Controller
 
     /**
      * 연동회원 포인트 충전을 위한 페이지의 팝업 URL을 반환합니다.
-     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/sms/php/api/point#GetChargeURL
      */
     public function GetChargeURL(){
@@ -1040,7 +1039,7 @@ class MessageController extends Controller
 
     /**
      * 연동회원 포인트 결제내역 확인을 위한 페이지의 팝업 URL을 반환합니다.
-     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/sms/php/api/point#GetPaymentURL
      */
     public function GetPaymentURL(){
@@ -1064,7 +1063,7 @@ class MessageController extends Controller
 
     /**
      * 연동회원 포인트 사용내역 확인을 위한 페이지의 팝업 URL을 반환합니다.
-     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/sms/php/api/point#GetUseHistoryURL
      */
     public function GetUseHistoryURL(){
@@ -1088,7 +1087,7 @@ class MessageController extends Controller
 
     /**
      * 파트너의 잔여포인트를 확인합니다.
-     * - 과금방식이 연동과금인 경우 연동회원 잔여포인트 확인(GetBalance API) 함수를 이용하시기 바랍니다.
+     * 과금방식이 연동과금인 경우 연동회원 잔여포인트 확인(GetBalance API) 함수를 이용하시기 바랍니다.
      * - https://developers.popbill.com/reference/sms/php/api/point#GetPartnerBalance
      */
     public function GetPartnerBalance(){
@@ -1109,7 +1108,7 @@ class MessageController extends Controller
 
     /**
      * 파트너 포인트 충전을 위한 페이지의 팝업 URL을 반환합니다.
-     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/sms/php/api/point#GetPartnerURL
      */
     public function GetPartnerURL(){
@@ -1287,7 +1286,7 @@ class MessageController extends Controller
 
     /**
      * 팝빌 사이트에 로그인 상태로 접근할 수 있는 페이지의 팝업 URL을 반환합니다.
-     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/sms/php/api/member#GetAccessURL
      */
     public function GetAccessURL(){

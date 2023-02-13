@@ -14,7 +14,6 @@
             <li><a href="Taxinvoice">TaxinvoiceService</a> - 전자세금계산서 API</li>
             <li><a href="Statement">StatementService</a> - 전자명세서 API</li>
             <li><a href="Cashbill">CashbillService</a> - 현금영수증 API</li>
-
             <li><a href="HTTaxinvoice">HTTaxinvoiceExample</a> - 홈택스연동 (전자세금계산서) API</li>
             <li><a href="HTCashbill">HTCashbillExample</a> - 홈택스연동 (현금영수증) API</li>
             <li><a href="CloseDown">CloseDownService</a> - 휴폐업조회 API</li>

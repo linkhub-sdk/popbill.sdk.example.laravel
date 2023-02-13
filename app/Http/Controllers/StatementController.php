@@ -47,7 +47,7 @@ class StatementController extends Controller
 
     /**
      * 파트너가 전자명세서 관리 목적으로 할당하는 문서번호의 사용여부를 확인합니다.
-     * - 이미 사용 중인 문서번호는 중복 사용이 불가하고, 전자명세서가 삭제된 경우에만 문서번호의 재사용이 가능합니다.
+     * 이미 사용 중인 문서번호는 중복 사용이 불가하고, 전자명세서가 삭제된 경우에만 문서번호의 재사용이 가능합니다.
      * - https://developers.popbill.com/reference/statement/php/api/info#CheckMgtKeyInUse
      */
     public function CheckMgtKeyInUse(){
@@ -75,7 +75,7 @@ class StatementController extends Controller
 
     /**
      * 작성된 전자명세서 데이터를 팝빌에 저장과 동시에 발행하여, "발행완료" 상태로 처리합니다.
-     * - 팝빌 사이트 [전자명세서] > [환경설정] > [전자명세서 관리] 메뉴의 발행시 자동승인 옵션 설정을 통해 전자명세서를 "발행완료" 상태가 아닌 "승인대기" 상태로 발행 처리 할 수 있습니다.
+     * 팝빌 사이트 [전자명세서] > [환경설정] > [전자명세서 관리] 메뉴의 발행시 자동승인 옵션 설정을 통해 전자명세서를 "발행완료" 상태가 아닌 "승인대기" 상태로 발행 처리 할 수 있습니다.
      * - https://developers.popbill.com/reference/statement/php/api/issue#RegistIssue
      */
     public function RegistIssue(){
@@ -250,7 +250,7 @@ class StatementController extends Controller
 
     /**
      * 작성된 전자명세서 데이터를 팝빌에 저장합니다.
-     * - "임시저장" 상태의 전자명세서는 발행(Issue API) 함수를 호출하여 "발행완료"처리한 경우에만 수신자에게 발행 안내 메일이 발송됩니다.
+     * "임시저장" 상태의 전자명세서는 발행(Issue API) 함수를 호출하여 "발행완료"처리한 경우에만 수신자에게 발행 안내 메일이 발송됩니다.
      * - https://developers.popbill.com/reference/statement/php/api/issue#Register
      */
     public function Register(){
@@ -621,7 +621,7 @@ class StatementController extends Controller
 
     /**
      * 발신자가 발행한 전자명세서를 발행취소합니다.
-     * - "발행취소" 상태의 전자명세서를 삭제(Delete API) 함수를 이용하면, 전자명세서 관리를 위해 부여했던 문서번호를 재사용 할 수 있습니다.
+     * "발행취소" 상태의 전자명세서를 삭제(Delete API) 함수를 이용하면, 전자명세서 관리를 위해 부여했던 문서번호를 재사용 할 수 있습니다.
      * - https://developers.popbill.com/reference/statement/php/api/issue#Cancel
      */
     public function CancelIssue(){
@@ -656,8 +656,8 @@ class StatementController extends Controller
 
     /**
      * 삭제 가능한 상태의 전자명세서를 삭제합니다.
-     * - 삭제 가능한 상태: "임시저장", "취소", "승인거부", "발행취소"
-     * - 전자명세서를 삭제하면 사용된 문서번호(mgtKey)를 재사용할 수 있습니다.
+     * 삭제 가능한 상태: "임시저장", "취소", "승인거부", "발행취소"
+     * 전자명세서를 삭제하면 사용된 문서번호(mgtKey)를 재사용할 수 있습니다.
      * - https://developers.popbill.com/reference/statement/php/api/issue#Delete
      */
     public function Delete(){
@@ -870,7 +870,7 @@ class StatementController extends Controller
 
     /**
      * 로그인 상태로 팝빌 사이트의 전자명세서 문서함 메뉴에 접근할 수 있는 페이지의 팝업 URL을 반환합니다.
-     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/statement/php/api/info#GetURL
      */
     public function GetURL(){
@@ -897,7 +897,7 @@ class StatementController extends Controller
 
     /**
      * 전자명세서 1건의 상세 정보 페이지의 팝업 URL을 반환합니다.
-     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/statement/php/api/view#GetPopUpURL
      */
     public function GetPopUpURL(){
@@ -927,7 +927,7 @@ class StatementController extends Controller
 
     /**
      * 전자명세서 1건의 상세 정보 페이지(사이트 상단, 좌측 메뉴 및 버튼 제외)의 팝업 URL을 반환합니다.
-     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/statement/php/api/view#GetViewURL
      */
     public function GetViewURL(){
@@ -957,8 +957,8 @@ class StatementController extends Controller
 
     /**
      * 전자명세서 1건을 인쇄하기 위한 페이지의 팝업 URL을 반환하며, 페이지내에서 인쇄 설정값을 "공급자" / "공급받는자" / "공급자+공급받는자"용 중 하나로 지정할 수 있습니다.
-     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-     * - 전자명세서의 공급자는 "발신자", 공급받는자는 "수신자"를 나타내는 용어입니다.
+     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * 전자명세서의 공급자는 "발신자", 공급받는자는 "수신자"를 나타내는 용어입니다.
      * - https://developers.popbill.com/reference/statement/php/api/view#GetPrintURL
      */
     public function GetPrintURL(){
@@ -988,8 +988,8 @@ class StatementController extends Controller
 
     /**
      * "공급받는자" 용 전자명세서 1건을 인쇄하기 위한 페이지의 팝업 URL을 반환합니다.
-     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-     * - 전자명세서의 공급받는자는 "수신자"를 나타내는 용어입니다.
+     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * 전자명세서의 공급받는자는 "수신자"를 나타내는 용어입니다.
      * - https://developers.popbill.com/reference/statement/php/api/view#GetEPrintURL
      */
     public function GetEPrintURL(){
@@ -1020,7 +1020,7 @@ class StatementController extends Controller
 
     /**
      * 다수건의 전자명세서를 인쇄하기 위한 페이지의 팝업 URL을 반환합니다. (최대 100건)
-     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/statement/php/api/view#GetMassPrintURL
      */
     public function GetMassPrintURL(){
@@ -1053,7 +1053,7 @@ class StatementController extends Controller
 
     /**
      * 전자명세서 안내메일의 상세보기 링크 URL을 반환합니다.
-     * - 함수 호출로 반환 받은 URL에는 유효시간이 없습니다.
+     * 함수 호출로 반환 받은 URL에는 유효시간이 없습니다.
      * - https://developers.popbill.com/reference/statement/php/api/view#GetMailURL
      */
     public function GetMailURL(){
@@ -1083,7 +1083,7 @@ class StatementController extends Controller
 
     /**
      * 팝빌 사이트에 로그인 상태로 접근할 수 있는 페이지의 팝업 URL을 반환합니다.
-     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/statement/php/api/etc#GetAccessURL
      */
     public function GetAccessURL(){
@@ -1107,7 +1107,7 @@ class StatementController extends Controller
 
     /**
      * 전자명세서에 첨부할 인감, 사업자등록증, 통장사본을 등록하는 페이지의 팝업 URL을 반환합니다.
-     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/statement/php/api/etc#GetSealURL
      */
     public function GetSealURL(){
@@ -1165,7 +1165,7 @@ class StatementController extends Controller
 
     /**
      * "임시저장" 상태의 전자명세서에 첨부된 1개의 파일을 삭제합니다.
-     * - 파일을 식별하는 파일아이디는 첨부파일 목록(GetFiles API) 의 응답항목 중 파일아이디(AttachedFile) 값을 통해 확인할 수 있습니다.
+     * 파일을 식별하는 파일아이디는 첨부파일 목록(GetFiles API) 의 응답항목 중 파일아이디(AttachedFile) 값을 통해 확인할 수 있습니다.
      * - https://developers.popbill.com/reference/statement/php/api/etc#DeleteFile
      */
     public function DeleteFile(){
@@ -1201,7 +1201,7 @@ class StatementController extends Controller
 
     /**
      * 전자명세서에 첨부된 파일목록을 확인합니다.
-     * - 응답항목 중 파일아이디(AttachedFile) 항목은 파일삭제(DeleteFile API) 호출시 이용할 수 있습니다.
+     * 응답항목 중 파일아이디(AttachedFile) 항목은 파일삭제(DeleteFile API) 호출시 이용할 수 있습니다.
      * - https://developers.popbill.com/reference/statement/php/api/etc#GetFiles
      */
     public function GetFiles(){
@@ -1266,8 +1266,8 @@ class StatementController extends Controller
 
     /**
      * 전자명세서와 관련된 안내 SMS(단문) 문자를 재전송하는 함수로, 팝빌 사이트 [문자·팩스] > [문자] > [전송내역] 메뉴에서 전송결과를 확인 할 수 있습니다.
-     * - 메시지는 최대 90byte까지 입력 가능하고, 초과한 내용은 자동으로 삭제되어 전송합니다. (한글 최대 45자)
-     * - 함수 호출시 포인트가 과금됩니다.
+     * 메시지는 최대 90byte까지 입력 가능하고, 초과한 내용은 자동으로 삭제되어 전송합니다. (한글 최대 45자)
+     * 함수 호출시 포인트가 과금됩니다.
      * - https://developers.popbill.com/reference/statement/php/api/etc#SendSMS
      */
     public function SendSMS(){
@@ -1309,7 +1309,7 @@ class StatementController extends Controller
 
     /**
      * 전자명세서를 팩스로 전송하는 함수로, 팝빌 사이트 [문자·팩스] > [팩스] > [전송내역] 메뉴에서 전송결과를 확인 할 수 있습니다.
-     * - 함수 호출시 포인트가 과금됩니다.
+     * 함수 호출시 포인트가 과금됩니다.
      * - https://developers.popbill.com/reference/statement/php/api/etc#SendFAX
      */
     public function SendFAX(){
@@ -1347,10 +1347,10 @@ class StatementController extends Controller
 
     /**
      * 전자명세서를 팩스로 전송하는 함수로, 팝빌에 데이터를 저장하는 과정이 없습니다.
-     * - 팝빌 사이트 [문자·팩스] > [팩스] > [전송내역] 메뉴에서 전송결과를 확인 할 수 있습니다.
-     * - 함수 호출시 포인트가 과금됩니다.
-     * - 선팩스 전송 요청시 작성한 문서번호는 팩스전송 파일명으로 사용됩니다.
-     * - 팩스 전송결과를 확인하기 위해서는 선팩스 전송 요청 시 반환받은 접수번호를 이용하여 팩스 API의 전송결과 확인 (GetFaxDetail) API를 이용하면 됩니다.
+     * 팝빌 사이트 [문자·팩스] > [팩스] > [전송내역] 메뉴에서 전송결과를 확인 할 수 있습니다.
+     * 함수 호출시 포인트가 과금됩니다.
+     * 선팩스 전송 요청시 작성한 문서번호는 팩스전송 파일명으로 사용됩니다.
+     * 팩스 전송결과를 확인하기 위해서는 선팩스 전송 요청 시 반환받은 접수번호를 이용하여 팩스 API의 전송결과 확인 (GetFaxDetail) API를 이용하면 됩니다.
      * - https://developers.popbill.com/reference/statement/php/api/etc#FAXSend
      */
     public function FAXSend(){
@@ -1654,7 +1654,7 @@ class StatementController extends Controller
 
     /**
      * 연동회원의 잔여포인트를 확인합니다.
-     * - 과금방식이 파트너과금인 경우 파트너 잔여포인트(GetPartnerBalance API) 함수를 통해 확인하시기 바랍니다.
+     * 과금방식이 파트너과금인 경우 파트너 잔여포인트(GetPartnerBalance API) 함수를 통해 확인하시기 바랍니다.
      * - https://developers.popbill.com/reference/statement/php/api/point#GetBalance
      */
     public function GetBalance(){
@@ -1676,7 +1676,7 @@ class StatementController extends Controller
 
     /**
      * 연동회원의 포인트 사용내역을 확인합니다.
-     * https://developers.popbill.com/reference/statement/php/api/point#GetUseHistory
+     * - https://developers.popbill.com/reference/statement/php/api/point#GetUseHistory
      */
     public function GetUseHistory(){
 
@@ -1713,8 +1713,8 @@ class StatementController extends Controller
     }
 
     /**
-     * 포인트 결제내역을 확인합니다.
-     * https://developers.popbill.com/reference/statement/php/api/point#GetPaymentHistory
+     * 연동회원의 포인트 결제내역을 확인합니다.
+     * - https://developers.popbill.com/reference/statement/php/api/point#GetPaymentHistory
      */
     public function GetPaymentHistory(){
 
@@ -1748,8 +1748,8 @@ class StatementController extends Controller
     }
 
     /**
-     * 환불 신청내역을 확인합니다.
-     * https://developers.popbill.com/reference/statement/php/api/point#GetRefundHistory
+     * 연동회원의 포인트 환불신청내역을 확인합니다.
+     * - https://developers.popbill.com/reference/statement/php/api/point#GetRefundHistory
      */
     public function GetRefundHistory(){
 
@@ -1777,8 +1777,8 @@ class StatementController extends Controller
     }
 
     /**
-     * 환불을 신청합니다.
-     * https://developers.popbill.com/reference/statement/php/api/point#Refund
+     * 연동회원 포인트를 환불 신청합니다.
+     * - https://developers.popbill.com/reference/statement/php/api/point#Refund
      */
     public function Refund(){
 
@@ -1824,8 +1824,8 @@ class StatementController extends Controller
     }
 
     /**
-     * 무통장 입금을 신청합니다.
-     * https://developers.popbill.com/reference/statement/php/api/point#PaymentRequest
+     * 연동회원 포인트 충전을 위해 무통장입금을 신청합니다.
+     * - https://developers.popbill.com/reference/statement/php/api/point#PaymentRequest
      */
     public function PaymentRequest(){
 
@@ -1871,8 +1871,8 @@ class StatementController extends Controller
     }
 
     /**
-     * 무통장 입금신청한 건의 정보를 확인합니다.
-     * https://developers.popbill.com/reference/statement/php/api/point#GetSettleResult
+     * 연동회원 포인트 무통장 입금신청내역 1건을 확인합니다.
+     * - https://developers.popbill.com/reference/statement/php/api/point#GetSettleResult
      */
     public function GetSettleResult(){
 
@@ -1898,7 +1898,7 @@ class StatementController extends Controller
 
     /**
      * 연동회원 포인트 충전을 위한 페이지의 팝업 URL을 반환합니다.
-     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/statement/php/api/point#GetChargeURL
      */
     public function GetChargeURL(){
@@ -1922,7 +1922,7 @@ class StatementController extends Controller
 
     /**
      * 연동회원 포인트 결제내역 확인을 위한 페이지의 팝업 URL을 반환합니다.
-     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/statement/php/api/point#GetPaymentURL
      */
     public function GetPaymentURL(){
@@ -1946,7 +1946,7 @@ class StatementController extends Controller
 
     /**
      * 연동회원 포인트 사용내역 확인을 위한 페이지의 팝업 URL을 반환합니다.
-     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/statement/php/api/point#GetUseHistoryURL
      */
     public function GetUseHistoryURL(){
@@ -1970,7 +1970,7 @@ class StatementController extends Controller
 
     /**
      * 파트너의 잔여포인트를 확인합니다.
-     * - 과금방식이 연동과금인 경우 연동회원 잔여포인트 확인(GetBalance API) 함수를 이용하시기 바랍니다.
+     * 과금방식이 연동과금인 경우 연동회원 잔여포인트 확인(GetBalance API) 함수를 이용하시기 바랍니다.
      * - https://developers.popbill.com/reference/statement/php/api/point#GetPartnerBalance
      */
     public function GetPartnerBalance(){
@@ -1992,7 +1992,7 @@ class StatementController extends Controller
 
     /**
      * 파트너 포인트 충전을 위한 페이지의 팝업 URL을 반환합니다.
-     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/statement/php/api/point#GetPartnerURL
      */
     public function GetPartnerURL(){

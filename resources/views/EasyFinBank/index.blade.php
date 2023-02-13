@@ -44,19 +44,19 @@
         <ul>
             <li><a href="EasyFinBank/GetFlatRatePopUpURL">GetFlatRatePopUpURL</a> (정액제 서비스 신청 URL) </li>
             <li><a href="EasyFinBank/GetFlatRateState">GetFlatRateState</a> (정액제 서비스 상태 확인) </li>
+            <li><a href="EasyFinBank/GetChargeInfo">GetChargeInfo</a> (과금정보 확인) </li>
             <li><a href="EasyFinBank/GetBalance">GetBalance</a> (연동회원 잔여포인트 확인) </li>
-            <li><a href="EasyFinBank/GetUseHistory">GetUseHistory</a> (연동회원 포인트 사용내역 확인) </li>
-            <li><a href="EasyFinBank/GetPaymentHistory">GetPaymentHistory</a> (연동회원 포인트 결제내역 확인) </li>
-            <li><a href="EasyFinBank/GetRefundHistory">GetRefundHistory</a> (연동회원 포인트 환불내역 확인) </li>
-            <li><a href="EasyFinBank/Refund">Refund</a> (연동회원 포인트 환불신청) </li>
+            <li><a href="EasyFinBank/GetChargeURL">GetChargeURL</a> (연동회원 포인트충전 URL) </li>
             <li><a href="EasyFinBank/PaymentRequest">PaymentRequest</a> (무통장 입금신청) </li>
             <li><a href="EasyFinBank/GetSettleResult">GetSettleResult</a> (연동회원 결제내역 정보확인) </li>
-            <li><a href="EasyFinBank/GetChargeURL">GetChargeURL</a> (연동회원 포인트충전 URL) </li>
+            <li><a href="EasyFinBank/GetPaymentHistory">GetPaymentHistory</a> (연동회원 포인트 결제내역 확인) </li>
             <li><a href="EasyFinBank/GetPaymentURL">GetPaymentURL</a> (연동회원 결재내역 URL)</li>
+            <li><a href="EasyFinBank/GetUseHistory">GetUseHistory</a> (연동회원 포인트 사용내역 확인) </li>
             <li><a href="EasyFinBank/GetUseHistoryURL">GetUseHistoryURL</a> (연동회원 사용내역 URL)</li>
+            <li><a href="EasyFinBank/Refund">Refund</a> (연동회원 포인트 환불신청) </li>
+            <li><a href="EasyFinBank/GetRefundHistory">GetRefundHistory</a> (연동회원 포인트 환불내역 확인) </li>
             <li><a href="EasyFinBank/GetPartnerBalance">GetPartnerBalance</a> (파트너 잔여포인트 확인) </li>
             <li><a href="EasyFinBank/GetPartnerURL">GetPartnerURL</a> (파트너 포인트충전 URL) </li>
-            <li><a href="EasyFinBank/GetChargeInfo">GetChargeInfo</a> (과금정보 확인) </li>
         </ul>
     </fieldset>
     <fieldset class="fieldset1">

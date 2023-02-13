@@ -46,7 +46,7 @@ class CashbillController extends Controller
 
     /**
      * 파트너가 현금영수증 관리 목적으로 할당하는 문서번호 사용여부를 확인합니다.
-     * - 이미 사용 중인 문서번호는 중복 사용이 불가하고, 현금영수증이 삭제된 경우에만 문서번호의 재사용이 가능합니다.
+     * 이미 사용 중인 문서번호는 중복 사용이 불가하고, 현금영수증이 삭제된 경우에만 문서번호의 재사용이 가능합니다.
      * - https://developers.popbill.com/reference/cashbill/php/api/info#CheckMgtKeyInUse
      */
     public function CheckMgtKeyInUse(){
@@ -68,12 +68,11 @@ class CashbillController extends Controller
         }
 
         return view('ReturnValue', ['filedName' => "문서번호 사용여부 =>".$mgtKey."", 'value' => $result]);
-
     }
 
     /**
      * 작성된 현금영수증 데이터를 팝빌에 저장과 동시에 발행하여 "발행완료" 상태로 처리합니다.
-     * - 현금영수증 국세청 전송 정책 : https://developers.popbill.com/guide/cashbill/php/introduction/policy-of-send-to-nts
+     * 현금영수증 국세청 전송 정책 : https://developers.popbill.com/guide/cashbill/php/introduction/policy-of-send-to-nts
      * - https://developers.popbill.com/reference/cashbill/php/api/issue#RegistIssue
      */
     public function RegistIssue(){
@@ -345,8 +344,8 @@ class CashbillController extends Controller
 
     /**
      * 삭제 가능한 상태의 현금영수증을 삭제합니다.
-     * - 삭제 가능한 상태: "전송실패"
-     * - 현금영수증을 삭제하면 사용된 문서번호(mgtKey)를 재사용할 수 있습니다.
+     * 삭제 가능한 상태: "전송실패"
+     * 현금영수증을 삭제하면 사용된 문서번호(mgtKey)를 재사용할 수 있습니다.
      * - https://developers.popbill.com/reference/cashbill/php/api/issue#Delete
      */
     public function Delete(){
@@ -375,7 +374,7 @@ class CashbillController extends Controller
 
     /**
      * 취소 현금영수증 데이터를 팝빌에 저장과 동시에 발행하여 "발행완료" 상태로 처리합니다.
-     * - 현금영수증 국세청 전송 정책 : https://developers.popbill.com/guide/cashbill/php/introduction/policy-of-send-to-nts
+     * 현금영수증 국세청 전송 정책 : https://developers.popbill.com/guide/cashbill/php/introduction/policy-of-send-to-nts
      * - https://developers.popbill.com/reference/cashbill/php/api/issue#RevokeRegistIssue
      */
     public function RevokeRegistIssue(){
@@ -432,8 +431,8 @@ class CashbillController extends Controller
 
     /**
      * 작성된 (부분)취소 현금영수증 데이터를 팝빌에 저장과 동시에 발행하여 "발행완료" 상태로 처리합니다.
-     * - 취소 현금영수증의 금액은 원본 금액을 넘을 수 없습니다.
-     * - 현금영수증 국세청 전송 정책 : https://developers.popbill.com/guide/cashbill/php/introduction/policy-of-send-to-nts
+     * 취소 현금영수증의 금액은 원본 금액을 넘을 수 없습니다.
+     * 현금영수증 국세청 전송 정책 : https://developers.popbill.com/guide/cashbill/php/introduction/policy-of-send-to-nts
      * - https://developers.popbill.com/reference/cashbill/php/api/issue#RevokeRegistIssue
      */
     public function RevokeRegistIssue_part(){
@@ -516,8 +515,8 @@ class CashbillController extends Controller
 
     /**
      * 현금영수증 1건의 상태 및 요약정보를 확인합니다.
-     * - 리턴값 'CashbillInfo'의 변수 'stateCode'를 통해 현금영수증의 상태코드를 확인합니다.
-     * - 현금영수증 상태코드 [https://developers.popbill.com/reference/cashbill/php/response-code]
+     * 리턴값 'CashbillInfo'의 변수 'stateCode'를 통해 현금영수증의 상태코드를 확인합니다.
+     * 현금영수증 상태코드 [https://developers.popbill.com/reference/cashbill/php/response-code]
      * - https://developers.popbill.com/reference/cashbill/php/api/info#GetInfo
      */
     public function GetInfo(){
@@ -542,8 +541,8 @@ class CashbillController extends Controller
 
     /**
      * 다수건의 현금영수증 상태 및 요약 정보를 확인합니다. (1회 호출 시 최대 1,000건 확인 가능)
-     * - 리턴값 'CashbillInfo'의 변수 'stateCode'를 통해 현금영수증의 상태코드를 확인합니다.
-     * - 현금영수증 상태코드 [https://developers.popbill.com/reference/cashbill/php/response-code]
+     * 리턴값 'CashbillInfo'의 변수 'stateCode'를 통해 현금영수증의 상태코드를 확인합니다.
+     * 현금영수증 상태코드 [https://developers.popbill.com/reference/cashbill/php/response-code]
      * - https://developers.popbill.com/reference/cashbill/php/api/info#GetInfos
      */
     public function GetInfos(){
@@ -682,7 +681,7 @@ class CashbillController extends Controller
 
     /**
      * 로그인 상태로 팝빌 사이트의 현금영수증 문서함 메뉴에 접근할 수 있는 페이지의 팝업 URL을 반환합니다.
-     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/cashbill/php/api/info#GetURL
      */
     public function GetURL(){
@@ -706,12 +705,11 @@ class CashbillController extends Controller
         }
 
         return view('ReturnValue', ['filedName' => "현금영수증 문서함 팝업 URL" , 'value' => $url]);
-
     }
 
     /**
      * 현금영수증 1건의 상세 정보 페이지의 URL을 반환합니다.
-     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/cashbill/php/api/view#GetPopUpURL
      */
     public function GetPopUpURL(){
@@ -737,8 +735,8 @@ class CashbillController extends Controller
     }
 
     /**
-     * 현금영수증 1건의 상세 정보 페이지(사이트 상단, 좌측 메뉴 및 버튼 제외)의 팝업 URL을 반환합니다.
-     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * 현금영수증 1건의 상세 정보 페이지(사이트 상단, 좌측 메뉴 및 버튼 제외)의 URL을 반환합니다.
+     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/cashbill/php/api/view#GetViewURL
      */
     public function GetViewURL(){
@@ -765,7 +763,7 @@ class CashbillController extends Controller
 
     /**
      * 현금영수증 1건을 인쇄하기 위한 페이지의 팝업 URL을 반환합니다.
-     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/cashbill/php/api/view#GetPrintURL
      */
     public function GetPrintURL(){
@@ -793,7 +791,7 @@ class CashbillController extends Controller
 
     /**
      * 다수건의 현금영수증을 인쇄하기 위한 페이지의 팝업 URL을 반환합니다. (최대 100건)
-     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/cashbill/php/api/view#GetMassPrintURL
      */
     public function GetMassPrintURL(){
@@ -823,7 +821,7 @@ class CashbillController extends Controller
 
     /**
      * 현금영수증 안내메일의 상세보기 링크 URL을 반환합니다.
-     * - 함수 호출로 반환 받은 URL에는 유효시간이 없습니다.
+     * 함수 호출로 반환 받은 URL에는 유효시간이 없습니다.
      * - https://developers.popbill.com/reference/cashbill/php/api/view#GetMailURL
      */
     public function GetMailURL(){
@@ -851,7 +849,7 @@ class CashbillController extends Controller
 
     /**
      * 팝빌 사이트에 로그인 상태로 접근할 수 있는 페이지의 팝업 URL을 반환합니다.
-     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/cashbill/php/api/etc#GetAccessURL
      */
     public function GetAccessURL(){
@@ -906,8 +904,8 @@ class CashbillController extends Controller
 
     /**
      * 현금영수증과 관련된 안내 SMS(단문) 문자를 재전송하는 함수로, 팝빌 사이트 [문자·팩스] > [문자] > [전송내역] 메뉴에서 전송결과를 확인 할 수 있습니다.
-     * - 메시지는 최대 90byte까지 입력 가능하고, 초과한 내용은 자동으로 삭제되어 전송합니다. (한글 최대 45자)
-     * - 함수 호출 시 포인트가 과금됩니다. (전송실패시 환불처리)
+     * 메시지는 최대 90byte까지 입력 가능하고, 초과한 내용은 자동으로 삭제되어 전송합니다. (한글 최대 45자)
+     * 함수 호출 시 포인트가 과금됩니다. (전송실패시 환불처리)
      * - https://developers.popbill.com/reference/cashbill/php/api/etc#SendSMS
      */
     public function SendSMS(){
@@ -945,7 +943,7 @@ class CashbillController extends Controller
 
     /**
      * 현금영수증을 팩스로 전송하는 함수로, 팝빌 사이트 [문자·팩스] > [팩스] > [전송내역] 메뉴에서 전송결과를 확인 할 수 있습니다.
-     * - 함수 호출 시 포인트가 과금됩니다. (전송실패시 환불처리)
+     * 함수 호출 시 포인트가 과금됩니다. (전송실패시 환불처리)
      * - https://developers.popbill.com/reference/cashbill/php/api/etc#SendFAX
      */
     public function SendFAX(){
@@ -1069,7 +1067,7 @@ class CashbillController extends Controller
 
     /**
      * 연동회원의 잔여포인트를 확인합니다.
-     * - 과금방식이 파트너과금인 경우 파트너 잔여포인트 확인(GetPartnerBalance API) 함수를 통해 확인하시기 바랍니다.
+     * 과금방식이 파트너과금인 경우 파트너 잔여포인트 확인(GetPartnerBalance API) 함수를 통해 확인하시기 바랍니다.
      * - https://developers.popbill.com/reference/cashbill/php/api/point#GetBalance
      */
     public function GetBalance(){
@@ -1129,7 +1127,7 @@ class CashbillController extends Controller
     }
 
     /**
-     * 포인트 결제내역을 확인합니다.
+     * 연동회원의 포인트 결제내역을 확인합니다.
      * https://developers.popbill.com/reference/cashbill/php/api/point#GetPaymentHistory
      */
     public function GetPaymentHistory(){
@@ -1164,7 +1162,7 @@ class CashbillController extends Controller
     }
 
     /**
-     * 환불 신청내역을 확인합니다.
+     * 연동회원의 포인트 환불신청내역을 확인합니다.
      * https://developers.popbill.com/reference/cashbill/php/api/point#GetRefundHistory
      */
     public function GetRefundHistory(){
@@ -1193,7 +1191,7 @@ class CashbillController extends Controller
     }
 
     /**
-     * 환불을 신청합니다.
+     * 연동회원 포인트를 환불 신청합니다.
      * https://developers.popbill.com/reference/cashbill/php/api/point#Refund
      */
     public function Refund(){
@@ -1240,7 +1238,7 @@ class CashbillController extends Controller
     }
 
     /**
-     * 무통장 입금을 신청합니다.
+     * 연동회원 포인트 충전을 위해 무통장입금을 신청합니다.
      * https://developers.popbill.com/reference/cashbill/php/api/point#PaymentRequest
      */
     public function PaymentRequest(){
@@ -1287,7 +1285,7 @@ class CashbillController extends Controller
     }
 
     /**
-     * 무통장 입금신청한 건의 정보를 확인합니다.
+     * 연동회원 포인트 무통장 입금신청내역 1건을 확인합니다.
      * https://developers.popbill.com/reference/cashbill/php/api/point#GetSettleResult
      */
     public function GetSettleResult(){
@@ -1314,7 +1312,7 @@ class CashbillController extends Controller
 
     /**
      * 연동회원 포인트 충전을 위한 페이지의 팝업 URL을 반환합니다.
-     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/cashbill/php/api/point#GetChargeURL
      */
     public function GetChargeURL(){
@@ -1338,7 +1336,7 @@ class CashbillController extends Controller
 
     /**
      * 연동회원 포인트 결제내역 확인을 위한 페이지의 팝업 URL을 반환합니다.
-     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/cashbill/php/api/point#GetPaymentURL
      */
     public function GetPaymentURL(){
@@ -1363,7 +1361,7 @@ class CashbillController extends Controller
 
     /**
      * 연동회원 포인트 사용내역 확인을 위한 페이지의 팝업 URL을 반환합니다.
-     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/cashbill/php/api/point#GetUseHistoryURL
      */
     public function GetUseHistoryURL(){
@@ -1388,7 +1386,7 @@ class CashbillController extends Controller
 
     /**
      * 파트너의 잔여포인트를 확인합니다.
-     * - 과금방식이 연동과금인 경우 연동회원 잔여포인트 확인(GetBalance API) 함수를 이용하시기 바랍니다.
+     * 과금방식이 연동과금인 경우 연동회원 잔여포인트 확인(GetBalance API) 함수를 이용하시기 바랍니다.
      * - https://developers.popbill.com/reference/cashbill/php/api/point#GetPartnerBalance
      */
     public function GetPartnerBalance(){
@@ -1410,7 +1408,7 @@ class CashbillController extends Controller
 
     /**
      * 파트너 포인트 충전을 위한 페이지의 팝업 URL을 반환합니다.
-     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/cashbill/php/api/point#GetPartnerURL
      */
     public function GetPartnerURL(){
@@ -1455,7 +1453,7 @@ class CashbillController extends Controller
 
     /**
      * 팝빌 현금영수증 API 서비스 과금정보를 확인합니다.
-     * - https://developers.popbill.com/reference/taxinvoice/php/api/point#GetChargeInfo
+     * - https://developers.popbill.com/reference/cashbill/php/api/point#GetChargeInfo
      */
     public function GetChargeInfo(){
 
@@ -1478,7 +1476,7 @@ class CashbillController extends Controller
 
 
     /**
-     *  사업자번호를 조회하여 연동회원 가입여부를 확인합니다.
+     * 사업자번호를 조회하여 연동회원 가입여부를 확인합니다.
      * - https://developers.popbill.com/reference/cashbill/php/api/member#CheckIsMember
      */
     public function CheckIsMember(){
