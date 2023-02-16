@@ -11,7 +11,7 @@ use Linkhub\Popbill\ContactInfo;
 use Linkhub\Popbill\ChargeInfo;
 use Linkhub\Popbill\PopbillException;
 use Linkhub\Popbill\PopbillHTTaxinvoice;
-use Linkhub\Popbill\HTTaxinvoiceKeyType;
+use Linkhub\Popbill\HTTIKeyType;
 use Linkhub\Popbill\RefundForm;
 use Linkhub\Popbill\PaymentForm;
 
@@ -55,7 +55,7 @@ class HTTaxinvoiceController extends Controller
         $testCorpNum = '1234567890';
 
         // 전자세금계산서 유형, SELL-매출, BUY-매입, TRUSTEE-위수탁
-        $TIKeyType = HTTaxinvoiceKeyType::SELL;
+        $TIKeyType = HTTIKeyType::SELL;
 
         // 수집일자유형, W-작성일자, I-발행일자, S-전송일자
         $DType = 'S';
