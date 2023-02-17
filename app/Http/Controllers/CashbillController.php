@@ -191,7 +191,7 @@ class CashbillController extends Controller
 
     /**
      * 최대 100건의 현금영수증 발행을 한번의 요청으로 접수합니다.
-     * - https://developers.popbill.com/reference/cashbill/php/api/issue#RegistIssue
+     * - https://developers.popbill.com/reference/cashbill/php/api/issue#BulkSubmit
      */
     public function BulkSubmit() {
 
