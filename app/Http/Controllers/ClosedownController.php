@@ -93,7 +93,7 @@ class ClosedownController extends Controller
 
     /**
      * 연동회원의 잔여포인트를 확인합니다.
-     * 과금방식이 파트너과금인 경우 파트너 잔여포인트 확인(GetPartnerBalance API) 함수를 통해 확인하시기 바랍니다.
+     * - 과금방식이 파트너과금인 경우 파트너 잔여포인트 확인(GetPartnerBalance API) 함수를 통해 확인하시기 바랍니다.
      * - https://developers.popbill.com/reference/closedown/php/api/point#GetBalance
      */
     public function GetBalance(){
@@ -336,7 +336,7 @@ class ClosedownController extends Controller
 
     /**
      * 연동회원 포인트 충전을 위한 페이지의 팝업 URL을 반환합니다.
-     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/closedown/php/api/point#GetChargeURL
      */
     public function GetChargeURL(){
@@ -359,7 +359,7 @@ class ClosedownController extends Controller
 
     /**
      * 연동회원 포인트 결제내역 확인을 위한 페이지의 팝업 URL을 반환합니다.
-     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/closedown/php/api/point#GetPaymentURL
      */
     public function GetPaymentURL(){
@@ -384,7 +384,7 @@ class ClosedownController extends Controller
 
     /**
      * 연동회원 포인트 사용내역 확인을 위한 페이지의 팝업 URL을 반환합니다.
-     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/closedown/php/api/point#GetUseHistoryURL
      */
     public function GetUseHistoryURL(){
@@ -429,7 +429,7 @@ class ClosedownController extends Controller
 
     /**
      * 파트너의 잔여포인트를 확인합니다.
-     * 과금방식이 연동과금인 경우 연동회원 잔여포인트 확인(GetBalance API) 함수를 이용하시기 바랍니다.
+     * - 과금방식이 연동과금인 경우 연동회원 잔여포인트 확인(GetBalance API) 함수를 이용하시기 바랍니다.
      * - https://developers.popbill.com/reference/closedown/php/api/point#GetPartnerBalance
      */
     public function GetPartnerBalance(){
@@ -450,7 +450,7 @@ class ClosedownController extends Controller
 
     /**
      * 파트너 포인트 충전을 위한 페이지의 팝업 URL을 반환합니다.
-     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/closedown/php/api/point#GetPartnerURL
      */
     public function GetPartnerURL(){
@@ -601,7 +601,7 @@ class ClosedownController extends Controller
 
     /**
      * 연동회원의 회사정보를 확인합니다.
-     * - https://developers.popbill.com/reference/closedown/php/api/member#JoinMember
+     * - https://developers.popbill.com/reference/closedown/php/api/member#GetCorpInfo
      */
     public function GetCorpInfo(){
 
@@ -804,7 +804,7 @@ class ClosedownController extends Controller
 
     /**
      * 팝빌 사이트에 로그인 상태로 접근할 수 있는 페이지의 팝업 URL을 반환합니다.
-     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/closedown/php/api/member#GetAccessURL
      */
     public function GetAccessURL(){
@@ -825,4 +825,5 @@ class ClosedownController extends Controller
         return view('ReturnValue', ['filedName' => "팝빌 로그인 URL" , 'value' => $url]);
 
     }
+    
 }

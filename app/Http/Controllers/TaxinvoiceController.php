@@ -49,7 +49,7 @@ class TaxinvoiceController extends Controller
 
     /**
      * 파트너가 세금계산서 관리 목적으로 할당하는 문서번호의 사용여부를 확인합니다.
-     * 이미 사용 중인 문서번호는 중복 사용이 불가하고, 세금계산서가 삭제된 경우에만 문서번호의 재사용이 가능합니다.
+     * - 이미 사용 중인 문서번호는 중복 사용이 불가하고, 세금계산서가 삭제된 경우에만 문서번호의 재사용이 가능합니다.
      * - https://developers.popbill.com/reference/taxinvoice/php/api/info#CheckMgtKeyInUse
      */
     public function CheckMgtKeyInUse(){
@@ -1259,7 +1259,7 @@ class TaxinvoiceController extends Controller
 
     /**
      * 국세청 전송 이전 "발행완료" 상태의 전자세금계산서를 "발행취소"하고 국세청 신고대상에서 제외합니다.
-     * Delete(삭제)함수를 호출하여 "발행취소" 상태의 전자세금계산서를 삭제하면, 문서번호 재사용이 가능합니다.
+     * - Delete(삭제)함수를 호출하여 "발행취소" 상태의 전자세금계산서를 삭제하면, 문서번호 재사용이 가능합니다.
      * - https://developers.popbill.com/reference/taxinvoice/php/api/issue#CancelIssue
      */
     public function CancelIssue(){
@@ -1712,8 +1712,8 @@ class TaxinvoiceController extends Controller
 
     /**
      * 세금계산서 1건의 상태 및 요약정보를 확인합니다.
-     * 리턴값 'TaxinvoiceInfo'의 변수 'stateCode'를 통해 세금계산서의 상태코드를 확인합니다.
-     * 세금계산서 상태코드 [https://developers.popbill.com/reference/taxinvoice/php/response-code]
+     * - 리턴값 'TaxinvoiceInfo'의 변수 'stateCode'를 통해 세금계산서의 상태코드를 확인합니다.
+     * - 세금계산서 상태코드 [https://developers.popbill.com/reference/taxinvoice/php/response-code]
      * - https://developers.popbill.com/reference/taxinvoice/php/api/info#GetInfo
      */
     public function GetInfo(){
@@ -1741,8 +1741,8 @@ class TaxinvoiceController extends Controller
 
     /**
      * 다수건의 세금계산서 상태 및 요약 정보를 확인합니다. (1회 호출 시 최대 1,000건 확인 가능)
-     * 리턴값 'TaxinvoiceInfo'의 변수 'stateCode'를 통해 세금계산서의 상태코드를 확인합니다.
-     * 세금계산서 상태코드 [https://developers.popbill.com/reference/taxinvoice/php/response-code]
+     * - 리턴값 'TaxinvoiceInfo'의 변수 'stateCode'를 통해 세금계산서의 상태코드를 확인합니다.
+     * - 세금계산서 상태코드 [https://developers.popbill.com/reference/taxinvoice/php/response-code]
      * - https://developers.popbill.com/reference/taxinvoice/php/api/info#GetInfos
      */
     public function GetInfos(){
@@ -2678,29 +2678,29 @@ class TaxinvoiceController extends Controller
      *
      * 메일전송유형
      * [정발행]
-     * TAX_ISSUE : 공급받는자에게 전자세금계산서가 발행 되었음을 알려주는 메일입니다.
-     * TAX_ISSUE_INVOICER : 공급자에게 전자세금계산서가 발행 되었음을 알려주는 메일입니다.
-     * TAX_CHECK : 공급자에게 전자세금계산서가 수신확인 되었음을 알려주는 메일입니다.
-     * TAX_CANCEL_ISSUE : 공급받는자에게 전자세금계산서가 발행취소 되었음을 알려주는 메일입니다.
+     * - TAX_ISSUE : 공급받는자에게 전자세금계산서가 발행 되었음을 알려주는 메일입니다.
+     * - TAX_ISSUE_INVOICER : 공급자에게 전자세금계산서가 발행 되었음을 알려주는 메일입니다.
+     * - TAX_CHECK : 공급자에게 전자세금계산서가 수신확인 되었음을 알려주는 메일입니다.
+     * - TAX_CANCEL_ISSUE : 공급받는자에게 전자세금계산서가 발행취소 되었음을 알려주는 메일입니다.
      *
      * [역발행]
-     * TAX_REQUEST : 공급자에게 세금계산서를 전자서명 하여 발행을 요청하는 메일입니다.
-     * TAX_CANCEL_REQUEST : 공급받는자에게 세금계산서가 취소 되었음을 알려주는 메일입니다.
-     * TAX_REFUSE : 공급받는자에게 세금계산서가 거부 되었음을 알려주는 메일입니다.
+     * - TAX_REQUEST : 공급자에게 세금계산서를 전자서명 하여 발행을 요청하는 메일입니다.
+     * - TAX_CANCEL_REQUEST : 공급받는자에게 세금계산서가 취소 되었음을 알려주는 메일입니다.
+     * - TAX_REFUSE : 공급받는자에게 세금계산서가 거부 되었음을 알려주는 메일입니다.
      *
      * [위수탁발행]
-     * TAX_TRUST_ISSUE : 공급받는자에게 전자세금계산서가 발행 되었음을 알려주는 메일입니다.
-     * TAX_TRUST_ISSUE_TRUSTEE : 수탁자에게 전자세금계산서가 발행 되었음을 알려주는 메일입니다.
-     * TAX_TRUST_ISSUE_INVOICER : 공급자에게 전자세금계산서가 발행 되었음을 알려주는 메일입니다.
-     * TAX_TRUST_CANCEL_ISSUE : 공급받는자에게 전자세금계산서가 발행취소 되었음을 알려주는 메일입니다.
-     * TAX_TRUST_CANCEL_ISSUE_INVOICER : 공급자에게 전자세금계산서가 발행취소 되었음을 알려주는 메일입니다.
+     * - TAX_TRUST_ISSUE : 공급받는자에게 전자세금계산서가 발행 되었음을 알려주는 메일입니다.
+     * - TAX_TRUST_ISSUE_TRUSTEE : 수탁자에게 전자세금계산서가 발행 되었음을 알려주는 메일입니다.
+     * - TAX_TRUST_ISSUE_INVOICER : 공급자에게 전자세금계산서가 발행 되었음을 알려주는 메일입니다.
+     * - TAX_TRUST_CANCEL_ISSUE : 공급받는자에게 전자세금계산서가 발행취소 되었음을 알려주는 메일입니다.
+     * - TAX_TRUST_CANCEL_ISSUE_INVOICER : 공급자에게 전자세금계산서가 발행취소 되었음을 알려주는 메일입니다.
      *
      * [처리결과]
-     * TAX_CLOSEDOWN : 거래처의 휴폐업 여부를 확인하여 안내하는 메일입니다.
-     * TAX_NTSFAIL_INVOICER : 전자세금계산서 국세청 전송실패를 안내하는 메일입니다.
+     * - TAX_CLOSEDOWN : 거래처의 휴폐업 여부를 확인하여 안내하는 메일입니다.
+     * - TAX_NTSFAIL_INVOICER : 전자세금계산서 국세청 전송실패를 안내하는 메일입니다.
      *
      * [정기발송]
-     * ETC_CERT_EXPIRATION : 팝빌에서 이용중인 공인인증서의 갱신을 안내하는 메일입니다.
+     * - ETC_CERT_EXPIRATION : 팝빌에서 이용중인 공인인증서의 갱신을 안내하는 메일입니다.
      */
     public function UpdateEmailConfig(){
 
@@ -2873,7 +2873,7 @@ class TaxinvoiceController extends Controller
 
     /**
      * 연동회원의 포인트 사용내역을 확인합니다.
-     * https://developers.popbill.com/reference/taxinvoice/php/api/point#GetUseHistory
+     * - https://developers.popbill.com/reference/taxinvoice/php/api/point#GetUseHistory
      */
     public function GetUseHistory(){
 
@@ -2911,7 +2911,7 @@ class TaxinvoiceController extends Controller
 
     /**
      * 연동회원의 포인트 결제내역을 확인합니다.
-     * https://developers.popbill.com/reference/taxinvoice/php/api/point#GetPaymentHistory
+     * - https://developers.popbill.com/reference/taxinvoice/php/api/point#GetPaymentHistory
      */
     public function GetPaymentHistory(){
 
@@ -2946,7 +2946,7 @@ class TaxinvoiceController extends Controller
 
     /**
      * 환불 신청내역을 확인합니다.
-     * https://developers.popbill.com/reference/taxinvoice/php/api/point#GetRefundHistory
+     * - https://developers.popbill.com/reference/taxinvoice/php/api/point#GetRefundHistory
      */
     public function GetRefundHistory(){
 
@@ -2975,7 +2975,7 @@ class TaxinvoiceController extends Controller
 
     /**
      * 환불을 신청합니다.
-     * https://developers.popbill.com/reference/taxinvoice/php/api/point#Refund
+     * - https://developers.popbill.com/reference/taxinvoice/php/api/point#Refund
      */
     public function Refund(){
 
@@ -3022,7 +3022,7 @@ class TaxinvoiceController extends Controller
 
     /**
      * 연동회원 포인트 충전을 위해 무통장입금을 신청합니다.
-     * https://developers.popbill.com/reference/taxinvoice/php/api/point#PaymentRequest
+     * - https://developers.popbill.com/reference/taxinvoice/php/api/point#PaymentRequest
      */
     public function PaymentRequest(){
 
@@ -3069,7 +3069,7 @@ class TaxinvoiceController extends Controller
 
     /**
      * 연동회원 포인트 무통장 입금신청내역 1건을 확인합니다.
-     * https://developers.popbill.com/reference/taxinvoice/php/api/point#GetSettleResult
+     * - https://developers.popbill.com/reference/taxinvoice/php/api/point#GetSettleResult
      */
     public function GetSettleResult(){
 
@@ -3119,7 +3119,7 @@ class TaxinvoiceController extends Controller
 
     /**
      * 연동회원 포인트 결제내역 확인을 위한 페이지의 팝업 URL을 반환합니다.
-     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/taxinvoice/php/api/point#GetPaymentURL
      */
     public function GetPaymentURL(){
@@ -3143,7 +3143,7 @@ class TaxinvoiceController extends Controller
 
     /**
      * 연동회원 포인트 사용내역 확인을 위한 페이지의 팝업 URL을 반환합니다.
-     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/taxinvoice/php/api/point#GetUseHistoryURL
      */
     public function GetUseHistoryURL(){
@@ -3167,7 +3167,7 @@ class TaxinvoiceController extends Controller
 
     /**
      * 파트너의 잔여포인트를 확인합니다.
-     * 과금방식이 연동과금인 경우 연동회원 잔여포인트 확인(GetBalance API) 함수를 이용하시기 바랍니다.
+     * - 과금방식이 연동과금인 경우 연동회원 잔여포인트 확인(GetBalance API) 함수를 이용하시기 바랍니다.
      * - https://developers.popbill.com/reference/taxinvoice/php/api/point#GetPartnerBalance
      */
     public function GetPartnerBalance(){
@@ -3189,7 +3189,7 @@ class TaxinvoiceController extends Controller
 
     /**
      * 파트너 포인트 충전을 위한 페이지의 팝업 URL을 반환합니다.
-     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/taxinvoice/php/api/point#GetPartnerURL
      */
     public function GetPartnerURL(){
@@ -3564,4 +3564,5 @@ class TaxinvoiceController extends Controller
 
         return view('PResponse', ['code' => $code, 'message' => $message]);
     }
+
 }

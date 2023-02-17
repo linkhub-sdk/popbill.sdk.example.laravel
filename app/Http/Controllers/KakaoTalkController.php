@@ -91,7 +91,7 @@ class KakaoTalkController extends Controller
 
     /**
      * 카카오톡 발신번호 등록여부를 확인합니다.
-    * - 발신번호 상태가 '승인'인 경우에만 code가 1로 반환됩니다.
+     * - 발신번호 상태가 '승인'인 경우에만 code가 1로 반환됩니다.
      * - https://developers.popbill.com/reference/kakaotalk/php/api/sendnum#CheckSenderNumber
      */
     public function CheckSenderNumber(){
@@ -1451,7 +1451,7 @@ class KakaoTalkController extends Controller
 
     /**
      * 연동회원의 포인트 사용내역을 확인합니다.
-     * https://developers.popbill.com/reference/kakaotalk/php/api/point#GetUseHistory
+     * - https://developers.popbill.com/reference/kakaotalk/php/api/point#GetUseHistory
      */
     public function GetUseHistory(){
 
@@ -1489,7 +1489,7 @@ class KakaoTalkController extends Controller
 
     /**
      * 포인트 결제내역을 확인합니다.
-     * https://developers.popbill.com/reference/kakaotalk/php/api/point#GetPaymentHistory
+     * - https://developers.popbill.com/reference/kakaotalk/php/api/point#GetPaymentHistory
      */
     public function GetPaymentHistory(){
 
@@ -1524,7 +1524,7 @@ class KakaoTalkController extends Controller
 
     /**
      * 환불 신청내역을 확인합니다.
-     * https://developers.popbill.com/reference/kakaotalk/php/api/point#GetRefundHistory
+     * - https://developers.popbill.com/reference/kakaotalk/php/api/point#GetRefundHistory
      */
     public function GetRefundHistory(){
 
@@ -1553,7 +1553,7 @@ class KakaoTalkController extends Controller
 
     /**
      * 환불을 신청합니다.
-     * https://developers.popbill.com/reference/kakaotalk/php/api/point#Refund
+     * - https://developers.popbill.com/reference/kakaotalk/php/api/point#Refund
      */
     public function Refund(){
 
@@ -1600,7 +1600,7 @@ class KakaoTalkController extends Controller
 
     /**
      * 무통장 입금을 신청합니다.
-     * https://developers.popbill.com/reference/kakaotalk/php/api/point#PaymentRequest
+     * - https://developers.popbill.com/reference/kakaotalk/php/api/point#PaymentRequest
      */
     public function PaymentRequest(){
 
@@ -1647,7 +1647,7 @@ class KakaoTalkController extends Controller
 
     /**
      * 무통장 입금신청한 건의 정보를 확인합니다.
-     * https://developers.popbill.com/reference/kakaotalk/php/api/point#GetSettleResult
+     * - https://developers.popbill.com/reference/kakaotalk/php/api/point#GetSettleResult
      */
     public function GetSettleResult(){
 
@@ -1945,7 +1945,7 @@ class KakaoTalkController extends Controller
 
     /**
      * 팝빌 사이트에 로그인 상태로 접근할 수 있는 페이지의 팝업 URL을 반환합니다.
-     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/kakaotalk/php/api/member#GetAccessURL
      */
     public function GetAccessURL(){
@@ -2172,4 +2172,5 @@ class KakaoTalkController extends Controller
 
         return view('PResponse', ['code' => $code, 'message' => $message]);
     }
+
 }

@@ -45,7 +45,7 @@ class FaxController extends Controller
 
     /**
      * 팩스 발신번호 등록여부를 확인합니다.
-     * 발신번호 상태가 '승인'인 경우에만 code가 1로 반환됩니다.
+     * - 발신번호 상태가 '승인'인 경우에만 code가 1로 반환됩니다.
      * - https://developers.popbill.com/reference/fax/php/api/sendnum#CheckSenderNumber
      */
     public function CheckSenderNumber(){
@@ -72,7 +72,7 @@ class FaxController extends Controller
 
     /**
      * 발신번호를 등록하고 내역을 확인하는 팩스 발신번호 관리 페이지 팝업 URL을 반환합니다.
-     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/fax/php/api/sendnum#GetSenderNumberMgtURL
      */
     public function GetSenderNumberMgtURL(){
@@ -394,9 +394,9 @@ class FaxController extends Controller
 
     /**
      * 팝빌에서 반환받은 접수번호를 통해 팩스 1건을 재전송합니다.
-     * 발신/수신 정보 미입력시 기존과 동일한 정보로 팩스가 전송되고, 접수일 기준 최대 60일이 경과되지 않는 건만 재전송이 가능합니다.
-     * 팩스 재전송 요청시 포인트가 차감됩니다. (전송실패시 환불처리)
-     * 변환실패 사유로 전송실패한 팩스 접수건은 재전송이 불가합니다.
+     * - 발신/수신 정보 미입력시 기존과 동일한 정보로 팩스가 전송되고, 접수일 기준 최대 60일이 경과되지 않는 건만 재전송이 가능합니다.
+     * - 팩스 재전송 요청시 포인트가 차감됩니다. (전송실패시 환불처리)
+     * - 변환실패 사유로 전송실패한 팩스 접수건은 재전송이 불가합니다.
      * - https://developers.popbill.com/reference/fax/php/api/send#ResendFAX
      */
     public function ResendFAX(){
@@ -453,9 +453,9 @@ class FaxController extends Controller
 
     /**
      * 파트너가 할당한 전송요청 번호를 통해 팩스 1건을 재전송합니다.
-     * 발신/수신 정보 미입력시 기존과 동일한 정보로 팩스가 전송되고, 접수일 기준 최대 60일이 경과되지 않는 건만 재전송이 가능합니다.
-     * 팩스 재전송 요청시 포인트가 차감됩니다. (전송실패시 환불처리)
-     * 변환실패 사유로 전송실패한 팩스 접수건은 재전송이 불가합니다.
+     * - 발신/수신 정보 미입력시 기존과 동일한 정보로 팩스가 전송되고, 접수일 기준 최대 60일이 경과되지 않는 건만 재전송이 가능합니다.
+     * - 팩스 재전송 요청시 포인트가 차감됩니다. (전송실패시 환불처리)
+     * - 변환실패 사유로 전송실패한 팩스 접수건은 재전송이 불가합니다.
      * - https://developers.popbill.com/reference/fax/php/api/send#ResendFAXRN
      */
     public function ResendFAXRN(){
@@ -513,14 +513,14 @@ class FaxController extends Controller
 
     /**
      * 동일한 팩스파일을 다수의 수신자에게 전송하기 위해 팝빌에 접수합니다. (최대 전송파일 개수: 20개) (최대 1,000건)
-     * 발신/수신 정보 미입력시 기존과 동일한 정보로 팩스가 전송되고, 접수일 기준 최대 60일이 경과되지 않는 건만 재전송이 가능합니다.
-     * 팩스 재전송 요청시 포인트가 차감됩니다. (전송실패시 환불처리)
-     * 변환실패 사유로 전송실패한 팩스 접수건은 재전송이 불가합니다.
+     * - 발신/수신 정보 미입력시 기존과 동일한 정보로 팩스가 전송되고, 접수일 기준 최대 60일이 경과되지 않는 건만 재전송이 가능합니다.
+     * - 팩스 재전송 요청시 포인트가 차감됩니다. (전송실패시 환불처리)
+     * - 변환실패 사유로 전송실패한 팩스 접수건은 재전송이 불가합니다.
      * - https://developers.popbill.com/reference/fax/php/api/send#ResendFAX
      */
     public function ResendFAX_Multi(){
 
-    // 팝빌 회원 사업자번호
+        // 팝빌 회원 사업자번호
         $testCorpNum = '1234567890';
 
         // 팝빌 회원 아이디
@@ -580,9 +580,9 @@ class FaxController extends Controller
 
     /**
      * 파트너가 할당한 전송요청 번호를 통해 다수건의 팩스를 재전송합니다. (최대 전송파일 개수: 20개) (최대 1,000건)
-     * 발신/수신 정보 미입력시 기존과 동일한 정보로 팩스가 전송되고, 접수일 기준 최대 60일이 경과되지 않는 건만 재전송이 가능합니다.
-     * 팩스 재전송 요청시 포인트가 차감됩니다. (전송실패시 환불처리)
-     * 변환실패 사유로 전송실패한 팩스 접수건은 재전송이 불가합니다.
+     * - 발신/수신 정보 미입력시 기존과 동일한 정보로 팩스가 전송되고, 접수일 기준 최대 60일이 경과되지 않는 건만 재전송이 가능합니다.
+     * - 팩스 재전송 요청시 포인트가 차감됩니다. (전송실패시 환불처리)
+     * - 변환실패 사유로 전송실패한 팩스 접수건은 재전송이 불가합니다.
      * - https://developers.popbill.com/reference/fax/php/api/send#ResendFAXRN
      */
     public function ResendFAXRN_Multi(){
@@ -862,7 +862,7 @@ class FaxController extends Controller
 
     /**
      * 연동회원의 잔여포인트를 확인합니다.
-     * 과금방식이 파트너과금인 경우 파트너 잔여포인트 확인(GetPartnerBalance API) 함수를 통해 확인하시기 바랍니다.
+     * - 과금방식이 파트너과금인 경우 파트너 잔여포인트 확인(GetPartnerBalance API) 함수를 통해 확인하시기 바랍니다.
      * - https://developers.popbill.com/reference/fax/php/api/point#GetBalance
      */
     public function GetBalance(){
@@ -882,7 +882,7 @@ class FaxController extends Controller
 
     /**
      * 연동회원의 포인트 사용내역을 확인합니다.
-     * https://developers.popbill.com/reference/fax/php/api/point#GetUseHistory
+     * - https://developers.popbill.com/reference/fax/php/api/point#GetUseHistory
      */
     public function GetUseHistory(){
 
@@ -920,7 +920,7 @@ class FaxController extends Controller
 
     /**
      * 포인트 결제내역을 확인합니다.
-     * https://developers.popbill.com/reference/fax/php/api/point#GetPaymentHistory
+     * - https://developers.popbill.com/reference/fax/php/api/point#GetPaymentHistory
      */
     public function GetPaymentHistory(){
 
@@ -955,7 +955,7 @@ class FaxController extends Controller
 
     /**
      * 환불 신청내역을 확인합니다.
-     * https://developers.popbill.com/reference/fax/php/api/point#GetRefundHistory
+     * - https://developers.popbill.com/reference/fax/php/api/point#GetRefundHistory
      */
     public function GetRefundHistory(){
 
@@ -984,7 +984,7 @@ class FaxController extends Controller
 
     /**
      * 환불을 신청합니다.
-     * https://developers.popbill.com/reference/fax/php/api/point#Refund
+     * - https://developers.popbill.com/reference/fax/php/api/point#Refund
      */
     public function Refund(){
 
@@ -1031,7 +1031,7 @@ class FaxController extends Controller
 
     /**
      * 연동회원 포인트 충전을 위해 무통장입금을 신청합니다.
-     * https://developers.popbill.com/reference/fax/php/api/point#PaymentRequest
+     * - https://developers.popbill.com/reference/fax/php/api/point#PaymentRequest
      */
     public function PaymentRequest(){
 
@@ -1078,7 +1078,7 @@ class FaxController extends Controller
 
     /**
      * 연동회원 포인트 무통장 입금신청내역 1건을 확인합니다.
-     * https://developers.popbill.com/reference/fax/php/api/point#GetSettleResult
+     * - https://developers.popbill.com/reference/fax/php/api/point#GetSettleResult
      */
     public function GetSettleResult(){
 
@@ -1104,7 +1104,7 @@ class FaxController extends Controller
 
     /**
      * 연동회원 포인트 충전을 위한 페이지의 팝업 URL을 반환합니다.
-     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/fax/php/api/point#GetChargeURL
      */
     public function GetChargeURL(){
@@ -1128,7 +1128,7 @@ class FaxController extends Controller
 
     /**
      * 연동회원 포인트 결제내역 확인을 위한 페이지의 팝업 URL을 반환합니다.
-     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/fax/php/api/point#GetPaymentURL
      */
     public function GetPaymentURL(){
@@ -1153,7 +1153,7 @@ class FaxController extends Controller
 
     /**
      * 연동회원 포인트 사용내역 확인을 위한 페이지의 팝업 URL을 반환합니다.
-     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/fax/php/api/point#GetUseHistoryURL
      */
     public function GetUseHistoryURL(){
@@ -1178,7 +1178,7 @@ class FaxController extends Controller
 
     /**
      * 파트너의 잔여포인트를 확인합니다.
-     * 과금방식이 연동과금인 경우 연동회원 잔여포인트 확인(GetBalance API) 함수를 이용하시기 바랍니다.
+     * - 과금방식이 연동과금인 경우 연동회원 잔여포인트 확인(GetBalance API) 함수를 이용하시기 바랍니다.
      * - https://developers.popbill.com/reference/fax/php/api/point#GetPartnerBalance
      */
     public function GetPartnerBalance(){
@@ -1199,7 +1199,7 @@ class FaxController extends Controller
 
     /**
      * 파트너 포인트 충전을 위한 페이지의 팝업 URL을 반환합니다.
-     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/fax/php/api/point#GetPartnerURL
      */
     public function GetPartnerURL(){
@@ -1381,7 +1381,7 @@ class FaxController extends Controller
 
     /**
      * 팝빌 사이트에 로그인 상태로 접근할 수 있는 페이지의 팝업 URL을 반환합니다.
-     * 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
+     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/fax/php/api/member#GetAccessURL
      */
     public function GetAccessURL(){
@@ -1601,4 +1601,5 @@ class FaxController extends Controller
 
         return view('PResponse', ['code' => $code, 'message' => $message]);
     }
+
 }
