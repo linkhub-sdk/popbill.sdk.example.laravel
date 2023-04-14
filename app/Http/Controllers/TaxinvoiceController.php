@@ -1997,8 +1997,8 @@ class TaxinvoiceController extends Controller
         // 팝빌 회원 아이디
         $testUserID = 'testkorea';
 
-        // [TBOX] 임시문서함, [SBOX] 매출문서함, [PBOX] 매입문서함, 
-        // [WRITE] 매출문서작성, [SWBOX] 매출 발행 대기함, [PWBOX] 매입 발행 대기함
+        // [TBOX] 임시문서함, [SBOX] 매출문서함, [PBOX] 매입문서함,
+        // [WRITE] 정발행 작성, [SWBOX] 매출 발행 대기함, [PWBOX] 매입 발행 대기함
         $TOGO = 'TBOX';
 
         try {
