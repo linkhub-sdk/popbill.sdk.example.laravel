@@ -218,7 +218,7 @@ class CashbillController extends Controller
             // 거래일시, 날짜(yyyyMMddHHmmss)
             // 당일, 전일만 가능
             $Cashbill->tradeDT = '20221103000000';
-            
+
             // 거래구분, (소득공제용, 지출증빙용) 중 기재
             $Cashbill->tradeUsage = '소득공제용';
 
@@ -1222,6 +1222,7 @@ class CashbillController extends Controller
         // 환불사유
         $RefundForm->reason = '환불사유';
 
+
         // 팝빌 회원 아이디
         $testUserID = 'testkorea';
 
@@ -1229,12 +1230,13 @@ class CashbillController extends Controller
             $result = $this->PopbillCashbill->Refund($testCorpNum, $RefundForm, $testUserID);
             $code = $result->code;
             $message = $result->message;
+            $refundCode = $result->refundCode;
         }
         catch(PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
         }
-        return view('PResponse', ['code' => $code, 'message' => $message]);
+        return view('PResponse', ['code' => $code, 'message' => $message, 'refundCode'=>$refundCode]);
     }
 
     /**

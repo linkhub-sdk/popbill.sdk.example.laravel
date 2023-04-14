@@ -31,6 +31,9 @@
             @isset($invoiceNum)
             <li>invoiceNum (팝빌 승인번호) : {{ $invoiceNum }}</li>
             @endisset
+            @isset($refundCode)
+            <li>refundCode (환불 코드) : {{ $refundCode }}</li>
+            @endisset
         </ul>
     </fieldset>
 </div>
