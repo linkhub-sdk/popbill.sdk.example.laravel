@@ -16,7 +16,8 @@ use Linkhub\Popbill\PaymentForm;
 
 class FaxController extends Controller
 {
-    public function __construct() {
+    public function __construct()
+    {
 
         // 통신방식 설정
         define('LINKHUB_COMM_MODE', config('popbill.LINKHUB_COMM_MODE'));
@@ -38,7 +39,8 @@ class FaxController extends Controller
     }
 
     // HTTP Get Request URI -> 함수 라우팅 처리 함수
-    public function RouteHandelerFunc(Request $request){
+    public function RouteHandelerFunc(Request $request)
+    {
         $APIName = $request->route('APIName');
         return $this->$APIName();
     }
@@ -48,7 +50,8 @@ class FaxController extends Controller
      * - 발신번호 상태가 '승인'인 경우에만 code가 1로 반환됩니다.
      * - https://developers.popbill.com/reference/fax/php/api/sendnum#CheckSenderNumber
      */
-    public function CheckSenderNumber(){
+    public function CheckSenderNumber()
+    {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -63,7 +66,7 @@ class FaxController extends Controller
             $result = $this->PopbillFax->CheckSenderNumber($testCorpNum, $senderNumber, $testUserID);
             $code = $result->code;
             $message = $result->message;
-        } catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
         }
@@ -75,7 +78,8 @@ class FaxController extends Controller
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/fax/php/api/sendnum#GetSenderNumberMgtURL
      */
-    public function GetSenderNumberMgtURL(){
+    public function GetSenderNumberMgtURL()
+    {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -85,19 +89,20 @@ class FaxController extends Controller
 
         try {
             $url = $this->PopbillFax->GetSenderNumberMgtURL($testCorpNum, $testUserID);
-        } catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('ReturnValue', ['filedName' => "팩스 발신번호 관리 팝업 URL" , 'value' => $url]);
+        return view('ReturnValue', ['filedName' => "팩스 발신번호 관리 팝업 URL", 'value' => $url]);
     }
 
     /**
      * 팝빌에 등록한 연동회원의 팩스 발신번호 목록을 확인합니다.
      * - https://developers.popbill.com/reference/fax/php/api/sendnum#GetSenderNumberList
      */
-    public function GetSenderNumberList(){
+    public function GetSenderNumberList()
+    {
 
         // 팝빌회원 사업자번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -107,21 +112,20 @@ class FaxController extends Controller
 
         try {
             $result = $this->PopbillFax->GetSenderNumberList($testCorpNum, $testUserID);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('GetSenderNumberList', ['Result' => $result] );
-
+        return view('GetSenderNumberList', ['Result' => $result]);
     }
 
     /**
      * 팩스 1건을 전송합니다. (최대 전송파일 개수: 20개)
      * - https://developers.popbill.com/reference/fax/php/api/send#SendFAX
      */
-    public function SendFAX(){
+    public function SendFAX()
+    {
 
         // 팝빌 회원 사업자번호
         $testCorpNum = '1234567890';
@@ -164,10 +168,19 @@ class FaxController extends Controller
         $requestNum = '';
 
         try {
-            $receiptNum = $this->PopbillFax->SendFAX($testCorpNum, $Sender, $Receivers, $Files,
-                $reserveDT, $testUserID, $SenderName, $adsYN, $title, $requestNum);
-        }
-        catch(PopbillException $pe) {
+            $receiptNum = $this->PopbillFax->SendFAX(
+                $testCorpNum,
+                $Sender,
+                $Receivers,
+                $Files,
+                $reserveDT,
+                $testUserID,
+                $SenderName,
+                $adsYN,
+                $title,
+                $requestNum
+            );
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -176,10 +189,11 @@ class FaxController extends Controller
     }
 
     /**
-    * 동일한 팩스파일을 다수의 수신자에게 전송하기 위해 팝빌에 접수합니다. (최대 전송파일 개수 : 20개) (최대 1,000건)
-    * - https://developers.popbill.com/reference/fax/php/api/send#SendFAX
-    */
-    public function SendFAX_Multi(){
+     * 동일한 팩스파일을 다수의 수신자에게 전송하기 위해 팝빌에 접수합니다. (최대 전송파일 개수 : 20개) (최대 1,000건)
+     * - https://developers.popbill.com/reference/fax/php/api/send#SendFAX
+     */
+    public function SendFAX_Multi()
+    {
 
         // 팝빌 회원 사업자번호
         $testCorpNum = '1234567890';
@@ -232,10 +246,19 @@ class FaxController extends Controller
         $requestNum = '';
 
         try {
-            $receiptNum = $this->PopbillFax->SendFAX($testCorpNum, $Sender, $Receivers, $Files,
-                $reserveDT, $testUserID, $SenderName, $adsYN, $title, $requestNum);
-        }
-        catch(PopbillException $pe) {
+            $receiptNum = $this->PopbillFax->SendFAX(
+                $testCorpNum,
+                $Sender,
+                $Receivers,
+                $Files,
+                $reserveDT,
+                $testUserID,
+                $SenderName,
+                $adsYN,
+                $title,
+                $requestNum
+            );
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -248,7 +271,8 @@ class FaxController extends Controller
      * 전송할 파일의 바이너리 데이터를 팩스 1건 전송합니다. (최대 전송파일 개수: 20개)
      * - https://developers.popbill.com/reference/fax/php/api/send#SendFAXBinary
      */
-    public function SendFAXBinary(){
+    public function SendFAXBinary()
+    {
 
         // 팝빌 회원 사업자번호
         $testCorpNum = '1234567890';
@@ -300,10 +324,19 @@ class FaxController extends Controller
         $requestNum = '';
 
         try {
-            $receiptNum = $this->PopbillFax->SendFAXBinary($testCorpNum, $Sender, $Receivers, $FileDatas,
-                $reserveDT, $testUserID, $SenderName, $adsYN, $title, $requestNum);
-        }
-        catch(PopbillException $pe) {
+            $receiptNum = $this->PopbillFax->SendFAXBinary(
+                $testCorpNum,
+                $Sender,
+                $Receivers,
+                $FileDatas,
+                $reserveDT,
+                $testUserID,
+                $SenderName,
+                $adsYN,
+                $title,
+                $requestNum
+            );
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -312,10 +345,11 @@ class FaxController extends Controller
     }
 
     /**
-    * 동일한 파일의 바이너리 데이터를 다수의 수신자에게 전송하기 위해 팝빌에 접수합니다. (최대 전송파일 개수 : 20개) (최대 1,000건)
-    * - https://developers.popbill.com/reference/fax/php/api/send#SendFAXBinary
-    */
-    public function SendFAXBinary_Multi(){
+     * 동일한 파일의 바이너리 데이터를 다수의 수신자에게 전송하기 위해 팝빌에 접수합니다. (최대 전송파일 개수 : 20개) (최대 1,000건)
+     * - https://developers.popbill.com/reference/fax/php/api/send#SendFAXBinary
+     */
+    public function SendFAXBinary_Multi()
+    {
 
         // 팝빌 회원 사업자번호
         $testCorpNum = '1234567890';
@@ -380,10 +414,19 @@ class FaxController extends Controller
         $requestNum = '';
 
         try {
-            $receiptNum = $this->PopbillFax->SendFAXBinary($testCorpNum, $Sender, $Receivers, $FileDatas,
-                $reserveDT, $testUserID, $SenderName, $adsYN, $title, $requestNum);
-        }
-        catch(PopbillException $pe) {
+            $receiptNum = $this->PopbillFax->SendFAXBinary(
+                $testCorpNum,
+                $Sender,
+                $Receivers,
+                $FileDatas,
+                $reserveDT,
+                $testUserID,
+                $SenderName,
+                $adsYN,
+                $title,
+                $requestNum
+            );
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -399,7 +442,8 @@ class FaxController extends Controller
      * - 변환실패 사유로 전송실패한 팩스 접수건은 재전송이 불가합니다.
      * - https://developers.popbill.com/reference/fax/php/api/send#ResendFAX
      */
-    public function ResendFAX(){
+    public function ResendFAX()
+    {
 
         // 팝빌 회원 사업자번호
         $testCorpNum = '1234567890';
@@ -441,9 +485,18 @@ class FaxController extends Controller
         $requestNum = '';
 
         try {
-            $receiptNum = $this->PopbillFax->ResendFAX($testCorpNum, $ReceiptNum, $Sender,
-                $SenderName, $Receivers, $reserveDT, $testUserID, $title, $requestNum);
-        } catch(PopbillException $pe) {
+            $receiptNum = $this->PopbillFax->ResendFAX(
+                $testCorpNum,
+                $ReceiptNum,
+                $Sender,
+                $SenderName,
+                $Receivers,
+                $reserveDT,
+                $testUserID,
+                $title,
+                $requestNum
+            );
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -458,7 +511,8 @@ class FaxController extends Controller
      * - 변환실패 사유로 전송실패한 팩스 접수건은 재전송이 불가합니다.
      * - https://developers.popbill.com/reference/fax/php/api/send#ResendFAXRN
      */
-    public function ResendFAXRN(){
+    public function ResendFAXRN()
+    {
 
         // 팝빌 회원 사업자번호
         $testCorpNum = '1234567890';
@@ -500,15 +554,23 @@ class FaxController extends Controller
         $requestNum = '';
 
         try {
-            $receiptNum = $this->PopbillFax->ResendFAXRN($testCorpNum, $requestNum, $Sender,
-                $SenderName, $Receivers, $originalFAXrequestNum, $reserveDT, $testUserID, $title);
-        } catch(PopbillException $pe) {
+            $receiptNum = $this->PopbillFax->ResendFAXRN(
+                $testCorpNum,
+                $requestNum,
+                $Sender,
+                $SenderName,
+                $Receivers,
+                $originalFAXrequestNum,
+                $reserveDT,
+                $testUserID,
+                $title
+            );
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
         return view('ReturnValue', ['filedName' => '팩스 재전송 접수번호(receiptNum)', 'value' => $receiptNum]);
-
     }
 
     /**
@@ -518,7 +580,8 @@ class FaxController extends Controller
      * - 변환실패 사유로 전송실패한 팩스 접수건은 재전송이 불가합니다.
      * - https://developers.popbill.com/reference/fax/php/api/send#ResendFAX
      */
-    public function ResendFAX_Multi(){
+    public function ResendFAX_Multi()
+    {
 
         // 팝빌 회원 사업자번호
         $testCorpNum = '1234567890';
@@ -568,9 +631,18 @@ class FaxController extends Controller
         $requestNum = '';
 
         try {
-            $receiptNum = $this->PopbillFax->ResendFAX($testCorpNum, $ReceiptNum, $Sender,
-                $SenderName, $Receivers, $reserveDT, $testUserID, $title, $requestNum);
-        } catch(PopbillException $pe) {
+            $receiptNum = $this->PopbillFax->ResendFAX(
+                $testCorpNum,
+                $ReceiptNum,
+                $Sender,
+                $SenderName,
+                $Receivers,
+                $reserveDT,
+                $testUserID,
+                $title,
+                $requestNum
+            );
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -585,7 +657,8 @@ class FaxController extends Controller
      * - 변환실패 사유로 전송실패한 팩스 접수건은 재전송이 불가합니다.
      * - https://developers.popbill.com/reference/fax/php/api/send#ResendFAXRN
      */
-    public function ResendFAXRN_Multi(){
+    public function ResendFAXRN_Multi()
+    {
 
         // 팝빌 회원 사업자번호
         $testCorpNum = '1234567890';
@@ -635,9 +708,19 @@ class FaxController extends Controller
         $requestNum = '';
 
         try {
-            $receiptNum = $this->PopbillFax->ResendFAXRN($testCorpNum, $requestNum, $Sender,
-                $SenderName, $Receivers, $originalFAXrequestNum, $reserveDT, $testUserID, $title, $requestNum);
-        } catch(PopbillException $pe) {
+            $receiptNum = $this->PopbillFax->ResendFAXRN(
+                $testCorpNum,
+                $requestNum,
+                $Sender,
+                $SenderName,
+                $Receivers,
+                $originalFAXrequestNum,
+                $reserveDT,
+                $testUserID,
+                $title,
+                $requestNum
+            );
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -649,7 +732,8 @@ class FaxController extends Controller
      * 팝빌에서 반환받은 접수번호를 통해 예약접수된 팩스 전송을 취소합니다. (예약시간 10분 전까지 가능)
      * - https://developers.popbill.com/reference/fax/php/api/send#CancelReserve
      */
-    public function CancelReserve(){
+    public function CancelReserve()
+    {
 
         // 팝빌 회원 사업자번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -661,11 +745,10 @@ class FaxController extends Controller
         $testUserID = 'testkorea';
 
         try {
-            $result = $this->PopbillFax->CancelReserve($testCorpNum ,$ReceiptNum, $testUserID);
+            $result = $this->PopbillFax->CancelReserve($testCorpNum, $ReceiptNum, $testUserID);
             $code = $result->code;
             $message = $result->message;
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
         }
@@ -677,7 +760,8 @@ class FaxController extends Controller
      * 파트너가 할당한 전송요청 번호를 통해 예약접수된 팩스 전송을 취소합니다. (예약시간 10분 전까지 가능)
      * - https://developers.popbill.com/reference/fax/php/api/send#CancelReserveRN
      */
-    public function CancelReserveRN(){
+    public function CancelReserveRN()
+    {
 
         // 팝빌 회원 사업자번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -689,11 +773,10 @@ class FaxController extends Controller
         $testUserID = 'testkorea';
 
         try {
-            $result = $this->PopbillFax->CancelReserveRN($testCorpNum ,$requestNum, $testUserID);
+            $result = $this->PopbillFax->CancelReserveRN($testCorpNum, $requestNum, $testUserID);
             $code = $result->code;
             $message = $result->message;
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
         }
@@ -704,7 +787,8 @@ class FaxController extends Controller
      * 팝빌에서 반환 받은 접수번호를 통해 팩스 전송상태 및 결과를 확인합니다.
      * - https://developers.popbill.com/reference/fax/php/api/info#GetFaxDetail
      */
-    public function GetFaxDetail(){
+    public function GetFaxDetail()
+    {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -717,20 +801,21 @@ class FaxController extends Controller
 
         try {
             $result = $this->PopbillFax->GetFaxDetail($testCorpNum, $ReceiptNum, $testUserID);
-        } catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
 
-        return view('Fax/GetFaxDetail', ['Result' => $result] );
+        return view('Fax/GetFaxDetail', ['Result' => $result]);
     }
 
     /**
      * 파트너가 할당한 전송요청 번호를 통해 팩스 전송상태 및 결과를 확인합니다.
      * - https://developers.popbill.com/reference/fax/php/api/info#GetFaxDetailRN
      */
-    public function GetFaxDetailRN(){
+    public function GetFaxDetailRN()
+    {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -743,13 +828,13 @@ class FaxController extends Controller
 
         try {
             $result = $this->PopbillFax->GetFaxDetailRN($testCorpNum, $requestNum, $testUserID);
-        } catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
 
-        return view('Fax/GetFaxDetail', ['Result' => $result] );
+        return view('Fax/GetFaxDetail', ['Result' => $result]);
     }
 
     /**
@@ -757,7 +842,8 @@ class FaxController extends Controller
      * - 팩스 접수일시로부터 2개월 이내 접수건만 조회할 수 있습니다.
      * - https://developers.popbill.com/reference/fax/php/api/info#Search
      */
-    public function Search(){
+    public function Search()
+    {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -802,12 +888,12 @@ class FaxController extends Controller
 
         try {
             $result = $this->PopbillFax->Search($testCorpNum, $SDate, $EDate, $State, $ReserveYN, $SenderOnly, $Page, $PerPage, $Order, $testUserID, $QString);
-        } catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('Fax/Search', ['Result' => $result] );
+        return view('Fax/Search', ['Result' => $result]);
     }
 
     /**
@@ -815,7 +901,8 @@ class FaxController extends Controller
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/fax/php/api/info#GetSentListURL
      */
-    public function GetSentListURL(){
+    public function GetSentListURL()
+    {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -825,12 +912,12 @@ class FaxController extends Controller
 
         try {
             $url = $this->PopbillFax->GetSentListURL($testCorpNum, $testUserID);
-        } catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('ReturnValue', ['filedName' => "팩스 전송내역 팝업 URL" , 'value' => $url]);
+        return view('ReturnValue', ['filedName' => "팩스 전송내역 팝업 URL", 'value' => $url]);
     }
 
     /**
@@ -838,7 +925,8 @@ class FaxController extends Controller
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/fax/php/api/info#GetPreviewURL
      */
-    public function GetPreviewURL(){
+    public function GetPreviewURL()
+    {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -850,14 +938,14 @@ class FaxController extends Controller
         $testUserID = 'testkorea';
 
         try {
-        $url = $this->PopbillFax->GetPreviewURL($testCorpNum,$ReceiptNum,$testUserID);
-        } catch(PopbillException $pe) {
+            $url = $this->PopbillFax->GetPreviewURL($testCorpNum, $ReceiptNum, $testUserID);
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
 
-        return view('ReturnValue', ['filedName' => "팩스 미리보기 팝업 URL" , 'value' => $url]);
+        return view('ReturnValue', ['filedName' => "팩스 미리보기 팝업 URL", 'value' => $url]);
     }
 
     /**
@@ -865,26 +953,28 @@ class FaxController extends Controller
      * - 과금방식이 파트너과금인 경우 파트너 잔여포인트 확인(GetPartnerBalance API) 함수를 통해 확인하시기 바랍니다.
      * - https://developers.popbill.com/reference/fax/php/api/point#GetBalance
      */
-    public function GetBalance(){
+    public function GetBalance()
+    {
 
         // 팝빌회원 사업자번호
         $testCorpNum = '1234567890';
 
         try {
             $remainPoint = $this->PopbillFax->GetBalance($testCorpNum);
-        } catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('ReturnValue', ['filedName' => "연동회원 잔여포인트" , 'value' => $remainPoint]);
+        return view('ReturnValue', ['filedName' => "연동회원 잔여포인트", 'value' => $remainPoint]);
     }
 
     /**
      * 연동회원의 포인트 사용내역을 확인합니다.
      * - https://developers.popbill.com/reference/fax/php/api/point#GetUseHistory
      */
-    public function GetUseHistory(){
+    public function GetUseHistory()
+    {
 
         // 팝빌회원 사업자번호 (하이픈 '-' 제외 10 자리)
         $testCorpNum = "1234567890";
@@ -907,10 +997,9 @@ class FaxController extends Controller
         // 팝빌회원 아이디
         $testUserID = 'testkorea';
 
-        try	{
+        try {
             $result = $this->PopbillFax->GetUseHistory($testCorpNum, $SDate, $EDate, $Page, $PerPage, $Order, $testUserID);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -922,7 +1011,8 @@ class FaxController extends Controller
      * 포인트 결제내역을 확인합니다.
      * - https://developers.popbill.com/reference/fax/php/api/point#GetPaymentHistory
      */
-    public function GetPaymentHistory(){
+    public function GetPaymentHistory()
+    {
 
         // 팝빌회원 사업자번호 (하이픈 '-' 제외 10 자리)
         $testCorpNum = "1234567890";
@@ -942,10 +1032,9 @@ class FaxController extends Controller
         // 팝빌회원 아이디
         $testUserID = 'testkorea';
 
-        try	{
+        try {
             $result = $this->PopbillFax->GetPaymentHistory($testCorpNum, $SDate, $EDate, $Page, $PerPage, $testUserID);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -957,7 +1046,8 @@ class FaxController extends Controller
      * 환불 신청내역을 확인합니다.
      * - https://developers.popbill.com/reference/fax/php/api/point#GetRefundHistory
      */
-    public function GetRefundHistory(){
+    public function GetRefundHistory()
+    {
 
         // 팝빌회원 사업자번호 (하이픈 '-' 제외 10 자리)
         $testCorpNum = "1234567890";
@@ -971,10 +1061,9 @@ class FaxController extends Controller
         // 팝빌회원 아이디
         $testUserID = 'testkorea';
 
-        try	{
+        try {
             $result = $this->PopbillFax->GetRefundHistory($testCorpNum, $Page, $PerPage, $testUserID);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -986,7 +1075,8 @@ class FaxController extends Controller
      * 환불을 신청합니다.
      * - https://developers.popbill.com/reference/fax/php/api/point#Refund
      */
-    public function Refund(){
+    public function Refund()
+    {
 
         // 팝빌 회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
@@ -1017,12 +1107,11 @@ class FaxController extends Controller
         // 팝빌 회원 아이디
         $testUserID = 'testkorea';
 
-        try	{
+        try {
             $result = $this->PopbillFax->Refund($testCorpNum, $RefundForm, $testUserID);
             $code = $result->code;
             $message = $result->message;
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
         }
@@ -1033,7 +1122,8 @@ class FaxController extends Controller
      * 연동회원 포인트 충전을 위해 무통장입금을 신청합니다.
      * - https://developers.popbill.com/reference/fax/php/api/point#PaymentRequest
      */
-    public function PaymentRequest(){
+    public function PaymentRequest()
+    {
 
         // 팝빌 회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
@@ -1067,8 +1157,7 @@ class FaxController extends Controller
             $code = $result->code;
             $message = $result->message;
             $settleCode = $result->settleCode;
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -1080,7 +1169,8 @@ class FaxController extends Controller
      * 연동회원 포인트 무통장 입금신청내역 1건을 확인합니다.
      * - https://developers.popbill.com/reference/fax/php/api/point#GetSettleResult
      */
-    public function GetSettleResult(){
+    public function GetSettleResult()
+    {
 
         // 팝빌회원 사업자번호
         $testCorpNum = '1234567890';
@@ -1093,8 +1183,7 @@ class FaxController extends Controller
 
         try {
             $result = $this->PopbillFax->GetSettleResult($testCorpNum, $settleCode, $testUserID);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -1107,7 +1196,8 @@ class FaxController extends Controller
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/fax/php/api/point#GetChargeURL
      */
-    public function GetChargeURL(){
+    public function GetChargeURL()
+    {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -1117,13 +1207,13 @@ class FaxController extends Controller
 
         try {
             $url = $this->PopbillFax->GetChargeURL($testCorpNum, $testUserID);
-        } catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
 
-        return view('ReturnValue', ['filedName' => "연동회원 포인트 충전 팝업 URL" , 'value' => $url]);
+        return view('ReturnValue', ['filedName' => "연동회원 포인트 충전 팝업 URL", 'value' => $url]);
     }
 
     /**
@@ -1131,7 +1221,8 @@ class FaxController extends Controller
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/fax/php/api/point#GetPaymentURL
      */
-    public function GetPaymentURL(){
+    public function GetPaymentURL()
+    {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -1141,14 +1232,13 @@ class FaxController extends Controller
 
         try {
             $url = $this->PopbillFax->GetPaymentURL($testCorpNum, $testUserID);
-        } catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
 
-        return view('ReturnValue', ['filedName' => "연동회원 포인트 결제내역 팝업 URL" , 'value' => $url]);
-
+        return view('ReturnValue', ['filedName' => "연동회원 포인트 결제내역 팝업 URL", 'value' => $url]);
     }
 
     /**
@@ -1156,7 +1246,8 @@ class FaxController extends Controller
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/fax/php/api/point#GetUseHistoryURL
      */
-    public function GetUseHistoryURL(){
+    public function GetUseHistoryURL()
+    {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -1166,14 +1257,13 @@ class FaxController extends Controller
 
         try {
             $url = $this->PopbillFax->GetUseHistoryURL($testCorpNum, $testUserID);
-        } catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
-          return view('PResponse', ['code' => $code, 'message' => $message]);
+            return view('PResponse', ['code' => $code, 'message' => $message]);
         }
 
-        return view('ReturnValue', ['filedName' => "연동회원 포인트 사용내역 팝업 URL" , 'value' => $url]);
-
+        return view('ReturnValue', ['filedName' => "연동회원 포인트 사용내역 팝업 URL", 'value' => $url]);
     }
 
     /**
@@ -1181,20 +1271,20 @@ class FaxController extends Controller
      * - 과금방식이 연동과금인 경우 연동회원 잔여포인트 확인(GetBalance API) 함수를 이용하시기 바랍니다.
      * - https://developers.popbill.com/reference/fax/php/api/point#GetPartnerBalance
      */
-    public function GetPartnerBalance(){
+    public function GetPartnerBalance()
+    {
 
         // 팝빌회원 사업자번호
         $testCorpNum = '1234567890';
 
         try {
             $remainPoint = $this->PopbillFax->GetPartnerBalance($testCorpNum);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('ReturnValue', ['filedName' => "파트너 잔여포인트" , 'value' => $remainPoint]);
+        return view('ReturnValue', ['filedName' => "파트너 잔여포인트", 'value' => $remainPoint]);
     }
 
     /**
@@ -1202,7 +1292,8 @@ class FaxController extends Controller
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/fax/php/api/point#GetPartnerURL
      */
-    public function GetPartnerURL(){
+    public function GetPartnerURL()
+    {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -1212,20 +1303,20 @@ class FaxController extends Controller
 
         try {
             $url = $this->PopbillFax->GetPartnerURL($testCorpNum, $TOGO);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('ReturnValue', ['filedName' => "파트너 포인트 충전 팝업 URL" , 'value' => $url]);
+        return view('ReturnValue', ['filedName' => "파트너 포인트 충전 팝업 URL", 'value' => $url]);
     }
 
     /**
      * 팩스 전송시 과금되는 포인트 단가를 확인합니다.
      * - https://developers.popbill.com/reference/fax/php/api/point#GetUnitCost
      */
-    public function GetUnitCost(){
+    public function GetUnitCost()
+    {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -1236,22 +1327,22 @@ class FaxController extends Controller
         $receiveNumType = '일반';
 
         try {
-            $unitCost= $this->PopbillFax->GetUnitCost($testCorpNum, $receiveNumType);
-        }
-        catch(PopbillException $pe) {
+            $unitCost = $this->PopbillFax->GetUnitCost($testCorpNum, $receiveNumType);
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
 
-        return view('ReturnValue', ['filedName' => "팩스 전송단가 " , 'value' => $unitCost]);
+        return view('ReturnValue', ['filedName' => "팩스 전송단가 ", 'value' => $unitCost]);
     }
 
     /**
      * 팝빌 팩스 API 서비스 과금정보를 확인합니다.
      * - https://developers.popbill.com/reference/fax/php/api/point#GetChargeInfo
      */
-    public function GetChargeInfo(){
+    public function GetChargeInfo()
+    {
 
         // 팝빌회원 사업자번호, '-'제외 10자리
         $testCorpNum = '1234567890';
@@ -1266,8 +1357,7 @@ class FaxController extends Controller
 
         try {
             $result = $this->PopbillFax->GetChargeInfo($testCorpNum, $testUserID, $receiveNumType);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -1279,7 +1369,8 @@ class FaxController extends Controller
      * 사업자번호를 조회하여 연동회원 가입여부를 확인합니다.
      * - https://developers.popbill.com/reference/fax/php/api/member#CheckIsMember
      */
-    public function CheckIsMember(){
+    public function CheckIsMember()
+    {
 
         // 사업자번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -1291,8 +1382,7 @@ class FaxController extends Controller
             $result = $this->PopbillFax->CheckIsMember($testCorpNum, $LinkID);
             $code = $result->code;
             $message = $result->message;
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
         }
@@ -1304,17 +1394,17 @@ class FaxController extends Controller
      * 사용하고자 하는 아이디의 중복여부를 확인합니다.
      * - https://developers.popbill.com/reference/fax/php/api/member#CheckID
      */
-    public function CheckID(){
+    public function CheckID()
+    {
 
         // 중복여부를 확인할 아이디
         $testUserID = 'testkorea';
 
         try {
-        $result = $this->PopbillFax->CheckID($testUserID);
-        $code = $result->code;
-        $message = $result->message;
-        }
-        catch(PopbillException $pe) {
+            $result = $this->PopbillFax->CheckID($testUserID);
+            $code = $result->code;
+            $message = $result->message;
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
         }
@@ -1326,7 +1416,8 @@ class FaxController extends Controller
      * 사용자를 연동회원으로 가입처리합니다.
      * - https://developers.popbill.com/reference/fax/php/api/member#JoinMember
      */
-    public function JoinMember(){
+    public function JoinMember()
+    {
 
         $joinForm = new JoinForm();
 
@@ -1370,8 +1461,7 @@ class FaxController extends Controller
             $result = $this->PopbillFax->JoinMember($joinForm);
             $code = $result->code;
             $message = $result->message;
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
         }
@@ -1384,7 +1474,8 @@ class FaxController extends Controller
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/fax/php/api/member#GetAccessURL
      */
-    public function GetAccessURL(){
+    public function GetAccessURL()
+    {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -1394,19 +1485,20 @@ class FaxController extends Controller
 
         try {
             $url = $this->PopbillFax->GetAccessURL($testCorpNum, $testUserID);
-        } catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('ReturnValue', ['filedName' => "팝빌 로그인 URL" , 'value' => $url]);
+        return view('ReturnValue', ['filedName' => "팝빌 로그인 URL", 'value' => $url]);
     }
 
     /**
      * 연동회원의 회사정보를 확인합니다.
      * - https://developers.popbill.com/reference/fax/php/api/member#GetCorpInfo
      */
-    public function GetCorpInfo(){
+    public function GetCorpInfo()
+    {
 
         // 팝빌회원 사업자번호, '-'제외 10자리
         $testCorpNum = '1234567890';
@@ -1416,8 +1508,7 @@ class FaxController extends Controller
 
         try {
             $CorpInfo = $this->PopbillFax->GetCorpInfo($testCorpNum, $testUserID);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -1430,7 +1521,8 @@ class FaxController extends Controller
      * 연동회원의 회사정보를 수정합니다.
      * - https://developers.popbill.com/reference/fax/php/api/member#UpdateCorpInfo
      */
-    public function UpdateCorpInfo(){
+    public function UpdateCorpInfo()
+    {
 
         // 팝빌회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
@@ -1457,8 +1549,7 @@ class FaxController extends Controller
             $result =  $this->PopbillFax->UpdateCorpInfo($testCorpNum, $CorpInfo);
             $code = $result->code;
             $message = $result->message;
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
         }
@@ -1470,7 +1561,8 @@ class FaxController extends Controller
      * 연동회원 사업자번호에 담당자(팝빌 로그인 계정)를 추가합니다.
      * - https://developers.popbill.com/reference/fax/php/api/member#RegistContact
      */
-    public function RegistContact(){
+    public function RegistContact()
+    {
 
         // 팝빌회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
@@ -1500,8 +1592,7 @@ class FaxController extends Controller
             $result = $this->PopbillFax->RegistContact($testCorpNum, $ContactInfo);
             $code = $result->code;
             $message = $result->message;
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
         }
@@ -1513,7 +1604,8 @@ class FaxController extends Controller
      * 연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 정보을 확인합니다.
      * - https://developers.popbill.com/reference/fax/php/api/member#GetContactInfo
      */
-    public function GetContactInfo(){
+    public function GetContactInfo()
+    {
         // 팝빌회원 사업자번호, '-'제외 10자리
         $testCorpNum = '1234567890';
 
@@ -1525,8 +1617,7 @@ class FaxController extends Controller
 
         try {
             $ContactInfo = $this->PopbillFax->GetContactInfo($testCorpNum, $contactID, $testUserID);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -1539,7 +1630,8 @@ class FaxController extends Controller
      * 연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 목록을 확인합니다.
      * - https://developers.popbill.com/reference/fax/php/api/member#ListContact
      */
-    public function ListContact(){
+    public function ListContact()
+    {
 
         // 팝빌회원 사업자번호, '-'제외 10자리
         $testCorpNum = '1234567890';
@@ -1549,8 +1641,7 @@ class FaxController extends Controller
 
         try {
             $ContactList = $this->PopbillFax->ListContact($testCorpNum, $testUserID);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -1563,7 +1654,8 @@ class FaxController extends Controller
      * 연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 정보를 수정합니다.
      * - https://developers.popbill.com/reference/fax/php/api/member#UpdateContact
      */
-    public function UpdateContact(){
+    public function UpdateContact()
+    {
 
         // 팝빌회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
@@ -1593,8 +1685,7 @@ class FaxController extends Controller
             $result = $this->PopbillFax->UpdateContact($testCorpNum, $ContactInfo, $testUserID);
             $code = $result->code;
             $message = $result->message;
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
         }
@@ -1602,4 +1693,90 @@ class FaxController extends Controller
         return view('PResponse', ['code' => $code, 'message' => $message]);
     }
 
+
+    /**
+     * 회원 탈퇴 요청을 합니다.
+     * - https://developers.popbill.com/reference/fax/php/api/member#QuitRequest
+     */
+    public function QuitRequest()
+    {
+
+        // 팝빌 회원 사업자 번호
+        $CorpNum = "1234567890";
+
+        // 회원 탈퇴 사유
+        $QuitReason = "탈퇴합니다.";
+
+        // 팝빌 회원 아이디
+        $UserID = "testkorea";
+
+        try {
+            $result = $this->PopbillFax->QuitRequest($CorpNum, $QuitReason, $UserID);
+        } catch (PopbillException $pe) {
+            $code = $pe->getCode();
+            $message = $pe->getMessage();
+            return view('PResponse', ['code' => $code, 'message' => $message]);
+        }
+        return view('PResponse', ['code' => $result->code, 'message' => $result->message]);
+    }
+
+    /**
+     * 환불 가능 포인트를 조회합니다.
+     * * - https://developers.popbill.com/reference/fax/php/api/member#GetRefundablePoint
+     */
+    public function GetRefundablePoint()
+    {
+
+        // 팝빌 회원 사업자 번호
+        $CorpNum = "1234567890";
+
+        // 팝빌 회원 아이디
+        $UserID = "testkorea";
+
+        try {
+            $result = $this->PopbillFax->GetRefundablePoint($CorpNum, $UserID);
+        } catch (PopbillException $pe) {
+            $code = $pe->getCode();
+            $message = $pe->getMessage();
+            return view('PResponse', ['code' => $code, 'message' => $message]);
+        }
+        return view('GetRefundablePoint', ['refundableBalance' => $result->refundableBalance]);
+    }
+
+    /**
+     * 환불 신청 상태를 조회합니다
+     * * - https://developers.popbill.com/reference/fax/php/api/member#GetRefundResult
+     */
+    public function GetRefundResult()
+    {
+
+        // 팝빌 회원 사업자 번호
+        $CorpNum = "1234567890";
+
+        // 환불 신청 코드
+        $RefundCode = "";
+
+        // 팝빌 회원 아이디
+        $UserID = "testkorea";
+
+        try {
+            $result = $this->PopbillFax->GetRefundResult($CorpNum, $RefundCode, $UserID);
+        } catch (PopbillException $pe) {
+            $code = $pe->getCode();
+            $message = $pe->getMessage();
+            return view('PResponse', ['code' => $code, 'message' => $message]);
+        }
+        return view(
+            'GetRefundResult',
+            [
+                'reqDT' => $result->reqDT,
+                'requestPoint' => $result->requestPoint,
+                'accountBank' => $result->accountBank,
+                'accountNum' => $result->accountNum,
+                'accountName' => $result->accountName,
+                'state' => $result->state,
+                'reason' => $result->reason
+            ]
+        );
+    }
 }

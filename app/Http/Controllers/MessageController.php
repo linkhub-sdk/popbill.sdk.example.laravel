@@ -145,6 +145,8 @@ class MessageController extends Controller
             'msg' => '안녕하세요.' // 메시지 내용
         );
 
+        $Message[1] =
+
         // 팝빌 회원 아이디
         $testUserID = 'testkorea';
 
@@ -547,7 +549,7 @@ class MessageController extends Controller
 
         // 팝빌 회원 아이디
         $testUserID = 'testkorea';
-        
+
         try {
             $result = $this->PopbillMessaging->CancelReservebyRCV($testCorpNum ,$ReceiptNum, $receiveNum, $testUserID);
             $code = $result->code;
@@ -1509,4 +1511,89 @@ class MessageController extends Controller
         return view('PResponse', ['code' => $code, 'message' => $message]);
     }
 
+    /**
+* 회원 탈퇴 요청을 합니다.
+* - https://developers.popbill.com/reference/sms/php/api/member#QuitRequest
+*/
+public function QuitRequest(){
+
+    // 팝빌 회원 사업자 번호
+    $CorpNum = "1234567890";
+
+    // 회원 탈퇴 사유
+    $QuitReason = "탈퇴합니다.";
+
+    // 팝빌 회원 아이디
+    $UserID = "testkorea";
+
+    try {
+    $result = $this->PopbillMessaging->QuitRequest($CorpNum, $QuitReason, $UserID);
+    }
+    catch(PopbillException $pe) {
+    $code = $pe->getCode();
+    $message = $pe->getMessage();
+    return view('PResponse', ['code' => $code, 'message' => $message]);
+    }
+    return view('PResponse', ['code' => $result->code , 'message'=> $result->message]);
+
+    }
+
+    /**
+        * 환불 가능 포인트를 조회합니다.
+        * * - https://developers.popbill.com/reference/sms/php/api/member#GetRefundablePoint
+        */
+    public function GetRefundablePoint(){
+
+    // 팝빌 회원 사업자 번호
+    $CorpNum = "1234567890";
+
+    // 팝빌 회원 아이디
+    $UserID = "testkorea";
+
+    try {
+    $result = $this->PopbillMessaging->GetRefundablePoint($CorpNum, $UserID);
+    }
+    catch(PopbillException $pe) {
+    $code = $pe->getCode();
+    $message = $pe->getMessage();
+    return view('PResponse', ['code' => $code, 'message' => $message]);
+    }
+    return view('GetRefundablePoint', ['refundableBalance' => $result->refundableBalance]);
+
+    }
+
+    /**
+        * 환불 신청 상태를 조회합니다
+        * * - https://developers.popbill.com/reference/sms/php/api/member#GetRefundResult
+        */
+    public function GetRefundResult(){
+
+    // 팝빌 회원 사업자 번호
+    $CorpNum = "1234567890";
+
+    // 환불 신청 코드
+    $RefundCode = "";
+
+    // 팝빌 회원 아이디
+    $UserID = "testkorea";
+
+    try {
+    $result = $this->PopbillMessaging->GetRefundResult($CorpNum, $RefundCode, $UserID);
+
+    }
+    catch(PopbillException $pe) {
+    $code = $pe->getCode();
+    $message = $pe->getMessage();
+    return view('PResponse', ['code' => $code, 'message' => $message]);
+    }
+    return view('GetRefundResult', ['reqDT' => $result->reqDT,
+    'requestPoint' => $result->requestPoint,
+    'accountBank' => $result->accountBank,
+    'accountNum' => $result->accountNum,
+    'accountName' => $result->accountName,
+    'state' => $result->state,
+    'reason' => $result->reason]
+    );
+
+    }
 }
