@@ -59,6 +59,8 @@
             <li><a href="Fax/GetRefundHistory">GetRefundHistory</a> (연동회원 포인트 환불내역 확인)</li>
             <li><a href="Fax/GetPartnerBalance">GetPartnerBalance</a> (파트너 잔여포인트 확인)</li>
             <li><a href="Fax/GetPartnerURL">GetPartnerURL</a> (파트너 포인트충전 팝업 URL)</li>
+            <li><a href="Fax/GetRefundResult">GetRefundResult</a> (환불 신청 상태 확인)</li>
+<li><a href="Fax/GetRefundablePoint">GetRefundablePoint</a> (환불 가능 포인트 확인)</li>
         </ul>
     </fieldset>
     <fieldset class="fieldset1">
@@ -74,6 +76,7 @@
             <li><a href="Fax/UpdateContact">UpdateContact</a> (담당자 정보 수정)</li>
             <li><a href="Fax/GetCorpInfo">GetCorpInfo</a> (회사정보 확인)</li>
             <li><a href="Fax/UpdateCorpInfo">UpdateCorpInfo</a> (회사정보 수정)</li>
+            <li><a href="Fax/QuitRequest">QuitRequest</a> (회원 탈퇴)</li>
         </ul>
     </fieldset>
 </div>

@@ -16,7 +16,8 @@ use Linkhub\Popbill\PaymentForm;
 
 class ClosedownController extends Controller
 {
-    public function __construct() {
+    public function __construct()
+    {
 
         // 통신방식 설정
         define('LINKHUB_COMM_MODE', config('popbill.LINKHUB_COMM_MODE'));
@@ -38,7 +39,8 @@ class ClosedownController extends Controller
     }
 
     // HTTP Get Request URI -> 함수 라우팅 처리 함수
-    public function RouteHandelerFunc(Request $request){
+    public function RouteHandelerFunc(Request $request)
+    {
         $APIName = $request->route('APIName');
         return $this->$APIName();
     }
@@ -47,7 +49,8 @@ class ClosedownController extends Controller
      * 사업자번호 1건에 대한 휴폐업정보를 확인합니다.
      * - https://developers.popbill.com/reference/closedown/php/api/check#CheckCorpNum
      */
-    public function CheckCorpNum(){
+    public function CheckCorpNum()
+    {
 
         // 팝빌회원 사업자번호
         $testCorpNum = "1234567890";
@@ -57,20 +60,20 @@ class ClosedownController extends Controller
 
         try {
             $result = $this->PopbillClosedown->checkCorpNum($testCorpNum, $CheckCorpNum);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('CloseDown/CheckCorpNum', ['Result' => [$result] ] );
+        return view('CloseDown/CheckCorpNum', ['Result' => [$result]]);
     }
 
     /**
      * 다수건의 사업자번호에 대한 휴폐업정보를 확인합니다. (최대 1,000건)
      * - https://developers.popbill.com/reference/closedown/php/api/check#CheckCorpNums
      */
-    public function CheckCorpNums(){
+    public function CheckCorpNums()
+    {
 
         //팝빌회원 사업자번호
         $testCorpNum = "1234567890";
@@ -83,12 +86,12 @@ class ClosedownController extends Controller
 
         try {
             $result = $this->PopbillClosedown->checkCorpNums($testCorpNum, $CorpNumList);
-        } catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('CloseDown/CheckCorpNum', ['Result' => $result ] );
+        return view('CloseDown/CheckCorpNum', ['Result' => $result]);
     }
 
     /**
@@ -96,27 +99,28 @@ class ClosedownController extends Controller
      * - 과금방식이 파트너과금인 경우 파트너 잔여포인트 확인(GetPartnerBalance API) 함수를 통해 확인하시기 바랍니다.
      * - https://developers.popbill.com/reference/closedown/php/api/point#GetBalance
      */
-    public function GetBalance(){
+    public function GetBalance()
+    {
 
         // 팝빌회원 사업자번호
         $testCorpNum = '1234567890';
 
         try {
             $remainPoint = $this->PopbillClosedown->GetBalance($testCorpNum);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('ReturnValue', ['filedName' => "연동회원 잔여포인트" , 'value' => $remainPoint]);
+        return view('ReturnValue', ['filedName' => "연동회원 잔여포인트", 'value' => $remainPoint]);
     }
 
     /**
      * 연동회원의 포인트 사용내역을 확인합니다.
      * - https://developers.popbill.com/reference/closedown/php/api/point#GetUseHistory
      */
-    public function GetUseHistory(){
+    public function GetUseHistory()
+    {
 
         // 팝빌회원 사업자번호 (하이픈 '-' 제외 10 자리)
         $testCorpNum = "1234567890";
@@ -139,10 +143,9 @@ class ClosedownController extends Controller
         // 팝빌회원 아이디
         $testUserID = 'testkorea';
 
-        try	{
+        try {
             $result = $this->PopbillClosedown->GetUseHistory($testCorpNum, $SDate, $EDate, $Page, $PerPage, $Order, $testUserID);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -154,7 +157,8 @@ class ClosedownController extends Controller
      * 연동회원의 포인트 결제내역을 확인합니다.
      * - https://developers.popbill.com/reference/closedown/php/api/point#GetPaymentHistory
      */
-    public function GetPaymentHistory(){
+    public function GetPaymentHistory()
+    {
 
         // 팝빌회원 사업자번호 (하이픈 '-' 제외 10 자리)
         $testCorpNum = "1234567890";
@@ -174,10 +178,9 @@ class ClosedownController extends Controller
         // 팝빌회원 아이디
         $testUserID = 'testkorea';
 
-        try	{
+        try {
             $result = $this->PopbillClosedown->GetPaymentHistory($testCorpNum, $SDate, $EDate, $Page, $PerPage, $testUserID);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -189,7 +192,8 @@ class ClosedownController extends Controller
      * 연동회원의 포인트 환불신청내역을 확인합니다.
      * - https://developers.popbill.com/reference/closedown/php/api/point#GetRefundHistory
      */
-    public function GetRefundHistory(){
+    public function GetRefundHistory()
+    {
 
         // 팝빌회원 사업자번호 (하이픈 '-' 제외 10 자리)
         $testCorpNum = "1234567890";
@@ -203,10 +207,9 @@ class ClosedownController extends Controller
         // 팝빌회원 아이디
         $testUserID = 'testkorea';
 
-        try	{
+        try {
             $result = $this->PopbillClosedown->GetRefundHistory($testCorpNum, $Page, $PerPage, $testUserID);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -218,7 +221,8 @@ class ClosedownController extends Controller
      * 연동회원 포인트를 환불 신청합니다.
      * - https://developers.popbill.com/reference/closedown/php/api/point#Refund
      */
-    public function Refund(){
+    public function Refund()
+    {
 
         // 팝빌 회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
@@ -249,23 +253,24 @@ class ClosedownController extends Controller
         // 팝빌 회원 아이디
         $testUserID = 'testkorea';
 
-        try	{
+        try {
             $result = $this->PopbillClosedown->Refund($testCorpNum, $RefundForm, $testUserID);
             $code = $result->code;
             $message = $result->message;
-        }
-        catch(PopbillException $pe) {
+            $refundCode = $result->refundCode;
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
         }
-        return view('PResponse', ['code' => $code, 'message' => $message]);
+        return view('PResponse', ['code' => $code, 'message' => $message, 'refundCode' => $refundCode]);
     }
 
     /**
      * 연동회원 포인트 충전을 위해 무통장입금을 신청합니다.
      * - https://developers.popbill.com/reference/closedown/php/api/point#PaymentRequest
      */
-    public function PaymentRequest(){
+    public function PaymentRequest()
+    {
 
         // 팝빌 회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
@@ -299,8 +304,7 @@ class ClosedownController extends Controller
             $code = $result->code;
             $message = $result->message;
             $settleCode = $result->settleCode;
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -312,7 +316,8 @@ class ClosedownController extends Controller
      * 연동회원 포인트 무통장 입금신청내역 1건을 확인합니다.
      * - https://developers.popbill.com/reference/closedown/php/api/point#GetSettleResult
      */
-    public function GetSettleResult(){
+    public function GetSettleResult()
+    {
 
         // 팝빌회원 사업자번호
         $testCorpNum = '1234567890';
@@ -325,8 +330,7 @@ class ClosedownController extends Controller
 
         try {
             $result = $this->PopbillClosedown->GetSettleResult($testCorpNum, $settleCode, $testUserID);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -339,7 +343,8 @@ class ClosedownController extends Controller
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/closedown/php/api/point#GetChargeURL
      */
-    public function GetChargeURL(){
+    public function GetChargeURL()
+    {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -349,12 +354,12 @@ class ClosedownController extends Controller
 
         try {
             $url = $this->PopbillClosedown->GetChargeURL($testCorpNum, $testUserID);
-        } catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('ReturnValue', ['filedName' => "연동회원 포인트 충전 팝업 URL" , 'value' => $url]);
+        return view('ReturnValue', ['filedName' => "연동회원 포인트 충전 팝업 URL", 'value' => $url]);
     }
 
     /**
@@ -362,7 +367,8 @@ class ClosedownController extends Controller
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/closedown/php/api/point#GetPaymentURL
      */
-    public function GetPaymentURL(){
+    public function GetPaymentURL()
+    {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -372,14 +378,13 @@ class ClosedownController extends Controller
 
         try {
             $url = $this->PopbillClosedown->GetPaymentURL($testCorpNum, $testUserID);
-        } catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
 
-        return view('ReturnValue', ['filedName' => "연동회원 포인트 결제내역 팝업 URL" , 'value' => $url]);
-
+        return view('ReturnValue', ['filedName' => "연동회원 포인트 결제내역 팝업 URL", 'value' => $url]);
     }
 
     /**
@@ -387,7 +392,8 @@ class ClosedownController extends Controller
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/closedown/php/api/point#GetUseHistoryURL
      */
-    public function GetUseHistoryURL(){
+    public function GetUseHistoryURL()
+    {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -397,34 +403,33 @@ class ClosedownController extends Controller
 
         try {
             $url = $this->PopbillClosedown->GetUseHistoryURL($testCorpNum, $testUserID);
-        } catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
 
-        return view('ReturnValue', ['filedName' => "연동회원 포인트 사용내역 팝업 URL" , 'value' => $url]);
-
+        return view('ReturnValue', ['filedName' => "연동회원 포인트 사용내역 팝업 URL", 'value' => $url]);
     }
 
     /**
      * 휴폐업 조회시 과금되는 포인트 단가를 확인합니다.
      * - https://developers.popbill.com/reference/closedown/php/api/point#GetUnitCost
      */
-    public function GetUnitCost(){
+    public function GetUnitCost()
+    {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
         $testCorpNum = '1234567890';
 
         try {
             $unitCost = $this->PopbillClosedown->GetUnitCost($testCorpNum);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('ReturnValue', ['filedName' => "휴폐업조회 단가" , 'value' => $unitCost]);
+        return view('ReturnValue', ['filedName' => "휴폐업조회 단가", 'value' => $unitCost]);
     }
 
     /**
@@ -432,20 +437,20 @@ class ClosedownController extends Controller
      * - 과금방식이 연동과금인 경우 연동회원 잔여포인트 확인(GetBalance API) 함수를 이용하시기 바랍니다.
      * - https://developers.popbill.com/reference/closedown/php/api/point#GetPartnerBalance
      */
-    public function GetPartnerBalance(){
+    public function GetPartnerBalance()
+    {
 
         // 팝빌회원 사업자번호
         $testCorpNum = '1234567890';
 
         try {
             $remainPoint = $this->PopbillClosedown->GetPartnerBalance($testCorpNum);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('ReturnValue', ['filedName' => "파트너 잔여포인트" , 'value' => $remainPoint]);
+        return view('ReturnValue', ['filedName' => "파트너 잔여포인트", 'value' => $remainPoint]);
     }
 
     /**
@@ -453,7 +458,8 @@ class ClosedownController extends Controller
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/closedown/php/api/point#GetPartnerURL
      */
-    public function GetPartnerURL(){
+    public function GetPartnerURL()
+    {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -463,20 +469,20 @@ class ClosedownController extends Controller
 
         try {
             $url = $this->PopbillClosedown->GetPartnerURL($testCorpNum, $TOGO);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('ReturnValue', ['filedName' => "파트너 포인트 충전 팝업 URL" , 'value' => $url]);
+        return view('ReturnValue', ['filedName' => "파트너 포인트 충전 팝업 URL", 'value' => $url]);
     }
 
     /**
      * 휴폐업조회 API 서비스 과금정보를 확인합니다.
      * - https://developers.popbill.com/reference/closedown/php/api/point#GetChargeInfo
      */
-    public function GetChargeInfo(){
+    public function GetChargeInfo()
+    {
 
         // 팝빌회원 사업자번호, '-'제외 10자리
         $testCorpNum = '1234567890';
@@ -485,9 +491,8 @@ class ClosedownController extends Controller
         $testUserID = 'testkorea';
 
         try {
-            $result = $this->PopbillClosedown->GetChargeInfo($testCorpNum,$testUserID);
-        }
-        catch(PopbillException $pe) {
+            $result = $this->PopbillClosedown->GetChargeInfo($testCorpNum, $testUserID);
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -499,7 +504,8 @@ class ClosedownController extends Controller
      * 사업자번호를 조회하여 연동회원 가입여부를 확인합니다.
      * - https://developers.popbill.com/reference/closedown/php/api/member#CheckIsMember
      */
-    public function CheckIsMember(){
+    public function CheckIsMember()
+    {
 
         // 사업자번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -511,8 +517,7 @@ class ClosedownController extends Controller
             $result = $this->PopbillClosedown->CheckIsMember($testCorpNum, $LinkID);
             $code = $result->code;
             $message = $result->message;
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
         }
@@ -524,7 +529,8 @@ class ClosedownController extends Controller
      * 사용하고자 하는 아이디의 중복여부를 확인합니다.
      * - https://developers.popbill.com/reference/closedown/php/api/member#CheckID
      */
-    public function CheckID(){
+    public function CheckID()
+    {
 
         // 중복여부를 확인할 아이디
         $testUserID = 'testkorea';
@@ -533,8 +539,7 @@ class ClosedownController extends Controller
             $result = $this->PopbillClosedown->CheckID($testUserID);
             $code = $result->code;
             $message = $result->message;
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
         }
@@ -546,7 +551,8 @@ class ClosedownController extends Controller
      * 사용자를 연동회원으로 가입처리합니다.
      * - https://developers.popbill.com/reference/closedown/php/api/member#JoinMember
      */
-    public function JoinMember(){
+    public function JoinMember()
+    {
 
         $joinForm = new JoinForm();
 
@@ -590,8 +596,7 @@ class ClosedownController extends Controller
             $result = $this->PopbillClosedown->JoinMember($joinForm);
             $code = $result->code;
             $message = $result->message;
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
         }
@@ -603,7 +608,8 @@ class ClosedownController extends Controller
      * 연동회원의 회사정보를 확인합니다.
      * - https://developers.popbill.com/reference/closedown/php/api/member#GetCorpInfo
      */
-    public function GetCorpInfo(){
+    public function GetCorpInfo()
+    {
 
         // 팝빌회원 사업자번호, '-'제외 10자리
         $testCorpNum = '1234567890';
@@ -613,8 +619,7 @@ class ClosedownController extends Controller
 
         try {
             $CorpInfo = $this->PopbillClosedown->GetCorpInfo($testCorpNum, $testUserID);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -627,7 +632,8 @@ class ClosedownController extends Controller
      * 연동회원의 회사정보를 수정합니다
      * - https://developers.popbill.com/reference/closedown/php/api/member#UpdateCorpInfo
      */
-    public function UpdateCorpInfo(){
+    public function UpdateCorpInfo()
+    {
 
         // 팝빌회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
@@ -657,8 +663,7 @@ class ClosedownController extends Controller
             $result =  $this->PopbillClosedown->UpdateCorpInfo($testCorpNum, $CorpInfo, $testUserID);
             $code = $result->code;
             $message = $result->message;
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
         }
@@ -670,7 +675,8 @@ class ClosedownController extends Controller
      * 연동회원 사업자번호에 담당자(팝빌 로그인 계정)를 추가합니다.
      * - https://developers.popbill.com/reference/closedown/php/api/member#RegistContact
      */
-    public function RegistContact(){
+    public function RegistContact()
+    {
 
         // 팝빌회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
@@ -700,8 +706,7 @@ class ClosedownController extends Controller
             $result = $this->PopbillClosedown->RegistContact($testCorpNum, $ContactInfo);
             $code = $result->code;
             $message = $result->message;
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
         }
@@ -713,7 +718,8 @@ class ClosedownController extends Controller
      * 연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 정보를 확인합니다.
      * - https://developers.popbill.com/reference/closedown/php/api/member#GetContactInfo
      */
-    public function GetContactInfo(){
+    public function GetContactInfo()
+    {
         // 팝빌회원 사업자번호, '-'제외 10자리
         $testCorpNum = '1234567890';
 
@@ -725,8 +731,7 @@ class ClosedownController extends Controller
 
         try {
             $ContactInfo = $this->PopbillClosedown->GetContactInfo($testCorpNum, $contactID, $testUserID);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -739,7 +744,8 @@ class ClosedownController extends Controller
      * 연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 목록을 확인합니다.
      * - https://developers.popbill.com/reference/closedown/php/api/member#ListContact
      */
-    public function ListContact(){
+    public function ListContact()
+    {
 
         // 팝빌회원 사업자번호, '-'제외 10자리
         $testCorpNum = '1234567890';
@@ -749,8 +755,7 @@ class ClosedownController extends Controller
 
         try {
             $ContactList = $this->PopbillClosedown->ListContact($testCorpNum, $testUserID);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -763,7 +768,8 @@ class ClosedownController extends Controller
      * 연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 정보를 수정합니다.
      * - https://developers.popbill.com/reference/closedown/php/api/member#UpdateContact
      */
-    public function UpdateContact(){
+    public function UpdateContact()
+    {
 
         // 팝빌회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
@@ -793,8 +799,7 @@ class ClosedownController extends Controller
             $result = $this->PopbillClosedown->UpdateContact($testCorpNum, $ContactInfo, $testUserID);
             $code = $result->code;
             $message = $result->message;
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
         }
@@ -807,7 +812,8 @@ class ClosedownController extends Controller
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/closedown/php/api/member#GetAccessURL
      */
-    public function GetAccessURL(){
+    public function GetAccessURL()
+    {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -817,99 +823,97 @@ class ClosedownController extends Controller
 
         try {
             $url = $this->PopbillClosedown->GetAccessURL($testCorpNum, $testUserID);
-        } catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('ReturnValue', ['filedName' => "팝빌 로그인 URL" , 'value' => $url]);
-
-    }
-
-/**
-* 회원 탈퇴 요청을 합니다.
-* - https://developers.popbill.com/reference/closedown/php/api/member#QuitRequest
-*/
-public function QuitRequest(){
-
-    // 팝빌 회원 사업자 번호
-    $CorpNum = "1234567890";
-
-    // 회원 탈퇴 사유
-    $QuitReason = "탈퇴합니다.";
-
-    // 팝빌 회원 아이디
-    $UserID = "testkorea";
-
-    try {
-    $result = $this->PopbillClosedown->QuitRequest($CorpNum, $QuitReason, $UserID);
-    }
-    catch(PopbillException $pe) {
-    $code = $pe->getCode();
-    $message = $pe->getMessage();
-    return view('PResponse', ['code' => $code, 'message' => $message]);
-    }
-    return view('PResponse', ['code' => $result->code , 'message'=> $result->message]);
-
+        return view('ReturnValue', ['filedName' => "팝빌 로그인 URL", 'value' => $url]);
     }
 
     /**
-        * 환불 가능 포인트를 조회합니다.
-        * * - https://developers.popbill.com/reference/closedown/php/api/member#GetRefundablePoint
-        */
-    public function GetRefundablePoint(){
+     * 회원 탈퇴 요청을 합니다.
+     * - https://developers.popbill.com/reference/closedown/php/api/member#QuitRequest
+     */
+    public function QuitRequest()
+    {
 
-    // 팝빌 회원 사업자 번호
-    $CorpNum = "1234567890";
+        // 팝빌 회원 사업자 번호
+        $CorpNum = "1234567890";
 
-    // 팝빌 회원 아이디
-    $UserID = "testkorea";
+        // 회원 탈퇴 사유
+        $QuitReason = "탈퇴 테스트";
 
-    try {
-    $result = $this->PopbillClosedown->GetRefundablePoint($CorpNum, $UserID);
-    }
-    catch(PopbillException $pe) {
-    $code = $pe->getCode();
-    $message = $pe->getMessage();
-    return view('PResponse', ['code' => $code, 'message' => $message]);
-    }
-    return view('GetRefundablePoint', ['refundableBalance' => $result->refundableBalance]);
+        // 팝빌 회원 아이디
+        $UserID = "testkorea";
 
+        try {
+            $result = $this->PopbillClosedown->QuitRequest($CorpNum, $QuitReason, $UserID);
+        } catch (PopbillException $pe) {
+            $code = $pe->getCode();
+            $message = $pe->getMessage();
+            return view('PResponse', ['code' => $code, 'message' => $message]);
+        }
+        return view('PResponse', ['code' => $result->code, 'message' => $result->message]);
     }
 
     /**
-        * 환불 신청 상태를 조회합니다
-        * * - https://developers.popbill.com/reference/closedown/php/api/member#GetRefundResult
-        */
-    public function GetRefundResult(){
+     * 환불 가능 포인트를 조회합니다.
+     * - https://developers.popbill.com/reference/closedown/php/api/member#GetRefundablePoint
+     */
+    public function GetRefundablePoint()
+    {
 
-    // 팝빌 회원 사업자 번호
-    $CorpNum = "1234567890";
+        // 팝빌 회원 사업자 번호
+        $CorpNum = "8442801306";
 
-    // 환불 신청 코드
-    $RefundCode = "";
+        // 팝빌 회원 아이디
+        $UserID = "test_hsjeong";
 
-    // 팝빌 회원 아이디
-    $UserID = "testkorea";
-
-    try {
-    $result = $this->PopbillClosedown->GetRefundResult($CorpNum, $RefundCode, $UserID);
-
-    }
-    catch(PopbillException $pe) {
-    $code = $pe->getCode();
-    $message = $pe->getMessage();
-    return view('PResponse', ['code' => $code, 'message' => $message]);
-    }
-    return view('GetRefundResult', ['reqDT' => $result->reqDT,
-    'requestPoint' => $result->requestPoint,
-    'accountBank' => $result->accountBank,
-    'accountNum' => $result->accountNum,
-    'accountName' => $result->accountName,
-    'state' => $result->state,
-    'reason' => $result->reason]
-    );
-
+        try {
+            $result = $this->PopbillClosedown->GetRefundablePoint($CorpNum, $UserID);
+        } catch (PopbillException $pe) {
+            $code = $pe->getCode();
+            $message = $pe->getMessage();
+            return view('PResponse', ['code' => $code, 'message' => $message]);
+        }
+        return view('GetRefundablePoint', ['refundableBalance' => $result->refundableBalance]);
     }
 
+    /**
+     * 환불 신청 상태를 조회합니다
+     * - https://developers.popbill.com/reference/closedown/php/api/member#GetRefundResult
+     */
+    public function GetRefundResult()
+    {
+
+        // 팝빌 회원 사업자 번호
+        $CorpNum = "8442801306";
+
+        // 환불 신청 코드
+        $RefundCode = "023040000015";
+
+        // 팝빌 회원 아이디
+        $UserID = "test_hsjeong";
+
+        try {
+            $result = $this->PopbillClosedown->GetRefundResult($CorpNum, $RefundCode, $UserID);
+        } catch (PopbillException $pe) {
+            $code = $pe->getCode();
+            $message = $pe->getMessage();
+            return view('PResponse', ['code' => $code, 'message' => $message]);
+        }
+        return view(
+            'GetRefundResult',
+            [
+                'reqDT' => $result->reqDT,
+                'requestPoint' => $result->requestPoint,
+                'accountBank' => $result->accountBank,
+                'accountNum' => $result->accountNum,
+                'accountName' => $result->accountName,
+                'state' => $result->state,
+                'reason' => $result->reason
+            ]
+        );
+    }
 }

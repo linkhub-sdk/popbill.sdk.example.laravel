@@ -1111,11 +1111,12 @@ class FaxController extends Controller
             $result = $this->PopbillFax->Refund($testCorpNum, $RefundForm, $testUserID);
             $code = $result->code;
             $message = $result->message;
+            $refundCode = $result->refundCode;
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
         }
-        return view('PResponse', ['code' => $code, 'message' => $message]);
+        return view('PResponse', ['code' => $code, 'message' => $message, 'refundCode' => $refundCode]);
     }
 
     /**
@@ -1705,7 +1706,7 @@ class FaxController extends Controller
         $CorpNum = "1234567890";
 
         // 회원 탈퇴 사유
-        $QuitReason = "탈퇴합니다.";
+        $QuitReason = "탈퇴 테스트";
 
         // 팝빌 회원 아이디
         $UserID = "testkorea";
@@ -1722,7 +1723,7 @@ class FaxController extends Controller
 
     /**
      * 환불 가능 포인트를 조회합니다.
-     * * - https://developers.popbill.com/reference/fax/php/api/member#GetRefundablePoint
+     * - https://developers.popbill.com/reference/fax/php/api/member#GetRefundablePoint
      */
     public function GetRefundablePoint()
     {
@@ -1745,7 +1746,7 @@ class FaxController extends Controller
 
     /**
      * 환불 신청 상태를 조회합니다
-     * * - https://developers.popbill.com/reference/fax/php/api/member#GetRefundResult
+     * - https://developers.popbill.com/reference/fax/php/api/member#GetRefundResult
      */
     public function GetRefundResult()
     {
@@ -1754,7 +1755,7 @@ class FaxController extends Controller
         $CorpNum = "1234567890";
 
         // 환불 신청 코드
-        $RefundCode = "";
+        $RefundCode = "023040000015";
 
         // 팝빌 회원 아이디
         $UserID = "testkorea";

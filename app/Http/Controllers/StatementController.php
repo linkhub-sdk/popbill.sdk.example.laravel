@@ -18,7 +18,8 @@ use Linkhub\Popbill\PaymentForm;
 
 class StatementController extends Controller
 {
-    public function __construct() {
+    public function __construct()
+    {
 
         // 통신방식 설정
         define('LINKHUB_COMM_MODE', config('popbill.LINKHUB_COMM_MODE'));
@@ -40,7 +41,8 @@ class StatementController extends Controller
     }
 
     // HTTP Get Request URI -> 함수 라우팅 처리 함수
-    public function RouteHandelerFunc(Request $request){
+    public function RouteHandelerFunc(Request $request)
+    {
         $APIName = $request->route('APIName');
         return $this->$APIName();
     }
@@ -50,7 +52,8 @@ class StatementController extends Controller
      * - 이미 사용 중인 문서번호는 중복 사용이 불가하고, 전자명세서가 삭제된 경우에만 문서번호의 재사용이 가능합니다.
      * - https://developers.popbill.com/reference/statement/php/api/info#CheckMgtKeyInUse
      */
-    public function CheckMgtKeyInUse(){
+    public function CheckMgtKeyInUse()
+    {
 
         // 팝빌 회원 사업자번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -62,15 +65,14 @@ class StatementController extends Controller
         $mgtKey = '20230102-PHP7-001';
 
         try {
-            $result = $this->PopbillStatement->CheckMgtKeyInUse($testCorpNum ,$itemCode, $mgtKey);
+            $result = $this->PopbillStatement->CheckMgtKeyInUse($testCorpNum, $itemCode, $mgtKey);
             $result ? $result = '사용중' : $result = '미사용중';
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('ReturnValue', ['filedName' => "문서번호 사용여부 =>".$mgtKey."", 'value' => $result]);
+        return view('ReturnValue', ['filedName' => "문서번호 사용여부 =>" . $mgtKey . "", 'value' => $result]);
     }
 
     /**
@@ -78,7 +80,8 @@ class StatementController extends Controller
      * - 팝빌 사이트 [전자명세서] > [환경설정] > [전자명세서 관리] 메뉴의 발행시 자동승인 옵션 설정을 통해 전자명세서를 "발행완료" 상태가 아닌 "승인대기" 상태로 발행 처리 할 수 있습니다.
      * - https://developers.popbill.com/reference/statement/php/api/issue#RegistIssue
      */
-    public function RegistIssue(){
+    public function RegistIssue()
+    {
 
         // 팝빌 회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
@@ -161,7 +164,7 @@ class StatementController extends Controller
         /************************************************************
          *                       전자명세서 기재정보
          ************************************************************/
-        $Statement->supplyCostTotal = '200000' ;    // 공급가액 합계
+        $Statement->supplyCostTotal = '200000';    // 공급가액 합계
         $Statement->taxTotal = '20000';       // 세액 합계
         $Statement->totalAmount = '220000';      // 합계금액 (공급가액 합계+세액합계)
         $Statement->serialNum = '123';       // 기재상 일련번호 항목
@@ -238,8 +241,7 @@ class StatementController extends Controller
             $code = $result->code;
             $message = $result->message;
             $invoiceNum = $result->invoiceNum;
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             $invoiceNum = null;
@@ -253,7 +255,8 @@ class StatementController extends Controller
      * - "임시저장" 상태의 전자명세서는 발행(Issue API) 함수를 호출하여 "발행완료"처리한 경우에만 수신자에게 발행 안내 메일이 발송됩니다.
      * - https://developers.popbill.com/reference/statement/php/api/issue#Register
      */
-    public function Register(){
+    public function Register()
+    {
 
         // 팝빌 회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
@@ -328,7 +331,7 @@ class StatementController extends Controller
         /************************************************************
          *                       전자명세서 기재정보
          ************************************************************/
-        $Statement->supplyCostTotal = '200000' ;    // 공급가액 합계
+        $Statement->supplyCostTotal = '200000';    // 공급가액 합계
         $Statement->taxTotal = '20000';       // 세액 합계
         $Statement->totalAmount = '220000';      // 합계금액 (공급가액 합계+세액합계)
         $Statement->serialNum = '123';       // 기재상 일련번호 항목
@@ -404,8 +407,7 @@ class StatementController extends Controller
             $result = $this->PopbillStatement->Register($testCorpNum, $Statement, $testUserID);
             $code = $result->code;
             $message = $result->message;
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
         }
@@ -417,7 +419,8 @@ class StatementController extends Controller
      * "임시저장" 상태의 전자명세서를 수정합니다.건의 전자명세서를 [수정]합니다.
      * - https://developers.popbill.com/reference/statement/php/api/issue#Update
      */
-    public function Update(){
+    public function Update()
+    {
 
         // 팝빌 회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
@@ -493,7 +496,7 @@ class StatementController extends Controller
         /************************************************************
          *                       전자명세서 기재정보
          ************************************************************/
-        $Statement->supplyCostTotal = '200000' ;    // 공급가액 합계
+        $Statement->supplyCostTotal = '200000';    // 공급가액 합계
         $Statement->taxTotal = '20000';       // 세액 합계
         $Statement->totalAmount = '220000';      // 합계금액 (공급가액 합계+세액합계)
         $Statement->serialNum = '123';       // 기재상 일련번호 항목
@@ -569,8 +572,7 @@ class StatementController extends Controller
             $result = $this->PopbillStatement->Update($testCorpNum, $itemCode, $mgtKey, $Statement, $testUserID);
             $code = $result->code;
             $message = $result->message;
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
         }
@@ -585,7 +587,8 @@ class StatementController extends Controller
      * - 전자명세서 발행 함수 호출시 수신자에게 발행 안내 메일이 발송됩니다.
      * - https://developers.popbill.com/reference/statement/php/api/issue#Issue
      */
-    public function Issue(){
+    public function Issue()
+    {
 
         // 팝빌회원 사업자번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -610,8 +613,7 @@ class StatementController extends Controller
             $result = $this->PopbillStatement->Issue($testCorpNum, $itemCode, $MgtKey, $memo, $testUserID, $emailSubject);
             $code = $result->code;
             $message = $result->message;
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
         }
@@ -624,7 +626,8 @@ class StatementController extends Controller
      * - "발행취소" 상태의 전자명세서를 삭제(Delete API) 함수를 이용하면, 전자명세서 관리를 위해 부여했던 문서번호를 재사용 할 수 있습니다.
      * - https://developers.popbill.com/reference/statement/php/api/issue#Cancel
      */
-    public function CancelIssue(){
+    public function CancelIssue()
+    {
 
         // 팝빌회원 사업자번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -645,8 +648,7 @@ class StatementController extends Controller
             $result = $this->PopbillStatement->CancelIssue($testCorpNum, $itemCode, $MgtKey, $memo, $testUserID);
             $code = $result->code;
             $message = $result->message;
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
         }
@@ -660,7 +662,8 @@ class StatementController extends Controller
      * - 전자명세서를 삭제하면 사용된 문서번호(mgtKey)를 재사용할 수 있습니다.
      * - https://developers.popbill.com/reference/statement/php/api/issue#Delete
      */
-    public function Delete(){
+    public function Delete()
+    {
 
         // 팝빌회원 사업자번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -678,8 +681,7 @@ class StatementController extends Controller
             $result = $this->PopbillStatement->Delete($testCorpNum, $itemCode, $MgtKey, $testUserID);
             $code = $result->code;
             $message = $result->message;
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
         }
@@ -691,7 +693,8 @@ class StatementController extends Controller
      * 전자명세서의 1건의 상태 및 요약정보 확인합니다.
      * - https://developers.popbill.com/reference/statement/php/api/info#GetInfo
      */
-    public function GetInfo(){
+    public function GetInfo()
+    {
 
         // 팝빌회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
@@ -707,21 +710,21 @@ class StatementController extends Controller
 
         try {
             $result = $this->PopbillStatement->GetInfo($testCorpNum, $itemCode, $mgtKey, $testUserID);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
 
-        return view('Statement/GetInfo', ['StatementInfo' => [$result] ] );
+        return view('Statement/GetInfo', ['StatementInfo' => [$result]]);
     }
 
     /**
      * 다수건의 전자명세서 상태/요약 정보를 확인합니다.
      * - https://developers.popbill.com/reference/statement/php/api/info#GetInfos
      */
-    public function GetInfos(){
+    public function GetInfos()
+    {
 
         // 팝빌회원 사업자번호, '-'제외 10자리
         $testCorpNum = '1234567890';
@@ -740,21 +743,21 @@ class StatementController extends Controller
 
         try {
             $resultList = $this->PopbillStatement->GetInfos($testCorpNum, $itemCode, $MgtKeyList, $testUserID);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
 
-        return view('Statement/GetInfo', ['StatementInfo' => $resultList ] );
+        return view('Statement/GetInfo', ['StatementInfo' => $resultList]);
     }
 
     /**
      * 전자명세서 1건의 상세정보 확인합니다.
      * - https://developers.popbill.com/reference/statement/php/api/info#GetDetailInfo
      */
-    public function GetDetailInfo(){
+    public function GetDetailInfo()
+    {
 
         // 팝빌회원 사업자번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -770,27 +773,27 @@ class StatementController extends Controller
 
         try {
             $result = $this->PopbillStatement->GetDetailInfo($testCorpNum, $itemCode, $mgtKey, $testUserID);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
 
-        return view('Statement/GetDetailInfo', ['Statement' => $result] );
+        return view('Statement/GetDetailInfo', ['Statement' => $result]);
     }
 
     /**
      * 검색조건에 해당하는 전자명세서를 조회합니다. (조회기간 단위 : 최대 6개월)
      * - https://developers.popbill.com/reference/statement/php/api/info#Search
      */
-    public function Search(){
+    public function Search()
+    {
 
         // 팝빌회원 사업자번호, '-'제외 10자리
         $testCorpNum = '1234567890';
 
         // 일자 유형 ("R" , "W" , "I" 중 택 1)
-         // └ R = 등록일자 , W = 작성일자 , I = 발행일자
+        // └ R = 등록일자 , W = 작성일자 , I = 발행일자
         $DType = 'W';
 
         // 시작일자
@@ -831,22 +834,33 @@ class StatementController extends Controller
         $QString = '';
 
         try {
-            $result = $this->PopbillStatement->Search($testCorpNum, $DType, $SDate, $EDate,
-                $State, $ItemCode, $Page, $PerPage, $Order, $QString);
-        } catch(PopbillException $pe) {
+            $result = $this->PopbillStatement->Search(
+                $testCorpNum,
+                $DType,
+                $SDate,
+                $EDate,
+                $State,
+                $ItemCode,
+                $Page,
+                $PerPage,
+                $Order,
+                $QString
+            );
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
 
-        return view('Statement/Search', ['Result' => $result] );
+        return view('Statement/Search', ['Result' => $result]);
     }
 
     /**
      * 전자명세서의 상태에 대한 변경이력을 확인합니다.
      * - https://developers.popbill.com/reference/statement/php/api/info#GetLogs
      */
-    public function GetLogs(){
+    public function GetLogs()
+    {
 
         // 팝빌회원 사업자번호
         $testCorpNum = '1234567890';
@@ -859,13 +873,12 @@ class StatementController extends Controller
 
         try {
             $result = $this->PopbillStatement->GetLogs($testCorpNum, $itemCode, $mgtKey);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('GetLogs', ['Result' => $result] );
+        return view('GetLogs', ['Result' => $result]);
     }
 
     /**
@@ -873,7 +886,8 @@ class StatementController extends Controller
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/statement/php/api/info#GetURL
      */
-    public function GetURL(){
+    public function GetURL()
+    {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -886,13 +900,12 @@ class StatementController extends Controller
 
         try {
             $url = $this->PopbillStatement->GetURL($testCorpNum, $testUserID, $TOGO);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('ReturnValue', ['filedName' => "전자명세서 문서함 팝업 URL" , 'value' => $url]);
+        return view('ReturnValue', ['filedName' => "전자명세서 문서함 팝업 URL", 'value' => $url]);
     }
 
     /**
@@ -900,7 +913,8 @@ class StatementController extends Controller
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/statement/php/api/view#GetPopUpURL
      */
-    public function GetPopUpURL(){
+    public function GetPopUpURL()
+    {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -916,13 +930,12 @@ class StatementController extends Controller
 
         try {
             $url = $this->PopbillStatement->GetPopUpURL($testCorpNum, $itemCode, $mgtKey, $testUserID);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('ReturnValue', ['filedName' => "전자명세서 내용 보기 팝업 URL" , 'value' => $url]);
+        return view('ReturnValue', ['filedName' => "전자명세서 내용 보기 팝업 URL", 'value' => $url]);
     }
 
     /**
@@ -930,7 +943,8 @@ class StatementController extends Controller
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/statement/php/api/view#GetViewURL
      */
-    public function GetViewURL(){
+    public function GetViewURL()
+    {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -946,13 +960,12 @@ class StatementController extends Controller
 
         try {
             $url = $this->PopbillStatement->GetViewURL($testCorpNum, $itemCode, $mgtKey, $testUserID);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('ReturnValue', ['filedName' => "전자명세서 보기 팝업 URL" , 'value' => $url]);
+        return view('ReturnValue', ['filedName' => "전자명세서 보기 팝업 URL", 'value' => $url]);
     }
 
     /**
@@ -961,7 +974,8 @@ class StatementController extends Controller
      * - 전자명세서의 공급자는 "발신자", 공급받는자는 "수신자"를 나타내는 용어입니다.
      * - https://developers.popbill.com/reference/statement/php/api/view#GetPrintURL
      */
-    public function GetPrintURL(){
+    public function GetPrintURL()
+    {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -977,13 +991,12 @@ class StatementController extends Controller
 
         try {
             $url = $this->PopbillStatement->GetPrintURL($testCorpNum, $itemCode, $mgtKey, $testUserID);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('ReturnValue', ['filedName' => "전자명세서 인쇄 팝업 URL" , 'value' => $url]);
+        return view('ReturnValue', ['filedName' => "전자명세서 인쇄 팝업 URL", 'value' => $url]);
     }
 
     /**
@@ -992,7 +1005,8 @@ class StatementController extends Controller
      * - 전자명세서의 공급받는자는 "수신자"를 나타내는 용어입니다.
      * - https://developers.popbill.com/reference/statement/php/api/view#GetEPrintURL
      */
-    public function GetEPrintURL(){
+    public function GetEPrintURL()
+    {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -1008,14 +1022,13 @@ class StatementController extends Controller
 
         try {
             $url = $this->PopbillStatement->GetEPrintURL($testCorpNum, $itemCode, $mgtKey, $testUserID);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
 
-        return view('ReturnValue', ['filedName' => "전자명세서 인쇄(공급받는자용) 팝업 URL" , 'value' => $url]);
+        return view('ReturnValue', ['filedName' => "전자명세서 인쇄(공급받는자용) 팝업 URL", 'value' => $url]);
     }
 
     /**
@@ -1023,7 +1036,8 @@ class StatementController extends Controller
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/statement/php/api/view#GetMassPrintURL
      */
-    public function GetMassPrintURL(){
+    public function GetMassPrintURL()
+    {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -1032,7 +1046,7 @@ class StatementController extends Controller
         $itemCode = '121';
 
         // 문서번호 배열, 최대 100건
-        $mgtKeyList = array (
+        $mgtKeyList = array(
             '20230102-PHP7-001',
             '20230102-PHP7-002'
         );
@@ -1042,13 +1056,12 @@ class StatementController extends Controller
 
         try {
             $url = $this->PopbillStatement->GetMassPrintURL($testCorpNum, $itemCode, $mgtKeyList, $testUserID);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('ReturnValue', ['filedName' => "전자명세서 인쇄(대량) 팝업 URL" , 'value' => $url]);
+        return view('ReturnValue', ['filedName' => "전자명세서 인쇄(대량) 팝업 URL", 'value' => $url]);
     }
 
     /**
@@ -1056,7 +1069,8 @@ class StatementController extends Controller
      * - 함수 호출로 반환 받은 URL에는 유효시간이 없습니다.
      * - https://developers.popbill.com/reference/statement/php/api/view#GetMailURL
      */
-    public function GetMailURL(){
+    public function GetMailURL()
+    {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -1072,13 +1086,12 @@ class StatementController extends Controller
 
         try {
             $url = $this->PopbillStatement->GetMailURL($testCorpNum, $itemCode, $mgtKey, $testUserID);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('ReturnValue', ['filedName' => "전자명세서 공급받는자 메일 링크 URL" , 'value' => $url]);
+        return view('ReturnValue', ['filedName' => "전자명세서 공급받는자 메일 링크 URL", 'value' => $url]);
     }
 
     /**
@@ -1086,7 +1099,8 @@ class StatementController extends Controller
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/statement/php/api/etc#GetAccessURL
      */
-    public function GetAccessURL(){
+    public function GetAccessURL()
+    {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -1096,13 +1110,13 @@ class StatementController extends Controller
 
         try {
             $url = $this->PopbillStatement->GetAccessURL($testCorpNum, $testUserID);
-        } catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
 
-        return view('ReturnValue', ['filedName' => "팝빌 로그인 URL" , 'value' => $url]);
+        return view('ReturnValue', ['filedName' => "팝빌 로그인 URL", 'value' => $url]);
     }
 
     /**
@@ -1110,7 +1124,8 @@ class StatementController extends Controller
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/statement/php/api/etc#GetSealURL
      */
-    public function GetSealURL(){
+    public function GetSealURL()
+    {
 
         // 팝빌 회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
@@ -1120,26 +1135,26 @@ class StatementController extends Controller
 
         try {
             $url = $this->PopbillStatement->GetSealURL($testCorpNum, $testUserID);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('ReturnValue', ['filedName' => "인감 및 첨부문서 등록 URL" , 'value' => $url]);
+        return view('ReturnValue', ['filedName' => "인감 및 첨부문서 등록 URL", 'value' => $url]);
     }
 
     /**
      * "임시저장" 상태의 명세서에 1개의 파일을 첨부합니다. (최대 5개)
      * - https://developers.popbill.com/reference/statement/php/api/etc#AttachFile
      */
-    public function AttachFile(){
+    public function AttachFile()
+    {
 
         // 팝빌 회원 사업자번호, "-" 제외 10자리
         $testCorpNum = '1234567890';
 
         // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
-        $itemCode= '121';
+        $itemCode = '121';
 
         // 문서번호
         $mgtKey = '20230102-PHP7-002';
@@ -1154,8 +1169,7 @@ class StatementController extends Controller
             $result = $this->PopbillStatement->AttachFile($testCorpNum, $itemCode, $mgtKey, $filePath, $testUserID);
             $code = $result->code;
             $message = $result->message;
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
         }
@@ -1168,7 +1182,8 @@ class StatementController extends Controller
      * - 파일을 식별하는 파일아이디는 첨부파일 목록(GetFiles API) 의 응답항목 중 파일아이디(AttachedFile) 값을 통해 확인할 수 있습니다.
      * - https://developers.popbill.com/reference/statement/php/api/etc#DeleteFile
      */
-    public function DeleteFile(){
+    public function DeleteFile()
+    {
 
         // 팝빌회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
@@ -1181,7 +1196,7 @@ class StatementController extends Controller
 
         // 팝빌이 첨부파일 관리를 위해 할당하는 식별번호
         // 첨부파일 목록 확인(getFiles API) 함수의 리턴 값 중 attachedFile 필드값 기재.
-        $FileID= '';
+        $FileID = '';
 
         // 팝빌 회원 아이디
         $testUserID = 'testkorea';
@@ -1190,8 +1205,7 @@ class StatementController extends Controller
             $result = $this->PopbillStatement->DeleteFile($testCorpNum, $itemCode, $mgtKey, $FileID, $testUserID);
             $code = $result->code;
             $message = $result->message;
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
         }
@@ -1204,7 +1218,8 @@ class StatementController extends Controller
      * - 응답항목 중 파일아이디(AttachedFile) 항목은 파일삭제(DeleteFile API) 호출시 이용할 수 있습니다.
      * - https://developers.popbill.com/reference/statement/php/api/etc#GetFiles
      */
-    public function GetFiles(){
+    public function GetFiles()
+    {
 
         // 팝빌회원 사업자번호, '-'제외 10자리
         $testCorpNum = '1234567890';
@@ -1220,21 +1235,21 @@ class StatementController extends Controller
 
         try {
             $result = $this->PopbillStatement->GetFiles($testCorpNum, $itemCode, $mgtKey, $testUserID);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
 
-        return view('GetFiles', ['Result' => $result] );
+        return view('GetFiles', ['Result' => $result]);
     }
 
     /**
      * "승인대기", "발행완료" 상태의 전자명세서와 관련된 발행 안내 메일을 재전송 합니다.
      * - https://developers.popbill.com/reference/statement/php/api/etc#SendEmail
      */
-    public function SendEmail(){
+    public function SendEmail()
+    {
 
         // 팝빌회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
@@ -1255,8 +1270,7 @@ class StatementController extends Controller
             $result = $this->PopbillStatement->SendEmail($testCorpNum, $itemCode, $mgtKey, $receiver, $testUserID);
             $code = $result->code;
             $message = $result->message;
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
         }
@@ -1270,7 +1284,8 @@ class StatementController extends Controller
      * - 함수 호출시 포인트가 과금됩니다.
      * - https://developers.popbill.com/reference/statement/php/api/etc#SendSMS
      */
-    public function SendSMS(){
+    public function SendSMS()
+    {
 
         // 팝빌 회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
@@ -1294,12 +1309,18 @@ class StatementController extends Controller
         $testUserID = 'testkorea';
 
         try {
-            $result = $this->PopbillStatement->SendSMS($testCorpNum, $itemCode, $mgtKey, $sender,
-                $receiver, $contents, $testUserID);
+            $result = $this->PopbillStatement->SendSMS(
+                $testCorpNum,
+                $itemCode,
+                $mgtKey,
+                $sender,
+                $receiver,
+                $contents,
+                $testUserID
+            );
             $code = $result->code;
             $message = $result->message;
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
         }
@@ -1312,7 +1333,8 @@ class StatementController extends Controller
      * - 함수 호출시 포인트가 과금됩니다.
      * - https://developers.popbill.com/reference/statement/php/api/etc#SendFAX
      */
-    public function SendFAX(){
+    public function SendFAX()
+    {
 
         // 팝빌 회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
@@ -1336,8 +1358,7 @@ class StatementController extends Controller
             $result = $this->PopbillStatement->SendFAX($testCorpNum, $itemCode, $mgtKey, $sender, $receiver, $testUserID);
             $code = $result->code;
             $message = $result->message;
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
         }
@@ -1353,7 +1374,8 @@ class StatementController extends Controller
      * - 팩스 전송결과를 확인하기 위해서는 선팩스 전송 요청 시 반환받은 접수번호를 이용하여 팩스 API의 전송결과 확인 (GetFaxDetail) API를 이용하면 됩니다.
      * - https://developers.popbill.com/reference/statement/php/api/etc#FAXSend
      */
-    public function FAXSend(){
+    public function FAXSend()
+    {
 
         // 팝빌 회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
@@ -1433,7 +1455,7 @@ class StatementController extends Controller
         /************************************************************
          *                       전자명세서 기재정보
          ************************************************************/
-        $Statement->supplyCostTotal = '200000' ;    // 공급가액 합계
+        $Statement->supplyCostTotal = '200000';    // 공급가액 합계
         $Statement->taxTotal = '20000';       // 세액 합계
         $Statement->totalAmount = '220000';      // 합계금액 (공급가액 합계+세액합계)
         $Statement->serialNum = '123';       // 기재상 일련번호 항목
@@ -1507,21 +1529,21 @@ class StatementController extends Controller
 
         try {
             $receiptNum = $this->PopbillStatement->FAXSend($testCorpNum, $Statement, $sendNum, $receiveNum, $testUserID);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
 
-        return view('ReturnValue', ['filedName' => "선팩스전송 접수번호(receiptNum)" , 'value' => $receiptNum]);
+        return view('ReturnValue', ['filedName' => "선팩스전송 접수번호(receiptNum)", 'value' => $receiptNum]);
     }
 
     /**
      * 하나의 전자명세서에 다른 전자명세서를 첨부합니다.
      * - https://developers.popbill.com/reference/statement/php/api/etc#AttachStatement
      */
-    public function AttachStatement(){
+    public function AttachStatement()
+    {
 
         // 팝빌 회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
@@ -1545,8 +1567,7 @@ class StatementController extends Controller
             $result = $this->PopbillStatement->AttachStatement($testCorpNum, $itemCode, $mgtKey, $subItemCode, $subMgtKey, $testUserID);
             $code = $result->code;
             $message = $result->message;
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
         }
@@ -1558,7 +1579,8 @@ class StatementController extends Controller
      * 하나의 전자명세서에 첨부된 다른 전자명세서를 해제합니다.
      * - https://developers.popbill.com/reference/statement/php/api/etc#DetachStatement
      */
-    public function DetachStatement(){
+    public function DetachStatement()
+    {
 
         // 팝빌 회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
@@ -1582,8 +1604,7 @@ class StatementController extends Controller
             $result = $this->PopbillStatement->DetachStatement($testCorpNum, $itemCode, $mgtKey, $subItemCode, $subMgtKey, $testUserID);
             $code = $result->code;
             $message = $result->message;
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
         }
@@ -1595,7 +1616,8 @@ class StatementController extends Controller
      * 전자명세서 관련 메일 항목에 대한 발송설정을 확인합니다.
      * - https://developers.popbill.com/reference/statement/php/api/etc#ListEmailConfig
      */
-    public function ListEmailConfig(){
+    public function ListEmailConfig()
+    {
 
         // 팝빌회원 사업자번호, '-'제외 10자리
         $testCorpNum = '1234567890';
@@ -1605,14 +1627,13 @@ class StatementController extends Controller
 
         try {
             $result = $this->PopbillStatement->ListEmailConfig($testCorpNum, $testUserID);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
 
-        return view('Statement/ListEmailConfig', ['Result' => $result] );
+        return view('Statement/ListEmailConfig', ['Result' => $result]);
     }
 
     /**
@@ -1626,7 +1647,8 @@ class StatementController extends Controller
      * - SMT_CANCEL : 공급받는자에게 전자명세서가 취소 되었음을 알려주는 메일입니다.
      * - SMT_CANCEL_ISSUE : 공급받는자에게 전자명세서가 발행취소 되었음을 알려주는 메일입니다.
      */
-    public function UpdateEmailConfig(){
+    public function UpdateEmailConfig()
+    {
 
         // 팝빌회원 사업자번호, '-'제외 10자리
         $testCorpNum = '1234567890';
@@ -1644,8 +1666,7 @@ class StatementController extends Controller
             $result = $this->PopbillStatement->UpdateEmailConfig($testCorpNum, $emailType, $sendYN, $testUserID);
             $code = $result->code;
             $message = $result->message;
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
         }
@@ -1657,28 +1678,29 @@ class StatementController extends Controller
      * - 과금방식이 파트너과금인 경우 파트너 잔여포인트(GetPartnerBalance API) 함수를 통해 확인하시기 바랍니다.
      * - https://developers.popbill.com/reference/statement/php/api/point#GetBalance
      */
-    public function GetBalance(){
+    public function GetBalance()
+    {
 
         // 팝빌회원 사업자번호
         $testCorpNum = '1234567890';
 
         try {
             $remainPoint = $this->PopbillStatement->GetBalance($testCorpNum);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
 
-        return view('ReturnValue', ['filedName' => "연동회원 잔여포인트" , 'value' => $remainPoint]);
+        return view('ReturnValue', ['filedName' => "연동회원 잔여포인트", 'value' => $remainPoint]);
     }
 
     /**
      * 연동회원의 포인트 사용내역을 확인합니다.
      * - https://developers.popbill.com/reference/statement/php/api/point#GetUseHistory
      */
-    public function GetUseHistory(){
+    public function GetUseHistory()
+    {
 
         // 팝빌회원 사업자번호 (하이픈 '-' 제외 10 자리)
         $testCorpNum = "1234567890";
@@ -1701,10 +1723,9 @@ class StatementController extends Controller
         // 팝빌 회원 아이디
         $testUserID = 'testkorea';
 
-        try	{
+        try {
             $result = $this->PopbillStatement->GetUseHistory($testCorpNum, $SDate, $EDate, $Page, $PerPage, $Order, $testUserID);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -1716,7 +1737,8 @@ class StatementController extends Controller
      * 연동회원의 포인트 결제내역을 확인합니다.
      * - https://developers.popbill.com/reference/statement/php/api/point#GetPaymentHistory
      */
-    public function GetPaymentHistory(){
+    public function GetPaymentHistory()
+    {
 
         // 팝빌회원 사업자번호 (하이픈 '-' 제외 10 자리)
         $testCorpNum = "1234567890";
@@ -1736,10 +1758,9 @@ class StatementController extends Controller
         // 팝빌 회원 아이디
         $testUserID = 'testkorea';
 
-        try	{
+        try {
             $result = $this->PopbillStatement->GetPaymentHistory($testCorpNum, $SDate, $EDate, $Page, $PerPage, $testUserID);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -1751,7 +1772,8 @@ class StatementController extends Controller
      * 연동회원의 포인트 환불신청내역을 확인합니다.
      * - https://developers.popbill.com/reference/statement/php/api/point#GetRefundHistory
      */
-    public function GetRefundHistory(){
+    public function GetRefundHistory()
+    {
 
         // 팝빌회원 사업자번호 (하이픈 '-' 제외 10 자리)
         $testCorpNum = "1234567890";
@@ -1765,10 +1787,9 @@ class StatementController extends Controller
         // 팝빌 회원 아이디
         $testUserID = 'testkorea';
 
-        try	{
+        try {
             $result = $this->PopbillStatement->GetRefundHistory($testCorpNum, $Page, $PerPage, $testUserID);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -1780,7 +1801,8 @@ class StatementController extends Controller
      * 연동회원 포인트를 환불 신청합니다.
      * - https://developers.popbill.com/reference/statement/php/api/point#Refund
      */
-    public function Refund(){
+    public function Refund()
+    {
 
         // 팝빌 회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
@@ -1811,23 +1833,24 @@ class StatementController extends Controller
         // 팝빌 회원 아이디
         $testUserID = 'testkorea';
 
-        try	{
+        try {
             $result = $this->PopbillStatement->Refund($testCorpNum, $RefundForm, $testUserID);
             $code = $result->code;
             $message = $result->message;
-        }
-        catch(PopbillException $pe) {
+            $refundCode = $result->refundCode;
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
         }
-        return view('PResponse', ['code' => $code, 'message' => $message]);
+        return view('PResponse', ['code' => $code, 'message' => $message, 'refundCode' => $refundCode]);
     }
 
     /**
      * 연동회원 포인트 충전을 위해 무통장입금을 신청합니다.
      * - https://developers.popbill.com/reference/statement/php/api/point#PaymentRequest
      */
-    public function PaymentRequest(){
+    public function PaymentRequest()
+    {
 
         // 팝빌 회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
@@ -1861,8 +1884,7 @@ class StatementController extends Controller
             $code = $result->code;
             $message = $result->message;
             $settleCode = $result->settleCode;
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -1874,7 +1896,8 @@ class StatementController extends Controller
      * 연동회원 포인트 무통장 입금신청내역 1건을 확인합니다.
      * - https://developers.popbill.com/reference/statement/php/api/point#GetSettleResult
      */
-    public function GetSettleResult(){
+    public function GetSettleResult()
+    {
 
         // 팝빌회원 사업자번호
         $testCorpNum = '1234567890';
@@ -1887,8 +1910,7 @@ class StatementController extends Controller
 
         try {
             $result = $this->PopbillStatement->GetSettleResult($testCorpNum, $settleCode, $testUserID);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -1901,7 +1923,8 @@ class StatementController extends Controller
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/statement/php/api/point#GetChargeURL
      */
-    public function GetChargeURL(){
+    public function GetChargeURL()
+    {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -1910,14 +1933,14 @@ class StatementController extends Controller
         $testUserID = 'testkorea';
 
         try {
-          $url = $this->PopbillStatement->GetChargeURL($testCorpNum, $testUserID);
-        } catch(PopbillException $pe) {
-          $code = $pe->getCode();
-          $message = $pe->getMessage();
-          return view('PResponse', ['code' => $code, 'message' => $message]);
+            $url = $this->PopbillStatement->GetChargeURL($testCorpNum, $testUserID);
+        } catch (PopbillException $pe) {
+            $code = $pe->getCode();
+            $message = $pe->getMessage();
+            return view('PResponse', ['code' => $code, 'message' => $message]);
         }
 
-        return view('ReturnValue', ['filedName' => "연동회원 포인트 충전 팝업 URL" , 'value' => $url]);
+        return view('ReturnValue', ['filedName' => "연동회원 포인트 충전 팝업 URL", 'value' => $url]);
     }
 
     /**
@@ -1925,7 +1948,8 @@ class StatementController extends Controller
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/statement/php/api/point#GetPaymentURL
      */
-    public function GetPaymentURL(){
+    public function GetPaymentURL()
+    {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -1935,13 +1959,13 @@ class StatementController extends Controller
 
         try {
             $url = $this->PopbillStatement->GetPaymentURL($testCorpNum, $testUserID);
-        } catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
 
-        return view('ReturnValue', ['filedName' => "연동회원 포인트 결제내역 팝업 URL" , 'value' => $url]);
+        return view('ReturnValue', ['filedName' => "연동회원 포인트 결제내역 팝업 URL", 'value' => $url]);
     }
 
     /**
@@ -1949,7 +1973,8 @@ class StatementController extends Controller
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/statement/php/api/point#GetUseHistoryURL
      */
-    public function GetUseHistoryURL(){
+    public function GetUseHistoryURL()
+    {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -1959,13 +1984,13 @@ class StatementController extends Controller
 
         try {
             $url = $this->PopbillStatement->GetUseHistoryURL($testCorpNum, $testUserID);
-        } catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
 
-        return view('ReturnValue', ['filedName' => "연동회원 포인트 사용내역 팝업 URL" , 'value' => $url]);
+        return view('ReturnValue', ['filedName' => "연동회원 포인트 사용내역 팝업 URL", 'value' => $url]);
     }
 
     /**
@@ -1973,21 +1998,21 @@ class StatementController extends Controller
      * - 과금방식이 연동과금인 경우 연동회원 잔여포인트 확인(GetBalance API) 함수를 이용하시기 바랍니다.
      * - https://developers.popbill.com/reference/statement/php/api/point#GetPartnerBalance
      */
-    public function GetPartnerBalance(){
+    public function GetPartnerBalance()
+    {
 
         // 팝빌회원 사업자번호
         $testCorpNum = '1234567890';
 
         try {
             $remainPoint = $this->PopbillStatement->GetPartnerBalance($testCorpNum);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
 
-        return view('ReturnValue', ['filedName' => "파트너 잔여포인트" , 'value' => $remainPoint]);
+        return view('ReturnValue', ['filedName' => "파트너 잔여포인트", 'value' => $remainPoint]);
     }
 
     /**
@@ -1995,7 +2020,8 @@ class StatementController extends Controller
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/statement/php/api/point#GetPartnerURL
      */
-    public function GetPartnerURL(){
+    public function GetPartnerURL()
+    {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -2005,21 +2031,21 @@ class StatementController extends Controller
 
         try {
             $url = $this->PopbillStatement->GetPartnerURL($testCorpNum, $TOGO);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
 
-        return view('ReturnValue', ['filedName' => "파트너 포인트 충전 팝업 URL" , 'value' => $url]);
+        return view('ReturnValue', ['filedName' => "파트너 포인트 충전 팝업 URL", 'value' => $url]);
     }
 
     /**
      * 전자명세서 발행시 과금되는 포인트 단가를 확인합니다.
      * - https://developers.popbill.com/reference/statement/php/api/point#GetUnitCost
      */
-    public function GetUnitCost(){
+    public function GetUnitCost()
+    {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -2027,21 +2053,21 @@ class StatementController extends Controller
         // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
         $itemCode = '121';
         try {
-            $unitCost = $this->PopbillStatement->GetUnitCost($testCorpNum,$itemCode);
-        }
-        catch(PopbillException $pe) {
+            $unitCost = $this->PopbillStatement->GetUnitCost($testCorpNum, $itemCode);
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('ReturnValue', ['filedName' => "전자명세서 발행단가" , 'value' => $unitCost]);
+        return view('ReturnValue', ['filedName' => "전자명세서 발행단가", 'value' => $unitCost]);
     }
 
     /**
      * 팝빌 전자명세서 API 서비스 과금정보를 확인합니다.
      * - https://developers.popbill.com/reference/statement/php/api/point#GetChargeInfo
      */
-    public function GetChargeInfo(){
+    public function GetChargeInfo()
+    {
 
         // 팝빌회원 사업자번호, '-'제외 10자리
         $testCorpNum = '1234567890';
@@ -2053,9 +2079,8 @@ class StatementController extends Controller
         $testUserID = 'testkorea';
 
         try {
-            $result = $this->PopbillStatement->GetChargeInfo( $testCorpNum, $itemCode, $testUserID );
-        }
-        catch(PopbillException $pe) {
+            $result = $this->PopbillStatement->GetChargeInfo($testCorpNum, $itemCode, $testUserID);
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -2068,7 +2093,8 @@ class StatementController extends Controller
      * 사업자번호를 조회하여 연동회원 가입여부를 확인합니다.
      * - https://developers.popbill.com/reference/statement/php/api/member#CheckIsMember
      */
-    public function CheckIsMember(){
+    public function CheckIsMember()
+    {
 
         // 사업자번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -2077,13 +2103,12 @@ class StatementController extends Controller
         $LinkID = config('popbill.LinkID');
 
         try {
-          $result = $this->PopbillStatement->CheckIsMember($testCorpNum, $LinkID);
-          $code = $result->code;
-          $message = $result->message;
-        }
-        catch(PopbillException $pe) {
-          $code = $pe->getCode();
-          $message = $pe->getMessage();
+            $result = $this->PopbillStatement->CheckIsMember($testCorpNum, $LinkID);
+            $code = $result->code;
+            $message = $result->message;
+        } catch (PopbillException $pe) {
+            $code = $pe->getCode();
+            $message = $pe->getMessage();
         }
 
         return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -2093,7 +2118,8 @@ class StatementController extends Controller
      * 사용하고자 하는 아이디의 중복여부를 확인합니다.
      * - https://developers.popbill.com/reference/statement/php/api/member#CheckID
      */
-    public function CheckID(){
+    public function CheckID()
+    {
 
         // 조회할 아이디
         $testUserID = 'testkorea';
@@ -2102,8 +2128,7 @@ class StatementController extends Controller
             $result = $this->PopbillStatement->CheckID($testUserID);
             $code = $result->code;
             $message = $result->message;
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
         }
@@ -2115,7 +2140,8 @@ class StatementController extends Controller
      * 사용자를 연동회원으로 가입처리합니다.
      * - https://developers.popbill.com/reference/statement/php/api/member#JoinMember
      */
-    public function JoinMember(){
+    public function JoinMember()
+    {
 
         $joinForm = new JoinForm();
 
@@ -2159,8 +2185,7 @@ class StatementController extends Controller
             $result = $this->PopbillStatement->JoinMember($joinForm);
             $code = $result->code;
             $message = $result->message;
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
         }
@@ -2172,7 +2197,8 @@ class StatementController extends Controller
      * 연동회원의 회사정보를 확인합니다.
      * - https://developers.popbill.com/reference/statement/php/api/member#GetCorpInfo
      */
-    public function GetCorpInfo(){
+    public function GetCorpInfo()
+    {
 
         // 팝빌회원 사업자번호, '-'제외 10자리
         $testCorpNum = '1234567890';
@@ -2182,8 +2208,7 @@ class StatementController extends Controller
 
         try {
             $CorpInfo = $this->PopbillStatement->GetCorpInfo($testCorpNum, $testUserID);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -2196,7 +2221,8 @@ class StatementController extends Controller
      * 연동회원의 회사정보를 수정합니다.
      * - https://developers.popbill.com/reference/statement/php/api/member#UpdateCorpInfo
      */
-    public function UpdateCorpInfo(){
+    public function UpdateCorpInfo()
+    {
 
         // 팝빌회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
@@ -2226,8 +2252,7 @@ class StatementController extends Controller
             $result =  $this->PopbillStatement->UpdateCorpInfo($testCorpNum, $CorpInfo, $testUserID);
             $code = $result->code;
             $message = $result->message;
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
         }
@@ -2239,7 +2264,8 @@ class StatementController extends Controller
      * 연동회원 사업자번호에 담당자(팝빌 로그인 계정)를 추가합니다.
      * - https://developers.popbill.com/reference/statement/php/api/member#RegistContact
      */
-    public function RegistContact(){
+    public function RegistContact()
+    {
 
         // 팝빌회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
@@ -2272,8 +2298,7 @@ class StatementController extends Controller
             $result = $this->PopbillStatement->RegistContact($testCorpNum, $ContactInfo, $testUserID);
             $code = $result->code;
             $message = $result->message;
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
         }
@@ -2285,7 +2310,8 @@ class StatementController extends Controller
      * 연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 정보을 확인합니다.
      * - https://developers.popbill.com/reference/statement/php/api/member#GetContactInfo
      */
-    public function GetContactInfo(){
+    public function GetContactInfo()
+    {
 
         // 팝빌회원 사업자번호, '-'제외 10자리
         $testCorpNum = '1234567890';
@@ -2298,8 +2324,7 @@ class StatementController extends Controller
 
         try {
             $ContactInfo = $this->PopbillStatement->GetContactInfo($testCorpNum, $contactID, $testUserID);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -2312,7 +2337,8 @@ class StatementController extends Controller
      * 연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 목록을 확인합니다.
      * - https://developers.popbill.com/reference/statement/php/api/member#ListContact
      */
-    public function ListContact(){
+    public function ListContact()
+    {
 
         // 팝빌회원 사업자번호, '-'제외 10자리
         $testCorpNum = '1234567890';
@@ -2322,8 +2348,7 @@ class StatementController extends Controller
 
         try {
             $ContactList = $this->PopbillStatement->ListContact($testCorpNum, $testUserID);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -2336,7 +2361,8 @@ class StatementController extends Controller
      * 연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 정보를 수정합니다.
      * - https://developers.popbill.com/reference/statement/php/api/member#UpdateContact
      */
-    public function UpdateContact(){
+    public function UpdateContact()
+    {
 
         // 팝빌회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
@@ -2366,8 +2392,7 @@ class StatementController extends Controller
             $result = $this->PopbillStatement->UpdateContact($testCorpNum, $ContactInfo, $testUserID);
             $code = $result->code;
             $message = $result->message;
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
         }
@@ -2376,89 +2401,88 @@ class StatementController extends Controller
     }
 
     /**
-* 회원 탈퇴 요청을 합니다.
-* - https://developers.popbill.com/reference/statement/php/api/member#QuitRequest
-*/
-public function QuitRequest(){
+     * 회원 탈퇴 요청을 합니다.
+     * - https://developers.popbill.com/reference/statement/php/api/member#QuitRequest
+     */
+    public function QuitRequest()
+    {
 
-    // 팝빌 회원 사업자 번호
-    $CorpNum = "1234567890";
+        // 팝빌 회원 사업자 번호
+        $CorpNum = "1234567890";
 
-    // 회원 탈퇴 사유
-    $QuitReason = "탈퇴합니다.";
+        // 회원 탈퇴 사유
+        $QuitReason = "탈퇴 테스트";
 
-    // 팝빌 회원 아이디
-    $UserID = "testkorea";
+        // 팝빌 회원 아이디
+        $UserID = "testkorea";
 
-    try {
-    $result = $this->PopbillAccountCheck->QuitRequest($CorpNum, $QuitReason, $UserID);
-    }
-    catch(PopbillException $pe) {
-    $code = $pe->getCode();
-    $message = $pe->getMessage();
-    return view('PResponse', ['code' => $code, 'message' => $message]);
-    }
-    return view('PResponse', ['code' => $result->code , 'message'=> $result->message]);
-
-    }
-
-    /**
-        * 환불 가능 포인트를 조회합니다.
-        * * - https://developers.popbill.com/reference/statement/php/api/member#GetRefundablePoint
-        */
-    public function GetRefundablePoint(){
-
-    // 팝빌 회원 사업자 번호
-    $CorpNum = "1234567890";
-
-    // 팝빌 회원 아이디
-    $UserID = "testkorea";
-
-    try {
-    $result = $this->PopbillAccountCheck->GetRefundablePoint($CorpNum, $UserID);
-    }
-    catch(PopbillException $pe) {
-    $code = $pe->getCode();
-    $message = $pe->getMessage();
-    return view('PResponse', ['code' => $code, 'message' => $message]);
-    }
-    return view('GetRefundablePoint', ['refundableBalance' => $result->refundableBalance]);
-
+        try {
+            $result = $this->PopbillStatement->QuitRequest($CorpNum, $QuitReason, $UserID);
+        } catch (PopbillException $pe) {
+            $code = $pe->getCode();
+            $message = $pe->getMessage();
+            return view('PResponse', ['code' => $code, 'message' => $message]);
+        }
+        return view('PResponse', ['code' => $result->code, 'message' => $result->message]);
     }
 
     /**
-        * 환불 신청 상태를 조회합니다
-        * * - https://developers.popbill.com/reference/statement/php/api/member#GetRefundResult
-        */
-    public function GetRefundResult(){
+     * 환불 가능 포인트를 조회합니다.
+     * - https://developers.popbill.com/reference/statement/php/api/member#GetRefundablePoint
+     */
+    public function GetRefundablePoint()
+    {
 
-    // 팝빌 회원 사업자 번호
-    $CorpNum = "1234567890";
+        // 팝빌 회원 사업자 번호
+        $CorpNum = "8442801306";
 
-    // 환불 신청 코드
-    $RefundCode = "";
+        // 팝빌 회원 아이디
+        $UserID = "test_hsjeong";
 
-    // 팝빌 회원 아이디
-    $UserID = "testkorea";
-
-    try {
-    $result = $this->PopbillAccountCheck->GetRefundResult($CorpNum, $RefundCode, $UserID);
-
-    }
-    catch(PopbillException $pe) {
-    $code = $pe->getCode();
-    $message = $pe->getMessage();
-    return view('PResponse', ['code' => $code, 'message' => $message]);
-    }
-    return view('GetRefundResult', ['reqDT' => $result->reqDT,
-    'requestPoint' => $result->requestPoint,
-    'accountBank' => $result->accountBank,
-    'accountNum' => $result->accountNum,
-    'accountName' => $result->accountName,
-    'state' => $result->state,
-    'reason' => $result->reason]
-    );
-
+        try {
+            $result = $this->PopbillStatement->GetRefundablePoint($CorpNum, $UserID);
+        } catch (PopbillException $pe) {
+            $code = $pe->getCode();
+            $message = $pe->getMessage();
+            return view('PResponse', ['code' => $code, 'message' => $message]);
+        }
+        return view('GetRefundablePoint', ['refundableBalance' => $result->refundableBalance]);
     }
 
+    /**
+     * 환불 신청 상태를 조회합니다
+     * - https://developers.popbill.com/reference/statement/php/api/member#GetRefundResult
+     */
+    public function GetRefundResult()
+    {
+
+        // 팝빌 회원 사업자 번호
+        $CorpNum = "8442801306";
+
+        // 환불 신청 코드
+        $RefundCode = "023040000015";
+
+        // 팝빌 회원 아이디
+        $UserID = "test_hsjeong";
+
+        try {
+            $result = $this->PopbillStatement->GetRefundResult($CorpNum, $RefundCode, $UserID);
+        } catch (PopbillException $pe) {
+            $code = $pe->getCode();
+            $message = $pe->getMessage();
+            return view('PResponse', ['code' => $code, 'message' => $message]);
+        }
+        return view(
+            'GetRefundResult',
+            [
+                'reqDT' => $result->reqDT,
+                'requestPoint' => $result->requestPoint,
+                'accountBank' => $result->accountBank,
+                'accountNum' => $result->accountNum,
+                'accountName' => $result->accountName,
+                'state' => $result->state,
+                'reason' => $result->reason
+            ]
+        );
+    }
 }

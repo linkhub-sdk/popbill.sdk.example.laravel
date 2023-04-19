@@ -17,7 +17,8 @@ use Linkhub\Popbill\PaymentForm;
 
 class MessageController extends Controller
 {
-    public function __construct() {
+    public function __construct()
+    {
 
         // 통신방식 설정
         define('LINKHUB_COMM_MODE', config('popbill.LINKHUB_COMM_MODE'));
@@ -39,7 +40,8 @@ class MessageController extends Controller
     }
 
     // HTTP Get Request URI -> 함수 라우팅 처리 함수
-    public function RouteHandelerFunc(Request $request){
+    public function RouteHandelerFunc(Request $request)
+    {
         $APIName = $request->route('APIName');
         return $this->$APIName();
     }
@@ -49,7 +51,8 @@ class MessageController extends Controller
      * - 발신번호 상태가 '승인'인 경우에만 code가 1로 반환됩니다.
      * - https://developers.popbill.com/reference/sms/php/api/sendnum#CheckSenderNumber
      */
-    public function CheckSenderNumber(){
+    public function CheckSenderNumber()
+    {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -64,7 +67,7 @@ class MessageController extends Controller
             $result = $this->PopbillMessaging->CheckSenderNumber($testCorpNum, $senderNumber, $testUserID);
             $code = $result->code;
             $message = $result->message;
-        } catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
         }
@@ -76,7 +79,8 @@ class MessageController extends Controller
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/sms/php/api/sendnum#GetSenderNumberMgtURL
      */
-    public function GetSenderNumberMgtURL(){
+    public function GetSenderNumberMgtURL()
+    {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -86,20 +90,21 @@ class MessageController extends Controller
 
         try {
             $url = $this->PopbillMessaging->GetSenderNumberMgtURL($testCorpNum, $testUserID);
-        } catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
 
-        return view('ReturnValue', ['filedName' => "문자 발신번호 팝업 URL" , 'value' => $url]);
+        return view('ReturnValue', ['filedName' => "문자 발신번호 팝업 URL", 'value' => $url]);
     }
 
     /**
      * 팝빌에 등록한 연동회원의 문자 발신번호 목록을 확인합니다.
      * - https://developers.popbill.com/reference/sms/php/api/sendnum#GetSenderNumberList
      */
-    public function GetSenderNumberList(){
+    public function GetSenderNumberList()
+    {
 
         // 팝빌회원 사업자번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -109,19 +114,20 @@ class MessageController extends Controller
 
         try {
             $result = $this->PopbillMessaging->GetSenderNumberList($testCorpNum, $testUserID);
-        } catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('GetSenderNumberList', ['Result' => $result] );
+        return view('GetSenderNumberList', ['Result' => $result]);
     }
 
     /**
      * 최대 90byte의 단문(SMS) 메시지 1건 전송을 팝빌에 접수합니다.
      * - https://developers.popbill.com/reference/sms/php/api/send#SendSMS
      */
-    public function SendSMS(){
+    public function SendSMS()
+    {
 
         // 팝빌 회원 사업자번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -147,12 +153,12 @@ class MessageController extends Controller
 
         $Message[1] =
 
-        // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+            // 팝빌 회원 아이디
+            $testUserID = 'testkorea';
 
         try {
             $receiptNum = $this->PopbillMessaging->SendSMS($testCorpNum, '', '', $Messages, $reserveDT, $adsYN, $testUserID, '', '', $requestNum);
-        } catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -165,7 +171,8 @@ class MessageController extends Controller
      * - 모든 수신자에게 동일한 내용을 전송하거나(동보전송), 수신자마다 개별 내용을 전송할 수 있습니다(대량전송).
      * - https://developers.popbill.com/reference/sms/php/api/send#SendSMS
      */
-    public function SendSMS_Multi(){
+    public function SendSMS_Multi()
+    {
 
         // 팝빌 회원 사업자번호, "-" 제외 10자리
         $testCorpNum = '1234567890';
@@ -182,14 +189,14 @@ class MessageController extends Controller
         $requestNum = '';
 
         // 문자전송정보 최대 1000건까지 호출가능
-        for ($i = 0; $i < 10; $i++ ) {
+        for ($i = 0; $i < 10; $i++) {
             $Messages[] = array(
                 'snd' => '',  // 발신번호, 팝빌에 등록되지 않은 발신번호 기재시 오류처리
                 'sndnm' => '발신자명',   // 발신자명
                 'rcv' => '',   // 수신번호
-                'rcvnm' => '수신자성명'.$i, // 수신자성명
+                'rcvnm' => '수신자성명' . $i, // 수신자성명
                 'msg' => '개별 메시지 내용',  // 개별 메시지 내용
-                'interOPRefKey' => '20230127'.$i    // 파트너 지정키, 동보전송시 수신자 구별용 메모
+                'interOPRefKey' => '20230127' . $i    // 파트너 지정키, 동보전송시 수신자 구별용 메모
             );
         }
 
@@ -197,9 +204,8 @@ class MessageController extends Controller
         $testUserID = 'testkorea';
 
         try {
-            $receiptNum = $this->PopbillMessaging->SendSMS($testCorpNum,'','', $Messages, $reserveDT, $adsYN, $testUserID, '', '', $requestNum);
-        }
-        catch(PopbillException $pe) {
+            $receiptNum = $this->PopbillMessaging->SendSMS($testCorpNum, '', '', $Messages, $reserveDT, $adsYN, $testUserID, '', '', $requestNum);
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -211,7 +217,8 @@ class MessageController extends Controller
      * 최대 2,000byte의 장문(LMS) 메시지 1건 전송을 팝빌에 접수합니다.
      * - https://developers.popbill.com/reference/sms/php/api/send#SendLMS
      */
-    public function SendLMS(){
+    public function SendLMS()
+    {
 
         // 팝빌 회원 사업자번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -241,8 +248,7 @@ class MessageController extends Controller
 
         try {
             $receiptNum = $this->PopbillMessaging->SendLMS($testCorpNum, '', '', '', $Messages, $reserveDT, $adsYN, $testUserID, '', '', $requestNum);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -251,11 +257,12 @@ class MessageController extends Controller
     }
 
     /**
-    * 최대 2,000byte의 장문(LMS) 메시지 다수건 전송을 팝빌에 접수합니다. (최대 1,000건)
-    * - 모든 수신자에게 동일한 내용을 전송하거나(동보전송), 수신자마다 개별 내용을 전송할 수 있습니다(대량전송).
-    * - https://developers.popbill.com/reference/sms/php/api/send#SendLMS
-    */
-    public function SendLMS_Multi(){
+     * 최대 2,000byte의 장문(LMS) 메시지 다수건 전송을 팝빌에 접수합니다. (최대 1,000건)
+     * - 모든 수신자에게 동일한 내용을 전송하거나(동보전송), 수신자마다 개별 내용을 전송할 수 있습니다(대량전송).
+     * - https://developers.popbill.com/reference/sms/php/api/send#SendLMS
+     */
+    public function SendLMS_Multi()
+    {
 
         // 팝빌 회원 사업자번호, "-" 제외 10자리
         $testCorpNum = '1234567890';
@@ -271,15 +278,15 @@ class MessageController extends Controller
         // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         $requestNum = '';
 
-        for ($i = 0; $i < 10; $i++){
+        for ($i = 0; $i < 10; $i++) {
             $Messages[] = array(
                 'snd' => '',  // 발신번호, 팝빌에 등록되지 않은 발신번호 기재시 오류처리
                 'sndnm' => '발신자명',   // 발신자명
                 'rcv' => '',   // 수신번호
-                'rcvnm' => '수신자성명'.$i, // 수신자 성명
+                'rcvnm' => '수신자성명' . $i, // 수신자 성명
                 'msg' => '개별 메시지 내용',  // 개별 메시지 내용. 장문은 2000byte로 길이가 조정되어 전송됨.
                 'sjt' => '개발 메시지 제목',  // 개별 메시지 내용
-                'interOPRefKey' => '20230127'.$i    // 파트너 지정키, 동보전송시 수신자 구별용 메모
+                'interOPRefKey' => '20230127' . $i    // 파트너 지정키, 동보전송시 수신자 구별용 메모
             );
         }
 
@@ -288,7 +295,7 @@ class MessageController extends Controller
 
         try {
             $receiptNum = $this->PopbillMessaging->SendLMS($testCorpNum, '', '', '', $Messages, $reserveDT, $adsYN, $testUserID, '', '', $requestNum);
-        } catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -301,7 +308,8 @@ class MessageController extends Controller
      * - 이미지 파일 포맷/규격 : 최대 300Kbyte(JPEG, JPG), 가로/세로 1,000px 이하 권장
      * - https://developers.popbill.com/reference/sms/php/api/send#SendMMS
      */
-    public function SendMMS(){
+    public function SendMMS()
+    {
 
         // 팝빌 회원 사업자번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -332,8 +340,8 @@ class MessageController extends Controller
         $testUserID = 'testkorea';
 
         try {
-            $receiptNum = $this->PopbillMessaging->SendMMS($testCorpNum,'','','',$Messages, $Files, $reserveDT, $adsYN, $testUserID, '', '', $requestNum);
-        } catch(PopbillException $pe) {
+            $receiptNum = $this->PopbillMessaging->SendMMS($testCorpNum, '', '', '', $Messages, $Files, $reserveDT, $adsYN, $testUserID, '', '', $requestNum);
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -343,12 +351,13 @@ class MessageController extends Controller
     }
 
     /**
-    * 최대 2,000byte의 메시지와 이미지로 구성된 포토문자(MMS) 다수건 전송을 팝빌에 접수합니다. (최대 1,000건)
-    * - 모든 수신자에게 동일한 내용을 전송하거나(동보전송), 수신자마다 개별 내용을 전송할 수 있습니다(대량전송).
-    * - 이미지 파일 포맷/규격 : 최대 300Kbyte(JPEG), 가로/세로 1,000px 이하 권장
-    *  - https://developers.popbill.com/reference/sms/php/api/send#SendMMS
-    */
-    public function SendMMS_Multi(){
+     * 최대 2,000byte의 메시지와 이미지로 구성된 포토문자(MMS) 다수건 전송을 팝빌에 접수합니다. (최대 1,000건)
+     * - 모든 수신자에게 동일한 내용을 전송하거나(동보전송), 수신자마다 개별 내용을 전송할 수 있습니다(대량전송).
+     * - 이미지 파일 포맷/규격 : 최대 300Kbyte(JPEG), 가로/세로 1,000px 이하 권장
+     *  - https://developers.popbill.com/reference/sms/php/api/send#SendMMS
+     */
+    public function SendMMS_Multi()
+    {
 
         // 팝빌 회원 사업자번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -365,15 +374,15 @@ class MessageController extends Controller
         $requestNum = '';
 
         // 전송정보 배열, 최대 1000건
-        for ($i = 0; $i < 10; $i++){
+        for ($i = 0; $i < 10; $i++) {
             $Messages[] = array(
                 'snd' => '',  // 발신번호, 팝빌에 등록되지 않은 발신번호 기재시 오류처리
                 'sndnm' => '발신자명',   // 발신자명
                 'rcv' => '',   // 수신번호
-                'rcvnm' => '수신자성명'.$i, // 수신자성명
+                'rcvnm' => '수신자성명' . $i, // 수신자성명
                 'msg' => '개별 메시지 내용',  // 개별 메시지 내용
                 'sjt' => '개발 메시지 제목',  // 개별 메시지 제목
-                'interOPRefKey' => '20230127'.$i    // 파트너 지정키, 동보전송시 수신자 구별용 메모
+                'interOPRefKey' => '20230127' . $i    // 파트너 지정키, 동보전송시 수신자 구별용 메모
             );
         }
 
@@ -385,7 +394,7 @@ class MessageController extends Controller
 
         try {
             $receiptNum = $this->PopbillMessaging->SendMMS($testCorpNum, '', '', '', $Messages, $Files, $reserveDT, $adsYN, $testUserID, '', '', $requestNum);
-        } catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -397,7 +406,8 @@ class MessageController extends Controller
      * 메시지 길이(90byte)에 따라 단문/장문(SMS/LMS)을 자동으로 인식하여 1건의 메시지를 전송을 팝빌에 접수합니다.
      * - https://developers.popbill.com/reference/sms/php/api/send#SendXMS
      */
-    public function SendXMS(){
+    public function SendXMS()
+    {
 
         // 팝빌 회원 사업자번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -426,7 +436,7 @@ class MessageController extends Controller
 
         try {
             $receiptNum = $this->PopbillMessaging->SendXMS($testCorpNum, '', '', '', $Messages, $reserveDT, $adsYN, $testUserID, '', '', $requestNum);
-        } catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -438,14 +448,15 @@ class MessageController extends Controller
      * 메시지 길이(90byte)에 따라 단문/장문(SMS/LMS)을 자동으로 인식하여 다수건의 메시지 전송을 팝빌에 접수합니다. (최대 1,000건)
      * - https://developers.popbill.com/reference/sms/php/api/send#SendXMS
      */
-    public function SendXMS_Multi(){
+    public function SendXMS_Multi()
+    {
 
         // 팝빌 회원 사업자번호, "-"제외 10자리
         $testCorpNum = '1234567890';
 
         // 문자전송정보 배열, 최대 1000건
         $Messages = array();
-        for ( $i = 0; $i < 100; $i++ ) {
+        for ($i = 0; $i < 100; $i++) {
             $Messages[] = array(
                 'snd' => '',    // 발신번호, 팝빌에 등록되지 않은 발신번호 기재시 오류처리
                 'sndnm' => '발신자명',     // 발신자명
@@ -453,7 +464,7 @@ class MessageController extends Controller
                 'rcvnm' => '수신자성명',     // 수신자성명
                 'sjt' => '개별 메시지 제목', // 개별전송 메시지 제목
                 'msg' => '개별 메시지 내용',  // 개별전송 메시지 내용
-                'interOPRefKey' => '20230127'.$i    // 파트너 지정키, 동보전송시 수신자 구별용 메모
+                'interOPRefKey' => '20230127' . $i    // 파트너 지정키, 동보전송시 수신자 구별용 메모
             );
         }
 
@@ -473,7 +484,7 @@ class MessageController extends Controller
 
         try {
             $receiptNum = $this->PopbillMessaging->SendXMS($testCorpNum, '', '', '', $Messages, $reserveDT, $adsYN, $testUserID, '', '', $requestNum);
-        } catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -485,7 +496,8 @@ class MessageController extends Controller
      * 팝빌에서 반환받은 접수번호를 통해 예약접수된 문자 메시지 전송을 취소합니다. (예약시간 10분 전까지 가능)
      * - https://developers.popbill.com/reference/sms/php/api/send#CancelReserve
      */
-    public function CancelReserve(){
+    public function CancelReserve()
+    {
 
         // 팝빌 회원 사업자번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -497,10 +509,10 @@ class MessageController extends Controller
         $testUserID = 'testkorea';
 
         try {
-            $result = $this->PopbillMessaging->CancelReserve($testCorpNum ,$ReceiptNum, $testUserID);
+            $result = $this->PopbillMessaging->CancelReserve($testCorpNum, $ReceiptNum, $testUserID);
             $code = $result->code;
             $message = $result->message;
-        } catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
         }
@@ -511,7 +523,8 @@ class MessageController extends Controller
      * 파트너가 할당한 전송요청 번호를 통해 예약접수된 문자 전송을 취소합니다. (예약시간 10분 전까지 가능)
      * - https://developers.popbill.com/reference/sms/php/api/send#CancelReserveRN
      */
-    public function CancelReserveRN(){
+    public function CancelReserveRN()
+    {
 
         // 팝빌 회원 사업자번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -523,10 +536,10 @@ class MessageController extends Controller
         $testUserID = 'testkorea';
 
         try {
-            $result = $this->PopbillMessaging->CancelReserveRN($testCorpNum ,$requestNum, $testUserID);
+            $result = $this->PopbillMessaging->CancelReserveRN($testCorpNum, $requestNum, $testUserID);
             $code = $result->code;
             $message = $result->message;
-        } catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
         }
@@ -536,7 +549,8 @@ class MessageController extends Controller
      * 팝빌에서 반환받은 접수번호와 수신번호를 통해 예약접수된 문자 메시지 전송을 취소합니다. (예약시간 10분 전까지 가능)
      * - https://developers.popbill.com/reference/sms/php/api/send#CancelReservebyRCV
      */
-    public function CancelReservebyRCV(){
+    public function CancelReservebyRCV()
+    {
 
         // 팝빌 회원 사업자번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -551,10 +565,10 @@ class MessageController extends Controller
         $testUserID = 'testkorea';
 
         try {
-            $result = $this->PopbillMessaging->CancelReservebyRCV($testCorpNum ,$ReceiptNum, $receiveNum, $testUserID);
+            $result = $this->PopbillMessaging->CancelReservebyRCV($testCorpNum, $ReceiptNum, $receiveNum, $testUserID);
             $code = $result->code;
             $message = $result->message;
-        } catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
         }
@@ -565,7 +579,8 @@ class MessageController extends Controller
      * 파트너가 할당한 전송요청 번호와 수신번호를 통해 예약접수된 문자 전송을 취소합니다. (예약시간 10분 전까지 가능)
      * - https://developers.popbill.com/reference/sms/php/api/send#CancelReserveRNbyRCV
      */
-    public function CancelReserveRNbyRCV(){
+    public function CancelReserveRNbyRCV()
+    {
 
         // 팝빌 회원 사업자번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -580,10 +595,10 @@ class MessageController extends Controller
         $testUserID = 'testkorea';
 
         try {
-            $result = $this->PopbillMessaging->CancelReserveRNbyRCV($testCorpNum ,$requestNum, $receiveNum, $testUserID);
+            $result = $this->PopbillMessaging->CancelReserveRNbyRCV($testCorpNum, $requestNum, $receiveNum, $testUserID);
             $code = $result->code;
             $message = $result->message;
-        } catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
         }
@@ -594,7 +609,8 @@ class MessageController extends Controller
      * 팝빌에서 반환받은 접수번호를 통해 문자 전송상태 및 결과를 확인합니다.
      * - https://developers.popbill.com/reference/sms/php/api/info#GetMessages
      */
-    public function GetMessages(){
+    public function GetMessages()
+    {
 
         // 팝빌회원 사업자번호, '-'제외 10자리
         $testCorpNum = '1234567890';
@@ -607,21 +623,21 @@ class MessageController extends Controller
 
         try {
             $result = $this->PopbillMessaging->GetMessages($testCorpNum, $ReceiptNum, $testUserID);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
 
-        return view('Message/GetMessage', ['Result' => $result] );
+        return view('Message/GetMessage', ['Result' => $result]);
     }
 
     /**
      * 파트너가 할당한 전송요청 번호를 통해 문자 전송상태 및 결과를 확인합니다.
      * - https://developers.popbill.com/reference/sms/php/api/info#GetMessagesRN
      */
-    public function GetMessagesRN(){
+    public function GetMessagesRN()
+    {
 
         // 팝빌회원 사업자번호, '-'제외 10자리
         $testCorpNum = '1234567890';
@@ -634,13 +650,12 @@ class MessageController extends Controller
 
         try {
             $result = $this->PopbillMessaging->GetMessagesRN($testCorpNum, $requestNum, $testUserID);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('Message/GetMessage', ['Result' => $result] );
+        return view('Message/GetMessage', ['Result' => $result]);
     }
 
     /**
@@ -648,7 +663,8 @@ class MessageController extends Controller
      * - 문자 접수일시로부터 6개월 이내 접수건만 조회할 수 있습니다.
      * - https://developers.popbill.com/reference/sms/php/api/info#Search
      */
-    public function Search(){
+    public function Search()
+    {
 
         // 팝빌회원 사업자번호, '-'제외 10자리
         $testCorpNum = '1234567890';
@@ -667,7 +683,7 @@ class MessageController extends Controller
         // 검색대상 배열 ("SMS" , "LMS" , "MMS" 중 선택, 다중 선택 가능)
         // └ SMS = 단문 , LMS = 장문 , MMS = 포토문자
         // - 미입력 시 전체조회
-        $Item = array( 'SMS', 'LMS', 'MMS' );
+        $Item = array('SMS', 'LMS', 'MMS');
 
         // 예약여부 (false , true 중 택 1)
         // └ false = 전체조회, true = 예약전송건 조회
@@ -697,15 +713,14 @@ class MessageController extends Controller
         $QString = '';
 
         try {
-            $result = $this->PopbillMessaging->Search( $testCorpNum, $SDate, $EDate, $State, $Item, $ReserveYN, $SenderYN, $Page, $PerPage, $Order, $testUserID, $QString );
-        }
-        catch(PopbillException $pe) {
+            $result = $this->PopbillMessaging->Search($testCorpNum, $SDate, $EDate, $State, $Item, $ReserveYN, $SenderYN, $Page, $PerPage, $Order, $testUserID, $QString);
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
 
-        return view('Message/Search', ['Result' => $result] );
+        return view('Message/Search', ['Result' => $result]);
     }
 
     /**
@@ -713,7 +728,8 @@ class MessageController extends Controller
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/sms/php/api/info#GetSentListURL
      */
-    public function GetSentListURL(){
+    public function GetSentListURL()
+    {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -723,53 +739,53 @@ class MessageController extends Controller
 
         try {
             $url = $this->PopbillMessaging->GetSentListURL($testCorpNum, $testUserID);
-        } catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
 
-        return view('ReturnValue', ['filedName' => "문자 전송내역 팝업 URL" , 'value' => $url]);
+        return view('ReturnValue', ['filedName' => "문자 전송내역 팝업 URL", 'value' => $url]);
     }
 
     /**
      * 전용 080 번호에 등록된 수신거부 목록을 반환합니다.
      * - https://developers.popbill.com/reference/sms/php/api/info#GetAutoDenyList
      */
-    public function GetAutoDenyList(){
+    public function GetAutoDenyList()
+    {
 
         // 팝빌회원 사업자번호, "-"제외 10자리
         $testCorpNum = '1234567890';
 
         try {
             $result = $this->PopbillMessaging->GetAutoDenyList($testCorpNum);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('Message/GetAutoDenyList', ['Result' => $result] );
+        return view('Message/GetAutoDenyList', ['Result' => $result]);
     }
 
     /**
      * 팝빌회원에 등록된 080 수신거부 번호 정보를 확인합니다.
      * - https://developers.popbill.com/reference/sms/php/api/info#CheckAutoDenyNumber
      */
-    public function CheckAutoDenyNumber(){
+    public function CheckAutoDenyNumber()
+    {
 
         // 팝빌회원 사업자번호, "-"제외 10자리
         $testCorpNum = '1234567890';
 
         try {
             $result = $this->PopbillMessaging->CheckAutoDenyNumber($testCorpNum);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('Message/CheckAutoDenyNumber', ['Result' => $result] );
+        return view('Message/CheckAutoDenyNumber', ['Result' => $result]);
     }
 
     /**
@@ -777,28 +793,29 @@ class MessageController extends Controller
      * - 과금방식이 파트너과금인 경우 파트너 잔여포인트 확인(GetPartnerBalance API) 함수를 통해 확인하시기 바랍니다.
      * - https://developers.popbill.com/reference/sms/php/api/point#GetBalance
      */
-    public function GetBalance(){
+    public function GetBalance()
+    {
 
         // 팝빌회원 사업자번호, "-"제외 10자리
         $testCorpNum = '1234567890';
 
         try {
             $remainPoint = $this->PopbillMessaging->GetBalance($testCorpNum);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
 
-        return view('ReturnValue', ['filedName' => "연동회원 잔여포인트" , 'value' => $remainPoint]);
+        return view('ReturnValue', ['filedName' => "연동회원 잔여포인트", 'value' => $remainPoint]);
     }
 
     /**
      * 연동회원의 포인트 사용내역을 확인합니다.
      * - https://developers.popbill.com/reference/sms/php/api/point#GetUseHistory
      */
-    public function GetUseHistory(){
+    public function GetUseHistory()
+    {
 
         // 팝빌회원 사업자번호 (하이픈 '-' 제외 10 자리)
         $testCorpNum = "1234567890";
@@ -821,10 +838,9 @@ class MessageController extends Controller
         // 팝빌 회원 아이디
         $testUserID = 'testkorea';
 
-        try	{
+        try {
             $result = $this->PopbillMessaging->GetUseHistory($testCorpNum, $SDate, $EDate, $Page, $PerPage, $Order, $testUserID);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -836,7 +852,8 @@ class MessageController extends Controller
      * 연동회원의 포인트 결제내역을 확인합니다.
      * - https://developers.popbill.com/reference/sms/php/api/point#GetPaymentHistory
      */
-    public function GetPaymentHistory(){
+    public function GetPaymentHistory()
+    {
 
         // 팝빌회원 사업자번호 (하이픈 '-' 제외 10 자리)
         $testCorpNum = "1234567890";
@@ -856,10 +873,9 @@ class MessageController extends Controller
         // 팝빌 회원 아이디
         $testUserID = 'testkorea';
 
-        try	{
+        try {
             $result = $this->PopbillMessaging->GetPaymentHistory($testCorpNum, $SDate, $EDate, $Page, $PerPage, $testUserID);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -871,7 +887,8 @@ class MessageController extends Controller
      * 연동회원의 포인트 환불신청내역을 확인합니다.
      * - https://developers.popbill.com/reference/sms/php/api/point#GetRefundHistory
      */
-    public function GetRefundHistory(){
+    public function GetRefundHistory()
+    {
 
         // 팝빌회원 사업자번호 (하이픈 '-' 제외 10 자리)
         $testCorpNum = "1234567890";
@@ -885,10 +902,9 @@ class MessageController extends Controller
         // 팝빌 회원 아이디
         $testUserID = 'testkorea';
 
-        try	{
+        try {
             $result = $this->PopbillMessaging->GetRefundHistory($testCorpNum, $Page, $PerPage, $testUserID);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -900,7 +916,8 @@ class MessageController extends Controller
      * 연동회원 포인트를 환불 신청합니다.
      * - https://developers.popbill.com/reference/sms/php/api/point#Refund
      */
-    public function Refund(){
+    public function Refund()
+    {
 
         // 팝빌 회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
@@ -931,23 +948,24 @@ class MessageController extends Controller
         // 팝빌 회원 아이디
         $testUserID = 'testkorea';
 
-        try	{
+        try {
             $result = $this->PopbillMessaging->Refund($testCorpNum, $RefundForm, $testUserID);
             $code = $result->code;
             $message = $result->message;
-        }
-        catch(PopbillException $pe) {
+            $refundCode = $result->refundCode;
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
         }
-        return view('PResponse', ['code' => $code, 'message' => $message]);
+        return view('PResponse', ['code' => $code, 'message' => $message, 'refundCode' => $refundCode]);
     }
 
     /**
      * 연동회원 포인트 충전을 위해 무통장입금을 신청합니다.
      * - https://developers.popbill.com/reference/sms/php/api/point#PaymentRequest
      */
-    public function PaymentRequest(){
+    public function PaymentRequest()
+    {
 
         // 팝빌 회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
@@ -981,8 +999,7 @@ class MessageController extends Controller
             $code = $result->code;
             $message = $result->message;
             $settleCode = $result->settleCode;
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -994,7 +1011,8 @@ class MessageController extends Controller
      * 연동회원 포인트 무통장 입금신청내역 1건을 확인합니다.
      * - https://developers.popbill.com/reference/sms/php/api/point#GetSettleResult
      */
-    public function GetSettleResult(){
+    public function GetSettleResult()
+    {
 
         // 팝빌회원 사업자번호
         $testCorpNum = '1234567890';
@@ -1007,8 +1025,7 @@ class MessageController extends Controller
 
         try {
             $result = $this->PopbillMessaging->GetSettleResult($testCorpNum, $settleCode, $testUserID);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -1021,7 +1038,8 @@ class MessageController extends Controller
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/sms/php/api/point#GetChargeURL
      */
-    public function GetChargeURL(){
+    public function GetChargeURL()
+    {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -1031,12 +1049,12 @@ class MessageController extends Controller
 
         try {
             $url = $this->PopbillMessaging->GetChargeURL($testCorpNum, $testUserID);
-        } catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('ReturnValue', ['filedName' => "연동회원 포인트 충전 팝업 URL" , 'value' => $url]);
+        return view('ReturnValue', ['filedName' => "연동회원 포인트 충전 팝업 URL", 'value' => $url]);
     }
 
     /**
@@ -1044,7 +1062,8 @@ class MessageController extends Controller
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/sms/php/api/point#GetPaymentURL
      */
-    public function GetPaymentURL(){
+    public function GetPaymentURL()
+    {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -1054,13 +1073,13 @@ class MessageController extends Controller
 
         try {
             $url = $this->PopbillMessaging->GetPaymentURL($testCorpNum, $testUserID);
-        } catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
 
-        return view('ReturnValue', ['filedName' => "연동회원 포인트 결제내역 팝업 URL" , 'value' => $url]);
+        return view('ReturnValue', ['filedName' => "연동회원 포인트 결제내역 팝업 URL", 'value' => $url]);
     }
 
     /**
@@ -1068,7 +1087,8 @@ class MessageController extends Controller
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/sms/php/api/point#GetUseHistoryURL
      */
-    public function GetUseHistoryURL(){
+    public function GetUseHistoryURL()
+    {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -1078,13 +1098,13 @@ class MessageController extends Controller
 
         try {
             $url = $this->PopbillMessaging->GetUseHistoryURL($testCorpNum, $testUserID);
-        } catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
 
-        return view('ReturnValue', ['filedName' => "연동회원 포인트 사용내역 팝업 URL" , 'value' => $url]);
+        return view('ReturnValue', ['filedName' => "연동회원 포인트 사용내역 팝업 URL", 'value' => $url]);
     }
 
     /**
@@ -1092,20 +1112,20 @@ class MessageController extends Controller
      * - 과금방식이 연동과금인 경우 연동회원 잔여포인트 확인(GetBalance API) 함수를 이용하시기 바랍니다.
      * - https://developers.popbill.com/reference/sms/php/api/point#GetPartnerBalance
      */
-    public function GetPartnerBalance(){
+    public function GetPartnerBalance()
+    {
 
         // 팝빌회원 사업자번호, "-"제외 10자리
         $testCorpNum = '1234567890';
 
         try {
             $remainPoint = $this->PopbillMessaging->GetPartnerBalance($testCorpNum);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('ReturnValue', ['filedName' => "파트너 잔여포인트" , 'value' => $remainPoint]);
+        return view('ReturnValue', ['filedName' => "파트너 잔여포인트", 'value' => $remainPoint]);
     }
 
     /**
@@ -1113,7 +1133,8 @@ class MessageController extends Controller
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/sms/php/api/point#GetPartnerURL
      */
-    public function GetPartnerURL(){
+    public function GetPartnerURL()
+    {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -1123,20 +1144,20 @@ class MessageController extends Controller
 
         try {
             $url = $this->PopbillMessaging->GetPartnerURL($testCorpNum, $TOGO);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('ReturnValue', ['filedName' => "파트너 포인트 충전 팝업 URL" , 'value' => $url]);
+        return view('ReturnValue', ['filedName' => "파트너 포인트 충전 팝업 URL", 'value' => $url]);
     }
 
     /**
-    * 문자 전송시 과금되는 포인트 단가를 확인합니다.
-    * - https://developers.popbill.com/reference/sms/php/api/point#GetUnitCost
-    */
-    public function GetUnitCost(){
+     * 문자 전송시 과금되는 포인트 단가를 확인합니다.
+     * - https://developers.popbill.com/reference/sms/php/api/point#GetUnitCost
+     */
+    public function GetUnitCost()
+    {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -1145,21 +1166,21 @@ class MessageController extends Controller
         $messageType = ENumMessageType::SMS;
 
         try {
-            $unitCost= $this->PopbillMessaging->GetUnitCost($testCorpNum, $messageType);
-        }
-        catch(PopbillException $pe) {
+            $unitCost = $this->PopbillMessaging->GetUnitCost($testCorpNum, $messageType);
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('ReturnValue', ['filedName' => "문자메시지(".ENumMessageType::SMS.") 전송단가", 'value' => $unitCost]);
+        return view('ReturnValue', ['filedName' => "문자메시지(" . ENumMessageType::SMS . ") 전송단가", 'value' => $unitCost]);
     }
 
     /**
      * 팝빌 문자 API 서비스 과금정보를 확인합니다.
      * - https://developers.popbill.com/reference/sms/php/api/point#GetChargeInfo
      */
-    public function GetChargeInfo(){
+    public function GetChargeInfo()
+    {
 
         // 팝빌회원 사업자번호, '-'제외 10자리
         $testCorpNum = '1234567890';
@@ -1172,8 +1193,7 @@ class MessageController extends Controller
 
         try {
             $result = $this->PopbillMessaging->GetChargeInfo($testCorpNum, $messageType, $testUserID);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -1186,7 +1206,8 @@ class MessageController extends Controller
      * 사업자번호를 조회하여 연동회원 가입여부를 확인합니다.
      * - https://developers.popbill.com/reference/sms/php/api/member#CheckIsMember
      */
-    public function CheckIsMember(){
+    public function CheckIsMember()
+    {
 
         // 사업자번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -1198,8 +1219,7 @@ class MessageController extends Controller
             $result = $this->PopbillMessaging->CheckIsMember($testCorpNum, $LinkID);
             $code = $result->code;
             $message = $result->message;
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
         }
@@ -1211,7 +1231,8 @@ class MessageController extends Controller
      * 사용하고자 하는 아이디의 중복여부를 확인합니다.
      * - https://developers.popbill.com/reference/sms/php/api/member#CheckID
      */
-    public function CheckID(){
+    public function CheckID()
+    {
 
         // 조회할 아이디
         $testUserID = 'testkorea';
@@ -1220,8 +1241,7 @@ class MessageController extends Controller
             $result = $this->PopbillMessaging->CheckID($testUserID);
             $code = $result->code;
             $message = $result->message;
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
         }
@@ -1233,7 +1253,8 @@ class MessageController extends Controller
      * 사용자를 연동회원으로 가입처리합니다.
      * - https://developers.popbill.com/reference/sms/php/api/member#JoinMember
      */
-    public function JoinMember(){
+    public function JoinMember()
+    {
 
         $joinForm = new JoinForm();
 
@@ -1277,8 +1298,7 @@ class MessageController extends Controller
             $result = $this->PopbillMessaging->JoinMember($joinForm);
             $code = $result->code;
             $message = $result->message;
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
         }
@@ -1291,7 +1311,8 @@ class MessageController extends Controller
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/sms/php/api/member#GetAccessURL
      */
-    public function GetAccessURL(){
+    public function GetAccessURL()
+    {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
         $testCorpNum = '1234567890';
@@ -1301,19 +1322,20 @@ class MessageController extends Controller
 
         try {
             $url = $this->PopbillMessaging->GetAccessURL($testCorpNum, $testUserID);
-        } catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('ReturnValue', ['filedName' => "팝빌 로그인 URL" , 'value' => $url]);
+        return view('ReturnValue', ['filedName' => "팝빌 로그인 URL", 'value' => $url]);
     }
 
     /**
      * 연동회원의 회사정보를 확인합니다.
      * - https://developers.popbill.com/reference/sms/php/api/member#GetCorpInfo
      */
-    public function GetCorpInfo(){
+    public function GetCorpInfo()
+    {
 
         // 팝빌회원 사업자번호, '-'제외 10자리
         $testCorpNum = '1234567890';
@@ -1323,7 +1345,7 @@ class MessageController extends Controller
 
         try {
             $CorpInfo = $this->PopbillMessaging->GetCorpInfo($testCorpNum, $testUserID);
-        } catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -1336,7 +1358,8 @@ class MessageController extends Controller
      * 연동회원의 회사정보를 수정합니다.
      * - https://developers.popbill.com/reference/sms/php/api/member#UpdateCorpInfo
      */
-    public function UpdateCorpInfo(){
+    public function UpdateCorpInfo()
+    {
 
         // 팝빌회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
@@ -1366,7 +1389,7 @@ class MessageController extends Controller
             $result =  $this->PopbillMessaging->UpdateCorpInfo($testCorpNum, $CorpInfo, $testUserID);
             $code = $result->code;
             $message = $result->message;
-        } catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
         }
@@ -1378,7 +1401,8 @@ class MessageController extends Controller
      * 연동회원 사업자번호에 담당자(팝빌 로그인 계정)를 추가합니다.
      * - https://developers.popbill.com/reference/sms/php/api/member#RegistContact
      */
-    public function RegistContact(){
+    public function RegistContact()
+    {
 
         // 팝빌회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
@@ -1411,7 +1435,7 @@ class MessageController extends Controller
             $result = $this->PopbillMessaging->RegistContact($testCorpNum, $ContactInfo, $testUserID);
             $code = $result->code;
             $message = $result->message;
-        } catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
         }
@@ -1423,7 +1447,8 @@ class MessageController extends Controller
      * 연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 정보을 확인합니다.
      * - https://developers.popbill.com/reference/sms/php/api/member#GetContactInfo
      */
-    public function GetContactInfo(){
+    public function GetContactInfo()
+    {
 
         // 팝빌회원 사업자번호, '-'제외 10자리
         $testCorpNum = '1234567890';
@@ -1436,8 +1461,7 @@ class MessageController extends Controller
 
         try {
             $ContactInfo = $this->PopbillMessaging->GetContactInfo($testCorpNum, $contactID, $testUserID);
-        }
-        catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -1450,7 +1474,8 @@ class MessageController extends Controller
      * 연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 목록을 확인합니다.
      * - https://developers.popbill.com/reference/sms/php/api/member#ListContact
      */
-    public function ListContact(){
+    public function ListContact()
+    {
 
         // 팝빌회원 사업자번호, '-'제외 10자리
         $testCorpNum = '1234567890';
@@ -1460,7 +1485,7 @@ class MessageController extends Controller
 
         try {
             $ContactList = $this->PopbillMessaging->ListContact($testCorpNum, $testUserID);
-        } catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -1473,7 +1498,8 @@ class MessageController extends Controller
      * 연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 정보를 수정합니다.
      * - https://developers.popbill.com/reference/sms/php/api/member#UpdateContact
      */
-    public function UpdateContact(){
+    public function UpdateContact()
+    {
 
         // 팝빌회원 사업자번호, '-' 제외 10자리
         $testCorpNum = '1234567890';
@@ -1503,7 +1529,7 @@ class MessageController extends Controller
             $result = $this->PopbillMessaging->UpdateContact($testCorpNum, $ContactInfo, $testUserID);
             $code = $result->code;
             $message = $result->message;
-        } catch(PopbillException $pe) {
+        } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
         }
@@ -1512,88 +1538,88 @@ class MessageController extends Controller
     }
 
     /**
-* 회원 탈퇴 요청을 합니다.
-* - https://developers.popbill.com/reference/sms/php/api/member#QuitRequest
-*/
-public function QuitRequest(){
+     * 회원 탈퇴 요청을 합니다.
+     * - https://developers.popbill.com/reference/sms/php/api/member#QuitRequest
+     */
+    public function QuitRequest()
+    {
 
-    // 팝빌 회원 사업자 번호
-    $CorpNum = "1234567890";
+        // 팝빌 회원 사업자 번호
+        $CorpNum = "1234567890";
 
-    // 회원 탈퇴 사유
-    $QuitReason = "탈퇴합니다.";
+        // 회원 탈퇴 사유
+        $QuitReason = "탈퇴 테스트";
 
-    // 팝빌 회원 아이디
-    $UserID = "testkorea";
+        // 팝빌 회원 아이디
+        $UserID = "testkorea";
 
-    try {
-    $result = $this->PopbillMessaging->QuitRequest($CorpNum, $QuitReason, $UserID);
-    }
-    catch(PopbillException $pe) {
-    $code = $pe->getCode();
-    $message = $pe->getMessage();
-    return view('PResponse', ['code' => $code, 'message' => $message]);
-    }
-    return view('PResponse', ['code' => $result->code , 'message'=> $result->message]);
-
-    }
-
-    /**
-        * 환불 가능 포인트를 조회합니다.
-        * * - https://developers.popbill.com/reference/sms/php/api/member#GetRefundablePoint
-        */
-    public function GetRefundablePoint(){
-
-    // 팝빌 회원 사업자 번호
-    $CorpNum = "1234567890";
-
-    // 팝빌 회원 아이디
-    $UserID = "testkorea";
-
-    try {
-    $result = $this->PopbillMessaging->GetRefundablePoint($CorpNum, $UserID);
-    }
-    catch(PopbillException $pe) {
-    $code = $pe->getCode();
-    $message = $pe->getMessage();
-    return view('PResponse', ['code' => $code, 'message' => $message]);
-    }
-    return view('GetRefundablePoint', ['refundableBalance' => $result->refundableBalance]);
-
+        try {
+            $result = $this->PopbillMessaging->QuitRequest($CorpNum, $QuitReason, $UserID);
+        } catch (PopbillException $pe) {
+            $code = $pe->getCode();
+            $message = $pe->getMessage();
+            return view('PResponse', ['code' => $code, 'message' => $message]);
+        }
+        return view('PResponse', ['code' => $result->code, 'message' => $result->message]);
     }
 
     /**
-        * 환불 신청 상태를 조회합니다
-        * * - https://developers.popbill.com/reference/sms/php/api/member#GetRefundResult
-        */
-    public function GetRefundResult(){
+     * 환불 가능 포인트를 조회합니다.
+     * - https://developers.popbill.com/reference/sms/php/api/member#GetRefundablePoint
+     */
+    public function GetRefundablePoint()
+    {
 
-    // 팝빌 회원 사업자 번호
-    $CorpNum = "1234567890";
+        // 팝빌 회원 사업자 번호
+        $CorpNum = "8442801306";
 
-    // 환불 신청 코드
-    $RefundCode = "";
+        // 팝빌 회원 아이디
+        $UserID = "test_hsjeong";
 
-    // 팝빌 회원 아이디
-    $UserID = "testkorea";
-
-    try {
-    $result = $this->PopbillMessaging->GetRefundResult($CorpNum, $RefundCode, $UserID);
-
+        try {
+            $result = $this->PopbillMessaging->GetRefundablePoint($CorpNum, $UserID);
+        } catch (PopbillException $pe) {
+            $code = $pe->getCode();
+            $message = $pe->getMessage();
+            return view('PResponse', ['code' => $code, 'message' => $message]);
+        }
+        return view('GetRefundablePoint', ['refundableBalance' => $result->refundableBalance]);
     }
-    catch(PopbillException $pe) {
-    $code = $pe->getCode();
-    $message = $pe->getMessage();
-    return view('PResponse', ['code' => $code, 'message' => $message]);
-    }
-    return view('GetRefundResult', ['reqDT' => $result->reqDT,
-    'requestPoint' => $result->requestPoint,
-    'accountBank' => $result->accountBank,
-    'accountNum' => $result->accountNum,
-    'accountName' => $result->accountName,
-    'state' => $result->state,
-    'reason' => $result->reason]
-    );
 
+    /**
+     * 환불 신청 상태를 조회합니다
+     * - https://developers.popbill.com/reference/sms/php/api/member#GetRefundResult
+     */
+    public function GetRefundResult()
+    {
+
+        // 팝빌 회원 사업자 번호
+        $CorpNum = "8442801306";
+
+        // 환불 신청 코드
+        $RefundCode = "023040000015";
+
+        // 팝빌 회원 아이디
+        $UserID = "test_hsjeong";
+
+        try {
+            $result = $this->PopbillMessaging->GetRefundResult($CorpNum, $RefundCode, $UserID);
+        } catch (PopbillException $pe) {
+            $code = $pe->getCode();
+            $message = $pe->getMessage();
+            return view('PResponse', ['code' => $code, 'message' => $message]);
+        }
+        return view(
+            'GetRefundResult',
+            [
+                'reqDT' => $result->reqDT,
+                'requestPoint' => $result->requestPoint,
+                'accountBank' => $result->accountBank,
+                'accountNum' => $result->accountNum,
+                'accountName' => $result->accountName,
+                'state' => $result->state,
+                'reason' => $result->reason
+            ]
+        );
     }
 }
