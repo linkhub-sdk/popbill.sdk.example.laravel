@@ -833,9 +833,9 @@ class ClosedownController extends Controller
 
     /**
      * 회원 탈퇴 요청을 합니다.
-     * - https://developers.popbill.com/reference/closedown/php/api/member#QuitRequest
+     * - https://developers.popbill.com/reference/closedown/php/api/member#QuitMember
      */
-    public function QuitRequest()
+    public function QuitMember()
     {
 
         // 팝빌 회원 사업자 번호
@@ -848,7 +848,7 @@ class ClosedownController extends Controller
         $UserID = "testkorea";
 
         try {
-            $result = $this->PopbillClosedown->QuitRequest($CorpNum, $QuitReason, $UserID);
+            $result = $this->PopbillClosedown->QuitMember($CorpNum, $QuitReason, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -859,7 +859,7 @@ class ClosedownController extends Controller
 
     /**
      * 환불 가능 포인트를 조회합니다.
-     * - https://developers.popbill.com/reference/closedown/php/api/member#GetRefundablePoint
+     * - https://developers.popbill.com/reference/closedown/php/api/member#GetRefundableBalance
      */
     public function GetRefundablePoint()
     {
@@ -871,20 +871,20 @@ class ClosedownController extends Controller
         $UserID = "test_hsjeong";
 
         try {
-            $result = $this->PopbillClosedown->GetRefundablePoint($CorpNum, $UserID);
+            $result = $this->PopbillClosedown->GetRefundableBalance($CorpNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('GetRefundablePoint', ['refundableBalance' => $result->refundableBalance]);
+        return view('GetRefundableBalance', ['refundableBalance' => $result->refundableBalance]);
     }
 
     /**
      * 환불 신청 상태를 조회합니다
-     * - https://developers.popbill.com/reference/closedown/php/api/member#GetRefundResult
+     * - https://developers.popbill.com/reference/closedown/php/api/member#GetRefundInfo
      */
-    public function GetRefundResult()
+    public function GetRefundInfo()
     {
 
         // 팝빌 회원 사업자 번호
@@ -897,14 +897,14 @@ class ClosedownController extends Controller
         $UserID = "test_hsjeong";
 
         try {
-            $result = $this->PopbillClosedown->GetRefundResult($CorpNum, $RefundCode, $UserID);
+            $result = $this->PopbillClosedown->GetRefundInfo($CorpNum, $RefundCode, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
         return view(
-            'GetRefundResult',
+            'GetRefundInfo',
             [
                 'reqDT' => $result->reqDT,
                 'requestPoint' => $result->requestPoint,

@@ -1169,9 +1169,9 @@ class HTCashbillController extends Controller
 
     /**
      * 회원 탈퇴 요청을 합니다.
-     * - https://developers.popbill.com/reference/htcashbill/php/api/member#QuitRequest
+     * - https://developers.popbill.com/reference/htcashbill/php/api/member#QuitMember
      */
-    public function QuitRequest()
+    public function QuitMember()
     {
 
         // 팝빌 회원 사업자 번호
@@ -1184,7 +1184,7 @@ class HTCashbillController extends Controller
         $UserID = "testkorea";
 
         try {
-            $result = $this->PopbillHTCashbill->QuitRequest($CorpNum, $QuitReason, $UserID);
+            $result = $this->PopbillHTCashbill->QuitMember($CorpNum, $QuitReason, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -1195,7 +1195,7 @@ class HTCashbillController extends Controller
 
     /**
      * 환불 가능 포인트를 조회합니다.
-     * - https://developers.popbill.com/reference/htcashbill/php/api/member#GetRefundablePoint
+     * - https://developers.popbill.com/reference/htcashbill/php/api/member#GetRefundableBalance
      */
     public function GetRefundablePoint()
     {
@@ -1207,20 +1207,20 @@ class HTCashbillController extends Controller
         $UserID = "test_hsjeong";
 
         try {
-            $result = $this->PopbillHTCashbill->GetRefundablePoint($CorpNum, $UserID);
+            $result = $this->PopbillHTCashbill->GetRefundableBalance($CorpNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('GetRefundablePoint', ['refundableBalance' => $result->refundableBalance]);
+        return view('GetRefundableBalance', ['refundableBalance' => $result->refundableBalance]);
     }
 
     /**
      * 환불 신청 상태를 조회합니다
-     * - https://developers.popbill.com/reference/htcashbill/php/api/member#GetRefundResult
+     * - https://developers.popbill.com/reference/htcashbill/php/api/member#GetRefundInfo
      */
-    public function GetRefundResult()
+    public function GetRefundInfo()
     {
 
         // 팝빌 회원 사업자 번호
@@ -1233,14 +1233,14 @@ class HTCashbillController extends Controller
         $UserID = "test_hsjeong";
 
         try {
-            $result = $this->PopbillHTCashbill->GetRefundResult($CorpNum, $RefundCode, $UserID);
+            $result = $this->PopbillHTCashbill->GetRefundInfo($CorpNum, $RefundCode, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
         return view(
-            'GetRefundResult',
+            'GetRefundInfo',
             [
                 'reqDT' => $result->reqDT,
                 'requestPoint' => $result->requestPoint,

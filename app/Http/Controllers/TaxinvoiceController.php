@@ -3606,9 +3606,9 @@ class TaxinvoiceController extends Controller
 
     /**
      * 회원 탈퇴 요청을 합니다.
-     * - https://developers.popbill.com/reference/taxinvoice/php/api/member#QuitRequest
+     * - https://developers.popbill.com/reference/taxinvoice/php/api/member#QuitMember
      */
-    public function QuitRequest()
+    public function QuitMember()
     {
 
         // 팝빌 회원 사업자 번호
@@ -3621,7 +3621,7 @@ class TaxinvoiceController extends Controller
         $UserID = "testkorea";
 
         try {
-            $result = $this->PopbillTaxinvoice->QuitRequest($CorpNum, $QuitReason, $UserID);
+            $result = $this->PopbillTaxinvoice->QuitMember($CorpNum, $QuitReason, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -3632,7 +3632,7 @@ class TaxinvoiceController extends Controller
 
     /**
      * 환불 가능 포인트를 조회합니다.
-     * - https://developers.popbill.com/reference/taxinvoice/php/api/member#GetRefundablePoint
+     * - https://developers.popbill.com/reference/taxinvoice/php/api/member#GetRefundableBalance
      */
     public function GetRefundablePoint()
     {
@@ -3644,20 +3644,20 @@ class TaxinvoiceController extends Controller
         $UserID = "test_hsjeong";
 
         try {
-            $result = $this->PopbillTaxinvoice->GetRefundablePoint($CorpNum, $UserID);
+            $result = $this->PopbillTaxinvoice->GetRefundableBalance($CorpNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('GetRefundablePoint', ['refundableBalance' => $result->refundableBalance]);
+        return view('GetRefundableBalance', ['refundableBalance' => $result->refundableBalance]);
     }
 
     /**
      * 환불 신청 상태를 조회합니다
-     * - https://developers.popbill.com/reference/taxinvoice/php/api/member#GetRefundResult
+     * - https://developers.popbill.com/reference/taxinvoice/php/api/member#GetRefundInfo
      */
-    public function GetRefundResult()
+    public function GetRefundInfo()
     {
 
         // 팝빌 회원 사업자 번호
@@ -3670,14 +3670,14 @@ class TaxinvoiceController extends Controller
         $UserID = "test_hsjeong";
 
         try {
-            $result = $this->PopbillTaxinvoice->GetRefundResult($CorpNum, $RefundCode, $UserID);
+            $result = $this->PopbillTaxinvoice->GetRefundInfo($CorpNum, $RefundCode, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
         return view(
-            'GetRefundResult',
+            'GetRefundInfo',
             [
                 'reqDT' => $result->reqDT,
                 'requestPoint' => $result->requestPoint,

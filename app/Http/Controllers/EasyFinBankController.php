@@ -1352,9 +1352,9 @@ class EasyFinBankController extends Controller
 
     /**
      * 회원 탈퇴 요청을 합니다.
-     * - https://developers.popbill.com/reference/easyfinbank/php/api/member#QuitRequest
+     * - https://developers.popbill.com/reference/easyfinbank/php/api/member#QuitMember
      */
-    public function QuitRequest()
+    public function QuitMember()
     {
 
         // 팝빌 회원 사업자 번호
@@ -1367,7 +1367,7 @@ class EasyFinBankController extends Controller
         $UserID = "testkorea";
 
         try {
-            $result = $this->PopbillEasyFinBank->QuitRequest($CorpNum, $QuitReason, $UserID);
+            $result = $this->PopbillEasyFinBank->QuitMember($CorpNum, $QuitReason, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -1378,7 +1378,7 @@ class EasyFinBankController extends Controller
 
     /**
      * 환불 가능 포인트를 조회합니다.
-     * - https://developers.popbill.com/reference/easyfinbank/php/api/member#GetRefundablePoint
+     * - https://developers.popbill.com/reference/easyfinbank/php/api/member#GetRefundableBalance
      */
     public function GetRefundablePoint()
     {
@@ -1390,20 +1390,20 @@ class EasyFinBankController extends Controller
         $UserID = "test_hsjeong";
 
         try {
-            $result = $this->PopbillEasyFinBank->GetRefundablePoint($CorpNum, $UserID);
+            $result = $this->PopbillEasyFinBank->GetRefundableBalance($CorpNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('GetRefundablePoint', ['refundableBalance' => $result->refundableBalance]);
+        return view('GetRefundableBalance', ['refundableBalance' => $result->refundableBalance]);
     }
 
     /**
      * 환불 신청 상태를 조회합니다
-     * - https://developers.popbill.com/reference/easyfinbank/php/api/member#GetRefundResult
+     * - https://developers.popbill.com/reference/easyfinbank/php/api/member#GetRefundInfo
      */
-    public function GetRefundResult()
+    public function GetRefundInfo()
     {
 
         // 팝빌 회원 사업자 번호
@@ -1416,14 +1416,14 @@ class EasyFinBankController extends Controller
         $UserID = "test_hsjeong";
 
         try {
-            $result = $this->PopbillEasyFinBank->GetRefundResult($CorpNum, $RefundCode, $UserID);
+            $result = $this->PopbillEasyFinBank->GetRefundInfo($CorpNum, $RefundCode, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
         return view(
-            'GetRefundResult',
+            'GetRefundInfo',
             [
                 'reqDT' => $result->reqDT,
                 'requestPoint' => $result->requestPoint,

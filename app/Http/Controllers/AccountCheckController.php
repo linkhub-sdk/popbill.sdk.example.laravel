@@ -838,9 +838,9 @@ class AccountCheckController extends Controller
 
     /**
      * 회원 탈퇴 요청을 합니다.
-     * - https://developers.popbill.com/reference/accountcheck/php/api/member#QuitRequest
+     * - https://developers.popbill.com/reference/accountcheck/php/api/member#QuitMember
      */
-    public function QuitRequest()
+    public function QuitMember()
     {
         // 팝빌 회원 사업자 번호
         $CorpNum = "1234567890";
@@ -852,7 +852,7 @@ class AccountCheckController extends Controller
         $UserID = "testkorea";
 
         try {
-            $result = $this->PopbillAccountCheck->QuitRequest($CorpNum, $QuitReason, $UserID);
+            $result = $this->PopbillAccountCheck->QuitMember($CorpNum, $QuitReason, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -863,7 +863,7 @@ class AccountCheckController extends Controller
 
     /**
      * 환불 가능 포인트를 조회합니다.
-     * - https://developers.popbill.com/reference/accountcheck/php/api/member#GetRefundablePoint
+     * - https://developers.popbill.com/reference/accountcheck/php/api/member#GetRefundableBalance
      */
     public function GetRefundablePoint()
     {
@@ -874,20 +874,20 @@ class AccountCheckController extends Controller
         $UserID = "testkorea";
 
         try {
-            $result = $this->PopbillAccountCheck->GetRefundablePoint($CorpNum, $UserID);
+            $result = $this->PopbillAccountCheck->GetRefundableBalance($CorpNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('GetRefundablePoint', ['refundableBalance' => $result->refundableBalance]);
+        return view('GetRefundableBalance', ['refundableBalance' => $result->refundableBalance]);
     }
 
     /**
      * 환불 신청 상태를 조회합니다
-     * - https://developers.popbill.com/reference/accountcheck/php/api/member#GetRefundResult
+     * - https://developers.popbill.com/reference/accountcheck/php/api/member#GetRefundInfo
      */
-    public function GetRefundResult()
+    public function GetRefundInfo()
     {
         // 팝빌 회원 사업자 번호
         $CorpNum = "1234567890";
@@ -899,14 +899,14 @@ class AccountCheckController extends Controller
         $UserID = "testkorea";
 
         try {
-            $result = $this->PopbillAccountCheck->GetRefundResult($CorpNum, $RefundCode, $UserID);
+            $result = $this->PopbillAccountCheck->GetRefundInfo($CorpNum, $RefundCode, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
         return view(
-            'GetRefundResult',
+            'GetRefundInfo',
             [
                 'reqDT' => $result->reqDT,
                 'requestPoint' => $result->requestPoint,
