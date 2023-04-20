@@ -36,7 +36,7 @@
                 <li><a href="AccountCheck/GetPartnerBalance">GetPartnerBalance</a> (파트너 잔여포인트 확인) </li>
                 <li><a href="AccountCheck/GetPartnerURL">GetPartnerURL</a> (파트너 포인트충전 팝업 URL) </li>
                 <li><a href="AccountCheck/GetRefundResult">GetRefundResult</a> (환불 신청 상태 확인)</li>
-                <li><a href="AccountCheck/GetRefundablePoint">GetRefundablePoint</a> (환불 가능 포인트 확인)</li>
+                <li><a href="AccountCheck/GetRefundableBalance">GetRefundableBalance</a> (환불 가능 포인트 확인)</li>
             </ul>
         </fieldset>
         <fieldset class="fieldset1">

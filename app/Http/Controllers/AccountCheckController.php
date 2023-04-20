@@ -865,7 +865,7 @@ class AccountCheckController extends Controller
      * 환불 가능 포인트를 조회합니다.
      * - https://developers.popbill.com/reference/accountcheck/php/api/member#GetRefundableBalance
      */
-    public function GetRefundablePoint()
+    public function GetRefundableBalance()
     {
         // 팝빌 회원 사업자 번호
         $CorpNum = "1234567890";
