@@ -874,13 +874,13 @@ class AccountCheckController extends Controller
         $UserID = "testkorea";
 
         try {
-            $result = $this->PopbillAccountCheck->GetRefundableBalance($CorpNum, $UserID);
+            $refundableBalance = $this->PopbillAccountCheck->GetRefundableBalance($CorpNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('GetRefundableBalance', ['refundableBalance' => $result->refundableBalance]);
+        return view('GetRefundableBalance', ['refundableBalance' => $refundableBalance]);
     }
 
     /**
@@ -907,15 +907,7 @@ class AccountCheckController extends Controller
         }
         return view(
             'GetRefundInfo',
-            [
-                'reqDT' => $result->reqDT,
-                'requestPoint' => $result->requestPoint,
-                'accountBank' => $result->accountBank,
-                'accountNum' => $result->accountNum,
-                'accountName' => $result->accountName,
-                'state' => $result->state,
-                'reason' => $result->reason
-            ]
+            ['result' => $result]
         );
     }
 }
