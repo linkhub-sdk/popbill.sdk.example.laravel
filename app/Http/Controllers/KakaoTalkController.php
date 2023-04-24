@@ -2330,7 +2330,6 @@ class KakaoTalkController extends Controller
 
     /**
      * 포인트 환불에 대한 상세정보 1건을 확인합니다.
-
      * - https://developers.popbill.com/reference/kakaotalk/php/api/point#GetRefundInfo
      */
     public function GetRefundInfo()
