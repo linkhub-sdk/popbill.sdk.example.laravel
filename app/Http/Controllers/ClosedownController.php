@@ -903,9 +903,6 @@ class ClosedownController extends Controller
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view(
-            'GetRefundInfo',
-            ['result' => $result]
-        );
+        return view('GetRefundInfo', ['result' => $result]);
     }
 }

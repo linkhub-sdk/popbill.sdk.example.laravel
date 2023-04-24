@@ -15,13 +15,13 @@
             <fieldset class="fieldset2">
                 <ul>
 
-                    <li>reqDT (신청일시) : {{$reqDT}}</li>
-                    <li>requestPoint (환불 신청 포인트) : {{$requestPoint}}</li>
-                    <li>accountBank (환불계좌 은행명) : {{$accountBank}}</li>
-                    <li>accountNum (환불계좌번호) : {{$accountNum}}</li>
-                    <li>accountName (환불계좌 예금주명) : {{$accountName}}</li>
-                    <li>state (상태) : {{$state}}</li>
-                    <li>reason (환불 사유) : {{$reason}}</li>
+                    <li>reqDT (신청일시) : {{$result->reqDT}}</li>
+                    <li>requestPoint (환불 신청 포인트) : {{$result->requestPoint}}</li>
+                    <li>accountBank (환불계좌 은행명) : {{$result->accountBank}}</li>
+                    <li>accountNum (환불계좌번호) : {{$result->accountNum}}</li>
+                    <li>accountName (환불계좌 예금주명) : {{$result->accountName}}</li>
+                    <li>state (상태) : {{$result->state}}</li>
+                    <li>reason (환불 사유) : {{$result->reason}}</li>
                 </ul>
             </fieldset>
         </fieldset>
