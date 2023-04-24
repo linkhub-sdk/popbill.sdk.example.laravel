@@ -832,7 +832,9 @@ class ClosedownController extends Controller
     }
 
     /**
-     * 회원 탈퇴 요청을 합니다.
+     * 가입된 연동회원의 탈퇴를 요청합니다.
+     * 회원탈퇴 신청과 동시에 팝빌의 모든 서비스 이용이 불가하며, 관리자를 포함한 모든 담당자 계정도 일괄탈퇴 됩니다.
+     * 회원탈퇴로 삭제된 데이터는 복원이 불가능합니다.
      * - https://developers.popbill.com/reference/closedown/php/api/member#QuitMember
      */
     public function QuitMember()
@@ -858,8 +860,8 @@ class ClosedownController extends Controller
     }
 
     /**
-     * 환불 가능 포인트를 조회합니다.
-     * - https://developers.popbill.com/reference/closedown/php/api/member#GetRefundableBalance
+     * 환불 가능한 포인트를 확인합니다. (보너스 포인트는 환불가능포인트에서 제외됩니다.)
+     * - https://developers.popbill.com/reference/closedown/php/api/point#GetRefundableBalance
      */
     public function GetRefundableBalance()
     {
@@ -881,8 +883,9 @@ class ClosedownController extends Controller
     }
 
     /**
-     * 환불 신청 상태를 조회합니다
-     * - https://developers.popbill.com/reference/closedown/php/api/member#GetRefundInfo
+     * 포인트 환불에 대한 상세정보 1건을 확인합니다.
+
+     * - https://developers.popbill.com/reference/closedown/php/api/point#GetRefundInfo
      */
     public function GetRefundInfo()
     {
