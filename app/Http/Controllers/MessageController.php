@@ -1573,10 +1573,10 @@ class MessageController extends Controller
     {
 
         // 팝빌 회원 사업자 번호
-        $CorpNum = "8442801306";
+        $CorpNum = "1234567890";
 
         // 팝빌 회원 아이디
-        $UserID = "test_hsjeong";
+        $UserID = "testkorea";
 
         try {
             $refundableBalance = $this->PopbillMessaging->GetRefundableBalance($CorpNum, $UserID);
@@ -1596,13 +1596,13 @@ class MessageController extends Controller
     {
 
         // 팝빌 회원 사업자 번호
-        $CorpNum = "8442801306";
+        $CorpNum = "1234567890";
 
         // 환불 신청 코드
         $RefundCode = "023040000015";
 
         // 팝빌 회원 아이디
-        $UserID = "test_hsjeong";
+        $UserID = "testkorea";
 
         try {
             $result = $this->PopbillMessaging->GetRefundInfo($CorpNum, $RefundCode, $UserID);
