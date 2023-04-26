@@ -275,9 +275,6 @@ class BizInfoCheckController extends Controller
 
         try {
             $result = $this->PopbillBizInfoCheck->PaymentRequest($testCorpNum, $paymentForm);
-            $code = $result->code;
-            $message = $result->message;
-            $settleCode = $result->settleCode;
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();

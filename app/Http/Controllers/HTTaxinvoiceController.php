@@ -848,9 +848,6 @@ class HTTaxinvoiceController extends Controller
 
         try {
             $result = $this->PopbillHTTaxinvoice->PaymentRequest($testCorpNum, $paymentForm, $testUserID);
-            $code = $result->code;
-            $message = $result->message;
-            $settleCode = $result->settleCode;
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
