@@ -3666,7 +3666,7 @@ class TaxinvoiceController extends Controller
         // 팝빌 회원 사업자 번호
         $CorpNum = "1234567890";
 
-        // 환불 신청 코드
+        // 환불코드
         $RefundCode = "023040000015";
 
         // 팝빌 회원 아이디
