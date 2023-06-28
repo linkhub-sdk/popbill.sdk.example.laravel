@@ -55,7 +55,7 @@ class HTTaxinvoiceController extends Controller
     {
 
         // 팝빌회원 사업자번호, '-'제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 전자세금계산서 유형, SELL-매출, BUY-매입, TRUSTEE-위수탁
         $TIKeyType = HTTIKeyType::SELL;
@@ -70,10 +70,10 @@ class HTTaxinvoiceController extends Controller
         $EDate = '20230131';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $jobID = $this->PopbillHTTaxinvoice->RequestJob($testCorpNum, $TIKeyType, $DType, $SDate, $EDate, $testUserID);
+            $jobID = $this->PopbillHTTaxinvoice->RequestJob($CorpNum, $TIKeyType, $DType, $SDate, $EDate, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -96,16 +96,16 @@ class HTTaxinvoiceController extends Controller
     {
 
         // 팝빌회원 사업자번호, '-'제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 수집 요청시 반환받은 작업아이디
         $jobID = '';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillHTTaxinvoice->GetJobState($testCorpNum, $jobID, $testUserID);
+            $result = $this->PopbillHTTaxinvoice->GetJobState($CorpNum, $jobID, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -124,13 +124,13 @@ class HTTaxinvoiceController extends Controller
     {
 
         // 팝빌회원 사업자번호, '-'제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillHTTaxinvoice->ListActiveJob($testCorpNum, $testUserID);
+            $result = $this->PopbillHTTaxinvoice->ListActiveJob($CorpNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -147,10 +147,10 @@ class HTTaxinvoiceController extends Controller
     {
 
         // 팝빌회원 사업자번호, '-'제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
-        $testUserID = '';
+        $UserID = '';
 
         // 수집 요청(RequestJob) 호출시 반환받은 작업아이디
         $JobID = '';
@@ -210,7 +210,7 @@ class HTTaxinvoiceController extends Controller
 
         try {
             $result = $this->PopbillHTTaxinvoice->Search(
-                $testCorpNum,
+                $CorpNum,
                 $JobID,
                 $Type,
                 $TaxType,
@@ -221,7 +221,7 @@ class HTTaxinvoiceController extends Controller
                 $Page,
                 $PerPage,
                 $Order,
-                $testUserID,
+                $UserID,
                 $SearchString
             );
         } catch (PopbillException $pe) {
@@ -241,10 +241,10 @@ class HTTaxinvoiceController extends Controller
     {
 
         // 팝빌회원 사업자번호, '-'제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
-        $testUserID = '';
+        $UserID = '';
 
         // 수집 요청(RequestJob) 함수 호출시 반환받은 작업아이디
         $JobID = '';
@@ -295,7 +295,7 @@ class HTTaxinvoiceController extends Controller
 
         try {
             $result = $this->PopbillHTTaxinvoice->Summary(
-                $testCorpNum,
+                $CorpNum,
                 $JobID,
                 $Type,
                 $TaxType,
@@ -303,7 +303,7 @@ class HTTaxinvoiceController extends Controller
                 $TaxRegIDYN,
                 $TaxRegIDType,
                 $TaxRegID,
-                $testUserID,
+                $UserID,
                 $SearchString
             );
         } catch (PopbillException $pe) {
@@ -322,16 +322,16 @@ class HTTaxinvoiceController extends Controller
     {
 
         // 팝빌회원 사업자번호, '-'제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         //국세청 승인번호
         $NTSConfirmNum = '';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillHTTaxinvoice->GetTaxinvoice($testCorpNum, $NTSConfirmNum, $testUserID);
+            $result = $this->PopbillHTTaxinvoice->GetTaxinvoice($CorpNum, $NTSConfirmNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -348,16 +348,16 @@ class HTTaxinvoiceController extends Controller
     {
 
         // 팝빌회원 사업자번호, '-'제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         //국세청 승인번호
         $NTSConfirmNum = '';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillHTTaxinvoice->GetXML($testCorpNum, $NTSConfirmNum, $testUserID);
+            $result = $this->PopbillHTTaxinvoice->GetXML($CorpNum, $NTSConfirmNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -375,16 +375,16 @@ class HTTaxinvoiceController extends Controller
     {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 국세청 승인번호
         $NTSConfirmNum = "";
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $url = $this->PopbillHTTaxinvoice->getPopUpURL($testCorpNum, $NTSConfirmNum, $testUserID);
+            $url = $this->PopbillHTTaxinvoice->getPopUpURL($CorpNum, $NTSConfirmNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -402,16 +402,16 @@ class HTTaxinvoiceController extends Controller
     {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 국세청 승인번호
         $NTSConfirmNum = "";
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $url = $this->PopbillHTTaxinvoice->getPrintURL($testCorpNum, $NTSConfirmNum, $testUserID);
+            $url = $this->PopbillHTTaxinvoice->getPrintURL($CorpNum, $NTSConfirmNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -429,13 +429,13 @@ class HTTaxinvoiceController extends Controller
     {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $url = $this->PopbillHTTaxinvoice->GetCertificatePopUpURL($testCorpNum, $testUserID);
+            $url = $this->PopbillHTTaxinvoice->GetCertificatePopUpURL($CorpNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -452,10 +452,10 @@ class HTTaxinvoiceController extends Controller
     {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         try {
-            $ExpireDate = $this->PopbillHTTaxinvoice->GetCertificateExpireDate($testCorpNum);
+            $ExpireDate = $this->PopbillHTTaxinvoice->GetCertificateExpireDate($CorpNum);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -472,13 +472,13 @@ class HTTaxinvoiceController extends Controller
     {
 
         // 사업자번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillHTTaxinvoice->CheckCertValidation($testCorpNum, $testUserID);
+            $result = $this->PopbillHTTaxinvoice->CheckCertValidation($CorpNum, $UserID);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {
@@ -497,7 +497,7 @@ class HTTaxinvoiceController extends Controller
     {
 
         // 사업자번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 홈택스에서 생성한 전자세금계산서 부서사용자 아이디
         $deptUserID = 'userid_test';
@@ -506,10 +506,10 @@ class HTTaxinvoiceController extends Controller
         $deptUserPWD = 'passwd_test';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillHTTaxinvoice->RegistDeptUser($testCorpNum, $deptUserID, $deptUserPWD, $testUserID);
+            $result = $this->PopbillHTTaxinvoice->RegistDeptUser($CorpNum, $deptUserID, $deptUserPWD, $UserID);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {
@@ -527,13 +527,13 @@ class HTTaxinvoiceController extends Controller
     {
 
         // 사업자번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillHTTaxinvoice->CheckDeptUser($testCorpNum, $testUserID);
+            $result = $this->PopbillHTTaxinvoice->CheckDeptUser($CorpNum, $UserID);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {
@@ -552,13 +552,13 @@ class HTTaxinvoiceController extends Controller
     {
 
         // 사업자번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillHTTaxinvoice->CheckLoginDeptUser($testCorpNum, $testUserID);
+            $result = $this->PopbillHTTaxinvoice->CheckLoginDeptUser($CorpNum, $UserID);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {
@@ -577,13 +577,13 @@ class HTTaxinvoiceController extends Controller
     {
 
         // 사업자번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillHTTaxinvoice->DeleteDeptUser($testCorpNum, $testUserID);
+            $result = $this->PopbillHTTaxinvoice->DeleteDeptUser($CorpNum, $UserID);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {
@@ -603,13 +603,13 @@ class HTTaxinvoiceController extends Controller
     {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $url = $this->PopbillHTTaxinvoice->GetFlatRatePopUpURL($testCorpNum, $testUserID);
+            $url = $this->PopbillHTTaxinvoice->GetFlatRatePopUpURL($CorpNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -626,13 +626,13 @@ class HTTaxinvoiceController extends Controller
     {
 
         // 팝빌회원 사업자번호, '-'제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillHTTaxinvoice->GetFlatRateState($testCorpNum, $testUserID);
+            $result = $this->PopbillHTTaxinvoice->GetFlatRateState($CorpNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -650,10 +650,10 @@ class HTTaxinvoiceController extends Controller
     {
 
         // 팝빌회원 사업자번호
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         try {
-            $remainPoint = $this->PopbillHTTaxinvoice->GetBalance($testCorpNum);
+            $remainPoint = $this->PopbillHTTaxinvoice->GetBalance($CorpNum);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -670,7 +670,7 @@ class HTTaxinvoiceController extends Controller
     {
 
         // 팝빌회원 사업자번호 (하이픈 '-' 제외 10 자리)
-        $testCorpNum = "1234567890";
+        $CorpNum = "1234567890";
 
         // 시작일자, 날짜형식(yyyyMMdd)
         $SDate = "20230101";
@@ -688,10 +688,10 @@ class HTTaxinvoiceController extends Controller
         $Order = "D";
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillHTTaxinvoice->GetUseHistory($testCorpNum, $SDate, $EDate, $Page, $PerPage, $Order, $testUserID);
+            $result = $this->PopbillHTTaxinvoice->GetUseHistory($CorpNum, $SDate, $EDate, $Page, $PerPage, $Order, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -708,7 +708,7 @@ class HTTaxinvoiceController extends Controller
     {
 
         // 팝빌회원 사업자번호 (하이픈 '-' 제외 10 자리)
-        $testCorpNum = "1234567890";
+        $CorpNum = "1234567890";
 
         // 시작일자, 날짜형식(yyyyMMdd)
         $SDate = "20230101";
@@ -723,10 +723,10 @@ class HTTaxinvoiceController extends Controller
         $PerPage = 30;
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillHTTaxinvoice->GetPaymentHistory($testCorpNum, $SDate, $EDate, $Page, $PerPage, $testUserID);
+            $result = $this->PopbillHTTaxinvoice->GetPaymentHistory($CorpNum, $SDate, $EDate, $Page, $PerPage, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -743,7 +743,7 @@ class HTTaxinvoiceController extends Controller
     {
 
         // 팝빌회원 사업자번호 (하이픈 '-' 제외 10 자리)
-        $testCorpNum = "1234567890";
+        $CorpNum = "1234567890";
 
         // 페이지번호
         $Page = 1;
@@ -752,10 +752,10 @@ class HTTaxinvoiceController extends Controller
         $PerPage = 30;
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillHTTaxinvoice->GetRefundHistory($testCorpNum, $Page, $PerPage, $testUserID);
+            $result = $this->PopbillHTTaxinvoice->GetRefundHistory($CorpNum, $Page, $PerPage, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -772,7 +772,7 @@ class HTTaxinvoiceController extends Controller
     {
 
         // 팝빌 회원 사업자번호, '-' 제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         $RefundForm = new RefundForm();
 
@@ -798,10 +798,10 @@ class HTTaxinvoiceController extends Controller
         $RefundForm->reason = '환불사유';
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillHTTaxinvoice->Refund($testCorpNum, $RefundForm, $testUserID);
+            $result = $this->PopbillHTTaxinvoice->Refund($CorpNum, $RefundForm, $UserID);
             $code = $result->code;
             $message = $result->message;
             $refundCode = $result->refundCode;
@@ -820,34 +820,34 @@ class HTTaxinvoiceController extends Controller
     {
 
         // 팝빌 회원 사업자번호, '-' 제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
-        $paymentForm = new PaymentForm();
+        $PaymentForm = new PaymentForm();
 
         // 담당자명
         // 미입력 시 기본값 적용 - 팝빌 회원 담당자명.
-        $paymentForm->settlerName = '담당자명';
+        $PaymentForm->settlerName = '담당자명';
 
         // 담당자 이메일
         // 사이트에서 신청하면 자동으로 담당자 이메일.
         // 미입력 시 공백 처리
-        $paymentForm->settlerEmail = 'test@test.com';
+        $PaymentForm->settlerEmail = 'test@test.com';
 
         // 담당자 휴대폰
         // 무통장 입금 승인 알림톡이 전송됩니다.
-        $paymentForm->notifyHP = '01012341234';
+        $PaymentForm->notifyHP = '01012341234';
 
         // 입금자명
-        $paymentForm->paymentName = '입금자명';
+        $PaymentForm->paymentName = '입금자명';
 
         // 결제금액
-        $paymentForm->settleCost = '11000';
+        $PaymentForm->settleCost = '11000';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillHTTaxinvoice->PaymentRequest($testCorpNum, $paymentForm, $testUserID);
+            $result = $this->PopbillHTTaxinvoice->PaymentRequest($CorpNum, $PaymentForm, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -864,16 +864,16 @@ class HTTaxinvoiceController extends Controller
     {
 
         // 팝빌회원 사업자번호
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // paymentRequest 를 통해 얻은 settleCode.
-        $settleCode = '202210040000000070';
+        $SettleCode = '202210040000000070';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillHTTaxinvoice->GetSettleResult($testCorpNum, $settleCode, $testUserID);
+            $result = $this->PopbillHTTaxinvoice->GetSettleResult($CorpNum, $SettleCode, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -891,13 +891,13 @@ class HTTaxinvoiceController extends Controller
     {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $url = $this->PopbillHTTaxinvoice->GetChargeURL($testCorpNum, $testUserID);
+            $url = $this->PopbillHTTaxinvoice->GetChargeURL($CorpNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -915,13 +915,13 @@ class HTTaxinvoiceController extends Controller
     {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $url = $this->PopbillHTTaxinvoice->GetPaymentURL($testCorpNum, $testUserID);
+            $url = $this->PopbillHTTaxinvoice->GetPaymentURL($CorpNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -940,13 +940,13 @@ class HTTaxinvoiceController extends Controller
     {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $url = $this->PopbillHTTaxinvoice->GetUseHistoryURL($testCorpNum, $testUserID);
+            $url = $this->PopbillHTTaxinvoice->GetUseHistoryURL($CorpNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -965,10 +965,10 @@ class HTTaxinvoiceController extends Controller
     {
 
         // 팝빌회원 사업자번호
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         try {
-            $remainPoint = $this->PopbillHTTaxinvoice->GetPartnerBalance($testCorpNum);
+            $remainPoint = $this->PopbillHTTaxinvoice->GetPartnerBalance($CorpNum);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -986,13 +986,13 @@ class HTTaxinvoiceController extends Controller
     {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // [CHRG] : 포인트충전 URL
         $TOGO = 'CHRG';
 
         try {
-            $url = $this->PopbillHTTaxinvoice->GetPartnerURL($testCorpNum, $TOGO);
+            $url = $this->PopbillHTTaxinvoice->GetPartnerURL($CorpNum, $TOGO);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -1009,13 +1009,13 @@ class HTTaxinvoiceController extends Controller
     {
 
         // 팝빌회원 사업자번호, '-'제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillHTTaxinvoice->GetChargeInfo($testCorpNum, $testUserID);
+            $result = $this->PopbillHTTaxinvoice->GetChargeInfo($CorpNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -1032,13 +1032,13 @@ class HTTaxinvoiceController extends Controller
     {
 
         // 사업자번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 연동신청 시 팝빌에서 발급받은 링크아이디
         $LinkID = config('popbill.LinkID');
 
         try {
-            $result = $this->PopbillHTTaxinvoice->CheckIsMember($testCorpNum, $LinkID);
+            $result = $this->PopbillHTTaxinvoice->CheckIsMember($CorpNum, $LinkID);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {
@@ -1057,10 +1057,10 @@ class HTTaxinvoiceController extends Controller
     {
 
         // 조회할 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillHTTaxinvoice->CheckID($testUserID);
+            $result = $this->PopbillHTTaxinvoice->CheckID($UserID);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {
@@ -1078,46 +1078,46 @@ class HTTaxinvoiceController extends Controller
     public function JoinMember()
     {
 
-        $joinForm = new JoinForm();
+        $JoinForm = new JoinForm();
 
         // 링크아이디
-        $joinForm->LinkID = config('popbill.LinkID');
+        $JoinForm->LinkID = config('popbill.LinkID');
 
         // 사업자번호, "-"제외 10자리
-        $joinForm->CorpNum = '1234567890';
+        $JoinForm->CorpNum = '1234567890';
 
         // 대표자성명
-        $joinForm->CEOName = '대표자성명';
+        $JoinForm->CEOName = '대표자성명';
 
         // 사업자상호
-        $joinForm->CorpName = '테스트사업자상호';
+        $JoinForm->CorpName = '테스트사업자상호';
 
         // 사업자주소
-        $joinForm->Addr = '테스트사업자주소';
+        $JoinForm->Addr = '테스트사업자주소';
 
         // 업태
-        $joinForm->BizType = '업태';
+        $JoinForm->BizType = '업태';
 
         // 종목
-        $joinForm->BizClass = '종목';
+        $JoinForm->BizClass = '종목';
 
         // 담당자명
-        $joinForm->ContactName = '담당자성명';
+        $JoinForm->ContactName = '담당자성명';
 
         // 담당자 이메일
-        $joinForm->ContactEmail = '';
+        $JoinForm->ContactEmail = '';
 
         // 담당자 연락처
-        $joinForm->ContactTEL = '';
+        $JoinForm->ContactTEL = '';
 
         // 아이디, 6자 이상 20자미만
-        $joinForm->ID = 'userid_phpdd';
+        $JoinForm->ID = 'userid_phpdd';
 
         // 비밀번호, 8자 이상 20자 이하(영문, 숫자, 특수문자 조합)
-        $joinForm->Password = 'asdf1234!@';
+        $JoinForm->Password = 'asdf1234!@';
 
         try {
-            $result = $this->PopbillHTTaxinvoice->JoinMember($joinForm);
+            $result = $this->PopbillHTTaxinvoice->JoinMember($JoinForm);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {
@@ -1137,13 +1137,13 @@ class HTTaxinvoiceController extends Controller
     {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $url = $this->PopbillHTTaxinvoice->GetAccessURL($testCorpNum, $testUserID);
+            $url = $this->PopbillHTTaxinvoice->GetAccessURL($CorpNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -1160,13 +1160,13 @@ class HTTaxinvoiceController extends Controller
     {
 
         // 팝빌회원 사업자번호, '-'제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $CorpInfo = $this->PopbillHTTaxinvoice->GetCorpInfo($testCorpNum, $testUserID);
+            $CorpInfo = $this->PopbillHTTaxinvoice->GetCorpInfo($CorpNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -1184,7 +1184,7 @@ class HTTaxinvoiceController extends Controller
     {
 
         // 팝빌회원 사업자번호, '-' 제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 회사정보 클래스 생성
         $CorpInfo = new CorpInfo();
@@ -1205,10 +1205,10 @@ class HTTaxinvoiceController extends Controller
         $CorpInfo->bizClass = '종목';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result =  $this->PopbillHTTaxinvoice->UpdateCorpInfo($testCorpNum, $CorpInfo, $testUserID);
+            $result =  $this->PopbillHTTaxinvoice->UpdateCorpInfo($CorpNum, $CorpInfo, $UserID);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {
@@ -1227,7 +1227,7 @@ class HTTaxinvoiceController extends Controller
     {
 
         // 팝빌회원 사업자번호, '-' 제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 담당자 정보 객체 생성
         $ContactInfo = new ContactInfo();
@@ -1251,10 +1251,10 @@ class HTTaxinvoiceController extends Controller
         $ContactInfo->searchRole = 3;
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillHTTaxinvoice->RegistContact($testCorpNum, $ContactInfo, $testUserID);
+            $result = $this->PopbillHTTaxinvoice->RegistContact($CorpNum, $ContactInfo, $UserID);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {
@@ -1273,16 +1273,16 @@ class HTTaxinvoiceController extends Controller
     {
 
         // 팝빌회원 사업자번호, '-'제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         //확인할 담당자 아이디
-        $contactID = 'checkContact';
+        $ContactID = 'checkContact';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $ContactInfo = $this->PopbillHTTaxinvoice->GetContactInfo($testCorpNum, $contactID, $testUserID);
+            $ContactInfo = $this->PopbillHTTaxinvoice->GetContactInfo($CorpNum, $ContactID, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -1300,13 +1300,13 @@ class HTTaxinvoiceController extends Controller
     {
 
         // 팝빌회원 사업자번호, '-'제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $ContactList = $this->PopbillHTTaxinvoice->ListContact($testCorpNum, $testUserID);
+            $ContactList = $this->PopbillHTTaxinvoice->ListContact($CorpNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -1324,10 +1324,10 @@ class HTTaxinvoiceController extends Controller
     {
 
         // 팝빌회원 사업자번호, '-' 제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         // 담당자 정보 객체 생성
         $ContactInfo = new ContactInfo();
@@ -1348,7 +1348,7 @@ class HTTaxinvoiceController extends Controller
         $ContactInfo->searchRole = 3;
 
         try {
-            $result = $this->PopbillHTTaxinvoice->UpdateContact($testCorpNum, $ContactInfo, $testUserID);
+            $result = $this->PopbillHTTaxinvoice->UpdateContact($CorpNum, $ContactInfo, $UserID);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {

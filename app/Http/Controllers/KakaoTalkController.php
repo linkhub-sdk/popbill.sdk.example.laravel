@@ -56,13 +56,13 @@ class KakaoTalkController extends Controller
     {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $url = $this->PopbillKakao->GetPlusFriendMgtURL($testCorpNum, $testUserID);
+            $url = $this->PopbillKakao->GetPlusFriendMgtURL($CorpNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -79,10 +79,10 @@ class KakaoTalkController extends Controller
     {
 
         // 팝빌회원 사업자번호, '-'제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         try {
-            $result = $this->PopbillKakao->ListPlusFriendID($testCorpNum);
+            $result = $this->PopbillKakao->ListPlusFriendID($CorpNum);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -101,16 +101,16 @@ class KakaoTalkController extends Controller
     {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 확인할 발신번호
-        $senderNumber = '';
+        $SenderNumber = '';
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillKakao->CheckSenderNumber($testCorpNum, $senderNumber, $testUserID);
+            $result = $this->PopbillKakao->CheckSenderNumber($CorpNum, $SenderNumber, $UserID);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {
@@ -129,13 +129,13 @@ class KakaoTalkController extends Controller
     {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $url = $this->PopbillKakao->GetSenderNumberMgtURL($testCorpNum, $testUserID);
+            $url = $this->PopbillKakao->GetSenderNumberMgtURL($CorpNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -153,10 +153,10 @@ class KakaoTalkController extends Controller
     {
 
         // 팝빌회원 사업자번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         try {
-            $result = $this->PopbillKakao->GetSenderNumberList($testCorpNum);
+            $result = $this->PopbillKakao->GetSenderNumberList($CorpNum);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -175,13 +175,13 @@ class KakaoTalkController extends Controller
     {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $url = $this->PopbillKakao->GetATSTemplateMgtURL($testCorpNum, $testUserID);
+            $url = $this->PopbillKakao->GetATSTemplateMgtURL($CorpNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -199,16 +199,16 @@ class KakaoTalkController extends Controller
     {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         //확인할 템플릿 코드
         $templateCode = '021110000491';
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillKakao->GetATSTemplate($testCorpNum, $templateCode, $testUserID);
+            $result = $this->PopbillKakao->GetATSTemplate($CorpNum, $templateCode, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -225,10 +225,10 @@ class KakaoTalkController extends Controller
     {
 
         // 팝빌회원 사업자번호, '-'제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         try {
-            $result = $this->PopbillKakao->ListATSTemplate($testCorpNum);
+            $result = $this->PopbillKakao->ListATSTemplate($CorpNum);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -248,10 +248,10 @@ class KakaoTalkController extends Controller
     {
 
         // 팝빌 회원 사업자번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         // 승인된 알림톡 템플릿코드
         // └ 알림톡 템플릿 관리 팝업 URL(GetATSTemplateMgtURL API) 함수, 알림톡 템플릿 목록 확인(ListATStemplate API) 함수를 호출하거나
@@ -262,7 +262,7 @@ class KakaoTalkController extends Controller
         // altSendType = 'C' / 'A' 일 경우, 대체문자를 전송할 발신번호
         // altSendType = '' 일 경우, null 또는 공백 처리
         // ※ 대체문자를 전송하는 경우에는 사전에 등록된 발신번호 입력 필수
-        $sender = '';
+        $Sender = '';
 
         // 알림톡 내용, 최대 1000자
         $content = '[ 팝빌 ]' . PHP_EOL;
@@ -273,7 +273,7 @@ class KakaoTalkController extends Controller
 
         // 대체문자 제목
         // - 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
-        $altSubject = '대체문자 제목';
+        $AltSubject = '대체문자 제목';
 
         // 대체문자 유형(altSendType)이 "A"일 경우, 대체문자로 전송할 내용 (최대 2000byte)
         // └ 팝빌이 메시지 길이에 따라 단문(90byte 이하) 또는 장문(90byte 초과)으로 전송처리
@@ -281,16 +281,16 @@ class KakaoTalkController extends Controller
 
         // 대체문자 유형 (null , "C" , "A" 중 택 1)
         // null = 미전송, C = 알림톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
-        $altSendType = 'A';
+        $AltSendType = 'A';
 
         // 예약전송일시, yyyyMMddHHmmss
         // - 분단위 전송, 미입력 시 즉시 전송
-        $reserveDT = '';
+        $ReserveDT = '';
 
         // 전송요청번호
         // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
         // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
-        $requestNum = '';
+        $RequestNum = '';
 
         // 수신자 정보
         $receivers[] = array(
@@ -317,18 +317,18 @@ class KakaoTalkController extends Controller
 
         try {
             $receiptNum = $this->PopbillKakao->SendATS(
-                $testCorpNum,
+                $CorpNum,
                 $templateCode,
-                $sender,
+                $Sender,
                 $content,
                 $altContent,
-                $altSendType,
+                $AltSendType,
                 $receivers,
-                $reserveDT,
-                $testUserID,
-                $requestNum,
+                $ReserveDT,
+                $UserID,
+                $RequestNum,
                 $buttons,
-                $altSubject
+                $AltSubject
             );
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
@@ -348,10 +348,10 @@ class KakaoTalkController extends Controller
     {
 
         // 팝빌 회원 사업자번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         // 승인된 알림톡 템플릿코드
         // └ 알림톡 템플릿 관리 팝업 URL(GetATSTemplateMgtURL API) 함수, 알림톡 템플릿 목록 확인(ListATStemplate API) 함수를 호출하거나
@@ -362,7 +362,7 @@ class KakaoTalkController extends Controller
         // altSendType = 'C' / 'A' 일 경우, 대체문자를 전송할 발신번호
         // altSendType = '' 일 경우, null 또는 공백 처리
         // ※ 대체문자를 전송하는 경우에는 사전에 등록된 발신번호 입력 필수
-        $sender = '';
+        $Sender = '';
 
         // 알림톡 내용, 최대 1000자
         $content = '[ 팝빌 ]' . PHP_EOL;
@@ -373,7 +373,7 @@ class KakaoTalkController extends Controller
 
         // 대체문자 제목
         // - 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
-        $altSubject = '대체문자 제목';
+        $AltSubject = '대체문자 제목';
 
         // 대체문자 유형(altSendType)이 "A"일 경우, 대체문자로 전송할 내용 (최대 2000byte)
         // └ 팝빌이 메시지 길이에 따라 단문(90byte 이하) 또는 장문(90byte 초과)으로 전송처리
@@ -381,15 +381,15 @@ class KakaoTalkController extends Controller
 
         // 대체문자 유형 (null , "C" , "A" 중 택 1)
         // null = 미전송, C = 알림톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
-        $altSendType = 'A';
+        $AltSendType = 'A';
 
         // 예약전송일시, yyyyMMddHHmmss
-        $reserveDT = null;
+        $ReserveDT = null;
 
         // 전송요청번호
         // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
         // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
-        $requestNum = '';
+        $RequestNum = '';
 
         // 수신정보 배열, 최대 1000건
         for ($i = 0; $i < 10; $i++) {
@@ -420,18 +420,18 @@ class KakaoTalkController extends Controller
 
         try {
             $receiptNum = $this->PopbillKakao->SendATS(
-                $testCorpNum,
+                $CorpNum,
                 $templateCode,
-                $sender,
+                $Sender,
                 $content,
                 $altContent,
-                $altSendType,
+                $AltSendType,
                 $receivers,
-                $reserveDT,
-                $testUserID,
-                $requestNum,
+                $ReserveDT,
+                $UserID,
+                $RequestNum,
                 $buttons,
-                $altSubject
+                $AltSubject
             );
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
@@ -452,10 +452,10 @@ class KakaoTalkController extends Controller
     {
 
         // 팝빌 회원 사업자번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         // 승인된 알림톡 템플릿코드
         // └ 알림톡 템플릿 관리 팝업 URL(GetATSTemplateMgtURL API) 함수, 알림톡 템플릿 목록 확인(ListATStemplate API) 함수를 호출하거나
@@ -474,25 +474,25 @@ class KakaoTalkController extends Controller
         // altSendType = 'C' / 'A' 일 경우, 대체문자를 전송할 발신번호
         // altSendType = '' 일 경우, null 또는 공백 처리
         // ※ 대체문자를 전송하는 경우에는 사전에 등록된 발신번호 입력 필수
-        $sender = '';
+        $Sender = '';
 
         // 대체문자 유형 (null , "C" , "A" 중 택 1)
         // null = 미전송, C = 알림톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
-        $altSendType = 'A';
+        $AltSendType = 'A';
 
         // 대체문자 제목
         // - 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
         // - 수신정보 배열에 대체문자 제목이 입력되지 않은 경우 적용.
         // - 모든 수신자에게 다른 제목을 보낼 경우 464번 라인에 있는 altsjt 를 이용.
-        $altSubject = '대체문자 제목';
+        $AltSubject = '대체문자 제목';
 
         // 예약전송일시, yyyyMMddHHmmss
-        $reserveDT = null;
+        $ReserveDT = null;
 
         // 전송요청번호
         // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
         // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
-        $requestNum = '';
+        $RequestNum = '';
 
         // 수신정보 배열, 최대 1000건
         for ($i = 0; $i < 5; $i++) {
@@ -502,14 +502,14 @@ class KakaoTalkController extends Controller
                 // 수신자명
                 'rcvnm' => '수신자명',
                 // 알림톡 내용, 최대 1000자
-                'msg' => $content,
+                'message' => $content,
                 // 대체문자 제목
                 // - 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
                 // - 모든 수신자에게 동일한 제목을 보낼 경우 배열의 모든 원소에 동일한 값을 입력하거나
                 //   값을 입력하지 않고 441번 라인에 있는 altSubject 를 이용
-                'altsjt' => '대체문자 제목' . $i,
+                'altSubject' => '대체문자 제목' . $i,
                 // 대체문자 내용
-                'altmsg' => '대체문자 내용' . $i,
+                'altMessage' => '대체문자 내용' . $i,
                 // 파트너 지정키, 대량전송시, 수신자 구별용 메모.
                 'interOPRefKey' => '20220405-' . $i
             );
@@ -576,18 +576,18 @@ class KakaoTalkController extends Controller
 
         try {
             $receiptNum = $this->PopbillKakao->SendATS(
-                $testCorpNum,
+                $CorpNum,
                 $templateCode,
-                $sender,
+                $Sender,
                 '',
                 '',
-                $altSendType,
+                $AltSendType,
                 $receivers,
-                $reserveDT,
-                $testUserID,
-                $requestNum,
+                $ReserveDT,
+                $UserID,
+                $RequestNum,
                 $buttons,
-                $altSubject
+                $AltSubject
             );
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
@@ -607,26 +607,26 @@ class KakaoTalkController extends Controller
     {
 
         // 팝빌 회원 사업자번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         // 팝빌에 등록된 카카오톡 검색용 아이디
-        $plusFriendID = '@팝빌';
+        $PlusFriendID = '@팝빌';
 
         // 팝빌에 사전 등록된 발신번호
         // altSendType = 'C' / 'A' 일 경우, 대체문자를 전송할 발신번호
         // altSendType = '' 일 경우, null 또는 공백 처리
         // ※ 대체문자를 전송하는 경우에는 사전에 등록된 발신번호 입력 필수
-        $sender = '';
+        $Sender = '';
 
         // 친구톡 내용, 최대 1000자
         $content = '친구톡 내용';
 
         // 대체문자 제목
         // - 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
-        $altSubject = '대체문자 제목';
+        $AltSubject = '대체문자 제목';
 
         // 대체문자 유형(altSendType)이 "A"일 경우, 대체문자로 전송할 내용 (최대 2000byte)
         // └ 팝빌이 메시지 길이에 따라 단문(90byte 이하) 또는 장문(90byte 초과)으로 전송처리
@@ -634,7 +634,7 @@ class KakaoTalkController extends Controller
 
         // 대체문자 유형 (null , "C" , "A" 중 택 1)
         // null = 미전송, C = 알림톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
-        $altSendType = 'C';
+        $AltSendType = 'C';
 
         // 광고성 메시지 여부 ( true , false 중 택 1)
         // └ true = 광고 , false = 일반
@@ -644,7 +644,7 @@ class KakaoTalkController extends Controller
         // 전송요청번호
         // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
         // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
-        $requestNum = '';
+        $RequestNum = '';
 
         // 수신자 정보
         $receivers[] = array(
@@ -667,10 +667,10 @@ class KakaoTalkController extends Controller
         );
 
         // 예약전송일시, yyyyMMddHHmmss
-        $reserveDT = null;
+        $ReserveDT = null;
 
         try {
-            $receiptNum = $this->PopbillKakao->SendFTS($testCorpNum, $plusFriendID, $sender, $content, $altContent, $altSendType, $adsYN, $receivers, $buttons, $reserveDT, $testUserID, $requestNum, $altSubject);
+            $receiptNum = $this->PopbillKakao->SendFTS($CorpNum, $PlusFriendID, $Sender, $content, $altContent, $AltSendType, $adsYN, $receivers, $buttons, $ReserveDT, $UserID, $RequestNum, $AltSubject);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -690,33 +690,33 @@ class KakaoTalkController extends Controller
     {
 
         // 팝빌 회원 사업자번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         // 팝빌에 등록된 카카오톡 검색용 아이디
-        $plusFriendID = '@팝빌';
+        $PlusFriendID = '@팝빌';
 
         // 팝빌에 사전 등록된 발신번호
         // altSendType = 'C' / 'A' 일 경우, 대체문자를 전송할 발신번호
         // altSendType = '' 일 경우, null 또는 공백 처리
         // ※ 대체문자를 전송하는 경우에는 사전에 등록된 발신번호 입력 필수
-        $sender = '';
+        $Sender = '';
 
         // 친구톡 내용, 최대 1000자
         $content = '친구톡 동일내용 대량전송';
 
         // 대체문자 제목
         // - 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
-        $altSubject = '대체문자 제목';
+        $AltSubject = '대체문자 제목';
 
         // 대체문자 내용
         $altContent = '대체문자 내용';
 
         // 대체문자 유형 (null , "C" , "A" 중 택 1)
         // null = 미전송, C = 친구톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
-        $altSendType = 'A';
+        $AltSendType = 'A';
 
         // 광고성 메시지 여부 ( true , false 중 택 1)
         // └ true = 광고 , false = 일반
@@ -726,7 +726,7 @@ class KakaoTalkController extends Controller
         // 전송요청번호
         // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
         // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
-        $requestNum = '';
+        $RequestNum = '';
 
         // 수신정보 배열, 최대 1000건
         for ($i = 0; $i < 10; $i++) {
@@ -751,10 +751,10 @@ class KakaoTalkController extends Controller
         );
 
         // 예약전송일시, yyyyMMddHHmmss
-        $reserveDT = null;
+        $ReserveDT = null;
 
         try {
-            $receiptNum = $this->PopbillKakao->SendFTS($testCorpNum, $plusFriendID, $sender, $content, $altContent, $altSendType, $adsYN, $receivers, $buttons, $reserveDT, $testUserID, $requestNum, $altSubject);
+            $receiptNum = $this->PopbillKakao->SendFTS($CorpNum, $PlusFriendID, $Sender, $content, $altContent, $AltSendType, $adsYN, $receivers, $buttons, $ReserveDT, $UserID, $RequestNum, $AltSubject);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -774,29 +774,29 @@ class KakaoTalkController extends Controller
     {
 
         // 팝빌 회원 사업자번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         // 팝빌에 등록된 카카오톡 검색용 아이디
-        $plusFriendID = '@팝빌';
+        $PlusFriendID = '@팝빌';
 
         // 팝빌에 사전 등록된 발신번호
         // altSendType = 'C' / 'A' 일 경우, 대체문자를 전송할 발신번호
         // altSendType = '' 일 경우, null 또는 공백 처리
         // ※ 대체문자를 전송하는 경우에는 사전에 등록된 발신번호 입력 필수
-        $sender = '';
+        $Sender = '';
 
         // 대체문자 유형 (null , "C" , "A" 중 택 1)
         // null = 미전송, C = 친구톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
-        $altSendType = 'C';
+        $AltSendType = 'C';
 
         // 대체문자 제목
         // - 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
         // - 수신정보 배열에 대체문자 제목이 입력되지 않은 경우 적용.
         // - 모든 수신자에게 다른 제목을 보낼 경우 754번 라인에 있는 altsjt 를 이용.
-        $altSubject = '대체문자 제목';
+        $AltSubject = '대체문자 제목';
 
         // 광고성 메시지 여부 ( true , false 중 택 1)
         // └ true = 광고 , false = 일반
@@ -806,7 +806,7 @@ class KakaoTalkController extends Controller
         // 전송요청번호
         // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
         // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
-        $requestNum = '';
+        $RequestNum = '';
 
         // 수신정보 배열, 최대 1000건
         for ($i = 0; $i < 10; $i++) {
@@ -883,10 +883,10 @@ class KakaoTalkController extends Controller
         );
 
         // 예약전송일시, yyyyMMddHHmmss
-        $reserveDT = null;
+        $ReserveDT = null;
 
         try {
-            $receiptNum = $this->PopbillKakao->SendFTS($testCorpNum, $plusFriendID, $sender, '', '', $altSendType, $adsYN, $receivers, $buttons, $reserveDT, $testUserID, $requestNum);
+            $receiptNum = $this->PopbillKakao->SendFTS($CorpNum, $PlusFriendID, $Sender, '', '', $AltSendType, $adsYN, $receivers, $buttons, $ReserveDT, $UserID, $RequestNum);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -907,26 +907,26 @@ class KakaoTalkController extends Controller
     {
 
         // 팝빌 회원 사업자번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         // 팝빌에 등록된 카카오톡 검색용 아이디
-        $plusFriendID = '@팝빌';
+        $PlusFriendID = '@팝빌';
 
         // 팝빌에 사전 등록된 발신번호
         // altSendType = 'C' / 'A' 일 경우, 대체문자를 전송할 발신번호
         // altSendType = '' 일 경우, null 또는 공백 처리
         // ※ 대체문자를 전송하는 경우에는 사전에 등록된 발신번호 입력 필수
-        $sender = '07043042991';
+        $Sender = '07043042991';
 
         // 친구톡 내용, 최대 400자
         $content = '친구톡 내용';
 
         // 대체문자 제목
         // - 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
-        $altSubject = '대체문자 제목';
+        $AltSubject = '대체문자 제목';
 
         // 대체문자 유형(altSendType)이 "A"일 경우, 대체문자로 전송할 내용 (최대 2000byte)
         // └ 팝빌이 메시지 길이에 따라 단문(90byte 이하) 또는 장문(90byte 초과)으로 전송처리
@@ -934,7 +934,7 @@ class KakaoTalkController extends Controller
 
         // 대체문자 유형 (null , "C" , "A" 중 택 1)
         // null = 미전송, C = 친구톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
-        $altSendType = 'A';
+        $AltSendType = 'A';
 
         // 광고성 메시지 여부 ( true , false 중 택 1)
         // └ true = 광고 , false = 일반
@@ -944,7 +944,7 @@ class KakaoTalkController extends Controller
         // 전송요청번호
         // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
         // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
-        $requestNum = '';
+        $RequestNum = '';
 
         // 수신자 정보
         $receivers[] = array(
@@ -967,7 +967,7 @@ class KakaoTalkController extends Controller
         );
 
         // 예약전송일시, yyyyMMddHHmmss
-        $reserveDT = null;
+        $ReserveDT = null;
 
         // 첨부이미지 파일 경로
         // - 이미지 파일 규격: 전송 포맷 – JPG 파일 (.jpg, .jpeg), 용량 – 최대 500 Kbyte, 크기 – 가로 500px 이상, 가로 기준으로 세로 0.5~1.3배 비율 가능
@@ -976,25 +976,25 @@ class KakaoTalkController extends Controller
         // 이미지 링크 URL
         // └ 수신자가 친구톡 상단 이미지 클릭시 호출되는 URL
         // - 미입력시 첨부된 이미지를 링크 기능 없이 표시
-        $imageURL = 'http://popbill.com';
+        $ImageURL = 'http://popbill.com';
 
         try {
             $receiptNum = $this->PopbillKakao->SendFMS(
-                $testCorpNum,
-                $plusFriendID,
-                $sender,
+                $CorpNum,
+                $PlusFriendID,
+                $Sender,
                 $content,
                 $altContent,
-                $altSendType,
+                $AltSendType,
                 $adsYN,
                 $receivers,
                 $buttons,
-                $reserveDT,
+                $ReserveDT,
                 $files,
-                $imageURL,
-                $testUserID,
-                $requestNum,
-                $altSubject
+                $ImageURL,
+                $UserID,
+                $RequestNum,
+                $AltSubject
             );
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
@@ -1016,19 +1016,19 @@ class KakaoTalkController extends Controller
     {
 
         // 팝빌 회원 사업자번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         // 팝빌에 등록된 카카오톡 검색용 아이디, ListPlusFriend API - plusFriendID 확인
-        $plusFriendID = '@팝빌';
+        $PlusFriendID = '@팝빌';
 
         // 팝빌에 사전 등록된 발신번호
         // altSendType = 'C' / 'A' 일 경우, 대체문자를 전송할 발신번호
         // altSendType = '' 일 경우, null 또는 공백 처리
         // ※ 대체문자를 전송하는 경우에는 사전에 등록된 발신번호 입력 필수
-        $sender = '';
+        $Sender = '';
 
         // 친구톡 내용, 최대 400자
         $content = '친구톡 내용';
@@ -1039,11 +1039,11 @@ class KakaoTalkController extends Controller
 
         // 대체문자 유형 (null , "C" , "A" 중 택 1)
         // null = 미전송, C = 친구톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
-        $altSendType = 'A';
+        $AltSendType = 'A';
 
         // 대체문자 제목
         // 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
-        $altSubject = '대체문자 제목';
+        $AltSubject = '대체문자 제목';
 
         // 광고성 메시지 여부 ( true , false 중 택 1)
         // └ true = 광고 , false = 일반
@@ -1053,7 +1053,7 @@ class KakaoTalkController extends Controller
         // 전송요청번호
         // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
         // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
-        $requestNum = '';
+        $RequestNum = '';
 
         // 수신정보 배열, 최대 1000건
         for ($i = 0; $i < 10; $i++) {
@@ -1078,7 +1078,7 @@ class KakaoTalkController extends Controller
         );
 
         // 예약전송일시, yyyyMMddHHmmss
-        $reserveDT = null;
+        $ReserveDT = null;
 
         // 첨부이미지 파일 경로
         // - 이미지 파일 규격: 전송 포맷 – JPG 파일 (.jpg, .jpeg), 용량 – 최대 500 Kbyte, 크기 – 가로 500px 이상, 가로 기준으로 세로 0.5~1.3배 비율 가능
@@ -1087,25 +1087,25 @@ class KakaoTalkController extends Controller
         // 이미지 링크 URL
         // └ 수신자가 친구톡 상단 이미지 클릭시 호출되는 URL
         // - 미입력시 첨부된 이미지를 링크 기능 없이 표시
-        $imageURL = 'http://popbill.com';
+        $ImageURL = 'http://popbill.com';
 
         try {
             $receiptNum = $this->PopbillKakao->SendFMS(
-                $testCorpNum,
-                $plusFriendID,
-                $sender,
+                $CorpNum,
+                $PlusFriendID,
+                $Sender,
                 $content,
                 $altContent,
-                $altSendType,
+                $AltSendType,
                 $adsYN,
                 $receivers,
                 $buttons,
-                $reserveDT,
+                $ReserveDT,
                 $files,
-                $imageURL,
-                $testUserID,
-                $requestNum,
-                $altSubject
+                $ImageURL,
+                $UserID,
+                $RequestNum,
+                $AltSubject
             );
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
@@ -1127,29 +1127,29 @@ class KakaoTalkController extends Controller
     {
 
         // 팝빌 회원 사업자번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         // 팝빌에 등록된 카카오톡 검색용 아이디
-        $plusFriendID = '@팝빌';
+        $PlusFriendID = '@팝빌';
 
         // 팝빌에 사전 등록된 발신번호
         // altSendType = 'C' / 'A' 일 경우, 대체문자를 전송할 발신번호
         // altSendType = '' 일 경우, null 또는 공백 처리
         // ※ 대체문자를 전송하는 경우에는 사전에 등록된 발신번호 입력 필수
-        $sender = '';
+        $Sender = '';
 
         // 대체문자 유형 (null , "C" , "A" 중 택 1)
         // null = 미전송, C = 친구톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
-        $altSendType = 'A';
+        $AltSendType = 'A';
 
         // 대체문자 제목
         // - 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
         // - 수신정보 배열에 대체문자 제목이 입력되지 않은 경우 적용.
         // - 모든 수신자에게 다른 제목을 보낼 경우 1065번 라인에 있는 altsjt 를 이용.
-        $altSubject = '대체문자 제목';
+        $AltSubject = '대체문자 제목';
 
         // 광고성 메시지 여부 ( true , false 중 택 1)
         // └ true = 광고 , false = 일반
@@ -1159,11 +1159,11 @@ class KakaoTalkController extends Controller
         // 전송요청번호
         // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
         // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
-        $requestNum = '';
+        $RequestNum = '';
 
         // 수신정보 배열, 최대 1000건
         for ($i = 0; $i < 10; $i++) {
-            $receivers[] = array(
+            $Messages[] = array(
                 // 수신번호
                 'rcv' => '',
                 // 수신자명
@@ -1215,7 +1215,7 @@ class KakaoTalkController extends Controller
             // $btns[] = $btn2;
             //
             // // 개별 버튼정보 배열 수신자정보에 추가
-            // $receivers[$i]['btns'] = $btns;
+            // $Messages[$i]['btns'] = $btns;
         }
 
         // 버튼내용을 전송하지 않는 경우, null처리.
@@ -1236,34 +1236,34 @@ class KakaoTalkController extends Controller
         );
 
         // 예약전송일시, yyyyMMddHHmmss
-        $reserveDT = null;
+        $ReserveDT = null;
 
         // 첨부이미지 파일 경로
         // - 이미지 파일 규격: 전송 포맷 – JPG 파일 (.jpg, .jpeg), 용량 – 최대 500 Kbyte, 크기 – 가로 500px 이상, 가로 기준으로 세로 0.5~1.3배 비율 가능
-        $files = array('/image.jpg');
+        $FilePaths = array('/image.jpg');
 
         // 이미지 링크 URL
         // └ 수신자가 친구톡 상단 이미지 클릭시 호출되는 URL
         // - 미입력시 첨부된 이미지를 링크 기능 없이 표시
-        $imageURL = 'http://popbill.com';
+        $ImageURL = 'http://popbill.com';
 
         try {
             $receiptNum = $this->PopbillKakao->SendFMS(
-                $testCorpNum,
-                $plusFriendID,
-                $sender,
+                $CorpNum,
+                $PlusFriendID,
+                $Sender,
                 '',
                 '',
-                $altSendType,
+                $AltSendType,
                 $adsYN,
-                $receivers,
+                $Messages,
                 $buttons,
-                $reserveDT,
-                $files,
-                $imageURL,
-                $testUserID,
-                $requestNum,
-                $altSubject
+                $ReserveDT,
+                $FilePaths,
+                $ImageURL,
+                $UserID,
+                $RequestNum,
+                $AltSubject
             );
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
@@ -1281,16 +1281,16 @@ class KakaoTalkController extends Controller
     {
 
         // 팝빌 회원 사업자번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 전송 요청시 발급받은 카카오톡 접수번호
         $ReceiptNum = '022040516101100001';
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillKakao->CancelReserve($testCorpNum, $ReceiptNum, $testUserID);
+            $result = $this->PopbillKakao->CancelReserve($CorpNum, $ReceiptNum, $UserID);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {
@@ -1308,16 +1308,16 @@ class KakaoTalkController extends Controller
     {
 
         // 팝빌 회원 사업자번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 예약전송 요청시 할당한 전송요청번호
-        $requestNum = '';
+        $RequestNum = '';
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillKakao->CancelReserveRN($testCorpNum, $requestNum, $testUserID);
+            $result = $this->PopbillKakao->CancelReserveRN($CorpNum, $RequestNum, $UserID);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {
@@ -1335,7 +1335,7 @@ class KakaoTalkController extends Controller
     {
 
         // 팝빌 회원 사업자번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 예약문자전송 요청시 발급받은 접수번호
         $ReceiptNum = '022102017000000019';
@@ -1344,10 +1344,10 @@ class KakaoTalkController extends Controller
         $ReceiveNum = '01011112222';
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillKakao->CancelReservebyRCV($testCorpNum, $ReceiptNum, $ReceiveNum, $testUserID);
+            $result = $this->PopbillKakao->CancelReservebyRCV($CorpNum, $ReceiptNum, $ReceiveNum, $UserID);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {
@@ -1365,19 +1365,19 @@ class KakaoTalkController extends Controller
     {
 
         // 팝빌 회원 사업자번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 예약문자전송 요청시 할당한 전송요청번호
-        $requestNum = '';
+        $RequestNum = '';
 
         // 예약문자전송 요청시 입력한 수신번호
         $ReceiveNum = '010222333';
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillKakao->CancelReserveRNbyRCV($testCorpNum, $requestNum, $ReceiveNum, $testUserID);
+            $result = $this->PopbillKakao->CancelReserveRNbyRCV($CorpNum, $RequestNum, $ReceiveNum, $UserID);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {
@@ -1395,16 +1395,16 @@ class KakaoTalkController extends Controller
     {
 
         // 팝빌회원 사업자번호, '-'제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 카카오톡 전송 접수 시 팝빌로부터 반환받은 접수번호(receiptNum)
         $ReceiptNum = '022040516101100001';
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillKakao->GetMessages($testCorpNum, $ReceiptNum, $testUserID);
+            $result = $this->PopbillKakao->GetMessages($CorpNum, $ReceiptNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -1421,16 +1421,16 @@ class KakaoTalkController extends Controller
     {
 
         // 팝빌회원 사업자번호, '-'제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 전송 접수 시 파트너가 할당한 전송요청번호
-        $requestNum = '';
+        $RequestNum = '';
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillKakao->GetMessagesRN($testCorpNum, $requestNum, $testUserID);
+            $result = $this->PopbillKakao->GetMessagesRN($CorpNum, $RequestNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -1448,7 +1448,7 @@ class KakaoTalkController extends Controller
     {
 
         // 팝빌회원 사업자번호, '-'제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 시작일자, 날짜형식(yyyyMMdd)
         $SDate = '20230101';
@@ -1487,14 +1487,14 @@ class KakaoTalkController extends Controller
         $Order = 'D';
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         // 조회하고자 하는 수신자명
         // - 미입력시 전체조회
         $QString = '';
 
         try {
-            $result = $this->PopbillKakao->Search($testCorpNum, $SDate, $EDate, $State, $Item, $ReserveYN, $SenderYN, $Page, $PerPage, $Order, $testUserID, $QString);
+            $result = $this->PopbillKakao->Search($CorpNum, $SDate, $EDate, $State, $Item, $ReserveYN, $SenderYN, $Page, $PerPage, $Order, $UserID, $QString);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -1512,13 +1512,13 @@ class KakaoTalkController extends Controller
     {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $url = $this->PopbillKakao->GetSentListURL($testCorpNum, $testUserID);
+            $url = $this->PopbillKakao->GetSentListURL($CorpNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -1536,10 +1536,10 @@ class KakaoTalkController extends Controller
     {
 
         // 팝빌회원 사업자번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         try {
-            $remainPoint = $this->PopbillKakao->GetBalance($testCorpNum);
+            $remainPoint = $this->PopbillKakao->GetBalance($CorpNum);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -1556,7 +1556,7 @@ class KakaoTalkController extends Controller
     {
 
         // 팝빌회원 사업자번호 (하이픈 '-' 제외 10 자리)
-        $testCorpNum = "1234567890";
+        $CorpNum = "1234567890";
 
         // 시작일자, 날짜형식(yyyyMMdd)
         $SDate = "20230101";
@@ -1574,10 +1574,10 @@ class KakaoTalkController extends Controller
         $Order = "D";
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillKakao->GetUseHistory($testCorpNum, $SDate, $EDate, $Page, $PerPage, $Order, $testUserID);
+            $result = $this->PopbillKakao->GetUseHistory($CorpNum, $SDate, $EDate, $Page, $PerPage, $Order, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -1594,7 +1594,7 @@ class KakaoTalkController extends Controller
     {
 
         // 팝빌회원 사업자번호 (하이픈 '-' 제외 10 자리)
-        $testCorpNum = "1234567890";
+        $CorpNum = "1234567890";
 
         // 시작일자, 날짜형식(yyyyMMdd)
         $SDate = "20230101";
@@ -1609,10 +1609,10 @@ class KakaoTalkController extends Controller
         $PerPage = 30;
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillKakao->GetPaymentHistory($testCorpNum, $SDate, $EDate, $Page, $PerPage, $testUserID);
+            $result = $this->PopbillKakao->GetPaymentHistory($CorpNum, $SDate, $EDate, $Page, $PerPage, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -1629,7 +1629,7 @@ class KakaoTalkController extends Controller
     {
 
         // 팝빌회원 사업자번호 (하이픈 '-' 제외 10 자리)
-        $testCorpNum = "1234567890";
+        $CorpNum = "1234567890";
 
         // 페이지번호
         $Page = 1;
@@ -1638,10 +1638,10 @@ class KakaoTalkController extends Controller
         $PerPage = 30;
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillKakao->GetRefundHistory($testCorpNum, $Page, $PerPage, $testUserID);
+            $result = $this->PopbillKakao->GetRefundHistory($CorpNum, $Page, $PerPage, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -1658,7 +1658,7 @@ class KakaoTalkController extends Controller
     {
 
         // 팝빌 회원 사업자번호, '-' 제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         $RefundForm = new RefundForm();
 
@@ -1684,10 +1684,10 @@ class KakaoTalkController extends Controller
         $RefundForm->reason = '환불사유';
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillKakao->Refund($testCorpNum, $RefundForm, $testUserID);
+            $result = $this->PopbillKakao->Refund($CorpNum, $RefundForm, $UserID);
             $code = $result->code;
             $message = $result->message;
             $refundCode = $result->refundCode;
@@ -1706,34 +1706,34 @@ class KakaoTalkController extends Controller
     {
 
         // 팝빌 회원 사업자번호, '-' 제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
-        $paymentForm = new PaymentForm();
+        $PaymentForm = new PaymentForm();
 
         // 담당자명
         // 미입력 시 기본값 적용 - 팝빌 회원 담당자명.
-        $paymentForm->settlerName = '담당자명';
+        $PaymentForm->settlerName = '담당자명';
 
         // 담당자 이메일
         // 사이트에서 신청하면 자동으로 담당자 이메일.
         // 미입력 시 공백 처리
-        $paymentForm->settlerEmail = 'test@test.com';
+        $PaymentForm->settlerEmail = 'test@test.com';
 
         // 담당자 휴대폰
         // 무통장 입금 승인 알림톡이 전송됩니다.
-        $paymentForm->notifyHP = '01012341234';
+        $PaymentForm->notifyHP = '01012341234';
 
         // 입금자명
-        $paymentForm->paymentName = '입금자명';
+        $PaymentForm->paymentName = '입금자명';
 
         // 결제금액
-        $paymentForm->settleCost = '11000';
+        $PaymentForm->settleCost = '11000';
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillKakao->PaymentRequest($testCorpNum, $paymentForm, $testUserID);
+            $result = $this->PopbillKakao->PaymentRequest($CorpNum, $PaymentForm, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -1750,16 +1750,16 @@ class KakaoTalkController extends Controller
     {
 
         // 팝빌회원 사업자번호
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // paymentRequest 를 통해 얻은 settleCode.
-        $settleCode = '202210040000000070';
+        $SettleCode = '202210040000000070';
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillKakao->GetSettleResult($testCorpNum, $settleCode, $testUserID);
+            $result = $this->PopbillKakao->GetSettleResult($CorpNum, $SettleCode, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -1777,13 +1777,13 @@ class KakaoTalkController extends Controller
     {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $url = $this->PopbillKakao->GetChargeURL($testCorpNum, $testUserID);
+            $url = $this->PopbillKakao->GetChargeURL($CorpNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -1802,13 +1802,13 @@ class KakaoTalkController extends Controller
     {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $url = $this->PopbillKakao->GetPaymentURL($testCorpNum, $testUserID);
+            $url = $this->PopbillKakao->GetPaymentURL($CorpNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -1827,13 +1827,13 @@ class KakaoTalkController extends Controller
     {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $url = $this->PopbillKakao->GetUseHistoryURL($testCorpNum, $testUserID);
+            $url = $this->PopbillKakao->GetUseHistoryURL($CorpNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -1852,10 +1852,10 @@ class KakaoTalkController extends Controller
     {
 
         // 팝빌회원 사업자번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         try {
-            $remainPoint = $this->PopbillKakao->GetPartnerBalance($testCorpNum);
+            $remainPoint = $this->PopbillKakao->GetPartnerBalance($CorpNum);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -1874,13 +1874,13 @@ class KakaoTalkController extends Controller
     {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // [CHRG] : 포인트충전 URL
         $TOGO = 'CHRG';
 
         try {
-            $url = $this->PopbillKakao->GetPartnerURL($testCorpNum, $TOGO);
+            $url = $this->PopbillKakao->GetPartnerURL($CorpNum, $TOGO);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -1898,19 +1898,19 @@ class KakaoTalkController extends Controller
     {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 카카오톡 전송유형 ATS-알림톡, FTS-친구톡(텍스트), FMS-친구톡(이미지)
-        $kakaoType = ENumKakaoType::ATS;
+        $MessageType = ENumKakaoType::ATS;
 
         try {
-            $unitCost = $this->PopbillKakao->GetUnitCost($testCorpNum, $kakaoType);
+            $unitCost = $this->PopbillKakao->GetUnitCost($CorpNum, $MessageType);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('ReturnValue', ['filedName' => "카카오톡(" . $kakaoType . ") 전송단가 ", 'value' => $unitCost]);
+        return view('ReturnValue', ['filedName' => "카카오톡(" . $MessageType . ") 전송단가 ", 'value' => $unitCost]);
     }
 
     /**
@@ -1921,16 +1921,16 @@ class KakaoTalkController extends Controller
     {
 
         // 팝빌회원 사업자번호, '-'제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         // 카카오톡 전송유형 ATS-알림톡, FTS-친구톡(텍스트), FMS-친구톡(이미지)
-        $kakaoType = ENumKakaoType::ATS;
+        $MessageType = ENumKakaoType::ATS;
 
         try {
-            $result = $this->PopbillKakao->GetChargeInfo($testCorpNum, $kakaoType, $testUserID);
+            $result = $this->PopbillKakao->GetChargeInfo($CorpNum, $MessageType, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -1947,13 +1947,13 @@ class KakaoTalkController extends Controller
     {
 
         // 사업자번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // ./config/popbill.php 에 선언된 파트너 링크아이디
         $LinkID = config('popbill.LinkID');
 
         try {
-            $result = $this->PopbillKakao->CheckIsMember($testCorpNum, $LinkID);
+            $result = $this->PopbillKakao->CheckIsMember($CorpNum, $LinkID);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {
@@ -1972,10 +1972,10 @@ class KakaoTalkController extends Controller
     {
 
         // 조회할 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillKakao->CheckID($testUserID);
+            $result = $this->PopbillKakao->CheckID($UserID);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {
@@ -1993,46 +1993,46 @@ class KakaoTalkController extends Controller
     public function JoinMember()
     {
 
-        $joinForm = new JoinForm();
+        $JoinForm = new JoinForm();
 
         // 링크아이디
-        $joinForm->LinkID = config('popbill.LinkID');
+        $JoinForm->LinkID = config('popbill.LinkID');
 
         // 사업자번호, "-"제외 10자리
-        $joinForm->CorpNum = '1234567890';
+        $JoinForm->CorpNum = '1234567890';
 
         // 대표자성명
-        $joinForm->CEOName = '대표자성명';
+        $JoinForm->CEOName = '대표자성명';
 
         // 사업자상호
-        $joinForm->CorpName = '테스트사업자상호';
+        $JoinForm->CorpName = '테스트사업자상호';
 
         // 사업자주소
-        $joinForm->Addr = '테스트사업자주소';
+        $JoinForm->Addr = '테스트사업자주소';
 
         // 업태
-        $joinForm->BizType = '업태';
+        $JoinForm->BizType = '업태';
 
         // 종목
-        $joinForm->BizClass = '종목';
+        $JoinForm->BizClass = '종목';
 
         // 담당자명
-        $joinForm->ContactName = '담당자성명';
+        $JoinForm->ContactName = '담당자성명';
 
         // 담당자 이메일
-        $joinForm->ContactEmail = '';
+        $JoinForm->ContactEmail = '';
 
         // 담당자 연락처
-        $joinForm->ContactTEL = '';
+        $JoinForm->ContactTEL = '';
 
         // 아이디, 6자 이상 20자미만
-        $joinForm->ID = 'userid_phpdd';
+        $JoinForm->ID = 'userid_phpdd';
 
         // 비밀번호, 8자 이상 20자 이하(영문, 숫자, 특수문자 조합)
-        $joinForm->Password = 'asdf1234!@';
+        $JoinForm->Password = 'asdf1234!@';
 
         try {
-            $result = $this->PopbillKakao->JoinMember($joinForm);
+            $result = $this->PopbillKakao->JoinMember($JoinForm);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {
@@ -2052,13 +2052,13 @@ class KakaoTalkController extends Controller
     {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $url = $this->PopbillKakao->GetAccessURL($testCorpNum, $testUserID);
+            $url = $this->PopbillKakao->GetAccessURL($CorpNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -2075,13 +2075,13 @@ class KakaoTalkController extends Controller
     {
 
         // 팝빌회원 사업자번호, '-'제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $CorpInfo = $this->PopbillKakao->GetCorpInfo($testCorpNum, $testUserID);
+            $CorpInfo = $this->PopbillKakao->GetCorpInfo($CorpNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -2099,7 +2099,7 @@ class KakaoTalkController extends Controller
     {
 
         // 팝빌회원 사업자번호, '-' 제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 회사정보 클래스 생성
         $CorpInfo = new CorpInfo();
@@ -2120,10 +2120,10 @@ class KakaoTalkController extends Controller
         $CorpInfo->bizClass = '종목';
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result =  $this->PopbillKakao->UpdateCorpInfo($testCorpNum, $CorpInfo, $testUserID);
+            $result =  $this->PopbillKakao->UpdateCorpInfo($CorpNum, $CorpInfo, $UserID);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {
@@ -2142,7 +2142,7 @@ class KakaoTalkController extends Controller
     {
 
         // 팝빌회원 사업자번호, '-' 제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 담당자 정보 객체 생성
         $ContactInfo = new ContactInfo();
@@ -2166,10 +2166,10 @@ class KakaoTalkController extends Controller
         $ContactInfo->searchRole = 3;
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillKakao->RegistContact($testCorpNum, $ContactInfo, $testUserID);
+            $result = $this->PopbillKakao->RegistContact($CorpNum, $ContactInfo, $UserID);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {
@@ -2188,16 +2188,16 @@ class KakaoTalkController extends Controller
     {
 
         // 팝빌회원 사업자번호, '-'제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         //확인할 담당자 아이디
-        $contactID = 'checkContact';
+        $ContactID = 'checkContact';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $ContactInfo = $this->PopbillKakao->GetContactInfo($testCorpNum, $contactID, $testUserID);
+            $ContactInfo = $this->PopbillKakao->GetContactInfo($CorpNum, $ContactID, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -2215,13 +2215,13 @@ class KakaoTalkController extends Controller
     {
 
         // 팝빌회원 사업자번호, '-'제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $ContactList = $this->PopbillKakao->ListContact($testCorpNum, $testUserID);
+            $ContactList = $this->PopbillKakao->ListContact($CorpNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -2239,10 +2239,10 @@ class KakaoTalkController extends Controller
     {
 
         // 팝빌회원 사업자번호, '-' 제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         // 담당자 정보 객체 생성
         $ContactInfo = new ContactInfo();
@@ -2263,7 +2263,7 @@ class KakaoTalkController extends Controller
         $ContactInfo->searchRole = 3;
 
         try {
-            $result = $this->PopbillKakao->UpdateContact($testCorpNum, $ContactInfo, $testUserID);
+            $result = $this->PopbillKakao->UpdateContact($CorpNum, $ContactInfo, $UserID);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {

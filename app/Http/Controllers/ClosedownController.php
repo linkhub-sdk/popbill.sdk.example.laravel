@@ -53,13 +53,13 @@ class ClosedownController extends Controller
     {
 
         // 팝빌회원 사업자번호
-        $testCorpNum = "1234567890";
+        $CorpNum = "1234567890";
 
         // 조회 사업자번호
         $CheckCorpNum = "6798700433";
 
         try {
-            $result = $this->PopbillClosedown->checkCorpNum($testCorpNum, $CheckCorpNum);
+            $result = $this->PopbillClosedown->checkCorpNum($CorpNum, $CheckCorpNum);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -76,7 +76,7 @@ class ClosedownController extends Controller
     {
 
         //팝빌회원 사업자번호
-        $testCorpNum = "1234567890";
+        $CorpNum = "1234567890";
 
         // 조회할 사업자번호 배열, 최대 1000건
         $CorpNumList = array(
@@ -85,7 +85,7 @@ class ClosedownController extends Controller
         );
 
         try {
-            $result = $this->PopbillClosedown->checkCorpNums($testCorpNum, $CorpNumList);
+            $result = $this->PopbillClosedown->checkCorpNums($CorpNum, $CorpNumList);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -103,10 +103,10 @@ class ClosedownController extends Controller
     {
 
         // 팝빌회원 사업자번호
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         try {
-            $remainPoint = $this->PopbillClosedown->GetBalance($testCorpNum);
+            $remainPoint = $this->PopbillClosedown->GetBalance($CorpNum);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -123,7 +123,7 @@ class ClosedownController extends Controller
     {
 
         // 팝빌회원 사업자번호 (하이픈 '-' 제외 10 자리)
-        $testCorpNum = "1234567890";
+        $CorpNum = "1234567890";
 
         // 시작일자, 날짜형식(yyyyMMdd)
         $SDate = "20230101";
@@ -141,10 +141,10 @@ class ClosedownController extends Controller
         $Order = "D";
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillClosedown->GetUseHistory($testCorpNum, $SDate, $EDate, $Page, $PerPage, $Order, $testUserID);
+            $result = $this->PopbillClosedown->GetUseHistory($CorpNum, $SDate, $EDate, $Page, $PerPage, $Order, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -161,7 +161,7 @@ class ClosedownController extends Controller
     {
 
         // 팝빌회원 사업자번호 (하이픈 '-' 제외 10 자리)
-        $testCorpNum = "1234567890";
+        $CorpNum = "1234567890";
 
         // 시작일자, 날짜형식(yyyyMMdd)
         $SDate = "20230101";
@@ -176,10 +176,10 @@ class ClosedownController extends Controller
         $PerPage = 30;
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillClosedown->GetPaymentHistory($testCorpNum, $SDate, $EDate, $Page, $PerPage, $testUserID);
+            $result = $this->PopbillClosedown->GetPaymentHistory($CorpNum, $SDate, $EDate, $Page, $PerPage, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -196,7 +196,7 @@ class ClosedownController extends Controller
     {
 
         // 팝빌회원 사업자번호 (하이픈 '-' 제외 10 자리)
-        $testCorpNum = "1234567890";
+        $CorpNum = "1234567890";
 
         // 페이지번호
         $Page = 1;
@@ -205,10 +205,10 @@ class ClosedownController extends Controller
         $PerPage = 30;
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillClosedown->GetRefundHistory($testCorpNum, $Page, $PerPage, $testUserID);
+            $result = $this->PopbillClosedown->GetRefundHistory($CorpNum, $Page, $PerPage, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -225,7 +225,7 @@ class ClosedownController extends Controller
     {
 
         // 팝빌 회원 사업자번호, '-' 제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         $RefundForm = new RefundForm();
 
@@ -251,10 +251,10 @@ class ClosedownController extends Controller
         $RefundForm->reason = '환불사유';
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillClosedown->Refund($testCorpNum, $RefundForm, $testUserID);
+            $result = $this->PopbillClosedown->Refund($CorpNum, $RefundForm, $UserID);
             $code = $result->code;
             $message = $result->message;
             $refundCode = $result->refundCode;
@@ -273,34 +273,34 @@ class ClosedownController extends Controller
     {
 
         // 팝빌 회원 사업자번호, '-' 제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
-        $paymentForm = new PaymentForm();
+        $PaymentForm = new PaymentForm();
 
         // 담당자명
         // 미입력 시 기본값 적용 - 팝빌 회원 담당자명.
-        $paymentForm->settlerName = '담당자명';
+        $PaymentForm->settlerName = '담당자명';
 
         // 담당자 이메일
         // 사이트에서 신청하면 자동으로 담당자 이메일.
         // 미입력 시 공백 처리
-        $paymentForm->settlerEmail = 'test@test.com';
+        $PaymentForm->settlerEmail = 'test@test.com';
 
         // 담당자 휴대폰
         // 무통장 입금 승인 알림톡이 전송됩니다.
-        $paymentForm->notifyHP = '01012341234';
+        $PaymentForm->notifyHP = '01012341234';
 
         // 입금자명
-        $paymentForm->paymentName = '입금자명';
+        $PaymentForm->paymentName = '입금자명';
 
         // 결제금액
-        $paymentForm->settleCost = '11000';
+        $PaymentForm->settleCost = '11000';
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillClosedown->PaymentRequest($testCorpNum, $paymentForm, $testUserID);
+            $result = $this->PopbillClosedown->PaymentRequest($CorpNum, $PaymentForm, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -317,16 +317,16 @@ class ClosedownController extends Controller
     {
 
         // 팝빌회원 사업자번호
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // paymentRequest 를 통해 얻은 settleCode.
-        $settleCode = '202210040000000070';
+        $SettleCode = '202210040000000070';
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillClosedown->GetSettleResult($testCorpNum, $settleCode, $testUserID);
+            $result = $this->PopbillClosedown->GetSettleResult($CorpNum, $SettleCode, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -344,13 +344,13 @@ class ClosedownController extends Controller
     {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $url = $this->PopbillClosedown->GetChargeURL($testCorpNum, $testUserID);
+            $url = $this->PopbillClosedown->GetChargeURL($CorpNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -368,13 +368,13 @@ class ClosedownController extends Controller
     {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $url = $this->PopbillClosedown->GetPaymentURL($testCorpNum, $testUserID);
+            $url = $this->PopbillClosedown->GetPaymentURL($CorpNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -393,13 +393,13 @@ class ClosedownController extends Controller
     {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $url = $this->PopbillClosedown->GetUseHistoryURL($testCorpNum, $testUserID);
+            $url = $this->PopbillClosedown->GetUseHistoryURL($CorpNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -417,10 +417,10 @@ class ClosedownController extends Controller
     {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         try {
-            $unitCost = $this->PopbillClosedown->GetUnitCost($testCorpNum);
+            $unitCost = $this->PopbillClosedown->GetUnitCost($CorpNum);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -438,10 +438,10 @@ class ClosedownController extends Controller
     {
 
         // 팝빌회원 사업자번호
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         try {
-            $remainPoint = $this->PopbillClosedown->GetPartnerBalance($testCorpNum);
+            $remainPoint = $this->PopbillClosedown->GetPartnerBalance($CorpNum);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -459,13 +459,13 @@ class ClosedownController extends Controller
     {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // [CHRG] : 포인트충전 URL
         $TOGO = 'CHRG';
 
         try {
-            $url = $this->PopbillClosedown->GetPartnerURL($testCorpNum, $TOGO);
+            $url = $this->PopbillClosedown->GetPartnerURL($CorpNum, $TOGO);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -482,13 +482,13 @@ class ClosedownController extends Controller
     {
 
         // 팝빌회원 사업자번호, '-'제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillClosedown->GetChargeInfo($testCorpNum, $testUserID);
+            $result = $this->PopbillClosedown->GetChargeInfo($CorpNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -505,13 +505,13 @@ class ClosedownController extends Controller
     {
 
         // 사업자번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 연동신청시 팝빌에서 발급받은 링크아이디
         $LinkID = config('popbill.LinkID');
 
         try {
-            $result = $this->PopbillClosedown->CheckIsMember($testCorpNum, $LinkID);
+            $result = $this->PopbillClosedown->CheckIsMember($CorpNum, $LinkID);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {
@@ -530,10 +530,10 @@ class ClosedownController extends Controller
     {
 
         // 중복여부를 확인할 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillClosedown->CheckID($testUserID);
+            $result = $this->PopbillClosedown->CheckID($UserID);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {
@@ -551,46 +551,46 @@ class ClosedownController extends Controller
     public function JoinMember()
     {
 
-        $joinForm = new JoinForm();
+        $JoinForm = new JoinForm();
 
         // 링크아이디
-        $joinForm->LinkID = config('popbill.LinkID');
+        $JoinForm->LinkID = config('popbill.LinkID');
 
         // 사업자번호, "-"제외 10자리
-        $joinForm->CorpNum = '1234567890';
+        $JoinForm->CorpNum = '1234567890';
 
         // 대표자성명
-        $joinForm->CEOName = '대표자성명';
+        $JoinForm->CEOName = '대표자성명';
 
         // 사업자상호
-        $joinForm->CorpName = '테스트사업자상호';
+        $JoinForm->CorpName = '테스트사업자상호';
 
         // 사업자주소
-        $joinForm->Addr = '테스트사업자주소';
+        $JoinForm->Addr = '테스트사업자주소';
 
         // 업태
-        $joinForm->BizType = '업태';
+        $JoinForm->BizType = '업태';
 
         // 종목
-        $joinForm->BizClass = '종목';
+        $JoinForm->BizClass = '종목';
 
         // 담당자명
-        $joinForm->ContactName = '담당자성명';
+        $JoinForm->ContactName = '담당자성명';
 
         // 담당자 이메일
-        $joinForm->ContactEmail = '';
+        $JoinForm->ContactEmail = '';
 
         // 담당자 연락처
-        $joinForm->ContactTEL = '';
+        $JoinForm->ContactTEL = '';
 
         // 아이디, 6자 이상 20자미만
-        $joinForm->ID = 'userid_phpdd';
+        $JoinForm->ID = 'userid_phpdd';
 
         // 비밀번호, 8자 이상 20자 이하(영문, 숫자, 특수문자 조합)
-        $joinForm->Password = 'asdf1234!@';
+        $JoinForm->Password = 'asdf1234!@';
 
         try {
-            $result = $this->PopbillClosedown->JoinMember($joinForm);
+            $result = $this->PopbillClosedown->JoinMember($JoinForm);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {
@@ -609,13 +609,13 @@ class ClosedownController extends Controller
     {
 
         // 팝빌회원 사업자번호, '-'제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $CorpInfo = $this->PopbillClosedown->GetCorpInfo($testCorpNum, $testUserID);
+            $CorpInfo = $this->PopbillClosedown->GetCorpInfo($CorpNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -633,7 +633,7 @@ class ClosedownController extends Controller
     {
 
         // 팝빌회원 사업자번호, '-' 제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 회사정보 클래스 생성
         $CorpInfo = new CorpInfo();
@@ -654,10 +654,10 @@ class ClosedownController extends Controller
         $CorpInfo->bizClass = '종목';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result =  $this->PopbillClosedown->UpdateCorpInfo($testCorpNum, $CorpInfo, $testUserID);
+            $result =  $this->PopbillClosedown->UpdateCorpInfo($CorpNum, $CorpInfo, $UserID);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {
@@ -676,7 +676,7 @@ class ClosedownController extends Controller
     {
 
         // 팝빌회원 사업자번호, '-' 제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 담당자 정보 객체 생성
         $ContactInfo = new ContactInfo();
@@ -700,7 +700,7 @@ class ClosedownController extends Controller
         $ContactInfo->searchRole = 3;
 
         try {
-            $result = $this->PopbillClosedown->RegistContact($testCorpNum, $ContactInfo);
+            $result = $this->PopbillClosedown->RegistContact($CorpNum, $ContactInfo);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {
@@ -718,16 +718,16 @@ class ClosedownController extends Controller
     public function GetContactInfo()
     {
         // 팝빌회원 사업자번호, '-'제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         //확인할 담당자 아이디
-        $contactID = 'checkContact';
+        $ContactID = 'checkContact';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $ContactInfo = $this->PopbillClosedown->GetContactInfo($testCorpNum, $contactID, $testUserID);
+            $ContactInfo = $this->PopbillClosedown->GetContactInfo($CorpNum, $ContactID, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -745,13 +745,13 @@ class ClosedownController extends Controller
     {
 
         // 팝빌회원 사업자번호, '-'제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $ContactList = $this->PopbillClosedown->ListContact($testCorpNum, $testUserID);
+            $ContactList = $this->PopbillClosedown->ListContact($CorpNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -769,10 +769,10 @@ class ClosedownController extends Controller
     {
 
         // 팝빌회원 사업자번호, '-' 제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         // 담당자 정보 객체 생성
         $ContactInfo = new ContactInfo();
@@ -793,7 +793,7 @@ class ClosedownController extends Controller
         $ContactInfo->searchRole = 3;
 
         try {
-            $result = $this->PopbillClosedown->UpdateContact($testCorpNum, $ContactInfo, $testUserID);
+            $result = $this->PopbillClosedown->UpdateContact($CorpNum, $ContactInfo, $UserID);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {
@@ -813,13 +813,13 @@ class ClosedownController extends Controller
     {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $url = $this->PopbillClosedown->GetAccessURL($testCorpNum, $testUserID);
+            $url = $this->PopbillClosedown->GetAccessURL($CorpNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();

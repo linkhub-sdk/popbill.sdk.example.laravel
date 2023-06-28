@@ -55,13 +55,13 @@ class CashbillController extends Controller
     {
 
         // 팝빌회원 사업자번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
-        $mgtKey = '20220405-PHP7-001';
+        $MgtKey = '20220405-PHP7-001';
 
         try {
-            $result = $this->PopbillCashbill->CheckMgtKeyInUse($testCorpNum, $mgtKey);
+            $result = $this->PopbillCashbill->CheckMgtKeyInUse($CorpNum, $MgtKey);
             $result ? $result = '사용중' : $result = '미사용중';
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
@@ -69,7 +69,7 @@ class CashbillController extends Controller
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
 
-        return view('ReturnValue', ['filedName' => "문서번호 사용여부 =>" . $mgtKey . "", 'value' => $result]);
+        return view('ReturnValue', ['filedName' => "문서번호 사용여부 =>" . $MgtKey . "", 'value' => $result]);
     }
 
     /**
@@ -81,16 +81,16 @@ class CashbillController extends Controller
     {
 
         // 팝빌 회원 사업자번호, '-' 제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         // 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
-        $mgtKey = '20230102-PHP7-001';
+        $MgtKey = '20230102-PHP7-001';
 
         // 메모
-        $memo = '현금영수증 즉시발행 메모';
+        $Memo = '현금영수증 즉시발행 메모';
 
         // 안내메일 제목, 공백처리시 기본양식으로 전송
         $emailSubject = '';
@@ -99,7 +99,7 @@ class CashbillController extends Controller
         $Cashbill = new Cashbill();
 
         // 현금영수증 문서번호, 1~24자리 (숫자, 영문, '-', '_') 조합으로 사업자 별로 중복되지 않도록 구성
-        $Cashbill->mgtKey = $mgtKey;
+        $Cashbill->mgtKey = $MgtKey;
 
         // 문서형태, 승인거래 기재
         $Cashbill->tradeType = '승인거래';
@@ -131,7 +131,7 @@ class CashbillController extends Controller
         $Cashbill->serviceFee = '0';
 
         // 가맹점 사업자번호
-        $Cashbill->franchiseCorpNum = $testCorpNum;
+        $Cashbill->franchiseCorpNum = $CorpNum;
 
         // 가맹점 종사업장 식별번호
         $Cashbill->franchiseTaxRegID = '';
@@ -176,7 +176,7 @@ class CashbillController extends Controller
         $Cashbill->hp = '';
 
         try {
-            $result = $this->PopbillCashbill->RegistIssue($testCorpNum, $Cashbill, $memo, $testUserID, $emailSubject);
+            $result = $this->PopbillCashbill->RegistIssue($CorpNum, $Cashbill, $Memo, $UserID, $emailSubject);
             $code = $result->code;
             $message = $result->message;
             $confirmNum = $result->confirmNum;
@@ -199,11 +199,11 @@ class CashbillController extends Controller
     {
 
         // 팝빌 회원 사업자번호, '-' 제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 제출아이디, 대량 발행 접수를 구별하는 식별키
         // └ 최대 36자리 영문, 숫자, '-' 조합으로 구성
-        $submitID = "20230102-PHP7-BULK";
+        $SubmitID = "20230102-PHP7-BULK";
 
         // 최대 100건
         $cashbillList = array();
@@ -213,7 +213,7 @@ class CashbillController extends Controller
             $Cashbill = new Cashbill();
 
             // 현금영수증 문서번호, 1~24자리 (숫자, 영문, '-', '_') 조합으로 사업자 별로 중복되지 않도록 구성
-            $Cashbill->mgtKey = $submitID . "-" . $i;
+            $Cashbill->mgtKey = $SubmitID . "-" . $i;
 
             // 문서형태, {승인거래, 취소거래} 중 기재
             $Cashbill->tradeType = '승인거래';
@@ -253,7 +253,7 @@ class CashbillController extends Controller
             $Cashbill->serviceFee = '0';
 
             // 가맹점 사업자번호, '-'제외 10자리
-            $Cashbill->franchiseCorpNum = $testCorpNum;
+            $Cashbill->franchiseCorpNum = $CorpNum;
 
             // 가맹점 종사업장 식별번호
             $Cashbill->franchiseTaxRegID = "";
@@ -301,10 +301,10 @@ class CashbillController extends Controller
         }
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillCashbill->BulkSubmit($testCorpNum, $submitID, $cashbillList, $testUserID);
+            $result = $this->PopbillCashbill->BulkSubmit($CorpNum, $SubmitID, $cashbillList, $UserID);
             $code = $result->code;
             $message = $result->message;
             $receiptID = $result->receiptID;
@@ -325,16 +325,16 @@ class CashbillController extends Controller
     {
 
         // 팝빌회원 사업자번호, '-'제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 초대량 발행 접수시 기재한 제출아이디
-        $submitID = '0221103-3a242d86ba184393bd2f2417861d';
+        $SubmitID = '0221103-3a242d86ba184393bd2f2417861d';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillCashbill->GetBulkResult($testCorpNum, $submitID, $testUserID);
+            $result = $this->PopbillCashbill->GetBulkResult($CorpNum, $SubmitID, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -354,16 +354,16 @@ class CashbillController extends Controller
     {
 
         // 팝빌 회원 사업자번호, '-' 제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 문서번호
-        $mgtKey = '20230102-PHP7-001';
+        $MgtKey = '20230102-PHP7-001';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillCashbill->Delete($testCorpNum, $mgtKey, $testUserID);
+            $result = $this->PopbillCashbill->Delete($CorpNum, $MgtKey, $UserID);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {
@@ -383,10 +383,10 @@ class CashbillController extends Controller
     {
 
         // 팝빌 회원 사업자번호, '-' 제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
-        $mgtKey = '20230102-PHP7-012';
+        $MgtKey = '20230102-PHP7-012';
 
         // 원본현금영수증 승인번호, 문서정보 확인(GetInfo API)을 통해 확인가능.
         $orgConfirmNum = 'TB0000068';
@@ -400,10 +400,10 @@ class CashbillController extends Controller
         $smssendYN = false;
 
         // 현금영수증 상태 이력을 관리하기 위한 메모
-        $memo = "취소 현금영수증 발행 메모";
+        $Memo = "취소 현금영수증 발행 메모";
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         // 현금영수증 취소유형 - false 기재
         $isPartCancel = false;
@@ -414,7 +414,7 @@ class CashbillController extends Controller
         $cancelType = 1;
 
         try {
-            $result = $this->PopbillCashbill->RevokeRegistIssue($testCorpNum, $mgtKey, $orgConfirmNum, $orgTradeDate, $smssendYN, $memo, $testUserID, $isPartCancel, $cancelType);
+            $result = $this->PopbillCashbill->RevokeRegistIssue($CorpNum, $MgtKey, $orgConfirmNum, $orgTradeDate, $smssendYN, $Memo, $UserID, $isPartCancel, $cancelType);
             $code = $result->code;
             $message = $result->message;
             $confirmNum = $result->confirmNum;
@@ -441,13 +441,13 @@ class CashbillController extends Controller
     {
 
         // 팝빌회원 사업자번호, '-' 제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         // 문서번호, 사업자별로 중복없이 1~24자리 영문, 숫자, '-', '_' 조합으로 구성
-        $mgtKey = '20230102-PHP7-012';
+        $MgtKey = '20230102-PHP7-012';
 
         // 원본현금영수증 승인번호, 문서정보 확인(GetInfo API) 함수를 통해 확인가능.
         $orgConfirmNum = 'TB0000068';
@@ -461,7 +461,7 @@ class CashbillController extends Controller
         $smssendYN = false;
 
         // 메모
-        $memo = '부분취소현금영수증 발행메모';
+        $Memo = '부분취소현금영수증 발행메모';
 
         // 현금영수증 취소유형 - true 기재
         $isPartCancel = true;
@@ -496,13 +496,13 @@ class CashbillController extends Controller
 
         try {
             $result = $this->PopbillCashbill->RevokeRegistIssue(
-                $testCorpNum,
-                $mgtKey,
+                $CorpNum,
+                $MgtKey,
                 $orgConfirmNum,
                 $orgTradeDate,
                 $smssendYN,
-                $memo,
-                $testUserID,
+                $Memo,
+                $UserID,
                 $isPartCancel,
                 $cancelType,
                 $supplyCost,
@@ -539,13 +539,13 @@ class CashbillController extends Controller
     {
 
         // 팝빌회원 사업자번호
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 문서번호
-        $mgtKey = '20230102-PHP7-001';
+        $MgtKey = '20230102-PHP7-001';
 
         try {
-            $result = $this->PopbillCashbill->GetInfo($testCorpNum, $mgtKey);
+            $result = $this->PopbillCashbill->GetInfo($CorpNum, $MgtKey);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -565,7 +565,7 @@ class CashbillController extends Controller
     {
 
         // 팝빌회원 사업자번호
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 문서번호 배열, 최대 1000건
         $MgtKeyList = array(
@@ -574,7 +574,7 @@ class CashbillController extends Controller
         );
 
         try {
-            $result = $this->PopbillCashbill->GetInfos($testCorpNum, $MgtKeyList);
+            $result = $this->PopbillCashbill->GetInfos($CorpNum, $MgtKeyList);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -590,13 +590,13 @@ class CashbillController extends Controller
     public function GetDetailInfo()
     {
         // 팝빌회원 사업자번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 문서번호
-        $mgtKey = '20230102-PHP7-001';
+        $MgtKey = '20230102-PHP7-001';
 
         try {
-            $result = $this->PopbillCashbill->GetDetailInfo($testCorpNum, $mgtKey);
+            $result = $this->PopbillCashbill->GetDetailInfo($CorpNum, $MgtKey);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -614,7 +614,7 @@ class CashbillController extends Controller
     {
 
         // 팝빌회원 사업자번호
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 일자 유형 ("R" , "T" , "I" 중 택 1)
         // └ R = 등록일자 , T = 거래일자 , I = 발행일자
@@ -684,7 +684,7 @@ class CashbillController extends Controller
 
         try {
             $result = $this->PopbillCashbill->Search(
-                $testCorpNum,
+                $CorpNum,
                 $DType,
                 $SDate,
                 $EDate,
@@ -717,16 +717,16 @@ class CashbillController extends Controller
     {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         // TBOX(임시문서함), PBOX(발행문서함), WRITE(현금영수증 작성)
         $TOGO = 'WRITE';
 
         try {
-            $url = $this->PopbillCashbill->GetURL($testCorpNum, $testUserID, $TOGO);
+            $url = $this->PopbillCashbill->GetURL($CorpNum, $UserID, $TOGO);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -745,16 +745,16 @@ class CashbillController extends Controller
     {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 문서번호
-        $mgtKey = '20230102-PHP7-001';
+        $MgtKey = '20230102-PHP7-001';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $url = $this->PopbillCashbill->GetPopUpURL($testCorpNum, $mgtKey, $testUserID);
+            $url = $this->PopbillCashbill->GetPopUpURL($CorpNum, $MgtKey, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -772,16 +772,16 @@ class CashbillController extends Controller
     {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 문서번호
-        $mgtKey = '20230102-PHP7-001';
+        $MgtKey = '20230102-PHP7-001';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $url = $this->PopbillCashbill->GetViewURL($testCorpNum, $mgtKey, $testUserID);
+            $url = $this->PopbillCashbill->GetViewURL($CorpNum, $MgtKey, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -799,16 +799,16 @@ class CashbillController extends Controller
     {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 문서번호
-        $mgtKey = '20230102-PHP7-001';
+        $MgtKey = '20230102-PHP7-001';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $url = $this->PopbillCashbill->GetPrintURL($testCorpNum, $mgtKey, $testUserID);
+            $url = $this->PopbillCashbill->GetPrintURL($CorpNum, $MgtKey, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -827,19 +827,19 @@ class CashbillController extends Controller
     {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 문서번호 배열, 최대 100건
-        $mgtKeyList = array(
+        $MgtKeyList = array(
             '20230102-PHP7-001',
             '20230102-PHP7-002'
         );
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $url = $this->PopbillCashbill->GetMassPrintURL($testCorpNum, $mgtKeyList, $testUserID);
+            $url = $this->PopbillCashbill->GetMassPrintURL($CorpNum, $MgtKeyList, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -857,16 +857,16 @@ class CashbillController extends Controller
     {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 문서번호
-        $mgtKey = '20230102-PHP7-001';
+        $MgtKey = '20230102-PHP7-001';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $url = $this->PopbillCashbill->GetMailURL($testCorpNum, $mgtKey, $testUserID);
+            $url = $this->PopbillCashbill->GetMailURL($CorpNum, $MgtKey, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -885,13 +885,13 @@ class CashbillController extends Controller
     {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $url = $this->PopbillCashbill->GetAccessURL($testCorpNum, $testUserID);
+            $url = $this->PopbillCashbill->GetAccessURL($CorpNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -909,19 +909,19 @@ class CashbillController extends Controller
     {
 
         // 팝빌 회원 사업자번호, "-" 제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 문서번호
-        $mgtKey = '20230102-PHP7-001';
+        $MgtKey = '20230102-PHP7-001';
 
         // 수신메일 주소
         $receiver = '';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillCashbill->SendEmail($testCorpNum, $mgtKey, $receiver, $testUserID);
+            $result = $this->PopbillCashbill->SendEmail($CorpNum, $MgtKey, $receiver, $UserID);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {
@@ -942,13 +942,13 @@ class CashbillController extends Controller
     {
 
         // 팝빌 회원 사업자번호, "-" 제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 문서번호
-        $mgtKey = '20230102-PHP7-001';
+        $MgtKey = '20230102-PHP7-001';
 
         // 발신번호
-        $sender = '';
+        $Sender = '';
 
         // 수신자번호
         $receiver = '';
@@ -957,10 +957,10 @@ class CashbillController extends Controller
         $contents = '메시지 전송 테스트입니다.';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillCashbill->SendSMS($testCorpNum, $mgtKey, $sender, $receiver, $contents, $testUserID);
+            $result = $this->PopbillCashbill->SendSMS($CorpNum, $MgtKey, $Sender, $receiver, $contents, $UserID);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {
@@ -980,22 +980,22 @@ class CashbillController extends Controller
     {
 
         // 팝빌 회원 사업자번호, "-" 제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 문서번호
-        $mgtKey = '20230102-PHP7-001';
+        $MgtKey = '20230102-PHP7-001';
 
         // 발신번호
-        $sender = '';
+        $Sender = '';
 
         // 수신팩스번호
         $receiver = '';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillCashbill->SendFAX($testCorpNum, $mgtKey, $sender, $receiver, $testUserID);
+            $result = $this->PopbillCashbill->SendFAX($CorpNum, $MgtKey, $Sender, $receiver, $UserID);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {
@@ -1013,19 +1013,19 @@ class CashbillController extends Controller
     {
 
         // 팝빌 회원 사업자번호, '-' 제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 현금영수증 아이템키
         $itemKey = '022040514332500001';
 
         // 부여할 파트너 문서번호
-        $mgtKey = '20230102-PHP7-007';
+        $MgtKey = '20230102-PHP7-007';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillCashbill->AssignMgtKey($testCorpNum, $itemKey, $mgtKey, $testUserID);
+            $result = $this->PopbillCashbill->AssignMgtKey($CorpNum, $itemKey, $MgtKey, $UserID);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {
@@ -1044,13 +1044,13 @@ class CashbillController extends Controller
     {
 
         // 팝빌회원 사업자번호, '-'제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillCashbill->ListEmailConfig($testCorpNum, $testUserID);
+            $result = $this->PopbillCashbill->ListEmailConfig($CorpNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -1072,7 +1072,7 @@ class CashbillController extends Controller
     {
 
         // 팝빌회원 사업자번호, '-'제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 메일 전송 유형
         $emailType = 'CSH_ISSUE';
@@ -1081,10 +1081,10 @@ class CashbillController extends Controller
         $sendYN = True;
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillCashbill->UpdateEmailConfig($testCorpNum, $emailType, $sendYN, $testUserID);
+            $result = $this->PopbillCashbill->UpdateEmailConfig($CorpNum, $emailType, $sendYN, $UserID);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {
@@ -1103,10 +1103,10 @@ class CashbillController extends Controller
     {
 
         // 팝빌회원 사업자번호
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         try {
-            $remainPoint = $this->PopbillCashbill->GetBalance($testCorpNum);
+            $remainPoint = $this->PopbillCashbill->GetBalance($CorpNum);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -1124,7 +1124,7 @@ class CashbillController extends Controller
     {
 
         // 팝빌회원 사업자번호 (하이픈 '-' 제외 10 자리)
-        $testCorpNum = "1234567890";
+        $CorpNum = "1234567890";
 
         // 시작일자, 날짜형식(yyyyMMdd)
         $SDate = "20230101";
@@ -1142,10 +1142,10 @@ class CashbillController extends Controller
         $Order = "D";
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillCashbill->GetUseHistory($testCorpNum, $SDate, $EDate, $Page, $PerPage, $Order, $testUserID);
+            $result = $this->PopbillCashbill->GetUseHistory($CorpNum, $SDate, $EDate, $Page, $PerPage, $Order, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -1162,7 +1162,7 @@ class CashbillController extends Controller
     {
 
         // 팝빌회원 사업자번호 (하이픈 '-' 제외 10 자리)
-        $testCorpNum = "1234567890";
+        $CorpNum = "1234567890";
 
         // 시작일자, 날짜형식(yyyyMMdd)
         $SDate = "20230101";
@@ -1177,10 +1177,10 @@ class CashbillController extends Controller
         $PerPage = 30;
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillCashbill->GetPaymentHistory($testCorpNum, $SDate, $EDate, $Page, $PerPage, $testUserID);
+            $result = $this->PopbillCashbill->GetPaymentHistory($CorpNum, $SDate, $EDate, $Page, $PerPage, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -1197,7 +1197,7 @@ class CashbillController extends Controller
     {
 
         // 팝빌회원 사업자번호 (하이픈 '-' 제외 10 자리)
-        $testCorpNum = "1234567890";
+        $CorpNum = "1234567890";
 
         // 페이지번호
         $Page = 1;
@@ -1206,10 +1206,10 @@ class CashbillController extends Controller
         $PerPage = 30;
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillCashbill->GetRefundHistory($testCorpNum, $Page, $PerPage, $testUserID);
+            $result = $this->PopbillCashbill->GetRefundHistory($CorpNum, $Page, $PerPage, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -1226,7 +1226,7 @@ class CashbillController extends Controller
     {
 
         // 팝빌 회원 사업자번호, '-' 제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         $RefundForm = new RefundForm();
 
@@ -1253,10 +1253,10 @@ class CashbillController extends Controller
 
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillCashbill->Refund($testCorpNum, $RefundForm, $testUserID);
+            $result = $this->PopbillCashbill->Refund($CorpNum, $RefundForm, $UserID);
             $code = $result->code;
             $message = $result->message;
             $refundCode = $result->refundCode;
@@ -1275,34 +1275,34 @@ class CashbillController extends Controller
     {
 
         // 팝빌 회원 사업자번호, '-' 제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
-        $paymentForm = new PaymentForm();
+        $PaymentForm = new PaymentForm();
 
         // 담당자명
         // 미입력 시 기본값 적용 - 팝빌 회원 담당자명.
-        $paymentForm->settlerName = '담당자명';
+        $PaymentForm->settlerName = '담당자명';
 
         // 담당자 이메일
         // 사이트에서 신청하면 자동으로 담당자 이메일.
         // 미입력 시 공백 처리
-        $paymentForm->settlerEmail = 'test@test.com';
+        $PaymentForm->settlerEmail = 'test@test.com';
 
         // 담당자 휴대폰
         // 무통장 입금 승인 알림톡이 전송됩니다.
-        $paymentForm->notifyHP = '01012341234';
+        $PaymentForm->notifyHP = '01012341234';
 
         // 입금자명
-        $paymentForm->paymentName = '입금자명';
+        $PaymentForm->paymentName = '입금자명';
 
         // 결제금액
-        $paymentForm->settleCost = '11000';
+        $PaymentForm->settleCost = '11000';
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillCashbill->PaymentRequest($testCorpNum, $paymentForm, $testUserID);
+            $result = $this->PopbillCashbill->PaymentRequest($CorpNum, $PaymentForm, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -1319,16 +1319,16 @@ class CashbillController extends Controller
     {
 
         // 팝빌회원 사업자번호
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // paymentRequest 를 통해 얻은 settleCode.
-        $settleCode = '202210040000000070';
+        $SettleCode = '202210040000000070';
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillCashbill->GetSettleResult($testCorpNum, $settleCode, $testUserID);
+            $result = $this->PopbillCashbill->GetSettleResult($CorpNum, $SettleCode, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -1346,13 +1346,13 @@ class CashbillController extends Controller
     {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $url = $this->PopbillCashbill->GetChargeURL($testCorpNum, $testUserID);
+            $url = $this->PopbillCashbill->GetChargeURL($CorpNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -1371,13 +1371,13 @@ class CashbillController extends Controller
     {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $url = $this->PopbillCashbill->GetPaymentURL($testCorpNum, $testUserID);
+            $url = $this->PopbillCashbill->GetPaymentURL($CorpNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -1396,13 +1396,13 @@ class CashbillController extends Controller
     {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $url = $this->PopbillCashbill->GetUseHistoryURL($testCorpNum, $testUserID);
+            $url = $this->PopbillCashbill->GetUseHistoryURL($CorpNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -1421,10 +1421,10 @@ class CashbillController extends Controller
     {
 
         // 팝빌회원 사업자번호
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         try {
-            $remainPoint = $this->PopbillCashbill->GetPartnerBalance($testCorpNum);
+            $remainPoint = $this->PopbillCashbill->GetPartnerBalance($CorpNum);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -1443,13 +1443,13 @@ class CashbillController extends Controller
     {
 
         // 팝빌 회원 사업자 번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // [CHRG] : 포인트충전 URL
         $TOGO = 'CHRG';
 
         try {
-            $url = $this->PopbillCashbill->GetPartnerURL($testCorpNum, $TOGO);
+            $url = $this->PopbillCashbill->GetPartnerURL($CorpNum, $TOGO);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -1466,10 +1466,10 @@ class CashbillController extends Controller
     {
 
         // 팝빌 회원 사업자 번호, '-' 제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         try {
-            $unitCost = $this->PopbillCashbill->GetUnitCost($testCorpNum);
+            $unitCost = $this->PopbillCashbill->GetUnitCost($CorpNum);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -1487,13 +1487,13 @@ class CashbillController extends Controller
     {
 
         // 팝빌회원 사업자번호, '-'제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillCashbill->GetChargeInfo($testCorpNum, $testUserID);
+            $result = $this->PopbillCashbill->GetChargeInfo($CorpNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -1511,13 +1511,13 @@ class CashbillController extends Controller
     {
 
         // 사업자번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 연동신청시 팝빌에서 발급받은 링크아이디
         $LinkID = config('popbill.LinkID');
 
         try {
-            $result = $this->PopbillCashbill->CheckIsMember($testCorpNum, $LinkID);
+            $result = $this->PopbillCashbill->CheckIsMember($CorpNum, $LinkID);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {
@@ -1536,10 +1536,10 @@ class CashbillController extends Controller
     {
 
         // 중복여부를 확인할 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillCashbill->CheckID($testUserID);
+            $result = $this->PopbillCashbill->CheckID($UserID);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {
@@ -1557,46 +1557,46 @@ class CashbillController extends Controller
     public function JoinMember()
     {
 
-        $joinForm = new JoinForm();
+        $JoinForm = new JoinForm();
 
         // 링크아이디
-        $joinForm->LinkID = config('popbill.LinkID');
+        $JoinForm->LinkID = config('popbill.LinkID');
 
         // 사업자번호, "-"제외 10자리
-        $joinForm->CorpNum = '1234567890';
+        $JoinForm->CorpNum = '1234567890';
 
         // 대표자성명
-        $joinForm->CEOName = '대표자성명';
+        $JoinForm->CEOName = '대표자성명';
 
         // 사업자상호
-        $joinForm->CorpName = '테스트사업자상호';
+        $JoinForm->CorpName = '테스트사업자상호';
 
         // 사업자주소
-        $joinForm->Addr = '테스트사업자주소';
+        $JoinForm->Addr = '테스트사업자주소';
 
         // 업태
-        $joinForm->BizType = '업태';
+        $JoinForm->BizType = '업태';
 
         // 종목
-        $joinForm->BizClass = '종목';
+        $JoinForm->BizClass = '종목';
 
         // 담당자명
-        $joinForm->ContactName = '담당자성명';
+        $JoinForm->ContactName = '담당자성명';
 
         // 담당자 이메일
-        $joinForm->ContactEmail = '';
+        $JoinForm->ContactEmail = '';
 
         // 담당자 연락처
-        $joinForm->ContactTEL = '';
+        $JoinForm->ContactTEL = '';
 
         // 아이디, 6자 이상 20자미만
-        $joinForm->ID = 'userid_phpdd';
+        $JoinForm->ID = 'userid_phpdd';
 
         // 비밀번호, 8자 이상 20자 이하(영문, 숫자, 특수문자 조합)
-        $joinForm->Password = 'asdf1234!@';
+        $JoinForm->Password = 'asdf1234!@';
 
         try {
-            $result = $this->PopbillCashbill->JoinMember($joinForm);
+            $result = $this->PopbillCashbill->JoinMember($JoinForm);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {
@@ -1615,13 +1615,13 @@ class CashbillController extends Controller
     {
 
         // 팝빌회원 사업자번호, '-'제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $CorpInfo = $this->PopbillCashbill->GetCorpInfo($testCorpNum, $testUserID);
+            $CorpInfo = $this->PopbillCashbill->GetCorpInfo($CorpNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -1639,7 +1639,7 @@ class CashbillController extends Controller
     {
 
         // 팝빌회원 사업자번호, '-' 제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 회사정보 클래스 생성
         $CorpInfo = new CorpInfo();
@@ -1660,10 +1660,10 @@ class CashbillController extends Controller
         $CorpInfo->bizClass = '종목';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result =  $this->PopbillCashbill->UpdateCorpInfo($testCorpNum, $CorpInfo, $testUserID);
+            $result =  $this->PopbillCashbill->UpdateCorpInfo($CorpNum, $CorpInfo, $UserID);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {
@@ -1682,7 +1682,7 @@ class CashbillController extends Controller
     {
 
         // 팝빌회원 사업자번호, '-' 제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 담당자 정보 객체 생성
         $ContactInfo = new ContactInfo();
@@ -1708,10 +1708,10 @@ class CashbillController extends Controller
         $ContactInfo->searchRole = 3;
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillCashbill->RegistContact($testCorpNum, $ContactInfo, $testUserID);
+            $result = $this->PopbillCashbill->RegistContact($CorpNum, $ContactInfo, $UserID);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {
@@ -1729,16 +1729,16 @@ class CashbillController extends Controller
     public function GetContactInfo()
     {
         // 팝빌회원 사업자번호, '-'제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         //확인할 담당자 아이디
-        $contactID = 'checkContact';
+        $ContactID = 'checkContact';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $ContactInfo = $this->PopbillCashbill->GetContactInfo($testCorpNum, $contactID, $testUserID);
+            $ContactInfo = $this->PopbillCashbill->GetContactInfo($CorpNum, $ContactID, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -1756,13 +1756,13 @@ class CashbillController extends Controller
     {
 
         // 팝빌회원 사업자번호, '-'제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $ContactList = $this->PopbillCashbill->ListContact($testCorpNum, $testUserID);
+            $ContactList = $this->PopbillCashbill->ListContact($CorpNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -1780,10 +1780,10 @@ class CashbillController extends Controller
     {
 
         // 팝빌회원 사업자번호, '-' 제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         // 담당자 정보 객체 생성
         $ContactInfo = new ContactInfo();
@@ -1806,7 +1806,7 @@ class CashbillController extends Controller
         $ContactInfo->searchRole = 3;
 
         try {
-            $result = $this->PopbillCashbill->UpdateContact($testCorpNum, $ContactInfo, $testUserID);
+            $result = $this->PopbillCashbill->UpdateContact($CorpNum, $ContactInfo, $UserID);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {

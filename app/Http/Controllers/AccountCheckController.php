@@ -54,7 +54,7 @@ class AccountCheckController extends Controller
         $MemberCorpNum = "1234567890";
 
         // 팝빌회원 아이디
-        $testUserID = "testkorea";
+        $UserID = "testkorea";
 
         // 조회할 기관코드
         $bankCode = "";
@@ -63,7 +63,7 @@ class AccountCheckController extends Controller
         $accountNumber = "";
 
         try {
-            $result = $this->PopbillAccountCheck->checkAccountInfo($MemberCorpNum, $bankCode, $accountNumber, $testUserID);
+            $result = $this->PopbillAccountCheck->checkAccountInfo($MemberCorpNum, $bankCode, $accountNumber, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -82,7 +82,7 @@ class AccountCheckController extends Controller
         $MemberCorpNum = "1234567890";
 
         //팝빌회원 아이디
-        $testUserID = "testkorea";
+        $UserID = "testkorea";
 
         // 조회할 기관코드
         $bankCode = "";
@@ -100,7 +100,7 @@ class AccountCheckController extends Controller
         $identityNum = "";
 
         try {
-            $result = $this->PopbillAccountCheck->checkDepositorInfo($MemberCorpNum, $bankCode, $accountNumber, $identityNumType, $identityNum, $testUserID);
+            $result = $this->PopbillAccountCheck->checkDepositorInfo($MemberCorpNum, $bankCode, $accountNumber, $identityNumType, $identityNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -117,10 +117,10 @@ class AccountCheckController extends Controller
     public function GetBalance()
     {
         // 팝빌회원 사업자번호
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         try {
-            $remainPoint = $this->PopbillAccountCheck->GetBalance($testCorpNum);
+            $remainPoint = $this->PopbillAccountCheck->GetBalance($CorpNum);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -136,7 +136,7 @@ class AccountCheckController extends Controller
     public function GetUseHistory()
     {
         // 팝빌회원 사업자번호 (하이픈 '-' 제외 10 자리)
-        $testCorpNum = "1234567890";
+        $CorpNum = "1234567890";
 
         // 시작일자, 날짜형식(yyyyMMdd)
         $SDate = "20230101";
@@ -154,10 +154,10 @@ class AccountCheckController extends Controller
         $Order = "D";
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillAccountCheck->GetUseHistory($testCorpNum, $SDate, $EDate, $Page, $PerPage, $Order, $testUserID);
+            $result = $this->PopbillAccountCheck->GetUseHistory($CorpNum, $SDate, $EDate, $Page, $PerPage, $Order, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -173,7 +173,7 @@ class AccountCheckController extends Controller
     public function GetPaymentHistory()
     {
         // 팝빌회원 사업자번호 (하이픈 '-' 제외 10 자리)
-        $testCorpNum = "1234567890";
+        $CorpNum = "1234567890";
 
         // 시작일자, 날짜형식(yyyyMMdd)
         $SDate = "20230101";
@@ -188,10 +188,10 @@ class AccountCheckController extends Controller
         $PerPage = 30;
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillAccountCheck->GetPaymentHistory($testCorpNum, $SDate, $EDate, $Page, $PerPage, $testUserID);
+            $result = $this->PopbillAccountCheck->GetPaymentHistory($CorpNum, $SDate, $EDate, $Page, $PerPage, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -207,7 +207,7 @@ class AccountCheckController extends Controller
     public function GetRefundHistory()
     {
         // 팝빌회원 사업자번호 (하이픈 '-' 제외 10 자리)
-        $testCorpNum = "1234567890";
+        $CorpNum = "1234567890";
 
         // 페이지번호
         $Page = 1;
@@ -216,10 +216,10 @@ class AccountCheckController extends Controller
         $PerPage = 30;
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillAccountCheck->GetRefundHistory($testCorpNum, $Page, $PerPage, $testUserID);
+            $result = $this->PopbillAccountCheck->GetRefundHistory($CorpNum, $Page, $PerPage, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -235,7 +235,7 @@ class AccountCheckController extends Controller
     public function Refund()
     {
         // 팝빌 회원 사업자번호, '-' 제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         $RefundForm = new RefundForm();
 
@@ -261,10 +261,10 @@ class AccountCheckController extends Controller
         $RefundForm->reason = '환불사유';
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillAccountCheck->Refund($testCorpNum, $RefundForm, $testUserID);
+            $result = $this->PopbillAccountCheck->Refund($CorpNum, $RefundForm, $UserID);
             $code = $result->code;
             $message = $result->message;
             $refundCode = $result->refundCode;
@@ -282,34 +282,34 @@ class AccountCheckController extends Controller
     public function PaymentRequest()
     {
         // 팝빌 회원 사업자번호, '-' 제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
-        $paymentForm = new PaymentForm();
+        $PaymentForm = new PaymentForm();
 
         // 담당자명
         // 미입력 시 기본값 적용 - 팝빌 회원 담당자명.
-        $paymentForm->settlerName = '담당자명';
+        $PaymentForm->settlerName = '담당자명';
 
         // 담당자 이메일
         // 사이트에서 신청하면 자동으로 담당자 이메일.
         // 미입력 시 공백 처리
-        $paymentForm->settlerEmail = 'test@test.com';
+        $PaymentForm->settlerEmail = 'test@test.com';
 
         // 담당자 휴대폰
         // 무통장 입금 승인 알림톡이 전송됩니다.
-        $paymentForm->notifyHP = '01012341234';
+        $PaymentForm->notifyHP = '01012341234';
 
         // 입금자명
-        $paymentForm->paymentName = '입금자명';
+        $PaymentForm->paymentName = '입금자명';
 
         // 결제금액
-        $paymentForm->settleCost = '11000';
+        $PaymentForm->settleCost = '11000';
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillAccountCheck->PaymentRequest($testCorpNum, $paymentForm, $testUserID);
+            $result = $this->PopbillAccountCheck->PaymentRequest($CorpNum, $PaymentForm, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -325,16 +325,16 @@ class AccountCheckController extends Controller
     public function GetSettleResult()
     {
         // 팝빌회원 사업자번호
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // paymentRequest 를 통해 얻은 settleCode.
-        $settleCode = '202210040000000070';
+        $SettleCode = '202210040000000070';
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillAccountCheck->GetSettleResult($testCorpNum, $settleCode, $testUserID);
+            $result = $this->PopbillAccountCheck->GetSettleResult($CorpNum, $SettleCode, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -351,13 +351,13 @@ class AccountCheckController extends Controller
     public function GetChargeURL()
     {
         // 팝빌 회원 사업자 번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $url = $this->PopbillAccountCheck->GetChargeURL($testCorpNum, $testUserID);
+            $url = $this->PopbillAccountCheck->GetChargeURL($CorpNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -374,13 +374,13 @@ class AccountCheckController extends Controller
     public function GetPaymentURL()
     {
         // 팝빌 회원 사업자 번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $url = $this->PopbillAccountCheck->GetPaymentURL($testCorpNum, $testUserID);
+            $url = $this->PopbillAccountCheck->GetPaymentURL($CorpNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -398,13 +398,13 @@ class AccountCheckController extends Controller
     public function GetUseHistoryURL()
     {
         // 팝빌 회원 사업자 번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $url = $this->PopbillAccountCheck->GetUseHistoryURL($testCorpNum, $testUserID);
+            $url = $this->PopbillAccountCheck->GetUseHistoryURL($CorpNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -421,16 +421,16 @@ class AccountCheckController extends Controller
     public function GetUnitCost()
     {
         // 팝빌 회원 사업자 번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         // 서비스 유형 , "성명" / "실명" 중 택 1
         $serviceType = '실명';
 
         try {
-            $unitCost = $this->PopbillAccountCheck->GetUnitCost($testCorpNum, $serviceType, $testUserID);
+            $unitCost = $this->PopbillAccountCheck->GetUnitCost($CorpNum, $serviceType, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -447,10 +447,10 @@ class AccountCheckController extends Controller
     public function GetPartnerBalance()
     {
         // 팝빌회원 사업자번호
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         try {
-            $remainPoint = $this->PopbillAccountCheck->GetPartnerBalance($testCorpNum);
+            $remainPoint = $this->PopbillAccountCheck->GetPartnerBalance($CorpNum);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -467,13 +467,13 @@ class AccountCheckController extends Controller
     public function GetPartnerURL()
     {
         // 팝빌 회원 사업자 번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // [CHRG] : 포인트충전 URL
         $TOGO = 'CHRG';
 
         try {
-            $url = $this->PopbillAccountCheck->GetPartnerURL($testCorpNum, $TOGO);
+            $url = $this->PopbillAccountCheck->GetPartnerURL($CorpNum, $TOGO);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -490,16 +490,16 @@ class AccountCheckController extends Controller
     public function GetChargeInfo()
     {
         // 팝빌회원 사업자번호, '-'제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         // 서비스 유형 , "성명" / "실명" 중 택 1
         $serviceType = '성명';
 
         try {
-            $result = $this->PopbillAccountCheck->GetChargeInfo($testCorpNum, $testUserID, $serviceType);
+            $result = $this->PopbillAccountCheck->GetChargeInfo($CorpNum, $UserID, $serviceType);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -515,13 +515,13 @@ class AccountCheckController extends Controller
     public function CheckIsMember()
     {
         // 사업자번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 연동신청시 팝빌에서 발급받은 링크아이디
         $LinkID = config('popbill.LinkID');
 
         try {
-            $result = $this->PopbillAccountCheck->CheckIsMember($testCorpNum, $LinkID);
+            $result = $this->PopbillAccountCheck->CheckIsMember($CorpNum, $LinkID);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {
@@ -539,10 +539,10 @@ class AccountCheckController extends Controller
     public function CheckID()
     {
         // 중복여부를 확인할 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillAccountCheck->CheckID($testUserID);
+            $result = $this->PopbillAccountCheck->CheckID($UserID);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {
@@ -559,46 +559,46 @@ class AccountCheckController extends Controller
      */
     public function JoinMember()
     {
-        $joinForm = new JoinForm();
+        $JoinForm = new JoinForm();
 
         // 링크아이디
-        $joinForm->LinkID = config('popbill.LinkID');
+        $JoinForm->LinkID = config('popbill.LinkID');
 
         // 사업자번호, "-"제외 10자리
-        $joinForm->CorpNum = '1234567890';
+        $JoinForm->CorpNum = '1234567890';
 
         // 대표자성명
-        $joinForm->CEOName = '대표자성명';
+        $JoinForm->CEOName = '대표자성명';
 
         // 사업자상호
-        $joinForm->CorpName = '테스트사업자상호';
+        $JoinForm->CorpName = '테스트사업자상호';
 
         // 사업자주소
-        $joinForm->Addr = '테스트사업자주소';
+        $JoinForm->Addr = '테스트사업자주소';
 
         // 업태
-        $joinForm->BizType = '업태';
+        $JoinForm->BizType = '업태';
 
         // 종목
-        $joinForm->BizClass = '종목';
+        $JoinForm->BizClass = '종목';
 
         // 담당자명
-        $joinForm->ContactName = '담당자성명';
+        $JoinForm->ContactName = '담당자성명';
 
         // 담당자 이메일
-        $joinForm->ContactEmail = '';
+        $JoinForm->ContactEmail = '';
 
         // 담당자 연락처
-        $joinForm->ContactTEL = '';
+        $JoinForm->ContactTEL = '';
 
         // 아이디, 6자 이상 20자미만
-        $joinForm->ID = 'userid_phpdd';
+        $JoinForm->ID = 'userid_phpdd';
 
         // 비밀번호, 8자 이상 20자 이하(영문, 숫자, 특수문자 조합)
-        $joinForm->Password = 'asdf1234!@';
+        $JoinForm->Password = 'asdf1234!@';
 
         try {
-            $result = $this->PopbillAccountCheck->JoinMember($joinForm);
+            $result = $this->PopbillAccountCheck->JoinMember($JoinForm);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {
@@ -616,13 +616,13 @@ class AccountCheckController extends Controller
     public function GetCorpInfo()
     {
         // 팝빌회원 사업자번호, '-'제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $CorpInfo = $this->PopbillAccountCheck->GetCorpInfo($testCorpNum, $testUserID);
+            $CorpInfo = $this->PopbillAccountCheck->GetCorpInfo($CorpNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -639,7 +639,7 @@ class AccountCheckController extends Controller
     public function UpdateCorpInfo()
     {
         // 팝빌회원 사업자번호, '-' 제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 회사정보 클래스 생성
         $CorpInfo = new CorpInfo();
@@ -660,10 +660,10 @@ class AccountCheckController extends Controller
         $CorpInfo->bizClass = '종목';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result =  $this->PopbillAccountCheck->UpdateCorpInfo($testCorpNum, $CorpInfo, $testUserID);
+            $result =  $this->PopbillAccountCheck->UpdateCorpInfo($CorpNum, $CorpInfo, $UserID);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {
@@ -681,7 +681,7 @@ class AccountCheckController extends Controller
     public function RegistContact()
     {
         // 팝빌회원 사업자번호, '-' 제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 담당자 정보 객체 생성
         $ContactInfo = new ContactInfo();
@@ -705,10 +705,10 @@ class AccountCheckController extends Controller
         $ContactInfo->searchRole = 3;
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $result = $this->PopbillAccountCheck->RegistContact($testCorpNum, $ContactInfo, $testUserID);
+            $result = $this->PopbillAccountCheck->RegistContact($CorpNum, $ContactInfo, $UserID);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {
@@ -726,16 +726,16 @@ class AccountCheckController extends Controller
     public function GetContactInfo()
     {
         // 팝빌회원 사업자번호, '-'제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         //확인할 담당자 아이디
-        $contactID = 'checkContact';
+        $ContactID = 'checkContact';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $ContactInfo = $this->PopbillAccountCheck->GetContactInfo($testCorpNum, $contactID, $testUserID);
+            $ContactInfo = $this->PopbillAccountCheck->GetContactInfo($CorpNum, $ContactID, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -752,13 +752,13 @@ class AccountCheckController extends Controller
     public function ListContact()
     {
         // 팝빌회원 사업자번호, '-'제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $ContactList = $this->PopbillAccountCheck->ListContact($testCorpNum, $testUserID);
+            $ContactList = $this->PopbillAccountCheck->ListContact($CorpNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -775,10 +775,10 @@ class AccountCheckController extends Controller
     public function UpdateContact()
     {
         // 팝빌회원 사업자번호, '-' 제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         // 담당자 정보 객체 생성
         $ContactInfo = new ContactInfo();
@@ -799,7 +799,7 @@ class AccountCheckController extends Controller
         $ContactInfo->searchRole = 3;
 
         try {
-            $result = $this->PopbillAccountCheck->UpdateContact($testCorpNum, $ContactInfo, $testUserID);
+            $result = $this->PopbillAccountCheck->UpdateContact($CorpNum, $ContactInfo, $UserID);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {
@@ -818,13 +818,13 @@ class AccountCheckController extends Controller
     public function GetAccessURL()
     {
         // 팝빌 회원 사업자 번호, "-"제외 10자리
-        $testCorpNum = '1234567890';
+        $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
-        $testUserID = 'testkorea';
+        $UserID = 'testkorea';
 
         try {
-            $url = $this->PopbillAccountCheck->GetAccessURL($testCorpNum, $testUserID);
+            $url = $this->PopbillAccountCheck->GetAccessURL($CorpNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
