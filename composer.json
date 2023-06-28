@@ -12,7 +12,7 @@
         "fideloper/proxy": "^4.0",
         "laravel/framework": "6.20.26",
         "laravel/tinker": "^1.0",
-        "linkhub/popbill": "^1.63.2"
+        "linkhub/popbill": "^1.63.3"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",
