@@ -11,3 +11,6 @@ npm-debug.log
 yarn-error.log
 composer.lock
 yarn.lock
+
+.DS_Store
+.vscode
