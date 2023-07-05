@@ -124,7 +124,7 @@ class BizInfoCheckController extends Controller
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('BizInfoCheck/UseHistoryResult', ['Result' => $result]);
+        return view('UseHistoryResult', ['Result' => $result]);
     }
 
     /**
@@ -159,7 +159,7 @@ class BizInfoCheckController extends Controller
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('BizInfoCheck/PaymentHistoryResult', ['Result' => $result]);
+        return view('PaymentHistoryResult', ['Result' => $result]);
     }
 
     /**
@@ -188,7 +188,7 @@ class BizInfoCheckController extends Controller
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('BizInfoCheck/RefundHistoryResult', ['Result' => $result]);
+        return view('RefundHistoryResult', ['Result' => $result]);
     }
 
     /**
@@ -280,7 +280,7 @@ class BizInfoCheckController extends Controller
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('BizInfoCheck/PaymentResponse', ['Result' => $result]);
+        return view('PaymentResponse', ['Result' => $result]);
     }
 
     /**
@@ -306,7 +306,7 @@ class BizInfoCheckController extends Controller
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('BizInfoCheck/PaymentHistory', ['Result' => $result]);
+        return view('PaymentHistory', ['Result' => $result]);
     }
 
     /**

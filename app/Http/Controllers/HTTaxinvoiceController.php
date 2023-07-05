@@ -697,7 +697,7 @@ class HTTaxinvoiceController extends Controller
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('HTTaxinvoice/UseHistoryResult', ['Result' => $result]);
+        return view('UseHistoryResult', ['Result' => $result]);
     }
 
     /**
@@ -732,7 +732,7 @@ class HTTaxinvoiceController extends Controller
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('HTTaxinvoice/PaymentHistoryResult', ['Result' => $result]);
+        return view('PaymentHistoryResult', ['Result' => $result]);
     }
 
     /**
@@ -761,7 +761,7 @@ class HTTaxinvoiceController extends Controller
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('HTTaxinvoice/RefundHistoryResult', ['Result' => $result]);
+        return view('RefundHistoryResult', ['Result' => $result]);
     }
 
     /**
@@ -853,7 +853,7 @@ class HTTaxinvoiceController extends Controller
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('HTTaxinvoice/PaymentResponse', ['Result' => $result]);
+        return view('PaymentResponse', ['Result' => $result]);
     }
 
     /**
@@ -879,7 +879,7 @@ class HTTaxinvoiceController extends Controller
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('HTTaxinvoice/PaymentHistory', ['Result' => $result]);
+        return view('PaymentHistory', ['Result' => $result]);
     }
 
     /**

@@ -1583,7 +1583,7 @@ class KakaoTalkController extends Controller
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('KakaoTalk/UseHistoryResult', ['Result' => $result]);
+        return view('UseHistoryResult', ['Result' => $result]);
     }
 
     /**
@@ -1618,7 +1618,7 @@ class KakaoTalkController extends Controller
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('KakaoTalk/PaymentHistoryResult', ['Result' => $result]);
+        return view('PaymentHistoryResult', ['Result' => $result]);
     }
 
     /**
@@ -1647,7 +1647,7 @@ class KakaoTalkController extends Controller
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('KakaoTalk/RefundHistoryResult', ['Result' => $result]);
+        return view('RefundHistoryResult', ['Result' => $result]);
     }
 
     /**
@@ -1739,7 +1739,7 @@ class KakaoTalkController extends Controller
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('KakaoTalk/PaymentResponse', ['Result' => $result]);
+        return view('PaymentResponse', ['Result' => $result]);
     }
 
     /**
@@ -1765,7 +1765,7 @@ class KakaoTalkController extends Controller
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('KakaoTalk/PaymentHistory', ['Result' => $result]);
+        return view('PaymentHistory', ['Result' => $result]);
     }
 
     /**

@@ -845,7 +845,7 @@ class MessageController extends Controller
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('Message/UseHistoryResult', ['Result' => $result]);
+        return view('UseHistoryResult', ['Result' => $result]);
     }
 
     /**
@@ -880,7 +880,7 @@ class MessageController extends Controller
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('Message/PaymentHistoryResult', ['Result' => $result]);
+        return view('PaymentHistoryResult', ['Result' => $result]);
     }
 
     /**
@@ -909,7 +909,7 @@ class MessageController extends Controller
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('Message/RefundHistoryResult', ['Result' => $result]);
+        return view('RefundHistoryResult', ['Result' => $result]);
     }
 
     /**
@@ -1001,7 +1001,7 @@ class MessageController extends Controller
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('Message/PaymentResponse', ['Result' => $result]);
+        return view('PaymentResponse', ['Result' => $result]);
     }
 
     /**
@@ -1027,7 +1027,7 @@ class MessageController extends Controller
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('Message/PaymentHistory', ['Result' => $result]);
+        return view('PaymentHistory', ['Result' => $result]);
     }
 
     /**

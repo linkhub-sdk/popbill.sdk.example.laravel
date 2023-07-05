@@ -1003,7 +1003,7 @@ class FaxController extends Controller
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('Fax/UseHistoryResult', ['Result' => $result]);
+        return view('UseHistoryResult', ['Result' => $result]);
     }
 
     /**
@@ -1038,7 +1038,7 @@ class FaxController extends Controller
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('Fax/PaymentHistoryResult', ['Result' => $result]);
+        return view('PaymentHistoryResult', ['Result' => $result]);
     }
 
     /**
@@ -1067,7 +1067,7 @@ class FaxController extends Controller
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('Fax/RefundHistoryResult', ['Result' => $result]);
+        return view('RefundHistoryResult', ['Result' => $result]);
     }
 
     /**
@@ -1159,7 +1159,7 @@ class FaxController extends Controller
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('Fax/PaymentResponse', ['Result' => $result]);
+        return view('PaymentResponse', ['Result' => $result]);
     }
 
     /**
@@ -1185,7 +1185,7 @@ class FaxController extends Controller
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('Fax/PaymentHistory', ['Result' => $result]);
+        return view('PaymentHistory', ['Result' => $result]);
     }
 
     /**
