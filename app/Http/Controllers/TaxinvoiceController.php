@@ -3885,9 +3885,10 @@ class TaxinvoiceController extends Controller
          * 상세항목(품목) 정보
          *********************************************************************/
 
-        $Taxinvoice->detailList[] = new TaxinvoiceDetail();
-
         // 상세항목 객체
+        $Taxinvoice->detailList = array();
+
+        $Taxinvoice->detailList[] = new TaxinvoiceDetail();
         $Taxinvoice->detailList[0]->serialNum = 1; // 일련번호, 1부터 순차기재
         $Taxinvoice->detailList[0]->purchaseDT = "20230102"; // 거래일자
         $Taxinvoice->detailList[0]->itemName = "품목명"; // 품목명
@@ -3898,7 +3899,7 @@ class TaxinvoiceController extends Controller
         $Taxinvoice->detailList[0]->tax = "-5000"; // 세액
         $Taxinvoice->detailList[0]->remark = "품목비고"; // 비고
 
-        $TaxinvoiceDetail = new TaxinvoiceDetail();
+        $Taxinvoice->detailList[] = new TaxinvoiceDetail();
         $Taxinvoice->detailList[1]->serialNum = 2; // 일련번호, 1부터 순차기재
         $Taxinvoice->detailList[1]->purchaseDT = "20230102"; // 거래일자
         $Taxinvoice->detailList[1]->itemName = "품목명2"; // 품목명
@@ -4190,10 +4191,10 @@ class TaxinvoiceController extends Controller
          * 상세항목(품목) 정보
          *********************************************************************/
 
-        $Taxinvoice->detailList[] = new TaxinvoiceDetail();
-
         // 상세항목 객체
+        $Taxinvoice->detailList = array();
 
+        $Taxinvoice->detailList[] = new TaxinvoiceDetail();
         $Taxinvoice->detailList[0]->serialNum = 1; // 일련번호, 1부터 순차기재
         $Taxinvoice->detailList[0]->purchaseDT = "20230102"; // 거래일자
         $Taxinvoice->detailList[0]->itemName = "품목명"; // 품목명
@@ -4205,16 +4206,15 @@ class TaxinvoiceController extends Controller
         $Taxinvoice->detailList[0]->remark = "품목비고"; // 비고
 
         $Taxinvoice->detailList[] = new TaxinvoiceDetail();
-
-        $Taxinvoice->detailList[0]->serialNum = 2; // 일련번호, 1부터 순차기재
-        $Taxinvoice->detailList[0]->purchaseDT = "20230102"; // 거래일자
-        $Taxinvoice->detailList[0]->itemName = "품목명2"; // 품목명
-        $Taxinvoice->detailList[0]->spec = "규격"; // 규격
-        $Taxinvoice->detailList[0]->qty = "1"; // 수량
-        $Taxinvoice->detailList[0]->unitCost = "50000"; // 단가
-        $Taxinvoice->detailList[0]->supplyCost = "50000"; // 공급가액
-        $Taxinvoice->detailList[0]->tax = "5000"; // 세액
-        $Taxinvoice->detailList[0]->remark = "품목비고2"; // 비고
+        $Taxinvoice->detailList[1]->serialNum = 2; // 일련번호, 1부터 순차기재
+        $Taxinvoice->detailList[1]->purchaseDT = "20230102"; // 거래일자
+        $Taxinvoice->detailList[1]->itemName = "품목명2"; // 품목명
+        $Taxinvoice->detailList[1]->spec = "규격"; // 규격
+        $Taxinvoice->detailList[1]->qty = "1"; // 수량
+        $Taxinvoice->detailList[1]->unitCost = "50000"; // 단가
+        $Taxinvoice->detailList[1]->supplyCost = "50000"; // 공급가액
+        $Taxinvoice->detailList[1]->tax = "5000"; // 세액
+        $Taxinvoice->detailList[1]->remark = "품목비고2"; // 비고
 
         // 즉시발행 메모
         $Memo = "수정세금계산서 발행 메모";
@@ -4468,10 +4468,12 @@ class TaxinvoiceController extends Controller
          * 상세항목(품목) 정보
          *********************************************************************/
 
-        $Taxinvoice->detailList[] = new TaxinvoiceDetail();
+
 
         // 상세항목 객체
+        $Taxinvoice->detailList = array();
 
+        $Taxinvoice->detailList[] = new TaxinvoiceDetail();
         $Taxinvoice->detailList[0]->serialNum = 1; // 일련번호, 1부터 순차기재
         $Taxinvoice->detailList[0]->purchaseDT = "20230102"; // 거래일자
         $Taxinvoice->detailList[0]->itemName = "품목명"; // 품목명
@@ -4483,16 +4485,15 @@ class TaxinvoiceController extends Controller
         $Taxinvoice->detailList[0]->remark = "품목비고"; // 비고
 
         $Taxinvoice->detailList[] = new TaxinvoiceDetail();
-
-        $Taxinvoice->detailList[0]->serialNum = 2; // 일련번호, 1부터 순차기재
-        $Taxinvoice->detailList[0]->purchaseDT = "20230102"; // 거래일자
-        $Taxinvoice->detailList[0]->itemName = "품목명2"; // 품목명
-        $Taxinvoice->detailList[0]->spec = "규격"; // 규격
-        $Taxinvoice->detailList[0]->qty = "1"; // 수량
-        $Taxinvoice->detailList[0]->unitCost = "-50000"; // 단가
-        $Taxinvoice->detailList[0]->supplyCost = "-50000"; // 공급가액
-        $Taxinvoice->detailList[0]->tax = "-5000"; // 세액
-        $Taxinvoice->detailList[0]->remark = "품목비고2"; // 비고
+        $Taxinvoice->detailList[1]->serialNum = 2; // 일련번호, 1부터 순차기재
+        $Taxinvoice->detailList[1]->purchaseDT = "20230102"; // 거래일자
+        $Taxinvoice->detailList[1]->itemName = "품목명2"; // 품목명
+        $Taxinvoice->detailList[1]->spec = "규격"; // 규격
+        $Taxinvoice->detailList[1]->qty = "1"; // 수량
+        $Taxinvoice->detailList[1]->unitCost = "-50000"; // 단가
+        $Taxinvoice->detailList[1]->supplyCost = "-50000"; // 공급가액
+        $Taxinvoice->detailList[1]->tax = "-5000"; // 세액
+        $Taxinvoice->detailList[1]->remark = "품목비고2"; // 비고
 
         // 즉시발행 메모
         $Memo = "수정세금계산서 발행 메모";
@@ -4746,10 +4747,10 @@ class TaxinvoiceController extends Controller
          * 상세항목(품목) 정보
          *********************************************************************/
 
-        $Taxinvoice->detailList[] = new TaxinvoiceDetail();
-
         // 상세항목 객체
+        $Taxinvoice->detailList = array();
 
+        $Taxinvoice->detailList[] = new TaxinvoiceDetail();
         $Taxinvoice->detailList[0]->serialNum = 1; // 일련번호, 1부터 순차기재
         $Taxinvoice->detailList[0]->purchaseDT = "20230102"; // 거래일자
         $Taxinvoice->detailList[0]->itemName = "품목명"; // 품목명
@@ -4761,16 +4762,15 @@ class TaxinvoiceController extends Controller
         $Taxinvoice->detailList[0]->remark = "품목비고"; // 비고
 
         $Taxinvoice->detailList[] = new TaxinvoiceDetail();
-
-        $Taxinvoice->detailList[0]->serialNum = 2; // 일련번호, 1부터 순차기재
-        $Taxinvoice->detailList[0]->purchaseDT = "20230102"; // 거래일자
-        $Taxinvoice->detailList[0]->itemName = "품목명2"; // 품목명
-        $Taxinvoice->detailList[0]->spec = "규격"; // 규격
-        $Taxinvoice->detailList[0]->qty = "1"; // 수량
-        $Taxinvoice->detailList[0]->unitCost = "50000"; // 단가
-        $Taxinvoice->detailList[0]->supplyCost = "50000"; // 공급가액
-        $Taxinvoice->detailList[0]->tax = "5000"; // 세액
-        $Taxinvoice->detailList[0]->remark = "품목비고2"; // 비고
+        $Taxinvoice->detailList[1]->serialNum = 2; // 일련번호, 1부터 순차기재
+        $Taxinvoice->detailList[1]->purchaseDT = "20230102"; // 거래일자
+        $Taxinvoice->detailList[1]->itemName = "품목명2"; // 품목명
+        $Taxinvoice->detailList[1]->spec = "규격"; // 규격
+        $Taxinvoice->detailList[1]->qty = "1"; // 수량
+        $Taxinvoice->detailList[1]->unitCost = "50000"; // 단가
+        $Taxinvoice->detailList[1]->supplyCost = "50000"; // 공급가액
+        $Taxinvoice->detailList[1]->tax = "5000"; // 세액
+        $Taxinvoice->detailList[1]->remark = "품목비고2"; // 비고
 
         // 즉시발행 메모
         $Memo = "수정세금계산서 발행 메모";
@@ -5023,10 +5023,12 @@ class TaxinvoiceController extends Controller
          * 상세항목(품목) 정보
          *********************************************************************/
 
-        $Taxinvoice->detailList[] = new TaxinvoiceDetail();
+
 
         // 상세항목 객체
+        $Taxinvoice->detailList = array();
 
+        $Taxinvoice->detailList[] = new TaxinvoiceDetail();
         $Taxinvoice->detailList[0]->serialNum = 1; // 일련번호, 1부터 순차기재
         $Taxinvoice->detailList[0]->purchaseDT = "20230102"; // 거래일자
         $Taxinvoice->detailList[0]->itemName = "품목명"; // 품목명
@@ -5038,16 +5040,26 @@ class TaxinvoiceController extends Controller
         $Taxinvoice->detailList[0]->remark = "품목비고"; // 비고
 
         $Taxinvoice->detailList[] = new TaxinvoiceDetail();
+        $Taxinvoice->detailList[1]->serialNum = 2; // 일련번호, 1부터 순차기재
+        $Taxinvoice->detailList[1]->purchaseDT = "20230102"; // 거래일자
+        $Taxinvoice->detailList[1]->itemName = "품목명2"; // 품목명
+        $Taxinvoice->detailList[1]->spec = "규격"; // 규격
+        $Taxinvoice->detailList[1]->qty = "1"; // 수량
+        $Taxinvoice->detailList[1]->unitCost = "50000"; // 단가
+        $Taxinvoice->detailList[1]->supplyCost = "50000"; // 공급가액
+        $Taxinvoice->detailList[1]->tax = "5000"; // 세액
+        $Taxinvoice->detailList[1]->remark = "품목비고2"; // 비고
 
-        $Taxinvoice->detailList[0]->serialNum = 2; // 일련번호, 1부터 순차기재
-        $Taxinvoice->detailList[0]->purchaseDT = "20230102"; // 거래일자
-        $Taxinvoice->detailList[0]->itemName = "품목명2"; // 품목명
-        $Taxinvoice->detailList[0]->spec = "규격"; // 규격
-        $Taxinvoice->detailList[0]->qty = "1"; // 수량
-        $Taxinvoice->detailList[0]->unitCost = "50000"; // 단가
-        $Taxinvoice->detailList[0]->supplyCost = "50000"; // 공급가액
-        $Taxinvoice->detailList[0]->tax = "5000"; // 세액
-        $Taxinvoice->detailList[0]->remark = "품목비고2"; // 비고
+        // 즉시발행 메모
+        $Memo = "수정세금계산서 발행 메모";
+
+        // 지연발행 강제여부  (true / false 중 택 1)
+        // └ true = 가능 , false = 불가능
+        // - 미입력 시 기본값 false 처리
+        // - 발행마감일이 지난 세금계산서를 발행하는 경우, 가산세가 부과될 수 있습니다.
+        // - 가산세가 부과되더라도 발행을 해야하는 경우에는 forceIssue의 값을
+        //   true로 선언하여 발행(Issue API)를 호출하시면 됩니다.
+        $ForceIssue = false;
 
         // 팝빌회원 아이디
         $UserID = "testkorea";
@@ -5292,10 +5304,10 @@ class TaxinvoiceController extends Controller
          * 상세항목(품목) 정보
          *********************************************************************/
 
-        $Taxinvoice->detailList[] = new TaxinvoiceDetail();
-
         // 상세항목 객체
+        $Taxinvoice->detailList = array();
 
+        $Taxinvoice->detailList[] = new TaxinvoiceDetail();
         $Taxinvoice->detailList[0]->serialNum = 1; // 일련번호, 1부터 순차기재
         $Taxinvoice->detailList[0]->purchaseDT = "20230102"; // 거래일자
         $Taxinvoice->detailList[0]->itemName = "품목명"; // 품목명
@@ -5307,16 +5319,15 @@ class TaxinvoiceController extends Controller
         $Taxinvoice->detailList[0]->remark = "품목비고"; // 비고
 
         $Taxinvoice->detailList[] = new TaxinvoiceDetail();
-
-        $Taxinvoice->detailList[0]->serialNum = 2; // 일련번호, 1부터 순차기재
-        $Taxinvoice->detailList[0]->purchaseDT = "20230102"; // 거래일자
-        $Taxinvoice->detailList[0]->itemName = "품목명2"; // 품목명
-        $Taxinvoice->detailList[0]->spec = "규격"; // 규격
-        $Taxinvoice->detailList[0]->qty = "1"; // 수량
-        $Taxinvoice->detailList[0]->unitCost = "50000"; // 단가
-        $Taxinvoice->detailList[0]->supplyCost = "50000"; // 공급가액
-        $Taxinvoice->detailList[0]->tax = "5000"; // 세액
-        $Taxinvoice->detailList[0]->remark = "품목비고2"; // 비고
+        $Taxinvoice->detailList[1]->serialNum = 2; // 일련번호, 1부터 순차기재
+        $Taxinvoice->detailList[1]->purchaseDT = "20230102"; // 거래일자
+        $Taxinvoice->detailList[1]->itemName = "품목명2"; // 품목명
+        $Taxinvoice->detailList[1]->spec = "규격"; // 규격
+        $Taxinvoice->detailList[1]->qty = "1"; // 수량
+        $Taxinvoice->detailList[1]->unitCost = "50000"; // 단가
+        $Taxinvoice->detailList[1]->supplyCost = "50000"; // 공급가액
+        $Taxinvoice->detailList[1]->tax = "5000"; // 세액
+        $Taxinvoice->detailList[1]->remark = "품목비고2"; // 비고
 
         // 즉시발행 메모
         $Memo = "수정세금계산서 발행 메모";
@@ -5575,10 +5586,10 @@ class TaxinvoiceController extends Controller
          * 상세항목(품목) 정보
          *********************************************************************/
 
-        $Taxinvoice->detailList[] = new TaxinvoiceDetail();
-
         // 상세항목 객체
+        $Taxinvoice->detailList = array();
 
+        $Taxinvoice->detailList[] = new TaxinvoiceDetail();
         $Taxinvoice->detailList[0]->serialNum = 1; // 일련번호, 1부터 순차기재
         $Taxinvoice->detailList[0]->purchaseDT = "20230102"; // 거래일자
         $Taxinvoice->detailList[0]->itemName = "품목명"; // 품목명
@@ -5590,16 +5601,15 @@ class TaxinvoiceController extends Controller
         $Taxinvoice->detailList[0]->remark = "품목비고"; // 비고
 
         $Taxinvoice->detailList[] = new TaxinvoiceDetail();
-
-        $Taxinvoice->detailList[0]->serialNum = 2; // 일련번호, 1부터 순차기재
-        $Taxinvoice->detailList[0]->purchaseDT = "20230102"; // 거래일자
-        $Taxinvoice->detailList[0]->itemName = "품목명2"; // 품목명
-        $Taxinvoice->detailList[0]->spec = "규격"; // 규격
-        $Taxinvoice->detailList[0]->qty = "1"; // 수량
-        $Taxinvoice->detailList[0]->unitCost = "50000"; // 단가
-        $Taxinvoice->detailList[0]->supplyCost = "50000"; // 공급가액
-        $Taxinvoice->detailList[0]->tax = "5000"; // 세액
-        $Taxinvoice->detailList[0]->remark = "품목비고2"; // 비고
+        $Taxinvoice->detailList[1]->serialNum = 2; // 일련번호, 1부터 순차기재
+        $Taxinvoice->detailList[1]->purchaseDT = "20230102"; // 거래일자
+        $Taxinvoice->detailList[1]->itemName = "품목명2"; // 품목명
+        $Taxinvoice->detailList[1]->spec = "규격"; // 규격
+        $Taxinvoice->detailList[1]->qty = "1"; // 수량
+        $Taxinvoice->detailList[1]->unitCost = "50000"; // 단가
+        $Taxinvoice->detailList[1]->supplyCost = "50000"; // 공급가액
+        $Taxinvoice->detailList[1]->tax = "5000"; // 세액
+        $Taxinvoice->detailList[1]->remark = "품목비고2"; // 비고
 
         // 즉시발행 메모
         $Memo = "수정세금계산서 발행 메모";
@@ -5857,9 +5867,10 @@ class TaxinvoiceController extends Controller
         /**********************************************************************
          * 상세항목(품목) 정보
          *********************************************************************/
+        // 상세항목 객체
+        $Taxinvoice->detailList = array();
 
         $Taxinvoice->detailList[] = new TaxinvoiceDetail();
-
         $Taxinvoice->detailList[0]->serialNum = 1; // 일련번호, 1부터 순차기재
         $Taxinvoice->detailList[0]->purchaseDT = "20230102"; // 거래일자
         $Taxinvoice->detailList[0]->itemName = "품목명"; // 품목명
@@ -5871,16 +5882,15 @@ class TaxinvoiceController extends Controller
         $Taxinvoice->detailList[0]->remark = "품목비고"; // 비고
 
         $Taxinvoice->detailList[] = new TaxinvoiceDetail();
-
-        $Taxinvoice->detailList[0]->serialNum = 2; // 일련번호, 1부터 순차기재
-        $Taxinvoice->detailList[0]->purchaseDT = "20230102"; // 거래일자
-        $Taxinvoice->detailList[0]->itemName = "품목명2"; // 품목명
-        $Taxinvoice->detailList[0]->spec = "규격"; // 규격
-        $Taxinvoice->detailList[0]->qty = "1"; // 수량
-        $Taxinvoice->detailList[0]->unitCost = "50000"; // 단가
-        $Taxinvoice->detailList[0]->supplyCost = "50000"; // 공급가액
-        $Taxinvoice->detailList[0]->tax = "5000"; // 세액
-        $Taxinvoice->detailList[0]->remark = "품목비고2"; // 비고
+        $Taxinvoice->detailList[1]->serialNum = 2; // 일련번호, 1부터 순차기재
+        $Taxinvoice->detailList[1]->purchaseDT = "20230102"; // 거래일자
+        $Taxinvoice->detailList[1]->itemName = "품목명2"; // 품목명
+        $Taxinvoice->detailList[1]->spec = "규격"; // 규격
+        $Taxinvoice->detailList[1]->qty = "1"; // 수량
+        $Taxinvoice->detailList[1]->unitCost = "50000"; // 단가
+        $Taxinvoice->detailList[1]->supplyCost = "50000"; // 공급가액
+        $Taxinvoice->detailList[1]->tax = "5000"; // 세액
+        $Taxinvoice->detailList[1]->remark = "품목비고2"; // 비고
 
         // 즉시발행 메모
         $Memo = "수정세금계산서 발행 메모";
