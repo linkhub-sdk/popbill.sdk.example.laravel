@@ -3916,16 +3916,11 @@ class TaxinvoiceController extends Controller
          * 추가담당자 정보 - 세금계산서 발행 안내 메일을 수신받을 공급받는자 담당자가 다수인 경우 - 담당자 정보를 추가하여 발행 안내메일을 다수에게 전송할 수
          * 있습니다. (최대 5명)
          *********************************************************************/
-
-        // $Taxinvoice->addContactList(new ArrayList<TaxinvoiceAddContact>());
-
-        // TaxinvoiceAddContact addContact = new TaxinvoiceAddContact();
-
-        // addContact.setSerialNum(1);
-        // addContact.setContactName("추가 담당자 성명");
-        // addContact.setEmail("test2@test.com");
-
-        // taxinvoice.getAddContactList().add(addContact);
+        $Taxinvoice->addContactList = array();
+        $Taxinvoice->addContactList[] = new TaxinvoiceAddContact();
+        $Taxinvoice->addContactList[0]->serialNum = 1;
+        $Taxinvoice->addContactList[0]->contactName = "추가 담당자 성명";
+        $Taxinvoice->addContactList[0]->email = "test2@test.com";
 
         // 즉시발행 메모
         $Memo = "수정세금계산서 발행 메모";
@@ -4217,6 +4212,18 @@ class TaxinvoiceController extends Controller
         $Taxinvoice->detailList[1]->tax = "5000"; // 세액
         $Taxinvoice->detailList[1]->remark = "품목비고2"; // 비고
 
+        /**********************************************************************
+         * 추가담당자 정보 - 세금계산서 발행 안내 메일을 수신받을 공급받는자 담당자가 다수인 경우 - 담당자 정보를 추가하여 발행 안내메일을 다수에게 전송할 수
+         * 있습니다. (최대 5명)
+         *********************************************************************/
+        $Taxinvoice->addContactList = array();
+        $Taxinvoice->addContactList[] = new TaxinvoiceAddContact();
+        $Taxinvoice->addContactList[0]->serialNum = 1;
+        $Taxinvoice->addContactList[0]->contactName = "추가 담당자 성명";
+        $Taxinvoice->addContactList[0]->email = "test2@test.com";
+
+
+
         // 즉시발행 메모
         $Memo = "수정세금계산서 발행 메모";
 
@@ -4491,6 +4498,17 @@ class TaxinvoiceController extends Controller
         $Taxinvoice->detailList[1]->supplyCost = "-50000"; // 공급가액
         $Taxinvoice->detailList[1]->tax = "-5000"; // 세액
         $Taxinvoice->detailList[1]->remark = "품목비고2"; // 비고
+
+        /**********************************************************************
+         * 추가담당자 정보 - 세금계산서 발행 안내 메일을 수신받을 공급받는자 담당자가 다수인 경우 - 담당자 정보를 추가하여 발행 안내메일을 다수에게 전송할 수
+         * 있습니다. (최대 5명)
+         *********************************************************************/
+        $Taxinvoice->addContactList = array();
+        $Taxinvoice->addContactList[] = new TaxinvoiceAddContact();
+        $Taxinvoice->addContactList[0]->serialNum = 1;
+        $Taxinvoice->addContactList[0]->contactName = "추가 담당자 성명";
+        $Taxinvoice->addContactList[0]->email = "test2@test.com";
+
 
         // 즉시발행 메모
         $Memo = "수정세금계산서 발행 메모";
@@ -4768,6 +4786,17 @@ class TaxinvoiceController extends Controller
         $Taxinvoice->detailList[1]->tax = "5000"; // 세액
         $Taxinvoice->detailList[1]->remark = "품목비고2"; // 비고
 
+        /**********************************************************************
+         * 추가담당자 정보 - 세금계산서 발행 안내 메일을 수신받을 공급받는자 담당자가 다수인 경우 - 담당자 정보를 추가하여 발행 안내메일을 다수에게 전송할 수
+         * 있습니다. (최대 5명)
+         *********************************************************************/
+        $Taxinvoice->addContactList = array();
+        $Taxinvoice->addContactList[] = new TaxinvoiceAddContact();
+        $Taxinvoice->addContactList[0]->serialNum = 1;
+        $Taxinvoice->addContactList[0]->contactName = "추가 담당자 성명";
+        $Taxinvoice->addContactList[0]->email = "test2@test.com";
+
+
         // 즉시발행 메모
         $Memo = "수정세금계산서 발행 메모";
 
@@ -5040,6 +5069,17 @@ class TaxinvoiceController extends Controller
         $Taxinvoice->detailList[1]->supplyCost = "50000"; // 공급가액
         $Taxinvoice->detailList[1]->tax = "5000"; // 세액
         $Taxinvoice->detailList[1]->remark = "품목비고2"; // 비고
+
+        /**********************************************************************
+         * 추가담당자 정보 - 세금계산서 발행 안내 메일을 수신받을 공급받는자 담당자가 다수인 경우 - 담당자 정보를 추가하여 발행 안내메일을 다수에게 전송할 수
+         * 있습니다. (최대 5명)
+         *********************************************************************/
+        $Taxinvoice->addContactList = array();
+        $Taxinvoice->addContactList[] = new TaxinvoiceAddContact();
+        $Taxinvoice->addContactList[0]->serialNum = 1;
+        $Taxinvoice->addContactList[0]->contactName = "추가 담당자 성명";
+        $Taxinvoice->addContactList[0]->email = "test2@test.com";
+
 
         // 즉시발행 메모
         $Memo = "수정세금계산서 발행 메모";
@@ -5318,6 +5358,17 @@ class TaxinvoiceController extends Controller
         $Taxinvoice->detailList[1]->supplyCost = "50000"; // 공급가액
         $Taxinvoice->detailList[1]->tax = "5000"; // 세액
         $Taxinvoice->detailList[1]->remark = "품목비고2"; // 비고
+
+        /**********************************************************************
+         * 추가담당자 정보 - 세금계산서 발행 안내 메일을 수신받을 공급받는자 담당자가 다수인 경우 - 담당자 정보를 추가하여 발행 안내메일을 다수에게 전송할 수
+         * 있습니다. (최대 5명)
+         *********************************************************************/
+        $Taxinvoice->addContactList = array();
+        $Taxinvoice->addContactList[] = new TaxinvoiceAddContact();
+        $Taxinvoice->addContactList[0]->serialNum = 1;
+        $Taxinvoice->addContactList[0]->contactName = "추가 담당자 성명";
+        $Taxinvoice->addContactList[0]->email = "test2@test.com";
+
 
         // 즉시발행 메모
         $Memo = "수정세금계산서 발행 메모";
@@ -5600,6 +5651,17 @@ class TaxinvoiceController extends Controller
         $Taxinvoice->detailList[1]->tax = "5000"; // 세액
         $Taxinvoice->detailList[1]->remark = "품목비고2"; // 비고
 
+        /**********************************************************************
+         * 추가담당자 정보 - 세금계산서 발행 안내 메일을 수신받을 공급받는자 담당자가 다수인 경우 - 담당자 정보를 추가하여 발행 안내메일을 다수에게 전송할 수
+         * 있습니다. (최대 5명)
+         *********************************************************************/
+        $Taxinvoice->addContactList = array();
+        $Taxinvoice->addContactList[] = new TaxinvoiceAddContact();
+        $Taxinvoice->addContactList[0]->serialNum = 1;
+        $Taxinvoice->addContactList[0]->contactName = "추가 담당자 성명";
+        $Taxinvoice->addContactList[0]->email = "test2@test.com";
+
+
         // 즉시발행 메모
         $Memo = "수정세금계산서 발행 메모";
 
@@ -5878,6 +5940,17 @@ class TaxinvoiceController extends Controller
         $Taxinvoice->detailList[1]->supplyCost = "50000"; // 공급가액
         $Taxinvoice->detailList[1]->tax = "5000"; // 세액
         $Taxinvoice->detailList[1]->remark = "품목비고2"; // 비고
+
+        /**********************************************************************
+         * 추가담당자 정보 - 세금계산서 발행 안내 메일을 수신받을 공급받는자 담당자가 다수인 경우 - 담당자 정보를 추가하여 발행 안내메일을 다수에게 전송할 수
+         * 있습니다. (최대 5명)
+         *********************************************************************/
+        $Taxinvoice->addContactList = array();
+        $Taxinvoice->addContactList[] = new TaxinvoiceAddContact();
+        $Taxinvoice->addContactList[0]->serialNum = 1;
+        $Taxinvoice->addContactList[0]->contactName = "추가 담당자 성명";
+        $Taxinvoice->addContactList[0]->email = "test2@test.com";
+
 
         // 즉시발행 메모
         $Memo = "수정세금계산서 발행 메모";
