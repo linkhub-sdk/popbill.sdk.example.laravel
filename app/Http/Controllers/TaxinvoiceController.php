@@ -2626,26 +2626,6 @@ class TaxinvoiceController extends Controller
         return view('PResponse', ['code' => $code, 'message' => $message]);
     }
 
-    /**
-     * 전자세금계산서 유통사업자의 메일 목록을 확인합니다.
-     * - https://developers.popbill.com/reference/taxinvoice/php/api/etc#GetEmailPublicKeys
-     */
-    public function GetEmailPublicKeys()
-    {
-
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
-        $CorpNum = '1234567890';
-
-        try {
-            $emailList = $this->PopbillTaxinvoice->GetEmailPublicKeys($CorpNum);
-        } catch (PopbillException $pe) {
-            $code = $pe->getCode();
-            $message = $pe->getMessage();
-            return view('PResponse', ['code' => $code, 'message' => $message]);
-        }
-
-        return view('Taxinvoice/GetEmailPublicKeys', ['Result' => $emailList]);
-    }
 
     /**
      * 팝빌 사이트를 통해 발행하였지만 문서번호가 존재하지 않는 세금계산서에 문서번호를 할당합니다.
