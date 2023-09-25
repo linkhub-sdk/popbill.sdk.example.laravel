@@ -2361,8 +2361,10 @@ class TaxinvoiceController extends Controller
         // 팝빌 회원 아이디
         $UserID = 'testkorea';
 
+        $DisplayName = 'DisplayName.jpg';
+
         try {
-            $result = $this->PopbillTaxinvoice->AttachFile($CorpNum, $MgtKeyType, $MgtKey, $filePath, $UserID);
+            $result = $this->PopbillTaxinvoice->AttachFile($CorpNum, $MgtKeyType, $MgtKey, $filePath, $UserID, $DisplayName);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {
