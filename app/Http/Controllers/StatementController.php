@@ -1160,13 +1160,16 @@ class StatementController extends Controller
         $MgtKey = '20230102-PHP7-002';
 
         // 첨부파일 경로, 해당 파일에 읽기 권한이 설정되어 있어야 합니다.
-        $filePath = '/image.jpg';
+        $FilePath = '/image.jpg';
 
         // 팝빌 회원 아이디
         $UserID = 'testkorea';
 
+        // 첨부파일명
+        $DisplayName = 'DisplayName.jpg';
+
         try {
-            $result = $this->PopbillStatement->AttachFile($CorpNum, $itemCode, $MgtKey, $filePath, $UserID);
+            $result = $this->PopbillStatement->AttachFile($CorpNum, $itemCode, $MgtKey, $FilePath, $UserID, $DisplayName);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {
