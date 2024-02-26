@@ -1,5 +1,17 @@
 <?php
-
+/**
+  * 팝빌 전자세금계산서 API PHP SDK Laravel Example
+  *
+  * Laravel 연동 튜토리얼 안내 : https://developers.popbill.com/guide/taxinvoice/php/getting-started/tutorial?fwn=laravel
+  * 연동 기술지원 연락처 : 1600-9854
+  * 연동 기술지원 이메일 : code@linkhubcorp.com
+  *
+  * <테스트 연동개발 준비사항>
+  * 1) 전자세금계산서 인증서 등록
+  *    - 전자세금계산서 발행을 위해 공인인증서를 등록합니다.
+  *    - 팝빌사이트 로그인 > [전자세금계산서] > [환경설정] > [공인인증서 관리]
+  *    - 공인인증서 등록 팝업 URL (GetTaxCertURL API)을 이용하여 등록
+  */
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -29,16 +41,16 @@ class TaxinvoiceController extends Controller
         // 세금계산서 서비스 클래스 초기화`
         $this->PopbillTaxinvoice = new PopbillTaxinvoice(config('popbill.LinkID'), config('popbill.SecretKey'));
 
-        // 연동환경 설정값, true-개발용, false-상업용
+        // 연동환경 설정, true-테스트, false-운영(Production), (기본값:true)
         $this->PopbillTaxinvoice->IsTest(config('popbill.IsTest'));
 
-        // 인증토큰의 IP제한기능 사용여부, true-사용, false-미사용, 기본값(true)
+        // 인증토큰 IP 검증 설정, true-사용, false-미사용, (기본값:true)
         $this->PopbillTaxinvoice->IPRestrictOnOff(config('popbill.IPRestrictOnOff'));
 
-        // 팝빌 API 서비스 고정 IP 사용여부, true-사용, false-미사용, 기본값(false)
+        // 통신 IP 고정, true-사용, false-미사용, (기본값:false)
         $this->PopbillTaxinvoice->UseStaticIP(config('popbill.UseStaticIP'));
 
-        // 로컬서버 시간 사용 여부, true-사용, false-미사용, 기본값(true)
+        // 로컬시스템 시간 사용여부, true-사용, false-미사용, (기본값:true)
         $this->PopbillTaxinvoice->UseLocalTimeYN(config('popbill.UseLocalTimeYN'));
     }
 
@@ -232,7 +244,7 @@ class TaxinvoiceController extends Controller
         $Taxinvoice->invoiceeContactName1 = '공급받는자 담당자성명';
 
         // 공급받는자 담당자 메일주소
-        // 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
+        // 팝빌 테스트 환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
         // 실제 거래처의 메일주소가 기재되지 않도록 주의
         $Taxinvoice->invoiceeEmail1 = 'test@invoicee.com';
 
@@ -507,7 +519,7 @@ class TaxinvoiceController extends Controller
             $Taxinvoice->invoiceeContactName1 = '공급받는자 담당자성명';
 
             // 공급받는자 담당자 메일주소
-            // 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
+            // 팝빌 테스트 환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
             // 실제 거래처의 메일주소가 기재되지 않도록 주의
             $Taxinvoice->invoiceeEmail1 = '';
 
@@ -803,7 +815,7 @@ class TaxinvoiceController extends Controller
         $Taxinvoice->invoiceeContactName1 = '공급받는자 담당자성명';
 
         // 공급받는자 담당자 메일주소
-        // 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
+        // 팝빌 테스트 환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
         // 실제 거래처의 메일주소가 기재되지 않도록 주의
         $Taxinvoice->invoiceeEmail1 = '';
 
@@ -1073,7 +1085,7 @@ class TaxinvoiceController extends Controller
         $Taxinvoice->invoiceeContactName1 = '공급받는자 담당자성명';
 
         // 공급받는자 담당자 메일주소
-        // 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
+        // 팝빌 테스트 환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
         // 실제 거래처의 메일주소가 기재되지 않도록 주의
         $Taxinvoice->invoiceeEmail1 = '';
 
@@ -1427,7 +1439,7 @@ class TaxinvoiceController extends Controller
         $Taxinvoice->invoiceeContactName1 = '공급받는자 담당자성명';
 
         // 공급받는자 담당자 메일주소
-        // 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
+        // 팝빌 테스트 환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
         // 실제 거래처의 메일주소가 기재되지 않도록 주의
         $Taxinvoice->invoiceeEmail1 = '';
 
@@ -2456,7 +2468,7 @@ class TaxinvoiceController extends Controller
         $MgtKey = '20230102-PHP7-002';
 
         // 수신이메일주소
-        // 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
+        // 팝빌 테스트 환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
         // 실제 거래처의 메일주소가 기재되지 않도록 주의
         $receiver = '';
 
@@ -3805,7 +3817,7 @@ class TaxinvoiceController extends Controller
         $Taxinvoice->invoiceeContactName1 = "공급받는자 담당자 성명";
 
         // 공급받는자 담당자 메일주소
-        // 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
+        // 팝빌 테스트 환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
         // 실제 거래처의 메일주소가 기재되지 않도록 주의
         $Taxinvoice->invoiceeEmail1 = "test@invoicee.com";
 
@@ -4107,7 +4119,7 @@ class TaxinvoiceController extends Controller
         $Taxinvoice->invoiceeContactName1 = "공급받는자 담당자 성명";
 
         // 공급받는자 담당자 메일주소
-        // 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
+        // 팝빌 테스트 환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
         // 실제 거래처의 메일주소가 기재되지 않도록 주의
         $Taxinvoice->invoiceeEmail1 = "test@invoicee.com";
 
@@ -4400,7 +4412,7 @@ class TaxinvoiceController extends Controller
         $Taxinvoice->invoiceeContactName1 = "공급받는자 담당자 성명";
 
         // 공급받는자 담당자 메일주소
-        // 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
+        // 팝빌 테스트 환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
         // 실제 거래처의 메일주소가 기재되지 않도록 주의
         $Taxinvoice->invoiceeEmail1 = "test@invoicee.com";
 
@@ -4685,7 +4697,7 @@ class TaxinvoiceController extends Controller
         $Taxinvoice->invoiceeContactName1 = "공급받는자 담당자 성명";
 
         // 공급받는자 담당자 메일주소
-        // 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
+        // 팝빌 테스트 환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
         // 실제 거래처의 메일주소가 기재되지 않도록 주의
         $Taxinvoice->invoiceeEmail1 = "test@invoicee.com";
 
@@ -4971,7 +4983,7 @@ class TaxinvoiceController extends Controller
         $Taxinvoice->invoiceeContactName1 = "공급받는자 담당자 성명";
 
         // 공급받는자 담당자 메일주소
-        // 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
+        // 팝빌 테스트 환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
         // 실제 거래처의 메일주소가 기재되지 않도록 주의
         $Taxinvoice->invoiceeEmail1 = "test@invoicee.com";
 
@@ -5256,7 +5268,7 @@ class TaxinvoiceController extends Controller
         $Taxinvoice->invoiceeContactName1 = "공급받는자 담당자 성명";
 
         // 공급받는자 담당자 메일주소
-        // 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
+        // 팝빌 테스트 환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
         // 실제 거래처의 메일주소가 기재되지 않도록 주의
         $Taxinvoice->invoiceeEmail1 = "test@invoicee.com";
 
@@ -5549,7 +5561,7 @@ class TaxinvoiceController extends Controller
         $Taxinvoice->invoiceeContactName1 = "공급받는자 담당자 성명";
 
         // 공급받는자 담당자 메일주소
-        // 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
+        // 팝빌 테스트 환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
         // 실제 거래처의 메일주소가 기재되지 않도록 주의
         $Taxinvoice->invoiceeEmail1 = "test@invoicee.com";
 
@@ -5838,7 +5850,7 @@ class TaxinvoiceController extends Controller
         $Taxinvoice->invoiceeContactName1 = "공급받는자 담당자 성명";
 
         // 공급받는자 담당자 메일주소
-        // 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
+        // 팝빌 테스트 환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
         // 실제 거래처의 메일주소가 기재되지 않도록 주의
         $Taxinvoice->invoiceeEmail1 = "test@invoicee.com";
 

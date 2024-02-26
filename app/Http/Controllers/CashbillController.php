@@ -1,5 +1,12 @@
 <?php
-
+/**
+  * 팝빌 현금영수증 API PHP SDK Laravel Example
+  *
+  * Laravel 연동 튜토리얼 안내 : https://developers.popbill.com/guide/cashbill/php/getting-started/tutorial?fwn=laravel
+  * 연동 기술지원 연락처 : 1600-9854
+  * 연동 기술지원 이메일 : code@linkhubcorp.com
+  *
+  */
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -26,16 +33,16 @@ class CashbillController extends Controller
         // 현금영수증 서비스 클래스 초기화
         $this->PopbillCashbill = new PopbillCashbill(config('popbill.LinkID'), config('popbill.SecretKey'));
 
-        // 연동환경 설정값, true-개발용, false-상업용
+        // 연동환경 설정, true-테스트, false-운영(Production), (기본값:true)
         $this->PopbillCashbill->IsTest(config('popbill.IsTest'));
 
-        // 인증토큰의 IP제한기능 사용여부, true-사용, false-미사용, 기본값(true)
+        // 인증토큰 IP 검증 설정, true-사용, false-미사용, (기본값:true)
         $this->PopbillCashbill->IPRestrictOnOff(config('popbill.IPRestrictOnOff'));
 
-        // 팝빌 API 서비스 고정 IP 사용여부, true-사용, false-미사용, 기본값(false)
+        // 통신 IP 고정, true-사용, false-미사용, (기본값:false)
         $this->PopbillCashbill->UseStaticIP(config('popbill.UseStaticIP'));
 
-        // 로컬서버 시간 사용 여부, true-사용, false-미사용, 기본값(true)
+        // 로컬시스템 시간 사용여부, true-사용, false-미사용, (기본값:true)
         $this->PopbillCashbill->UseLocalTimeYN(config('popbill.UseLocalTimeYN'));
     }
 
@@ -164,7 +171,7 @@ class CashbillController extends Controller
         $Cashbill->orderNumber = '주문번호';
 
         // 주문자 이메일
-        // 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
+        // 팝빌 테스트 환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
         // 실제 거래처의 메일주소가 기재되지 않도록 주의
         $Cashbill->email = '';
 
@@ -286,7 +293,7 @@ class CashbillController extends Controller
             $Cashbill->orderNumber = '주문번호';
 
             // 주문자 이메일
-            // 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
+            // 팝빌 테스트 환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
             // 실제 거래처의 메일주소가 기재되지 않도록 주의
             $Cashbill->email = '';
 
@@ -1700,7 +1707,7 @@ class CashbillController extends Controller
         $ContactInfo->tel = '';
 
         // 이메일주소
-        // 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
+        // 팝빌 테스트 환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
         // 실제 거래처의 메일주소가 기재되지 않도록 주의
         $ContactInfo->email = '';
 
@@ -1798,7 +1805,7 @@ class CashbillController extends Controller
         $ContactInfo->tel = '';
 
         // 이메일 주소
-        // 팝빌 개발환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
+        // 팝빌 테스트 환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
         // 실제 거래처의 메일주소가 기재되지 않도록 주의
         $ContactInfo->email = '';
 

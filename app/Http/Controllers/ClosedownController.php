@@ -1,5 +1,12 @@
 <?php
-
+/**
+  * 팝빌 휴폐업조회 API PHP SDK Laravel Example
+  *
+  * Laravel 연동 튜토리얼 안내 : https://developers.popbill.com/guide/closedown/php/getting-started/tutorial?fwn=laravel
+  * 연동 기술지원 연락처 : 1600-9854
+  * 연동 기술지원 이메일 : code@linkhubcorp.com
+  *
+  */
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -25,16 +32,16 @@ class ClosedownController extends Controller
         // 휴폐업조회 서비스 클래스 초기화
         $this->PopbillClosedown = new PopbillClosedown(config('popbill.LinkID'), config('popbill.SecretKey'));
 
-        // 연동환경 설정값, true-개발용, false-상업용
+        // 연동환경 설정, true-테스트, false-운영(Production), (기본값:true)
         $this->PopbillClosedown->IsTest(config('popbill.IsTest'));
 
-        // 인증토큰의 IP제한기능 사용여부, true-사용, false-미사용, 기본값(true)
+        // 인증토큰 IP 검증 설정, true-사용, false-미사용, (기본값:true)
         $this->PopbillClosedown->IPRestrictOnOff(config('popbill.IPRestrictOnOff'));
 
-        // 팝빌 API 서비스 고정 IP 사용여부, true-사용, false-미사용, 기본값(false)
+        // 통신 IP 고정, true-사용, false-미사용, (기본값:false)
         $this->PopbillClosedown->UseStaticIP(config('popbill.UseStaticIP'));
 
-        // 로컬서버 시간 사용 여부, true-사용, false-미사용, 기본값(true)
+        // 로컬시스템 시간 사용여부, true-사용, false-미사용, (기본값:true)
         $this->PopbillClosedown->UseLocalTimeYN(config('popbill.UseLocalTimeYN'));
     }
 

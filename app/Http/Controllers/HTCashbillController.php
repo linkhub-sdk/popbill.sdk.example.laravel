@@ -1,5 +1,17 @@
 <?php
-
+/**
+  * 팝빌 홈택스 현금영수증 API PHP SDK Laravel Example
+  *
+  * Laravel 연동 튜토리얼 안내 : https://developers.popbill.com/guide/htcashbill/php/getting-started/tutorial?fwn=laravel
+  * 연동 기술지원 연락처 : 1600-9854
+  * 연동 기술지원 이메일 : code@linkhubcorp.com
+  *
+  * <테스트 연동개발 준비사항>
+  * 1) 홈택스 로그인 인증정보를 등록합니다. (부서사용자등록 / 공동인증서 등록)
+  *    - 팝빌로그인 > [홈택스연동] > [환경설정] > [인증 관리] 메뉴
+  *    - 홈택스연동 인증 관리 팝업 URL(GetCertificatePopUpURL API) 반환된 URL을 이용하여
+  *      홈택스 인증 처리를 합니다.
+  */
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -26,16 +38,16 @@ class HTCashbillController extends Controller
         // 홈택스 현금영수증 서비스 클래스 초기화
         $this->PopbillHTCashbill = new PopbillHTCashbill(config('popbill.LinkID'), config('popbill.SecretKey'));
 
-        // 연동환경 설정값, true-개발용, false-상업용
+        // 연동환경 설정, true-테스트, false-운영(Production), (기본값:true)
         $this->PopbillHTCashbill->IsTest(config('popbill.IsTest'));
 
-        // 인증토큰의 IP제한기능 사용여부, true-사용, false-미사용, 기본값(true)
+        // 인증토큰 IP 검증 설정, true-사용, false-미사용, (기본값:true)
         $this->PopbillHTCashbill->IPRestrictOnOff(config('popbill.IPRestrictOnOff'));
 
-        // 팝빌 API 서비스 고정 IP 사용여부, true-사용, false-미사용, 기본값(false)
+        // 통신 IP 고정, true-사용, false-미사용, (기본값:false)
         $this->PopbillHTCashbill->UseStaticIP(config('popbill.UseStaticIP'));
 
-        // 로컬서버 시간 사용 여부, true-사용, false-미사용, 기본값(true)
+        // 로컬시스템 시간 사용여부, true-사용, false-미사용, (기본값:true)
         $this->PopbillHTCashbill->UseLocalTimeYN(config('popbill.UseLocalTimeYN'));
     }
 

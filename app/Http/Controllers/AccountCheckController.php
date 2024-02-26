@@ -1,5 +1,12 @@
 <?php
-
+/**
+  * 팝빌 예금주조회 API PHP SDK Laravel Example
+  *
+  * Laravel 연동 튜토리얼 안내 : https://developers.popbill.com/guide/accountcheck/php/getting-started/tutorial?fwn=laravel
+  * 연동 기술지원 연락처 : 1600-9854
+  * 연동 기술지원 이메일 : code@linkhubcorp.com
+  *
+  */
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -24,16 +31,16 @@ class AccountCheckController extends Controller
         // 예금주조회 서비스 클래스 초기화
         $this->PopbillAccountCheck = new PopbillAccountCheck(config('popbill.LinkID'), config('popbill.SecretKey'));
 
-        // 연동환경 설정값, true-개발용, false-상업용
+        // 연동환경 설정, true-테스트, false-운영(Production), (기본값:true)
         $this->PopbillAccountCheck->IsTest(config('popbill.IsTest'));
 
-        // 인증토큰의 IP제한기능 사용여부, true-사용, false-미사용, 기본값(true)
+        // 인증토큰 IP 검증 설정, true-사용, false-미사용, (기본값:true)
         $this->PopbillAccountCheck->IPRestrictOnOff(config('popbill.IPRestrictOnOff'));
 
-        // 팝빌 API 서비스 고정 IP 사용여부, true-사용, false-미사용, 기본값(false)
+        // 통신 IP 고정, true-사용, false-미사용, (기본값:false)
         $this->PopbillAccountCheck->UseStaticIP(config('popbill.UseStaticIP'));
 
-        // 로컬서버 시간 사용 여부, true-사용, false-미사용, 기본값(true)
+        // 로컬시스템 시간 사용여부, true-사용, false-미사용, (기본값:true)
         $this->PopbillAccountCheck->UseLocalTimeYN(config('popbill.UseLocalTimeYN'));
     }
 

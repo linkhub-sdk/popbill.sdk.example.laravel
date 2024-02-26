@@ -1,5 +1,15 @@
 <?php
-
+/**
+  * 팝빌 팩스 API PHP SDK Laravel Example
+  *
+  * Laravel 연동 튜토리얼 안내 : https://developers.popbill.com/guide/fax/php/getting-started/tutorial?fwn=laravel
+  * 연동 기술지원 연락처 : 1600-9854
+  * 연동 기술지원 이메일 : code@linkhubcorp.com
+  *
+  * 1) 발신번호 사전등록을 합니다. (등록방법은 사이트/API 두가지 방식이 있습니다.)
+  *    - 1. 팝빌 사이트 로그인 > [문자/팩스] > [팩스] > [발신번호 사전등록] 메뉴에서 등록
+  *    - 2. getSenderNumberMgtURL API를 통해 반환된 URL을 이용하여 발신번호 등록
+  */
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -25,16 +35,16 @@ class FaxController extends Controller
         // 팩스 서비스 클래스 초기화
         $this->PopbillFax = new PopbillFax(config('popbill.LinkID'), config('popbill.SecretKey'));
 
-        // 연동환경 설정값, true-개발용, false-상업용
+        // 연동환경 설정, true-테스트, false-운영(Production), (기본값:true)
         $this->PopbillFax->IsTest(config('popbill.IsTest'));
 
-        // 인증토큰의 IP제한기능 사용여부, true-사용, false-미사용, 기본값(true)
+        // 인증토큰 IP 검증 설정, true-사용, false-미사용, (기본값:true)
         $this->PopbillFax->IPRestrictOnOff(config('popbill.IPRestrictOnOff'));
 
-        // 팝빌 API 서비스 고정 IP 사용여부, true-사용, false-미사용, 기본값(false)
+        // 통신 IP 고정, true-사용, false-미사용, (기본값:false)
         $this->PopbillFax->UseStaticIP(config('popbill.UseStaticIP'));
 
-        // 로컬서버 시간 사용 여부, true-사용, false-미사용, 기본값(true)
+        // 로컬시스템 시간 사용여부, true-사용, false-미사용, (기본값:true)
         $this->PopbillFax->UseLocalTimeYN(config('popbill.UseLocalTimeYN'));
     }
 
@@ -163,7 +173,7 @@ class FaxController extends Controller
         $title = '팩스 단건전송 제목';
 
         // 전송요청번호
-        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
+        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 할당하는 식별번호.
         // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         $RequestNum = '';
 
@@ -241,7 +251,7 @@ class FaxController extends Controller
         $title = '팩스 동보전송 제목';
 
         // 전송요청번호
-        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
+        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 할당하는 식별번호.
         // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         $RequestNum = '';
 
@@ -319,7 +329,7 @@ class FaxController extends Controller
         $title = '팩스 단건전송 제목';
 
         // 전송요청번호
-        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
+        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 할당하는 식별번호.
         // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         $RequestNum = '';
 
@@ -409,7 +419,7 @@ class FaxController extends Controller
         $title = '팩스 동보전송 제목';
 
         // 전송요청번호
-        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
+        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 할당하는 식별번호.
         // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         $RequestNum = '';
 
@@ -480,7 +490,7 @@ class FaxController extends Controller
         $title = '팩스 재전송 제목';
 
         // 재전송 팩스의 전송요청번호
-        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
+        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 할당하는 식별번호.
         // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         $RequestNum = '';
 
@@ -549,7 +559,7 @@ class FaxController extends Controller
         $originalFAXrequestNum = '';
 
         // 재전송 팩스의 전송요청번호
-        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
+        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 할당하는 식별번호.
         // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         $RequestNum = '';
 
@@ -626,7 +636,7 @@ class FaxController extends Controller
         $ReceiptNum = '022040516355100002';
 
         // 재전송 팩스의 전송요청번호
-        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
+        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 할당하는 식별번호.
         // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         $RequestNum = '';
 
@@ -703,7 +713,7 @@ class FaxController extends Controller
         $originalFAXrequestNum = '';
 
         // 재전송 팩스의 전송요청번호
-        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 부여하는 식별번호.
+        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 할당하는 식별번호.
         // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         $RequestNum = '';
 
