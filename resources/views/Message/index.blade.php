@@ -106,7 +106,7 @@
                 <li><a href="Message/UpdateContact">UpdateContact</a> (담당자 정보 수정)</li>
                 <li><a href="Message/GetCorpInfo">GetCorpInfo</a> (회사정보 확인)</li>
                 <li><a href="Message/UpdateCorpInfo">UpdateCorpInfo</a> (회사정보 수정)</li>
-                <li><a href="Message/QuitRequest">QuitRequest</a> (회원 탈퇴)</li>
+                <li><a href="Message/QuitMember">QuitMember</a> (회원 탈퇴)</li>
             </ul>
         </fieldset>
     </div>

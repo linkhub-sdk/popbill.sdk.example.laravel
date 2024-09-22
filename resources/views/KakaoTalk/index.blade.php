@@ -114,7 +114,7 @@
                 <li><a href="KakaoTalk/UpdateContact">UpdateContact</a> (담당자 정보 수정)</li>
                 <li><a href="KakaoTalk/GetCorpInfo">GetCorpInfo</a> (회사정보 확인)</li>
                 <li><a href="KakaoTalk/UpdateCorpInfo">UpdateCorpInfo</a> (회사정보 수정)</li>
-                <li><a href="KakaoTalk/QuitRequest">QuitRequest</a> (회원 탈퇴)</li>
+                <li><a href="KakaoTalk/QuitMember">QuitMember</a> (회원 탈퇴)</li>
             </ul>
         </fieldset>
     </div>

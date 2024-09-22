@@ -52,7 +52,7 @@
                 <li><a href="AccountCheck/ListContact">ListContact</a> (담당자 목록 확인) </li>
                 <li><a href="AccountCheck/UpdateContact">UpdateContact</a> (담당자 정보 수정) </li>
                 <li><a href="AccountCheck/GetAccessURL">GetAccessURL</a> (팝빌 로그인 URL) </li>
-                <li><a href="AccountCheck/QuitRequest">QuitRequest</a> (회원 탈퇴)</li>
+                <li><a href="AccountCheck/QuitMember">QuitMember</a> (회원 탈퇴)</li>
             </ul>
         </fieldset>
     </div>

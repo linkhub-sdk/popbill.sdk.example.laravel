@@ -16,7 +16,7 @@
                     <li>accountName (예금주 성명) : {{ $Result->accountName }}</li>
                     <li>identityNumType (등록번호 유형) : {{ $Result->identityNumType }}</li>
                     <li>identityNum (등록번호) : {{ $Result->identityNum }}</li>
-                    <li>checkDate (확인일시) : {{ $Result->checkDate }}</li>
+                    <li>checkDT (확인일시) : {{ $Result->checkDT }}</li>
                     <li>result (응답코드) : {{ $Result->result }}</li>
                     <li>resultMessage (응답메시지) : {{ $Result->resultMessage }}</li>
                 </ul>

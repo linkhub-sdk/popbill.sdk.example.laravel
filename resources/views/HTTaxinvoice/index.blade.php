@@ -77,7 +77,7 @@
                 <li><a href="HTHTTaxinvoice/GetContactInfo">GetContactInfo</a> (담당자 정보 확인)</li>
                 <li><a href="HTHTTaxinvoice/ListContact">ListContact</a> (담당자 목록 확인) </li>
                 <li><a href="HTHTTaxinvoice/UpdateContact">UpdateContact</a> (담당자 정보 수정) </li>
-                <li><a href="HTTaxinvoice/QuitRequest">QuitRequest</a> (회원 탈퇴)</li>
+                <li><a href="HTTaxinvoice/QuitMember">QuitMember</a> (회원 탈퇴)</li>
             </ul>
         </fieldset>
     </div>

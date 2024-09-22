@@ -73,7 +73,7 @@
                 <li><a href="HTCashbill/GetContactInfo">GetContactInfo</a> (담당자 정보 확인)</li>
                 <li><a href="HTCashbill/ListContact">ListContact</a> (담당자 목록 확인)</li>
                 <li><a href="HTCashbill/UpdateContact">UpdateContact</a> (담당자 정보 수정)</li>
-                <li><a href="HTCashbill/QuitRequest">QuitRequest</a> (회원 탈퇴)</li>
+                <li><a href="HTCashbill/QuitMember">QuitMember</a> (회원 탈퇴)</li>
             </ul>
         </fieldset>
 </body>
