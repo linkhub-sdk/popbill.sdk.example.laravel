@@ -40,8 +40,8 @@
               <li> itemName (주문상품명) : {{ $cbInfo->itemName }}</li>
               <li> customerName (주문자명) : {{ $cbInfo->customerName }}</li>
               <li> confirmNum (국세청승인번호) : {{ $cbInfo->confirmNum }}</li>
-              <li> orgConfirmNum (원본 현금영수증 국세청승인번호) : {{ $cbInfo->orgConfirmNum }}</li>
-              <li> orgTradeDate (원본 현금영수증 거래일자) : {{ $cbInfo->orgTradeDate }}</li>
+              <li> orgConfirmNum (당초 승인 현금영수증 국세청승인번호) : {{ $cbInfo->orgConfirmNum }}</li>
+              <li> orgTradeDate (당초 승인 현금영수증 거래일자) : {{ $cbInfo->orgTradeDate }}</li>
               <li> ntssendDT (국세청 전송일시) : {{ $cbInfo->ntssendDT }}</li>
               <li> ntsresultDT (국세청 처리결과 수신일시) : {{ $cbInfo->ntsresultDT }}</li>
               <li> ntsresultCode (국세청 처리결과 상태코드) : {{ $cbInfo->ntsresultCode }}</li>

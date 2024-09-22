@@ -236,11 +236,11 @@ class CashbillController extends Controller
             // - 미입력시 기본값 "일반" 처리
             $Cashbill->tradeOpt = '일반';
 
-            // // 원본 현금영수증 국세청 승인번호
+            // // 상 현금영수증 국세청 승인번호
             // // 취소 현금영수증 작성시 필수
             // $Cashbill->orgConfirmNum = '';
             //
-            // // 원본 현금영수증 거래일자
+            // // 당초 승인 현금영수증 거래일자
             // // 취소 현금영수증 작성시 필수
             // $Cashbill->orgTradeDate = '';
 
@@ -403,7 +403,7 @@ class CashbillController extends Controller
 
         // 안내 문자 전송여부 , true / false 중 택 1
         // └ true = 전송 , false = 미전송
-        // └ 원본 현금영수증의 구매자(고객)의 휴대폰번호 문자 전송
+        // └ 당초 승인 현금영수증의 구매자(고객)의 휴대폰번호 문자 전송
         $smssendYN = false;
 
         // 현금영수증 상태 이력을 관리하기 위한 메모
@@ -464,7 +464,7 @@ class CashbillController extends Controller
 
         // 안내 문자 전송여부 , true / false 중 택 1
         // └ true = 전송 , false = 미전송
-        // └ 원본 현금영수증의 구매자(고객)의 휴대폰번호 문자 전송
+        // └ 당초 승인 현금영수증의 구매자(고객)의 휴대폰번호 문자 전송
         $smssendYN = false;
 
         // 메모

@@ -12,8 +12,8 @@
         <legend>{{\Request::fullUrl()}}</legend>
         <ul>
           <li>mgtKey (현금영수증 문서번호) : {{ $CashbillInfo->mgtKey }} </li>
-          <li>orgConfirmNum (원본 현금영수증 국세청승인번호) : {{ $CashbillInfo->orgConfirmNum }} </li>
-          <li>orgTradeDate (원본 현금영수증 거래일자) : {{ $CashbillInfo->orgTradeDate }} </li>
+          <li>orgConfirmNum (당초 승인 현금영수증 국세청승인번호) : {{ $CashbillInfo->orgConfirmNum }} </li>
+          <li>orgTradeDate (당초 승인 현금영수증 거래일자) : {{ $CashbillInfo->orgTradeDate }} </li>
           <li>tradeDate (거래일자) : {{ $CashbillInfo->tradeDate }} </li>
           <li>tradeDT (거래일시) : {{ $CashbillInfo->tradeDT }} </li>
           <li>tradeType (문서형태) : {{ $CashbillInfo->tradeType }} </li>

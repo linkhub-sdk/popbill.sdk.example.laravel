@@ -85,7 +85,6 @@
             <li><a href="Taxinvoice/SendFAX">SendFAX</a> (팩스 전송)</li>
             <li><a href="Taxinvoice/AttachStatement">AttachStatement</a> (전자명세서 첨부)</li>
             <li><a href="Taxinvoice/DetachStatement">DetachStatement</a> (전자명세서 첨부해제)</li>
-            <li><a href="Taxinvoice/GetEmailPublicKeys">GetEmailPublicKeys</a> (유통사업자 메일 목록 확인)</li>
             <li><a href="Taxinvoice/AssignMgtKey">AssignMgtKey</a> (문서번호 할당)</li>
             <li><a href="Taxinvoice/ListEmailConfig">ListEmailConfig</a> (세금계산서 알림메일 전송목록 조회)</li>
             <li><a href="Taxinvoice/UpdateEmailConfig">UpdateEmailConfig</a> (세금계산서 알림메일 전송설정 수정)</li>
