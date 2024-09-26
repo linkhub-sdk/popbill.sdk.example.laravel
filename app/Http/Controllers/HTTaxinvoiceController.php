@@ -38,7 +38,7 @@ class HTTaxinvoiceController extends Controller
         // 홈택스 전자세금계산서 서비스 클래스 초기화
         $this->PopbillHTTaxinvoice = new PopbillHTTaxinvoice(config('popbill.LinkID'), config('popbill.SecretKey'));
 
-        // 연동환경 설정, true-테스트, false-운영(Production), (기본값:true)
+        // 연동환경 설정, true-테스트, false-운영(Production), (기본값:false)
         $this->PopbillHTTaxinvoice->IsTest(config('popbill.IsTest'));
 
         // 인증토큰 IP 검증 설정, true-사용, false-미사용, (기본값:true)
@@ -386,7 +386,7 @@ class HTTaxinvoiceController extends Controller
     public function GetPopUpURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 국세청 승인번호
@@ -413,7 +413,7 @@ class HTTaxinvoiceController extends Controller
     public function GetPrintURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 국세청 승인번호
@@ -440,7 +440,7 @@ class HTTaxinvoiceController extends Controller
     public function GetCertificatePopUpURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
@@ -463,7 +463,7 @@ class HTTaxinvoiceController extends Controller
     public function GetCertificateExpireDate()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         try {
@@ -486,11 +486,8 @@ class HTTaxinvoiceController extends Controller
         // 사업자번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
-        // 팝빌회원 아이디
-        $UserID = 'testkorea';
-
         try {
-            $result = $this->PopbillHTTaxinvoice->CheckCertValidation($CorpNum, $UserID);
+            $result = $this->PopbillHTTaxinvoice->CheckCertValidation($CorpNum);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {
@@ -541,11 +538,8 @@ class HTTaxinvoiceController extends Controller
         // 사업자번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
-        // 팝빌회원 아이디
-        $UserID = 'testkorea';
-
         try {
-            $result = $this->PopbillHTTaxinvoice->CheckDeptUser($CorpNum, $UserID);
+            $result = $this->PopbillHTTaxinvoice->CheckDeptUser($CorpNum);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {
@@ -566,11 +560,8 @@ class HTTaxinvoiceController extends Controller
         // 사업자번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
-        // 팝빌회원 아이디
-        $UserID = 'testkorea';
-
         try {
-            $result = $this->PopbillHTTaxinvoice->CheckLoginDeptUser($CorpNum, $UserID);
+            $result = $this->PopbillHTTaxinvoice->CheckLoginDeptUser($CorpNum);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {
@@ -614,7 +605,7 @@ class HTTaxinvoiceController extends Controller
     public function GetFlatRatePopUpURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
@@ -783,7 +774,7 @@ class HTTaxinvoiceController extends Controller
     public function Refund()
     {
 
-        // 팝빌 회원 사업자번호, '-' 제외 10자리
+        // 팝빌회원 사업자번호, '-' 제외 10자리
         $CorpNum = '1234567890';
 
         $RefundForm = new RefundForm();
@@ -831,7 +822,7 @@ class HTTaxinvoiceController extends Controller
     public function PaymentRequest()
     {
 
-        // 팝빌 회원 사업자번호, '-' 제외 10자리
+        // 팝빌회원 사업자번호, '-' 제외 10자리
         $CorpNum = '1234567890';
 
         $PaymentForm = new PaymentForm();
@@ -902,7 +893,7 @@ class HTTaxinvoiceController extends Controller
     public function GetChargeURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
@@ -926,7 +917,7 @@ class HTTaxinvoiceController extends Controller
     public function GetPaymentURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
@@ -951,7 +942,7 @@ class HTTaxinvoiceController extends Controller
     public function GetUseHistoryURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
@@ -997,7 +988,7 @@ class HTTaxinvoiceController extends Controller
     public function GetPartnerURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // [CHRG] : 포인트충전 URL
@@ -1148,7 +1139,7 @@ class HTTaxinvoiceController extends Controller
     public function GetAccessURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
@@ -1381,7 +1372,7 @@ class HTTaxinvoiceController extends Controller
     public function QuitMember()
     {
 
-        // 팝빌 회원 사업자 번호
+        // 팝빌회원 사업자 번호
         $CorpNum = "1234567890";
 
         // 회원 탈퇴 사유
@@ -1407,7 +1398,7 @@ class HTTaxinvoiceController extends Controller
     public function GetRefundableBalance()
     {
 
-        // 팝빌 회원 사업자 번호
+        // 팝빌회원 사업자 번호
         $CorpNum = "1234567890";
 
         // 팝빌 회원 아이디
@@ -1430,7 +1421,7 @@ class HTTaxinvoiceController extends Controller
     public function GetRefundInfo()
     {
 
-        // 팝빌 회원 사업자 번호
+        // 팝빌회원 사업자 번호
         $CorpNum = "1234567890";
 
         // 환불코드

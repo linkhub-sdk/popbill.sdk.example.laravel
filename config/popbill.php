@@ -1,6 +1,6 @@
 <?php
 /**
- * 업데이트 일자 : 2024-02-26
+ * 업데이트 일자 : 2024-09-26
  * 연동기술지원 연락처 : 1600-9854
  * 연동기술지원 이메일 : code@linkhubcorp.com
  *         
@@ -9,7 +9,7 @@
  *     - LinkID : 링크허브에서 발급한 링크아이디
  *     - SecretKey : 링크허브에서 발급한 비밀키
  * 2) SDK 환경설정 옵션 설정
- *     - IsTest : 연동환경 설정, true-테스트, false-운영(Production), (기본값:true)
+ *     - IsTest : 연동환경 설정, true-테스트, false-운영(Production), (기본값:false)
  *     - IPRestrictOnOff : 인증토큰 IP 검증 설정, true-사용, false-미사용, (기본값:true)
  *     - UseStaticIP : 통신 IP 고정, true-사용, false-미사용, (기본값:false)
  *     - UseLocalTimeYN : 로컬시스템 시간 사용여부, true-사용, false-미사용, (기본값:true)
@@ -27,7 +27,7 @@ return [
     // STREAM 사용시에는 php.ini의 allow_url_fopen = on 으로 설정해야함.
     'LINKHUB_COMM_MODE' => 'CURL',
 
-    // 연동환경 설정, true-테스트, false-운영(Production), (기본값:true)
+    // 연동환경 설정, true-테스트, false-운영(Production), (기본값:flase)
     'IsTest' => true,
 
     // 인증토큰 IP 검증 설정, true-사용, false-미사용, (기본값:true)

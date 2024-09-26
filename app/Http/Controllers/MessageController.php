@@ -37,7 +37,7 @@ class MessageController extends Controller
         // 문자 서비스 클래스 초기화
         $this->PopbillMessaging = new PopbillMessaging(config('popbill.LinkID'), config('popbill.SecretKey'));
 
-        // 연동환경 설정, true-테스트, false-운영(Production), (기본값:true)
+        // 연동환경 설정, true-테스트, false-운영(Production), (기본값:false)
         $this->PopbillMessaging->IsTest(config('popbill.IsTest'));
 
         // 인증토큰 IP 검증 설정, true-사용, false-미사용, (기본값:true)
@@ -65,7 +65,7 @@ class MessageController extends Controller
     public function CheckSenderNumber()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 확인할 발신번호
@@ -93,7 +93,7 @@ class MessageController extends Controller
     public function GetSenderNumberMgtURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
@@ -140,7 +140,7 @@ class MessageController extends Controller
     public function SendSMS()
     {
 
-        // 팝빌 회원 사업자번호, "-"제외 10자리
+        // 팝빌회원 사업자번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 예약전송일시(yyyyMMddHHmmss) ex) 20151212230000, null인 경우 즉시전송
@@ -185,7 +185,7 @@ class MessageController extends Controller
     public function SendSMS_Multi()
     {
 
-        // 팝빌 회원 사업자번호, "-" 제외 10자리
+        // 팝빌회원 사업자번호, "-" 제외 10자리
         $CorpNum = '1234567890';
 
         // 예약전송일시(yyyyMMddHHmmss) ex)20151212230000, null인 경우 즉시전송
@@ -231,7 +231,7 @@ class MessageController extends Controller
     public function SendLMS()
     {
 
-        // 팝빌 회원 사업자번호, "-"제외 10자리
+        // 팝빌회원 사업자번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 예약전송일시(yyyyMMddHHmmss), null인경우 즉시전송
@@ -275,7 +275,7 @@ class MessageController extends Controller
     public function SendLMS_Multi()
     {
 
-        // 팝빌 회원 사업자번호, "-" 제외 10자리
+        // 팝빌회원 사업자번호, "-" 제외 10자리
         $CorpNum = '1234567890';
 
         // 예약전송일시(yyyyMMddHHmmss) ex)20151212230000, null인경우 즉시전송
@@ -322,7 +322,7 @@ class MessageController extends Controller
     public function SendMMS()
     {
 
-        // 팝빌 회원 사업자번호, "-"제외 10자리
+        // 팝빌회원 사업자번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 예약전송일시(yyyyMMddHHmmss) ex)20161108200000, null인경우 즉시전송
@@ -370,7 +370,7 @@ class MessageController extends Controller
     public function SendMMS_Multi()
     {
 
-        // 팝빌 회원 사업자번호, "-"제외 10자리
+        // 팝빌회원 사업자번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 예약전송일시(yyyyMMddHHmmss) ex) 20161108200000, null인경우 즉시전송
@@ -420,7 +420,7 @@ class MessageController extends Controller
     public function SendXMS()
     {
 
-        // 팝빌 회원 사업자번호, "-"제외 10자리
+        // 팝빌회원 사업자번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 예약전송일시(yyyyMMddHHmmss) ex)20151212230000, null인경우 즉시전송
@@ -462,7 +462,7 @@ class MessageController extends Controller
     public function SendXMS_Multi()
     {
 
-        // 팝빌 회원 사업자번호, "-"제외 10자리
+        // 팝빌회원 사업자번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 문자전송정보 배열, 최대 1000건
@@ -510,7 +510,7 @@ class MessageController extends Controller
     public function CancelReserve()
     {
 
-        // 팝빌 회원 사업자번호, "-"제외 10자리
+        // 팝빌회원 사업자번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 예약문자전송 요청시 발급받은 접수번호
@@ -537,7 +537,7 @@ class MessageController extends Controller
     public function CancelReserveRN()
     {
 
-        // 팝빌 회원 사업자번호, "-"제외 10자리
+        // 팝빌회원 사업자번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 예약문자전송 요청시 할당한 전송요청번호
@@ -563,7 +563,7 @@ class MessageController extends Controller
     public function CancelReservebyRCV()
     {
 
-        // 팝빌 회원 사업자번호, "-"제외 10자리
+        // 팝빌회원 사업자번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 예약문자전송 요청시 발급받은 접수번호
@@ -593,7 +593,7 @@ class MessageController extends Controller
     public function CancelReserveRNbyRCV()
     {
 
-        // 팝빌 회원 사업자번호, "-"제외 10자리
+        // 팝빌회원 사업자번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 예약문자전송 요청시 할당한 전송요청번호
@@ -742,7 +742,7 @@ class MessageController extends Controller
     public function GetSentListURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
@@ -769,8 +769,11 @@ class MessageController extends Controller
         // 팝빌회원 사업자번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
+        // 팝빌회원 아이디
+        $UserID = 'testkorea';
+
         try {
-            $result = $this->PopbillMessaging->GetAutoDenyList($CorpNum);
+            $result = $this->PopbillMessaging->GetAutoDenyList($CorpNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -789,8 +792,11 @@ class MessageController extends Controller
         // 팝빌회원 사업자번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
+        // 팝빌회원 아이디
+        $UserID = 'testkorea';
+
         try {
-            $result = $this->PopbillMessaging->CheckAutoDenyNumber($CorpNum);
+            $result = $this->PopbillMessaging->CheckAutoDenyNumber($CorpNum, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -930,7 +936,7 @@ class MessageController extends Controller
     public function Refund()
     {
 
-        // 팝빌 회원 사업자번호, '-' 제외 10자리
+        // 팝빌회원 사업자번호, '-' 제외 10자리
         $CorpNum = '1234567890';
 
         $RefundForm = new RefundForm();
@@ -978,7 +984,7 @@ class MessageController extends Controller
     public function PaymentRequest()
     {
 
-        // 팝빌 회원 사업자번호, '-' 제외 10자리
+        // 팝빌회원 사업자번호, '-' 제외 10자리
         $CorpNum = '1234567890';
 
         $PaymentForm = new PaymentForm();
@@ -1049,7 +1055,7 @@ class MessageController extends Controller
     public function GetChargeURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
@@ -1073,7 +1079,7 @@ class MessageController extends Controller
     public function GetPaymentURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
@@ -1098,7 +1104,7 @@ class MessageController extends Controller
     public function GetUseHistoryURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
@@ -1144,7 +1150,7 @@ class MessageController extends Controller
     public function GetPartnerURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // [CHRG] : 포인트충전 URL
@@ -1167,7 +1173,7 @@ class MessageController extends Controller
     public function GetUnitCost()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 문자 전송유형 ENumMessageType::SMS(단문), ENumMessageType::LMS(장문), ENumMessageType::MMS(포토)
@@ -1322,7 +1328,7 @@ class MessageController extends Controller
     public function GetAccessURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
@@ -1555,7 +1561,7 @@ class MessageController extends Controller
     public function QuitMember()
     {
 
-        // 팝빌 회원 사업자 번호
+        // 팝빌회원 사업자 번호
         $CorpNum = "1234567890";
 
         // 회원 탈퇴 사유
@@ -1581,7 +1587,7 @@ class MessageController extends Controller
     public function GetRefundableBalance()
     {
 
-        // 팝빌 회원 사업자 번호
+        // 팝빌회원 사업자 번호
         $CorpNum = "1234567890";
 
         // 팝빌 회원 아이디
@@ -1604,7 +1610,7 @@ class MessageController extends Controller
     public function GetRefundInfo()
     {
 
-        // 팝빌 회원 사업자 번호
+        // 팝빌회원 사업자 번호
         $CorpNum = "1234567890";
 
         // 환불코드

@@ -38,7 +38,7 @@ class HTCashbillController extends Controller
         // 홈택스 현금영수증 서비스 클래스 초기화
         $this->PopbillHTCashbill = new PopbillHTCashbill(config('popbill.LinkID'), config('popbill.SecretKey'));
 
-        // 연동환경 설정, true-테스트, false-운영(Production), (기본값:true)
+        // 연동환경 설정, true-테스트, false-운영(Production), (기본값:false)
         $this->PopbillHTCashbill->IsTest(config('popbill.IsTest'));
 
         // 인증토큰 IP 검증 설정, true-사용, false-미사용, (기본값:true)
@@ -250,7 +250,7 @@ class HTCashbillController extends Controller
     public function GetCertificatePopUpURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
@@ -273,7 +273,7 @@ class HTCashbillController extends Controller
     public function GetCertificateExpireDate()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         try {
@@ -296,11 +296,8 @@ class HTCashbillController extends Controller
         // 사업자번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
-        // 팝빌회원 아이디
-        $UserID = 'testkorea';
-
         try {
-            $result = $this->PopbillHTCashbill->CheckCertValidation($CorpNum, $UserID);
+            $result = $this->PopbillHTCashbill->CheckCertValidation($CorpNum);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {
@@ -351,11 +348,8 @@ class HTCashbillController extends Controller
         // 사업자번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
-        // 팝빌회원 아이디
-        $UserID = 'testkorea';
-
         try {
-            $result = $this->PopbillHTCashbill->CheckDeptUser($CorpNum, $UserID);
+            $result = $this->PopbillHTCashbill->CheckDeptUser($CorpNum);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {
@@ -376,11 +370,8 @@ class HTCashbillController extends Controller
         // 사업자번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
-        // 팝빌회원 아이디
-        $UserID = 'testkorea';
-
         try {
-            $result = $this->PopbillHTCashbill->CheckLoginDeptUser($CorpNum, $UserID);
+            $result = $this->PopbillHTCashbill->CheckLoginDeptUser($CorpNum);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {
@@ -424,7 +415,7 @@ class HTCashbillController extends Controller
     public function GetFlatRatePopUpURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
@@ -593,7 +584,7 @@ class HTCashbillController extends Controller
     public function Refund()
     {
 
-        // 팝빌 회원 사업자번호, '-' 제외 10자리
+        // 팝빌회원 사업자번호, '-' 제외 10자리
         $CorpNum = '1234567890';
 
         $RefundForm = new RefundForm();
@@ -640,7 +631,7 @@ class HTCashbillController extends Controller
     public function PaymentRequest()
     {
 
-        // 팝빌 회원 사업자번호, '-' 제외 10자리
+        // 팝빌회원 사업자번호, '-' 제외 10자리
         $CorpNum = '1234567890';
 
         $PaymentForm = new PaymentForm();
@@ -711,7 +702,7 @@ class HTCashbillController extends Controller
     public function GetChargeURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
@@ -735,7 +726,7 @@ class HTCashbillController extends Controller
     public function GetPaymentURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
@@ -760,7 +751,7 @@ class HTCashbillController extends Controller
     public function GetUseHistoryURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
@@ -806,7 +797,7 @@ class HTCashbillController extends Controller
     public function GetPartnerURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // [CHRG] : 포인트충전 URL
@@ -957,7 +948,7 @@ class HTCashbillController extends Controller
     public function GetAccessURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
@@ -1186,7 +1177,7 @@ class HTCashbillController extends Controller
     public function QuitMember()
     {
 
-        // 팝빌 회원 사업자 번호
+        // 팝빌회원 사업자 번호
         $CorpNum = "1234567890";
 
         // 회원 탈퇴 사유
@@ -1212,7 +1203,7 @@ class HTCashbillController extends Controller
     public function GetRefundableBalance()
     {
 
-        // 팝빌 회원 사업자 번호
+        // 팝빌회원 사업자 번호
         $CorpNum = "1234567890";
 
         // 팝빌 회원 아이디
@@ -1235,7 +1226,7 @@ class HTCashbillController extends Controller
     public function GetRefundInfo()
     {
 
-        // 팝빌 회원 사업자 번호
+        // 팝빌회원 사업자 번호
         $CorpNum = "1234567890";
 
         // 환불코드

@@ -33,7 +33,7 @@ class CashbillController extends Controller
         // 현금영수증 서비스 클래스 초기화
         $this->PopbillCashbill = new PopbillCashbill(config('popbill.LinkID'), config('popbill.SecretKey'));
 
-        // 연동환경 설정, true-테스트, false-운영(Production), (기본값:true)
+        // 연동환경 설정, true-테스트, false-운영(Production), (기본값:false)
         $this->PopbillCashbill->IsTest(config('popbill.IsTest'));
 
         // 인증토큰 IP 검증 설정, true-사용, false-미사용, (기본값:true)
@@ -87,7 +87,7 @@ class CashbillController extends Controller
     public function RegistIssue()
     {
 
-        // 팝빌 회원 사업자번호, '-' 제외 10자리
+        // 팝빌회원 사업자번호, '-' 제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
@@ -205,7 +205,7 @@ class CashbillController extends Controller
     public function BulkSubmit()
     {
 
-        // 팝빌 회원 사업자번호, '-' 제외 10자리
+        // 팝빌회원 사업자번호, '-' 제외 10자리
         $CorpNum = '1234567890';
 
         // 제출아이디, 대량 발행 접수를 구별하는 식별키
@@ -360,7 +360,7 @@ class CashbillController extends Controller
     public function Delete()
     {
 
-        // 팝빌 회원 사업자번호, '-' 제외 10자리
+        // 팝빌회원 사업자번호, '-' 제외 10자리
         $CorpNum = '1234567890';
 
         // 문서번호
@@ -389,7 +389,7 @@ class CashbillController extends Controller
     public function RevokeRegistIssue()
     {
 
-        // 팝빌 회원 사업자번호, '-' 제외 10자리
+        // 팝빌회원 사업자번호, '-' 제외 10자리
         $CorpNum = '1234567890';
 
         // 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
@@ -426,16 +426,14 @@ class CashbillController extends Controller
             $message = $result->message;
             $confirmNum = $result->confirmNum;
             $tradeDate = $result->tradeDate;
-            $tradeDT = $result->tradeDT;
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             $confirmNum = null;
             $tradeDate = null;
-            $tradeDT = null;
         }
 
-        return view('PResponse', ['code' => $code, 'message' => $message, 'confirmNum' => $confirmNum, 'tradeDate' => $tradeDate, 'tradeDT' => $tradeDT]);
+        return view('PResponse', ['code' => $code, 'message' => $message, 'confirmNum' => $confirmNum, 'tradeDate' => $tradeDate]);
     }
 
     /**
@@ -524,16 +522,14 @@ class CashbillController extends Controller
             $message = $result->message;
             $confirmNum = $result->confirmNum;
             $tradeDate = $result->tradeDate;
-            $tradeDT = $result->tradeDT;
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
             $confirmNum = null;
             $tradeDate = null;
-            $tradeDT = null;
         }
 
-        return view('PResponse', ['code' => $code, 'message' => $message, 'confirmNum' => $confirmNum, 'tradeDate' => $tradeDate, 'tradeDT' => $tradeDT]);
+        return view('PResponse', ['code' => $code, 'message' => $message, 'confirmNum' => $confirmNum, 'tradeDate' => $tradeDate]);
     }
 
     /**
@@ -723,7 +719,7 @@ class CashbillController extends Controller
     public function GetURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
@@ -751,7 +747,7 @@ class CashbillController extends Controller
     public function GetPopUpURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 문서번호
@@ -778,7 +774,7 @@ class CashbillController extends Controller
     public function GetViewURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 문서번호
@@ -805,7 +801,7 @@ class CashbillController extends Controller
     public function GetPrintURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 문서번호
@@ -833,7 +829,7 @@ class CashbillController extends Controller
     public function GetMassPrintURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 문서번호 배열, 최대 100건
@@ -863,7 +859,7 @@ class CashbillController extends Controller
     public function GetMailURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 문서번호
@@ -891,7 +887,7 @@ class CashbillController extends Controller
     public function GetAccessURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
@@ -915,7 +911,7 @@ class CashbillController extends Controller
     public function SendEmail()
     {
 
-        // 팝빌 회원 사업자번호, "-" 제외 10자리
+        // 팝빌회원 사업자번호, "-" 제외 10자리
         $CorpNum = '1234567890';
 
         // 문서번호
@@ -948,7 +944,7 @@ class CashbillController extends Controller
     public function SendSMS()
     {
 
-        // 팝빌 회원 사업자번호, "-" 제외 10자리
+        // 팝빌회원 사업자번호, "-" 제외 10자리
         $CorpNum = '1234567890';
 
         // 문서번호
@@ -986,7 +982,7 @@ class CashbillController extends Controller
     public function SendFAX()
     {
 
-        // 팝빌 회원 사업자번호, "-" 제외 10자리
+        // 팝빌회원 사업자번호, "-" 제외 10자리
         $CorpNum = '1234567890';
 
         // 문서번호
@@ -1019,7 +1015,7 @@ class CashbillController extends Controller
     public function AssignMgtKey()
     {
 
-        // 팝빌 회원 사업자번호, '-' 제외 10자리
+        // 팝빌회원 사업자번호, '-' 제외 10자리
         $CorpNum = '1234567890';
 
         // 현금영수증 아이템키
@@ -1232,7 +1228,7 @@ class CashbillController extends Controller
     public function Refund()
     {
 
-        // 팝빌 회원 사업자번호, '-' 제외 10자리
+        // 팝빌회원 사업자번호, '-' 제외 10자리
         $CorpNum = '1234567890';
 
         $RefundForm = new RefundForm();
@@ -1281,7 +1277,7 @@ class CashbillController extends Controller
     public function PaymentRequest()
     {
 
-        // 팝빌 회원 사업자번호, '-' 제외 10자리
+        // 팝빌회원 사업자번호, '-' 제외 10자리
         $CorpNum = '1234567890';
 
         $PaymentForm = new PaymentForm();
@@ -1352,7 +1348,7 @@ class CashbillController extends Controller
     public function GetChargeURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
@@ -1377,7 +1373,7 @@ class CashbillController extends Controller
     public function GetPaymentURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
@@ -1402,7 +1398,7 @@ class CashbillController extends Controller
     public function GetUseHistoryURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
@@ -1449,7 +1445,7 @@ class CashbillController extends Controller
     public function GetPartnerURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // [CHRG] : 포인트충전 URL
@@ -1472,7 +1468,7 @@ class CashbillController extends Controller
     public function GetUnitCost()
     {
 
-        // 팝빌 회원 사업자 번호, '-' 제외 10자리
+        // 팝빌회원 사업자 번호, '-' 제외 10자리
         $CorpNum = '1234567890';
 
         try {
@@ -1834,7 +1830,7 @@ class CashbillController extends Controller
     public function QuitMember()
     {
 
-        // 팝빌 회원 사업자 번호
+        // 팝빌회원 사업자 번호
         $CorpNum = "1234567890";
 
         // 회원 탈퇴 사유
@@ -1860,7 +1856,7 @@ class CashbillController extends Controller
     public function GetRefundableBalance()
     {
 
-        // 팝빌 회원 사업자 번호
+        // 팝빌회원 사업자 번호
         $CorpNum = "1234567890";
 
         // 팝빌 회원 아이디
@@ -1883,7 +1879,7 @@ class CashbillController extends Controller
     public function GetRefundInfo()
     {
 
-        // 팝빌 회원 사업자 번호
+        // 팝빌회원 사업자 번호
         $CorpNum = "1234567890";
 
         // 환불코드

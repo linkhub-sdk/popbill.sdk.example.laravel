@@ -35,7 +35,7 @@ class FaxController extends Controller
         // 팩스 서비스 클래스 초기화
         $this->PopbillFax = new PopbillFax(config('popbill.LinkID'), config('popbill.SecretKey'));
 
-        // 연동환경 설정, true-테스트, false-운영(Production), (기본값:true)
+        // 연동환경 설정, true-테스트, false-운영(Production), (기본값:false)
         $this->PopbillFax->IsTest(config('popbill.IsTest'));
 
         // 인증토큰 IP 검증 설정, true-사용, false-미사용, (기본값:true)
@@ -63,7 +63,7 @@ class FaxController extends Controller
     public function CheckSenderNumber()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 확인할 발신번호
@@ -91,7 +91,7 @@ class FaxController extends Controller
     public function GetSenderNumberMgtURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
@@ -137,7 +137,7 @@ class FaxController extends Controller
     public function SendFAX()
     {
 
-        // 팝빌 회원 사업자번호
+        // 팝빌회원 사업자번호
         $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
@@ -205,7 +205,7 @@ class FaxController extends Controller
     public function SendFAX_Multi()
     {
 
-        // 팝빌 회원 사업자번호
+        // 팝빌회원 사업자번호
         $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
@@ -284,7 +284,7 @@ class FaxController extends Controller
     public function SendFAXBinary()
     {
 
-        // 팝빌 회원 사업자번호
+        // 팝빌회원 사업자번호
         $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
@@ -361,7 +361,7 @@ class FaxController extends Controller
     public function SendFAXBinary_Multi()
     {
 
-        // 팝빌 회원 사업자번호
+        // 팝빌회원 사업자번호
         $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
@@ -455,7 +455,7 @@ class FaxController extends Controller
     public function ResendFAX()
     {
 
-        // 팝빌 회원 사업자번호
+        // 팝빌회원 사업자번호
         $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
@@ -524,7 +524,7 @@ class FaxController extends Controller
     public function ResendFAXRN()
     {
 
-        // 팝빌 회원 사업자번호
+        // 팝빌회원 사업자번호
         $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
@@ -593,7 +593,7 @@ class FaxController extends Controller
     public function ResendFAX_Multi()
     {
 
-        // 팝빌 회원 사업자번호
+        // 팝빌회원 사업자번호
         $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
@@ -670,7 +670,7 @@ class FaxController extends Controller
     public function ResendFAXRN_Multi()
     {
 
-        // 팝빌 회원 사업자번호
+        // 팝빌회원 사업자번호
         $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
@@ -744,7 +744,7 @@ class FaxController extends Controller
     public function CancelReserve()
     {
 
-        // 팝빌 회원 사업자번호, "-"제외 10자리
+        // 팝빌회원 사업자번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팩스예약전송 접수번호
@@ -772,7 +772,7 @@ class FaxController extends Controller
     public function CancelReserveRN()
     {
 
-        // 팝빌 회원 사업자번호, "-"제외 10자리
+        // 팝빌회원 사업자번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 예약팩스전송 요청시 할당한 전송요청번호
@@ -799,7 +799,7 @@ class FaxController extends Controller
     public function GetFaxDetail()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팩스전송 접수번호
@@ -826,7 +826,7 @@ class FaxController extends Controller
     public function GetFaxDetailRN()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팩스전송 요청시 할당한 전송요청번호
@@ -854,7 +854,7 @@ class FaxController extends Controller
     public function Search()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 검색시작일자
@@ -913,7 +913,7 @@ class FaxController extends Controller
     public function GetSentListURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
@@ -930,14 +930,14 @@ class FaxController extends Controller
     }
 
     /**
-     * 팩스 미리보기 팝업 URL을 반환하며, 팩스전송을 위한 TIF 포맷 변환 완료 후 호출 할 수 있습니다.
+     * 팩스 변환결과 확인 팝업 URL을 반환하며, 팩스전송을 위한 TIF 포맷 변환 완료 후 호출 할 수 있습니다.
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/fax/php/api/info#GetPreviewURL
      */
     public function GetPreviewURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팩스전송 접수번호
@@ -954,7 +954,7 @@ class FaxController extends Controller
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
 
-        return view('ReturnValue', ['filedName' => "팩스 미리보기 팝업 URL", 'value' => $url]);
+        return view('ReturnValue', ['filedName' => "팩스 변환결과 확인 팝업 URL", 'value' => $url]);
     }
 
     /**
@@ -1087,7 +1087,7 @@ class FaxController extends Controller
     public function Refund()
     {
 
-        // 팝빌 회원 사업자번호, '-' 제외 10자리
+        // 팝빌회원 사업자번호, '-' 제외 10자리
         $CorpNum = '1234567890';
 
         $RefundForm = new RefundForm();
@@ -1135,7 +1135,7 @@ class FaxController extends Controller
     public function PaymentRequest()
     {
 
-        // 팝빌 회원 사업자번호, '-' 제외 10자리
+        // 팝빌회원 사업자번호, '-' 제외 10자리
         $CorpNum = '1234567890';
 
         $PaymentForm = new PaymentForm();
@@ -1206,7 +1206,7 @@ class FaxController extends Controller
     public function GetChargeURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
@@ -1231,7 +1231,7 @@ class FaxController extends Controller
     public function GetPaymentURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
@@ -1256,7 +1256,7 @@ class FaxController extends Controller
     public function GetUseHistoryURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
@@ -1302,7 +1302,7 @@ class FaxController extends Controller
     public function GetPartnerURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // [CHRG] : 포인트충전 URL
@@ -1325,7 +1325,7 @@ class FaxController extends Controller
     public function GetUnitCost()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 수신번호 유형 : "일반" / "지능" 중 택 1
@@ -1333,8 +1333,11 @@ class FaxController extends Controller
         // └ 지능망 : 030*, 050*, 070*, 080*, 대표번호
         $receiveNumType = '일반';
 
+        // 팝빌회원 아이디
+        $UserID = 'testkorea';
+
         try {
-            $unitCost = $this->PopbillFax->GetUnitCost($CorpNum, $receiveNumType);
+            $unitCost = $this->PopbillFax->GetUnitCost($CorpNum, $receiveNumType, $UserID);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -1484,7 +1487,7 @@ class FaxController extends Controller
     public function GetAccessURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
@@ -1711,7 +1714,7 @@ class FaxController extends Controller
     public function QuitMember()
     {
 
-        // 팝빌 회원 사업자 번호
+        // 팝빌회원 사업자 번호
         $CorpNum = "1234567890";
 
         // 회원 탈퇴 사유
@@ -1737,7 +1740,7 @@ class FaxController extends Controller
     public function GetRefundableBalance()
     {
 
-        // 팝빌 회원 사업자 번호
+        // 팝빌회원 사업자 번호
         $CorpNum = "1234567890";
 
         // 팝빌 회원 아이디
@@ -1760,7 +1763,7 @@ class FaxController extends Controller
     public function GetRefundInfo()
     {
 
-        // 팝빌 회원 사업자 번호
+        // 팝빌회원 사업자 번호
         $CorpNum = "1234567890";
 
         // 환불코드

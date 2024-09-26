@@ -45,7 +45,7 @@ class KakaoTalkController extends Controller
         // 카카오톡 서비스 클래스 초기화
         $this->PopbillKakao = new PopbillKakao(config('popbill.LinkID'), config('popbill.SecretKey'));
 
-        // 연동환경 설정, true-테스트, false-운영(Production), (기본값:true)
+        // 연동환경 설정, true-테스트, false-운영(Production), (기본값:false)
         $this->PopbillKakao->IsTest(config('popbill.IsTest'));
 
         // 인증토큰 IP 검증 설정, true-사용, false-미사용, (기본값:true)
@@ -73,7 +73,7 @@ class KakaoTalkController extends Controller
     public function GetPlusFriendMgtURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
@@ -118,7 +118,7 @@ class KakaoTalkController extends Controller
     public function CheckSenderNumber()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 확인할 발신번호
@@ -146,7 +146,7 @@ class KakaoTalkController extends Controller
     public function GetSenderNumberMgtURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
@@ -192,7 +192,7 @@ class KakaoTalkController extends Controller
     public function GetATSTemplateMgtURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
@@ -216,7 +216,7 @@ class KakaoTalkController extends Controller
     public function GetATSTemplate()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         //확인할 템플릿 코드
@@ -265,7 +265,7 @@ class KakaoTalkController extends Controller
     public function SendATS_one()
     {
 
-        // 팝빌 회원 사업자번호, "-"제외 10자리
+        // 팝빌회원 사업자번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
@@ -367,7 +367,7 @@ class KakaoTalkController extends Controller
     public function SendATS_same()
     {
 
-        // 팝빌 회원 사업자번호, "-"제외 10자리
+        // 팝빌회원 사업자번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
@@ -473,7 +473,7 @@ class KakaoTalkController extends Controller
     public function SendATS_multi()
     {
 
-        // 팝빌 회원 사업자번호, "-"제외 10자리
+        // 팝빌회원 사업자번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
@@ -630,7 +630,7 @@ class KakaoTalkController extends Controller
     public function SendFTS_one()
     {
 
-        // 팝빌 회원 사업자번호, "-"제외 10자리
+        // 팝빌회원 사업자번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
@@ -715,7 +715,7 @@ class KakaoTalkController extends Controller
     public function SendFTS_same()
     {
 
-        // 팝빌 회원 사업자번호, "-"제외 10자리
+        // 팝빌회원 사업자번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
@@ -801,7 +801,7 @@ class KakaoTalkController extends Controller
     public function SendFTS_multi()
     {
 
-        // 팝빌 회원 사업자번호, "-"제외 10자리
+        // 팝빌회원 사업자번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
@@ -936,7 +936,7 @@ class KakaoTalkController extends Controller
     public function SendFMS_one()
     {
 
-        // 팝빌 회원 사업자번호, "-"제외 10자리
+        // 팝빌회원 사업자번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
@@ -1047,7 +1047,7 @@ class KakaoTalkController extends Controller
     public function SendFMS_same()
     {
 
-        // 팝빌 회원 사업자번호, "-"제외 10자리
+        // 팝빌회원 사업자번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
@@ -1160,7 +1160,7 @@ class KakaoTalkController extends Controller
     public function SendFMS_multi()
     {
 
-        // 팝빌 회원 사업자번호, "-"제외 10자리
+        // 팝빌회원 사업자번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌회원 아이디
@@ -1316,7 +1316,7 @@ class KakaoTalkController extends Controller
     public function CancelReserve()
     {
 
-        // 팝빌 회원 사업자번호, "-"제외 10자리
+        // 팝빌회원 사업자번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 전송 요청시 발급받은 카카오톡 접수번호
@@ -1343,7 +1343,7 @@ class KakaoTalkController extends Controller
     public function CancelReserveRN()
     {
 
-        // 팝빌 회원 사업자번호, "-"제외 10자리
+        // 팝빌회원 사업자번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 예약전송 요청시 할당한 전송요청번호
@@ -1370,7 +1370,7 @@ class KakaoTalkController extends Controller
     public function CancelReservebyRCV()
     {
 
-        // 팝빌 회원 사업자번호, "-"제외 10자리
+        // 팝빌회원 사업자번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 예약문자전송 요청시 발급받은 접수번호
@@ -1400,7 +1400,7 @@ class KakaoTalkController extends Controller
     public function CancelReserveRNbyRCV()
     {
 
-        // 팝빌 회원 사업자번호, "-"제외 10자리
+        // 팝빌회원 사업자번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 예약문자전송 요청시 할당한 전송요청번호
@@ -1547,7 +1547,7 @@ class KakaoTalkController extends Controller
     public function GetSentListURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
@@ -1693,7 +1693,7 @@ class KakaoTalkController extends Controller
     public function Refund()
     {
 
-        // 팝빌 회원 사업자번호, '-' 제외 10자리
+        // 팝빌회원 사업자번호, '-' 제외 10자리
         $CorpNum = '1234567890';
 
         $RefundForm = new RefundForm();
@@ -1741,7 +1741,7 @@ class KakaoTalkController extends Controller
     public function PaymentRequest()
     {
 
-        // 팝빌 회원 사업자번호, '-' 제외 10자리
+        // 팝빌회원 사업자번호, '-' 제외 10자리
         $CorpNum = '1234567890';
 
         $PaymentForm = new PaymentForm();
@@ -1812,7 +1812,7 @@ class KakaoTalkController extends Controller
     public function GetChargeURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
@@ -1837,7 +1837,7 @@ class KakaoTalkController extends Controller
     public function GetPaymentURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
@@ -1862,7 +1862,7 @@ class KakaoTalkController extends Controller
     public function GetUseHistoryURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
@@ -1909,7 +1909,7 @@ class KakaoTalkController extends Controller
     public function GetPartnerURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // [CHRG] : 포인트충전 URL
@@ -1933,7 +1933,7 @@ class KakaoTalkController extends Controller
     public function GetUnitCost()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 카카오톡 전송유형 ATS-알림톡, FTS-친구톡(텍스트), FMS-친구톡(이미지)
@@ -2087,7 +2087,7 @@ class KakaoTalkController extends Controller
     public function GetAccessURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
@@ -2320,7 +2320,7 @@ class KakaoTalkController extends Controller
     public function QuitMember()
     {
 
-        // 팝빌 회원 사업자 번호
+        // 팝빌회원 사업자 번호
         $CorpNum = "1234567890";
 
         // 회원 탈퇴 사유
@@ -2346,7 +2346,7 @@ class KakaoTalkController extends Controller
     public function GetRefundableBalance()
     {
 
-        // 팝빌 회원 사업자 번호
+        // 팝빌회원 사업자 번호
         $CorpNum = "1234567890";
 
         // 팝빌 회원 아이디
@@ -2369,7 +2369,7 @@ class KakaoTalkController extends Controller
     public function GetRefundInfo()
     {
 
-        // 팝빌 회원 사업자 번호
+        // 팝빌회원 사업자 번호
         $CorpNum = "1234567890";
 
         // 환불코드

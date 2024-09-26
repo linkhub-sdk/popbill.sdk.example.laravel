@@ -41,7 +41,7 @@ class TaxinvoiceController extends Controller
         // 세금계산서 서비스 클래스 초기화`
         $this->PopbillTaxinvoice = new PopbillTaxinvoice(config('popbill.LinkID'), config('popbill.SecretKey'));
 
-        // 연동환경 설정, true-테스트, false-운영(Production), (기본값:true)
+        // 연동환경 설정, true-테스트, false-운영(Production), (기본값:false)
         $this->PopbillTaxinvoice->IsTest(config('popbill.IsTest'));
 
         // 인증토큰 IP 검증 설정, true-사용, false-미사용, (기본값:true)
@@ -1239,7 +1239,7 @@ class TaxinvoiceController extends Controller
     public function Issue()
     {
 
-        // 팝빌 회원 사업자번호, '-' 제외 10자리
+        // 팝빌회원 사업자번호, '-' 제외 10자리
         $CorpNum = '1234567890';
 
         // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
@@ -1287,7 +1287,7 @@ class TaxinvoiceController extends Controller
     public function CancelIssue()
     {
 
-        // 팝빌 회원 사업자번호, '-' 제외 10자리
+        // 팝빌회원 사업자번호, '-' 제외 10자리
         $CorpNum = '1234567890';
 
         // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
@@ -1572,7 +1572,7 @@ class TaxinvoiceController extends Controller
     public function Request()
     {
 
-        // 팝빌 회원 사업자번호, '-' 제외 10자리
+        // 팝빌회원 사업자번호, '-' 제외 10자리
         $CorpNum = '1234567890';
 
         // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
@@ -1608,7 +1608,7 @@ class TaxinvoiceController extends Controller
     public function CancelRequest()
     {
 
-        // 팝빌 회원 사업자번호, '-' 제외 10자리
+        // 팝빌회원 사업자번호, '-' 제외 10자리
         $CorpNum = '1234567890';
 
         // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
@@ -1642,7 +1642,7 @@ class TaxinvoiceController extends Controller
     public function Refuse()
     {
 
-        // 팝빌 회원 사업자번호, '-' 제외 10자리
+        // 팝빌회원 사업자번호, '-' 제외 10자리
         $CorpNum = '1234567890';
 
         // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
@@ -1709,7 +1709,7 @@ class TaxinvoiceController extends Controller
     public function SendToNTS()
     {
 
-        // 팝빌 회원 사업자번호, '-' 제외 10자리
+        // 팝빌회원 사업자번호, '-' 제외 10자리
         $CorpNum = '1234567890';
 
         // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
@@ -1826,7 +1826,7 @@ class TaxinvoiceController extends Controller
     public function GetXML()
     {
 
-        // 팝빌 회원 사업자 번호, '-'제외 10자리
+        // 팝빌회원 사업자 번호, '-'제외 10자리
         $CorpNum = '1234567890';
 
         // 발행유형, TIENumMgtKeyType::SELL:매출, TIENumMgtKeyType::BUY:매입, TIENumMgtKeyType::TRUSTEE:위수탁
@@ -2036,7 +2036,7 @@ class TaxinvoiceController extends Controller
     public function GetURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
@@ -2065,7 +2065,7 @@ class TaxinvoiceController extends Controller
     public function GetPopUpURL()
     {
 
-        // 팝빌 회원 사업자 번호, '-'제외 10자리
+        // 팝빌회원 사업자 번호, '-'제외 10자리
         $CorpNum = '1234567890';
 
         // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
@@ -2096,7 +2096,7 @@ class TaxinvoiceController extends Controller
     public function GetViewURL()
     {
 
-        // 팝빌 회원 사업자 번호, '-'제외 10자리
+        // 팝빌회원 사업자 번호, '-'제외 10자리
         $CorpNum = '1234567890';
 
         // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
@@ -2127,7 +2127,7 @@ class TaxinvoiceController extends Controller
     public function GetPrintURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
@@ -2157,7 +2157,7 @@ class TaxinvoiceController extends Controller
     public function GetOldPrintURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
@@ -2187,7 +2187,7 @@ class TaxinvoiceController extends Controller
     public function GetEPrintURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
@@ -2217,7 +2217,7 @@ class TaxinvoiceController extends Controller
     public function GetMassPrintURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
@@ -2250,7 +2250,7 @@ class TaxinvoiceController extends Controller
     public function GetMailURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
@@ -2280,7 +2280,7 @@ class TaxinvoiceController extends Controller
     public function GetPDFURL()
     {
 
-        // 팝빌 회원 사업자 번호, '-'제외 10자리
+        // 팝빌회원 사업자 번호, '-'제외 10자리
         $CorpNum = '1234567890';
 
         // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
@@ -2311,7 +2311,7 @@ class TaxinvoiceController extends Controller
     public function GetAccessURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
@@ -2335,7 +2335,7 @@ class TaxinvoiceController extends Controller
     public function GetSealURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
@@ -2358,7 +2358,7 @@ class TaxinvoiceController extends Controller
     public function AttachFile()
     {
 
-        // 팝빌 회원 사업자번호, '-' 제외 10자리
+        // 팝빌회원 사업자번호, '-' 제외 10자리
         $CorpNum = '1234567890';
 
         // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
@@ -2458,7 +2458,7 @@ class TaxinvoiceController extends Controller
     public function SendEmail()
     {
 
-        // 팝빌 회원 사업자번호, '-' 제외 10자리
+        // 팝빌회원 사업자번호, '-' 제외 10자리
         $CorpNum = '1234567890';
 
         // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
@@ -2496,7 +2496,7 @@ class TaxinvoiceController extends Controller
     public function SendSMS()
     {
 
-        // 팝빌 회원 사업자번호, '-' 제외 10자리
+        // 팝빌회원 사업자번호, '-' 제외 10자리
         $CorpNum = '1234567890';
 
         // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
@@ -2537,7 +2537,7 @@ class TaxinvoiceController extends Controller
     public function SendFAX()
     {
 
-        // 팝빌 회원 사업자번호, '-' 제외 10자리
+        // 팝빌회원 사업자번호, '-' 제외 10자리
         $CorpNum = '1234567890';
 
         // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
@@ -2574,7 +2574,7 @@ class TaxinvoiceController extends Controller
     public function AttachStatement()
     {
 
-        // 팝빌 회원 사업자번호, '-' 제외 10자리
+        // 팝빌회원 사업자번호, '-' 제외 10자리
         $CorpNum = '1234567890';
 
         // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
@@ -2611,7 +2611,7 @@ class TaxinvoiceController extends Controller
     public function DetachStatement()
     {
 
-        // 팝빌 회원 사업자번호, '-' 제외 10자리
+        // 팝빌회원 사업자번호, '-' 제외 10자리
         $CorpNum = '1234567890';
 
         // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
@@ -2767,7 +2767,7 @@ class TaxinvoiceController extends Controller
     public function GetSendToNTSConfig()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
@@ -2792,7 +2792,7 @@ class TaxinvoiceController extends Controller
     public function GetTaxCertURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
@@ -2837,7 +2837,7 @@ class TaxinvoiceController extends Controller
     public function CheckCertValidation()
     {
 
-        // 팝빌 회원 사업자번호, '-' 제외 10자리
+        // 팝빌회원 사업자번호, '-' 제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
@@ -2862,7 +2862,7 @@ class TaxinvoiceController extends Controller
     public function GetTaxCertInfo()
     {
 
-        // 팝빌 회원 사업자번호, '-' 제외 10자리
+        // 팝빌회원 사업자번호, '-' 제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
@@ -3010,7 +3010,7 @@ class TaxinvoiceController extends Controller
     public function Refund()
     {
 
-        // 팝빌 회원 사업자번호, '-' 제외 10자리
+        // 팝빌회원 사업자번호, '-' 제외 10자리
         $CorpNum = '1234567890';
 
         $RefundForm = new RefundForm();
@@ -3058,7 +3058,7 @@ class TaxinvoiceController extends Controller
     public function PaymentRequest()
     {
 
-        // 팝빌 회원 사업자번호, '-' 제외 10자리
+        // 팝빌회원 사업자번호, '-' 제외 10자리
         $CorpNum = '1234567890';
 
         $PaymentForm = new PaymentForm();
@@ -3129,7 +3129,7 @@ class TaxinvoiceController extends Controller
     public function GetChargeURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
@@ -3154,7 +3154,7 @@ class TaxinvoiceController extends Controller
     public function GetPaymentURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
@@ -3179,7 +3179,7 @@ class TaxinvoiceController extends Controller
     public function GetUseHistoryURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // 팝빌 회원 아이디
@@ -3226,7 +3226,7 @@ class TaxinvoiceController extends Controller
     public function GetPartnerURL()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         // [CHRG] : 포인트충전 URL
@@ -3250,7 +3250,7 @@ class TaxinvoiceController extends Controller
     public function GetUnitCost()
     {
 
-        // 팝빌 회원 사업자 번호, "-"제외 10자리
+        // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
         try {
@@ -3606,7 +3606,7 @@ class TaxinvoiceController extends Controller
     public function QuitMember()
     {
 
-        // 팝빌 회원 사업자 번호
+        // 팝빌회원 사업자 번호
         $CorpNum = "1234567890";
 
         // 회원 탈퇴 사유
@@ -3632,7 +3632,7 @@ class TaxinvoiceController extends Controller
     public function GetRefundableBalance()
     {
 
-        // 팝빌 회원 사업자 번호
+        // 팝빌회원 사업자 번호
         $CorpNum = "1234567890";
 
         // 팝빌 회원 아이디
@@ -3655,7 +3655,7 @@ class TaxinvoiceController extends Controller
     public function GetRefundInfo()
     {
 
-        // 팝빌 회원 사업자 번호
+        // 팝빌회원 사업자 번호
         $CorpNum = "1234567890";
 
         // 환불코드
@@ -3690,7 +3690,7 @@ class TaxinvoiceController extends Controller
          * 원본 전자세금계산서와 동일한 내용의 부(-) 세금계산서 발행
          */
 
-        // 팝빌 회원 사업자 번호
+        // 팝빌회원 사업자 번호
         $CorpNum = "1234567890";
 
         // 원본 세금계산서를 취소할 세금계산서 객체
@@ -3992,7 +3992,7 @@ class TaxinvoiceController extends Controller
          * 수정사항을 반영한 정(+) 세금계산서를 발행
          */
 
-        // 팝빌 회원 사업자 번호
+        // 팝빌회원 사업자 번호
         $CorpNum = "1234567890";
 
         $Taxinvoice = new Taxinvoice();
@@ -4283,7 +4283,7 @@ class TaxinvoiceController extends Controller
          * 원본 공급가액의 50,000원에서 차감되어야 하는 금액이 -20,000원의 수정세금계산서 발행
          */
 
-        // 팝빌 회원 사업자 번호
+        // 팝빌회원 사업자 번호
         $CorpNum = "1234567890";
 
         $Taxinvoice = new Taxinvoice();
@@ -4567,7 +4567,7 @@ class TaxinvoiceController extends Controller
          *  2월 12일 작성일자로 환입(반품) 금액 10,000원에 대해 환입 사유로 세금계산서를 발행
          */
 
-        // 팝빌 회원 사업자 번호
+        // 팝빌회원 사업자 번호
         $CorpNum = "1234567890";
 
         $Taxinvoice = new Taxinvoice();
@@ -4854,7 +4854,7 @@ class TaxinvoiceController extends Controller
          * 계약이 취소된 2월 15일을 작성일자로 계약의 해제 사유의 수정세금계산서를 발행
          */
 
-        // 팝빌 회원 사업자 번호
+        // 팝빌회원 사업자 번호
         $CorpNum = "1234567890";
 
         $Taxinvoice = new Taxinvoice();
@@ -5139,7 +5139,7 @@ class TaxinvoiceController extends Controller
          * 내국 신용장 사후개설된 1,000,000원에 대한 3월 13일 작성일자의 영세율 세금계산서 작성
          */
 
-        // 팝빌 회원 사업자 번호
+        // 팝빌회원 사업자 번호
         $CorpNum = "1234567890";
 
         $Taxinvoice = new Taxinvoice();
@@ -5428,7 +5428,7 @@ class TaxinvoiceController extends Controller
          * 내국 신용장 사후개설된 1,000,000원에 대한 3월 13일 작성일자의 영세율 세금계산서 작성
          */
 
-        // 팝빌 회원 사업자 번호
+        // 팝빌회원 사업자 번호
         $CorpNum = "1234567890";
 
         $Taxinvoice = new Taxinvoice();
@@ -5720,7 +5720,7 @@ class TaxinvoiceController extends Controller
          *  [착오에의한 이중발급] 사유로 작성일자 2월 16일, 공급가액 마이너스(-)80,000원의 수정세금계산서를 발급
          */
 
-        // 팝빌 회원 사업자 번호
+        // 팝빌회원 사업자 번호
         $CorpNum = "1234567890";
 
         $Taxinvoice = new Taxinvoice();
