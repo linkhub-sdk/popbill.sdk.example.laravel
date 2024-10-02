@@ -15,7 +15,7 @@
                     <li>cntAccIn (입금거래 건수) : {{ $Result->cntAccIn }}</li>
                     <li>cntAccOut (출금거래 건수) : {{ $Result->cntAccOut }}</li>
                     <li>totalAccIn (입금액 합계) : {{ $Result->totalAccIn }}</li>
-                    <li>totalAccOut (출금액 합계) : {{ $Result->totalAccIn }}</li>
+                    <li>totalAccOut (출금액 합계) : {{ $Result->totalAccOut }}</li>
                 </ul>
             </fieldset>
          </div>

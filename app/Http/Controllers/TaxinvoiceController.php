@@ -1929,7 +1929,7 @@ class TaxinvoiceController extends Controller
 
         // 지연발행 여부 (null , true , false 중 택 1)
         // - null = 전체조회 , true = 지연발행 , false = 정상발행
-        $LateOnly = 0;
+        $LateOnly = null;
 
         // 종사업장번호 유무 (null , "0" , "1" 중 택 1)
         // - null = 전체 , 0 = 없음, 1 = 있음
