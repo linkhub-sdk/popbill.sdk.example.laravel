@@ -64,7 +64,7 @@
                <li>remark (비고) : {{ $tiInfo->remark }}</li>
 
                <li>modifyYN (수정 전자세금계산서 여부) : {{ $tiInfo->modifyYN  ? 'true' : 'false' }}</li>
-               <li>orgNTSConfirmNum (원본 전자세금계산서 국세청승인번호) : {{ $tiInfo->orgNTSConfirmNum }}</li>
+               <li>orgNTSConfirmNum (당초 전자세금계산서 국세청승인번호) : {{ $tiInfo->orgNTSConfirmNum }}</li>
             </ul>
           </fieldset>
           @endforeach

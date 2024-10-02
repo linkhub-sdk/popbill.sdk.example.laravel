@@ -314,7 +314,7 @@ class TaxinvoiceController extends Controller
         // [수정세금계산서 작성시 필수] 수정사유코드, 수정사유에 따라 1~6중 선택기재
         // $Taxinvoice->modifyCode = '';
 
-        // [수정세금계산서 작성시 필수] 원본세금계산서 국세청 승인번호 기재
+        // [수정세금계산서 작성시 필수] 당초 세금계산서 국세청 승인번호 기재
         // $Taxinvoice->orgNTSConfirmNum = '';
 
         /************************************************************
@@ -589,7 +589,7 @@ class TaxinvoiceController extends Controller
             // [수정세금계산서 작성시 필수] 수정사유코드, 수정사유에 따라 1~6중 선택기재
             // $Taxinvoice->modifyCode = '';
 
-            // [수정세금계산서 작성시 필수] 원본세금계산서 국세청 승인번호 기재
+            // [수정세금계산서 작성시 필수] 당초 세금계산서 국세청 승인번호 기재
             // $Taxinvoice->orgNTSConfirmNum = '';
 
             /************************************************************
@@ -891,7 +891,7 @@ class TaxinvoiceController extends Controller
         // [수정세금계산서 작성시 필수] 수정사유코드, 수정사유에 따라 1~6중 선택기재
         // $Taxinvoice->modifyCode = '';
 
-        // [수정세금계산서 작성시 필수] 원본세금계산서 국세청 승인번호 기재
+        // [수정세금계산서 작성시 필수] 당초 세금계산서 국세청 승인번호 기재
         // $Taxinvoice->orgNTSConfirmNum = '';
 
         /************************************************************
@@ -1161,7 +1161,7 @@ class TaxinvoiceController extends Controller
         // [수정세금계산서 작성시 필수] 수정사유코드, 수정사유에 따라 1~6중 선택기재
         // $Taxinvoice->modifyCode = '';
 
-        // [수정세금계산서 작성시 필수] 원본세금계산서 국세청 승인번호 기재
+        // [수정세금계산서 작성시 필수] 당초 세금계산서 국세청 승인번호 기재
         // $Taxinvoice->orgNTSConfirmNum = '';
 
         /************************************************************
@@ -1515,7 +1515,7 @@ class TaxinvoiceController extends Controller
         // [수정세금계산서 작성시 필수] 수정사유코드, 수정사유에 따라 1~6중 선택기재
         // $Taxinvoice->modifyCode = '';
 
-        // [수정세금계산서 작성시 필수] 원본세금계산서 국세청 승인번호 기재
+        // [수정세금계산서 작성시 필수] 당초 세금계산서 국세청 승인번호 기재
         // $Taxinvoice->orgNTSConfirmNum = '';
 
         /************************************************************
@@ -3687,13 +3687,13 @@ class TaxinvoiceController extends Controller
         /**
          **************** 기재사항 착오정정 수정세금계산서 예시 (취소분) ****************
          * 작성일자 1월 2일 공급가액 200,000원으로 매출 세금계산서를 발급해야 하는데, 공급가액 100,000원으로 잘못 발급 한 경우
-         * 원본 전자세금계산서와 동일한 내용의 부(-) 세금계산서 발행
+         * 당초 전자세금계산서와 동일한 내용의 부(-) 세금계산서 발행
          */
 
         // 팝빌회원 사업자 번호
         $CorpNum = "1234567890";
 
-        // 원본 세금계산서를 취소할 세금계산서 객체
+        // 당초 세금계산서를 취소할 세금계산서 객체
         $Taxinvoice = new Taxinvoice();
 
         /**********************************************************************
@@ -3703,11 +3703,11 @@ class TaxinvoiceController extends Controller
         // 수정사유코드, 수정사유에 따라 1~6 중 선택기재.
         $Taxinvoice->modifyCode = 1;
 
-        // 수정세금계산서 작성시 원본세금계산서 국세청 승인번호 기재
+        // 수정세금계산서 작성시 당초 세금계산서 국세청 승인번호 기재
         $Taxinvoice->orgNTSConfirmNum = "20230706-original-TI00001";
 
         // 작성일자, 날짜형식(yyyyMMdd)
-        // 원본 세금계산서 작성 일자 기재
+        // 당초 세금계산서 작성 일자 기재
         $Taxinvoice->writeDate = "20230102";
 
         // 공급가액 합계
@@ -4002,11 +4002,11 @@ class TaxinvoiceController extends Controller
          * [https://developers.popbill.com/guide/taxinvoice/java/introduction/modified-taxinvoice]
          *********************************************************************/
 
-        // 수정세금계산서 작성시 원본세금계산서 국세청 승인번호 기재
+        // 수정세금계산서 작성시 당초 세금계산서 국세청 승인번호 기재
         $Taxinvoice->orgNTSConfirmNum = "20230706-original-TI00001";
 
         // 작성일자, 날짜형식(yyyyMMdd)
-        // 원본 전자세금계산서 작성일자 또는 변경을 원하는 작성일자
+        // 당초 전자세금계산서 작성일자 또는 변경을 원하는 작성일자
         $Taxinvoice->writeDate = "20230102";
 
         // 공급가액 합계
@@ -4271,16 +4271,16 @@ class TaxinvoiceController extends Controller
         /**
          * 공급가액 변동에 의한 수정세금계산서 발행
          * - 일부 금액의 계약의 해지 등을 포함하여 공급가액의 증가 또는 감소가 발생한 경우 이용하는 수정사유 입니다.
-         * - 증가 : 원본 전자세금계산서 공급가액에서 증가한 금액만큼만 수정분 정(+) 세금계산서 발행
-         * - 감소 : 원본 전자세금계산서 공급가액에서 감소한 금액만큼만 수정분 부(-) 세금계산서 발행
-         * - ※ 원본 전자세금계산서 공급가액 + 수정세금계산서 공급가액(+/-) = 최종 공급가액
+         * - 증가 : 당초 전자세금계산서 공급가액에서 증가한 금액만큼만 수정분 정(+) 세금계산서 발행
+         * - 감소 : 당초 전자세금계산서 공급가액에서 감소한 금액만큼만 수정분 부(-) 세금계산서 발행
+         * - ※ 당초 전자세금계산서 공급가액 + 수정세금계산서 공급가액(+/-) = 최종 공급가액
          * - 수정세금계산서 가이드: [https://developers.popbill.com/guide/taxinvoice/java/introduction/modified-taxinvoice]
          */
 
         /**
          **************** 공급가액 변동에 의한 수정세금계산서 예시 ****************
          * 작성일자 2월 7일 공급가액 30,000원으로 매출 세금계산서를 발급해야 하는데, 공급가액 50,000원으로 잘못  발급한 경우
-         * 원본 공급가액의 50,000원에서 차감되어야 하는 금액이 -20,000원의 수정세금계산서 발행
+         * 당초 세금계산서의 공급가액 50,000원에서 차감되어야 하는 금액이 -20,000원의 수정세금계산서 발행
          */
 
         // 팝빌회원 사업자 번호
@@ -4295,7 +4295,7 @@ class TaxinvoiceController extends Controller
         // 수정사유코드, 수정사유에 따라 1~6 중 선택기재.
         $Taxinvoice->modifyCode = 2;
 
-        // 수정세금계산서 작성시 원본세금계산서 국세청 승인번호 기재
+        // 수정세금계산서 작성시 당초 세금계산서 국세청 승인번호 기재
         $Taxinvoice->orgNTSConfirmNum = "20230706-original-TI00001";
 
         // 작성일자, 날짜형식(yyyyMMdd)
@@ -4312,7 +4312,7 @@ class TaxinvoiceController extends Controller
         $Taxinvoice->totalAmount = "-22000";
 
         // 비고
-        // 공급가액 변동으로 인한 수정 세금계산서 작성 시, = 원본 세금계산서 작성일자 기재 필수
+        // 공급가액 변동으로 인한 수정 세금계산서 작성 시, = 당초 세금계산서 작성일자 기재 필수
         $Taxinvoice->remark1 = "20230207";
         // 과금방향, [정과금, 역과금] 중 선택기재
         // └ 정과금 = 공급자 과금 , 역과금 = 공급받는자 과금
@@ -4577,7 +4577,7 @@ class TaxinvoiceController extends Controller
          * [https://developers.popbill.com/guide/taxinvoice/java/introduction/modified-taxinvoice]
          *********************************************************************/
 
-        // 수정세금계산서 작성시 원본세금계산서 국세청 승인번호 기재
+        // 수정세금계산서 작성시 당초 세금계산서 국세청 승인번호 기재
         $Taxinvoice->orgNTSConfirmNum = "20230706-original-TI00001";
 
         // 작성일자, 날짜형식(yyyyMMdd)
@@ -4594,7 +4594,7 @@ class TaxinvoiceController extends Controller
         $Taxinvoice->totalAmount = "-11000";
 
         // 비고
-        // - 환입에 의한 수정세금계산서 작성의 경우, 원본 = 세금계산서의 작성일자 기재 필수
+        // - 환입에 의한 수정세금계산서 작성의 경우, 당초 = 세금계산서의 작성일자 기재 필수
         $Taxinvoice->remark1 = "20230208";
         // 수정사유코드, 수정사유에 따라 1~6 중 선택기재.
         $Taxinvoice->modifyCode = 3;
@@ -4844,7 +4844,7 @@ class TaxinvoiceController extends Controller
         /**
          * 계약의 해제에 의한 수정세금계산서 발행
          * - 재화 또는 용역/서비스가 공급되지 아니하였거나 계약이 해제된 경우 이용하는 수정사유 입니다.
-         * - 원본 전자세금계산서와 동일한 내용의 부(-) 세금계산서 발행
+         * - 당초 전자세금계산서와 동일한 내용의 부(-) 세금계산서 발행
          * - 수정세금계산서 가이드: [https://developers.popbill.com/guide/taxinvoice/java/introduction/modified-taxinvoice]
          */
 
@@ -4864,7 +4864,7 @@ class TaxinvoiceController extends Controller
          * [https://developers.popbill.com/guide/taxinvoice/java/introduction/modified-taxinvoice]
          *********************************************************************/
 
-        // 수정세금계산서 작성시 원본세금계산서 국세청 승인번호 기재
+        // 수정세금계산서 작성시 당초 세금계산서 국세청 승인번호 기재
         $Taxinvoice->orgNTSConfirmNum = "20230706-original-TI00001";
 
         // 작성일자, 날짜형식(yyyyMMdd)
@@ -5149,11 +5149,11 @@ class TaxinvoiceController extends Controller
          * 수정세금계산서 정보 (수정세금계산서 작성시 기재) - 수정세금계산서 작성방법 안내
          * [https://developers.popbill.com/guide/taxinvoice/java/introduction/modified-taxinvoice]
          *********************************************************************/
-        // 수정세금계산서 작성시 원본세금계산서 국세청 승인번호 기재
+        // 수정세금계산서 작성시 당초 세금계산서 국세청 승인번호 기재
         $Taxinvoice->orgNTSConfirmNum = "20230706-original-TI00001";
 
         // 작성일자, 날짜형식(yyyyMMdd)
-        // 원본 세금계산서의 작성일자 기재
+        // 당초 세금계산서의 작성일자 기재
         $Taxinvoice->writeDate = "20230313";
 
         // 과세형태, [과세, 영세, 면세] 중 기재
@@ -5438,11 +5438,11 @@ class TaxinvoiceController extends Controller
          * [https://developers.popbill.com/guide/taxinvoice/java/introduction/modified-taxinvoice]
          *********************************************************************/
 
-        // 수정세금계산서 작성시 원본세금계산서 국세청 승인번호 기재
+        // 수정세금계산서 작성시 당초 세금계산서 국세청 승인번호 기재
         $Taxinvoice->orgNTSConfirmNum = "20230706-original-TI00001";
 
         // 작성일자, 날짜형식(yyyyMMdd)
-        //  원본 세금계산서의 작성 일자
+        //  당초 세금계산서의 작성 일자
         $Taxinvoice->writeDate = "20230313";
 
         // 공급가액 합계
@@ -5709,7 +5709,7 @@ class TaxinvoiceController extends Controller
         /**
          * 착오에 의한 이중발급에 의한 수정세금계산서 발행
          * - 1건의 거래에 대한 단순 착오로 인해 2건 이상의 전자세금계산서를 발행하거나, 과세형태(과세/영세율↔면세) 착오로 잘못 발급된 경우 이용하는 수정사유 입니다.
-         * - 원본 전자세금계산서와 동일한 내용의 수정분 부(-) 세금계산서 발행
+         * - 당초 전자세금계산서와 동일한 내용의 수정분 부(-) 세금계산서 발행
          * - 수정세금계산서 가이드: [https://developers.popbill.com/guide/taxinvoice/java/introduction/modified-taxinvoice]
          */
 
@@ -5729,23 +5729,23 @@ class TaxinvoiceController extends Controller
          * 수정세금계산서 정보 (수정세금계산서 작성시 기재) - 수정세금계산서 작성방법 안내
          * [https://developers.popbill.com/guide/taxinvoice/java/introduction/modified-taxinvoice]
          *********************************************************************/
-        // 수정세금계산서 작성시 원본세금계산서 국세청 승인번호 기재
+        // 수정세금계산서 작성시 당초 세금계산서 국세청 승인번호 기재
         $Taxinvoice->orgNTSConfirmNum = "20230706-original-TI00001";
 
         // 작성일자, 날짜형식(yyyyMMdd)
-        // 착오에 의한 이중발급 사유로 수정세금계산서 작성 시, 원본 전자세금계산서 작성일자 기재
+        // 착오에 의한 이중발급 사유로 수정세금계산서 작성 시, 당초 전자세금계산서 작성일자 기재
         $Taxinvoice->writeDate = "20230701";
 
         // 공급가액 합계
-        // 원본 세금계산서와 동일한 내용의 수정분 부(-) 기재
+        // 당초 세금계산서와 동일한 내용의 수정분 부(-) 기재
         $Taxinvoice->supplyCostTotal = "-80000";
 
         // 세액 합계
-        // 원본 세금계산서와 동일한 내용의 수정분 부(-) 기재
+        // 당초 세금계산서와 동일한 내용의 수정분 부(-) 기재
         $Taxinvoice->taxTotal = "-8000";
 
         // 합계금액, 공급가액 + 세액
-        // 원본 세금계산서와 동일한 내용의 수정분 부(-) 기재
+        // 당초 세금계산서와 동일한 내용의 수정분 부(-) 기재
         $Taxinvoice->totalAmount = "-88000";
 
         // 수정사유코드, 수정사유에 따라 1~6 중 선택기재.

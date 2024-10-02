@@ -687,9 +687,7 @@ class KakaoTalkController extends Controller
             // [앱링크] iOS, [웹링크] Mobile
             'u1' => 'http://www.popbill.com',
             // [앱링크] Android, [웹링크] PC URL
-            'u2' => 'http://www.popbill.com',
-            // 아웃 링크, out - 디바이스 기본 브라우저, (기본값 : 카카오톡 인앱 브라우저)
-            'tg' => 'out' 
+            'u2' => 'http://www.popbill.com'
         );
 
         // 예약전송일시, yyyyMMddHHmmss
@@ -773,9 +771,7 @@ class KakaoTalkController extends Controller
             // [앱링크] iOS, [웹링크] Mobile
             'u1' => 'http://www.popbill.com',
             // [앱링크] Android, [웹링크] PC URL
-            'u2' => 'http://www.popbill.com',
-            // 아웃 링크, out - 디바이스 기본 브라우저, (기본값 : 카카오톡 인앱 브라우저)
-            'tg' => 'out' 
+            'u2' => 'http://www.popbill.com'
         );
 
         // 예약전송일시, yyyyMMddHHmmss
@@ -907,9 +903,7 @@ class KakaoTalkController extends Controller
             // [앱링크] iOS, [웹링크] Mobile
             'u1' => 'http://www.popbill.com',
             // [앱링크] Android, [웹링크] PC URL
-            'u2' => 'http://www.popbill.com',
-            // 아웃 링크, out - 디바이스 기본 브라우저, (기본값 : 카카오톡 인앱 브라우저)
-            'tg' => 'out' 
+            'u2' => 'http://www.popbill.com'
         );
 
         // 예약전송일시, yyyyMMddHHmmss
@@ -993,9 +987,7 @@ class KakaoTalkController extends Controller
             // [앱링크] iOS, [웹링크] Mobile
             'u1' => 'http://www.popbill.com',
             // [앱링크] Android, [웹링크] PC URL
-            'u2' => 'http://www.popbill.com',
-            // 아웃 링크, out - 디바이스 기본 브라우저, (기본값 : 카카오톡 인앱 브라우저)
-            'tg' => 'out' 
+            'u2' => 'http://www.popbill.com'
         );
 
         // 예약전송일시, yyyyMMddHHmmss
@@ -1106,9 +1098,7 @@ class KakaoTalkController extends Controller
             // [앱링크] iOS, [웹링크] Mobile
             'u1' => 'http://www.popbill.com',
             // [앱링크] Android, [웹링크] PC URL
-            'u2' => 'http://www.popbill.com',
-            // 아웃 링크, out - 디바이스 기본 브라우저, (기본값 : 카카오톡 인앱 브라우저)
-            'tg' => 'out' 
+            'u2' => 'http://www.popbill.com'
         );
 
         // 예약전송일시, yyyyMMddHHmmss
@@ -1266,9 +1256,7 @@ class KakaoTalkController extends Controller
             // [앱링크] iOS, [웹링크] Mobile
             'u1' => 'http://www.popbill.com',
             // [앱링크] Android, [웹링크] PC URL
-            'u2' => 'http://www.popbill.com',
-            // 아웃 링크, out - 디바이스 기본 브라우저, (기본값 : 카카오톡 인앱 브라우저)
-            'tg' => 'out' 
+            'u2' => 'http://www.popbill.com'
         );
 
         // 예약전송일시, yyyyMMddHHmmss
