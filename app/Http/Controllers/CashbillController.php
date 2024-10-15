@@ -90,17 +90,17 @@ class CashbillController extends Controller
         // 팝빌회원 사업자번호, '-' 제외 10자리
         $CorpNum = '1234567890';
 
-        // 팝빌회원 아이디
-        $UserID = 'testkorea';
-
-        // 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
-        $MgtKey = '20230102-PHP7-001';
-
         // 메모
         $Memo = '현금영수증 즉시발행 메모';
 
+        // 팝빌회원 아이디
+        $UserID = 'testkorea';
+
         // 안내메일 제목, 공백처리시 기본양식으로 전송
         $emailSubject = '';
+
+        // 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
+        $MgtKey = '20230102-PHP7-001';
 
         // 현금영수증 객체 생성
         $Cashbill = new Cashbill();
@@ -108,15 +108,15 @@ class CashbillController extends Controller
         // 현금영수증 문서번호, 1~24자리 (숫자, 영문, '-', '_') 조합으로 사업자 별로 중복되지 않도록 구성
         $Cashbill->mgtKey = $MgtKey;
 
+        // 거래일시, 날짜(yyyyMMddHHmmss)
+        // 당일, 전일만 가능
+        $Cashbill->tradeDT = '20221103000000';
+
         // 문서형태, 승인거래 기재
         $Cashbill->tradeType = '승인거래';
 
         // 거래구분, {소득공제용, 지출증빙용} 중 기재
         $Cashbill->tradeUsage = '소득공제용';
-
-        // 거래일시, 날짜(yyyyMMddHHmmss)
-        // 당일, 전일만 가능
-        $Cashbill->tradeDT = '20221103000000';
 
         // 거래유형, {일반, 도서공연, 대중교통} 중 기재
         // - 미입력시 기본값 "일반" 처리
@@ -175,12 +175,12 @@ class CashbillController extends Controller
         // 실제 거래처의 메일주소가 기재되지 않도록 주의
         $Cashbill->email = '';
 
-        // 발행시 알림문자 전송여부
-        $Cashbill->smssendYN = false;
-
         // 주문자 휴대폰
         // - {smssendYN} 의 값이 true 인 경우 아래 휴대폰번호로 안내 문자 전송
         $Cashbill->hp = '';
+
+        // 발행시 알림문자 전송여부
+        $Cashbill->smssendYN = false;
 
         try {
             $result = $this->PopbillCashbill->RegistIssue($CorpNum, $Cashbill, $Memo, $UserID, $emailSubject);
@@ -210,7 +210,7 @@ class CashbillController extends Controller
 
         // 제출아이디, 대량 발행 접수를 구별하는 식별키
         // └ 최대 36자리 영문, 숫자, '-' 조합으로 구성
-        $SubmitID = "20230102-PHP7-BULK";
+        $SubmitID = "2023010-PHP7-BULK";
 
         // 최대 100건
         $cashbillList = array();
@@ -222,20 +222,6 @@ class CashbillController extends Controller
             // 현금영수증 문서번호, 1~24자리 (숫자, 영문, '-', '_') 조합으로 사업자 별로 중복되지 않도록 구성
             $Cashbill->mgtKey = $SubmitID . "-" . $i;
 
-            // 문서형태, {승인거래, 취소거래} 중 기재
-            $Cashbill->tradeType = '승인거래';
-
-            // 거래일시, 날짜(yyyyMMddHHmmss)
-            // 당일, 전일만 가능
-            $Cashbill->tradeDT = '20221103000000';
-
-            // 거래구분, (소득공제용, 지출증빙용) 중 기재
-            $Cashbill->tradeUsage = '소득공제용';
-
-            // 거래유형, {일반, 도서공연, 대중교통} 중 기재
-            // - 미입력시 기본값 "일반" 처리
-            $Cashbill->tradeOpt = '일반';
-
             // // 상 현금영수증 국세청 승인번호
             // // 취소 현금영수증 작성시 필수
             // $Cashbill->orgConfirmNum = '';
@@ -243,6 +229,20 @@ class CashbillController extends Controller
             // // 당초 승인 현금영수증 거래일자
             // // 취소 현금영수증 작성시 필수
             // $Cashbill->orgTradeDate = '';
+
+            // 거래일시, 날짜(yyyyMMddHHmmss)
+            // 당일, 전일만 가능
+            $Cashbill->tradeDT = '20221103000000';
+
+            // 문서형태, {승인거래, 취소거래} 중 기재
+            $Cashbill->tradeType = '승인거래';
+
+            // 거래구분, (소득공제용, 지출증빙용) 중 기재
+            $Cashbill->tradeUsage = '소득공제용';
+
+            // 거래유형, {일반, 도서공연, 대중교통} 중 기재
+            // - 미입력시 기본값 "일반" 처리
+            $Cashbill->tradeOpt = '일반';
 
             // 과세형태, (과세, 비과세) 중 기재
             $Cashbill->taxationType = '과세';
@@ -297,12 +297,12 @@ class CashbillController extends Controller
             // 실제 거래처의 메일주소가 기재되지 않도록 주의
             $Cashbill->email = '';
 
-            // 발행시 알림문자 전송여부
-            $Cashbill->smssendYN = false;
-
             // 주문자 휴대폰
             // - {smssendYN} 의 값이 true 인 경우 아래 휴대폰번호로 안내 문자 전송
             $Cashbill->hp = '';
+
+            // 발행시 알림문자 전송여부
+            $Cashbill->smssendYN = false;
 
             $cashbillList[] = $Cashbill;
         }
@@ -448,9 +448,6 @@ class CashbillController extends Controller
         // 팝빌회원 사업자번호, '-' 제외 10자리
         $CorpNum = '1234567890';
 
-        // 팝빌회원 아이디
-        $UserID = 'testkorea';
-
         // 문서번호, 사업자별로 중복없이 1~24자리 영문, 숫자, '-', '_' 조합으로 구성
         $MgtKey = '20230102-PHP7-012';
 
@@ -467,6 +464,9 @@ class CashbillController extends Controller
 
         // 메모
         $Memo = '부분취소현금영수증 발행메모';
+
+        // 팝빌회원 아이디
+        $UserID = 'testkorea';
 
         // 현금영수증 취소유형 - true 기재
         $isPartCancel = true;
@@ -651,15 +651,6 @@ class CashbillController extends Controller
             'C'
         );
 
-        // 거래유형 배열 ("N" , "B" , "T" 중 선택, 다중 선택 가능)
-        // - N = 일반 , B = 도서공연 , T = 대중교통
-        // - 미입력시 전체조회
-        $TradeOpt = array(
-            'N',
-            'B',
-            'T'
-        );
-
         // 과세형태 배열 ("T" , "N" 중 선택, 다중 선택 가능)
         // - T = 과세 , N = 비과세
         // - 미입력시 전체조회
@@ -678,12 +669,21 @@ class CashbillController extends Controller
         $Order = 'D';
 
         // 식별번호 조회, 미기재시 전체조회
-        $QString = '';
+        $QString = null;
+
+        // 거래유형 배열 ("N" , "B" , "T" 중 선택, 다중 선택 가능)
+        // - N = 일반 , B = 도서공연 , T = 대중교통
+        // - 미입력시 전체조회
+        $TradeOpt = array(
+            'N',
+            'B',
+            'T'
+        );
 
         // 가맹점 종사업장 번호
         // └ 다수건 검색시 콤마(",")로 구분. 예) "1234,1000"
         // └ 미입력시 전제조회
-        $FranchiseTaxRegID = "";
+        $FranchiseTaxRegID = null;
 
         try {
             $result = $this->PopbillCashbill->Search(

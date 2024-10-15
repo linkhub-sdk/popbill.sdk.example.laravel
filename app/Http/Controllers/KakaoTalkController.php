@@ -268,9 +268,6 @@ class KakaoTalkController extends Controller
         // 팝빌회원 사업자번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
-        // 팝빌회원 아이디
-        $UserID = 'testkorea';
-
         // 승인된 알림톡 템플릿코드
         // └ 알림톡 템플릿 관리 팝업 URL(GetATSTemplateMgtURL API) 함수, 알림톡 템플릿 목록 확인(ListATStemplate API) 함수를 호출하거나
         //   팝빌사이트에서 승인된 알림톡 템플릿 코드를  확인 가능.
@@ -280,7 +277,7 @@ class KakaoTalkController extends Controller
         // altSendType = 'C' / 'A' 일 경우, 대체문자를 전송할 발신번호
         // altSendType = '' 일 경우, null 또는 공백 처리
         // ※ 대체문자를 전송하는 경우에는 사전에 등록된 발신번호 입력 필수
-        $Sender = '';
+        $Sender = null;
 
         // 알림톡 내용, 최대 1000자
         $content = '[ 팝빌 ]' . PHP_EOL;
@@ -288,10 +285,6 @@ class KakaoTalkController extends Controller
         $content .= '문의사항 있으시면 파트너센터로 편하게 연락주시기 바랍니다.' . PHP_EOL . PHP_EOL;
         $content .= '팝빌 파트너센터 : 1600-8536' . PHP_EOL;
         $content .= 'support@linkhub.co.kr' . PHP_EOL;
-
-        // 대체문자 제목
-        // - 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
-        $AltSubject = '대체문자 제목';
 
         // 대체문자 유형(altSendType)이 "A"일 경우, 대체문자로 전송할 내용 (최대 2000byte)
         // └ 팝빌이 메시지 길이에 따라 단문(90byte 이하) 또는 장문(90byte 초과)으로 전송처리
@@ -301,28 +294,31 @@ class KakaoTalkController extends Controller
         // null = 미전송, C = 알림톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
         $AltSendType = 'A';
 
-        // 예약전송일시, yyyyMMddHHmmss
-        // - 분단위 전송, 미입력 시 즉시 전송
-        $ReserveDT = '';
-
-        // 전송요청번호
-        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 할당하는 식별번호.
-        // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
-        $RequestNum = '';
-
         // 수신자 정보
-        $receivers[] = array(
+        $Messages[] = array(
             // 수신번호
             'rcv' => '',
             // 수신자명
             'rcvnm' => '수신자명'
         );
 
+        // 예약전송일시, yyyyMMddHHmmss
+        // - 분단위 전송, 미입력 시 즉시 전송
+        $ReserveDT = '';
+
+        // 팝빌회원 아이디
+        $UserID = 'testkorea';
+
+        // 전송요청번호
+        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 할당하는 식별번호.
+        // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
+        $RequestNum = '';
+
         // 알림톡 버튼정보를 템플릿 신청시 기재한 버튼정보와 동일하게 전송하는 경우 null 처리.
-        $buttons = null;
+        $Btns = null;
 
         // 버튼배열, 버튼링크URL에 #{템플릿변수}를 기재하여 승인받은 경우 URL 수정가능.
-        // $buttons[] = array(
+        // $Btns[] = array(
         //     // 버튼 표시명
         //     'n' => '템플릿 안내',
         //     // 버튼 유형, WL-웹링크, AL-앱링크, MD-메시지 전달, BK-봇키워드
@@ -332,8 +328,13 @@ class KakaoTalkController extends Controller
         //     // 링크2, [앱링크] Android, [웹링크] PC URL
         //     'u2' => 'http://www.popbill.com',
         //     // 아웃 링크, out - 디바이스 기본 브라우저, (기본값 : 카카오톡 인앱 브라우저)
+        //     //친구톡 사용 시 적용되지 않음
         //     'tg' => 'out' 
         // );
+
+        // 대체문자 제목
+        // - 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
+        $AltSubject = '대체문자 제목';
 
         try {
             $receiptNum = $this->PopbillKakao->SendATS(
@@ -343,11 +344,11 @@ class KakaoTalkController extends Controller
                 $content,
                 $altContent,
                 $AltSendType,
-                $receivers,
+                $Messages,
                 $ReserveDT,
                 $UserID,
                 $RequestNum,
-                $buttons,
+                $Btns,
                 $AltSubject
             );
         } catch (PopbillException $pe) {
@@ -370,9 +371,6 @@ class KakaoTalkController extends Controller
         // 팝빌회원 사업자번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
-        // 팝빌회원 아이디
-        $UserID = 'testkorea';
-
         // 승인된 알림톡 템플릿코드
         // └ 알림톡 템플릿 관리 팝업 URL(GetATSTemplateMgtURL API) 함수, 알림톡 템플릿 목록 확인(ListATStemplate API) 함수를 호출하거나
         //   팝빌사이트에서 승인된 알림톡 템플릿 코드를  확인 가능.
@@ -382,7 +380,7 @@ class KakaoTalkController extends Controller
         // altSendType = 'C' / 'A' 일 경우, 대체문자를 전송할 발신번호
         // altSendType = '' 일 경우, null 또는 공백 처리
         // ※ 대체문자를 전송하는 경우에는 사전에 등록된 발신번호 입력 필수
-        $Sender = '';
+        $Sender = null;
 
         // 알림톡 내용, 최대 1000자
         $content = '[ 팝빌 ]' . PHP_EOL;
@@ -390,10 +388,6 @@ class KakaoTalkController extends Controller
         $content .= '문의사항 있으시면 파트너센터로 편하게 연락주시기 바랍니다.' . PHP_EOL . PHP_EOL;
         $content .= '팝빌 파트너센터 : 1600-8536' . PHP_EOL;
         $content .= 'support@linkhub.co.kr' . PHP_EOL;
-
-        // 대체문자 제목
-        // - 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
-        $AltSubject = '대체문자 제목';
 
         // 대체문자 유형(altSendType)이 "A"일 경우, 대체문자로 전송할 내용 (최대 2000byte)
         // └ 팝빌이 메시지 길이에 따라 단문(90byte 이하) 또는 장문(90byte 초과)으로 전송처리
@@ -403,17 +397,9 @@ class KakaoTalkController extends Controller
         // null = 미전송, C = 알림톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
         $AltSendType = 'A';
 
-        // 예약전송일시, yyyyMMddHHmmss
-        $ReserveDT = null;
-
-        // 전송요청번호
-        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 할당하는 식별번호.
-        // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
-        $RequestNum = '';
-
         // 수신정보 배열, 최대 1000건
         for ($i = 0; $i < 10; $i++) {
-            $receivers[] = array(
+            $Messages[] = array(
                 // 수신번호
                 'rcv' => '',
                 // 수신자명
@@ -422,6 +408,17 @@ class KakaoTalkController extends Controller
                 'interOPRefKey' => '20220405-' . $i
             );
         }
+
+        // 예약전송일시, yyyyMMddHHmmss
+        $ReserveDT = null;
+
+        // 팝빌회원 아이디
+        $UserID = 'testkorea';
+
+        // 전송요청번호
+        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 할당하는 식별번호.
+        // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
+        $RequestNum = '';
 
         // 알림톡 버튼정보를 템플릿 신청시 기재한 버튼정보와 동일하게 전송하는 경우 null 처리.
         $buttons = null;
@@ -437,8 +434,13 @@ class KakaoTalkController extends Controller
         //     // 링크2, [앱링크] Android, [웹링크] PC URL
         //     'u2' => 'http://www.popbill.com'
         //     // 아웃 링크, out - 디바이스 기본 브라우저, (기본값 : 카카오톡 인앱 브라우저)
+        //     //친구톡 사용 시 적용되지 않음
         //     'tg' => 'out' 
         // );
+
+        // 대체문자 제목
+        // - 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
+        $AltSubject = '대체문자 제목';
 
         try {
             $receiptNum = $this->PopbillKakao->SendATS(
@@ -448,7 +450,7 @@ class KakaoTalkController extends Controller
                 $content,
                 $altContent,
                 $AltSendType,
-                $receivers,
+                $Messages,
                 $ReserveDT,
                 $UserID,
                 $RequestNum,
@@ -476,55 +478,44 @@ class KakaoTalkController extends Controller
         // 팝빌회원 사업자번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
-        // 팝빌회원 아이디
-        $UserID = 'testkorea';
-
         // 승인된 알림톡 템플릿코드
         // └ 알림톡 템플릿 관리 팝업 URL(GetATSTemplateMgtURL API) 함수, 알림톡 템플릿 목록 확인(ListATStemplate API) 함수를 호출하거나
         //   팝빌사이트에서 승인된 알림톡 템플릿 코드를  확인 가능.
         $templateCode = '019020000163';
 
-        // 알림톡 내용, 최대 1000자
-        // 사전에 승인받은 템플릿 내용과 다를 경우 전송실패 처리
-        $content = '[ 팝빌 ]' . PHP_EOL;
-        $content .= '신청하신 #{템플릿코드}에 대한 심사가 완료되어 승인 처리되었습니다.해당 템플릿으로 전송 가능합니다.' . PHP_EOL . PHP_EOL;
-        $content .= '문의사항 있으시면 파트너센터로 편하게 연락주시기 바랍니다.' . PHP_EOL . PHP_EOL;
-        $content .= '팝빌 파트너센터 : 1600-8536' . PHP_EOL;
-        $content .= 'support@linkhub.co.kr' . PHP_EOL;
-
         // 팝빌에 사전 등록된 발신번호
         // altSendType = 'C' / 'A' 일 경우, 대체문자를 전송할 발신번호
         // altSendType = '' 일 경우, null 또는 공백 처리
         // ※ 대체문자를 전송하는 경우에는 사전에 등록된 발신번호 입력 필수
-        $Sender = '';
+        $Sender = null;
+
+        // 대량 전송의 경우 미사용
+        $Content = null;
+
+        // 대량 전송의 경우 미사용
+        $AltContent = null;
 
         // 대체문자 유형 (null , "C" , "A" 중 택 1)
         // null = 미전송, C = 알림톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
         $AltSendType = 'A';
 
-        // 대체문자 제목
-        // - 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
-        // - 수신정보 배열에 대체문자 제목이 입력되지 않은 경우 적용.
-        // - 모든 수신자에게 다른 제목을 보낼 경우 464번 라인에 있는 altsjt 를 이용.
-        $AltSubject = '대체문자 제목';
-
-        // 예약전송일시, yyyyMMddHHmmss
-        $ReserveDT = null;
-
-        // 전송요청번호
-        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 할당하는 식별번호.
-        // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
-        $RequestNum = '';
+        // 알림톡 내용, 최대 1000자
+        // 사전에 승인받은 템플릿 내용과 다를 경우 전송실패 처리
+        $msg = '[ 팝빌 ]' . PHP_EOL;
+        $msg .= '신청하신 #{템플릿코드}에 대한 심사가 완료되어 승인 처리되었습니다.해당 템플릿으로 전송 가능합니다.' . PHP_EOL . PHP_EOL;
+        $msg .= '문의사항 있으시면 파트너센터로 편하게 연락주시기 바랍니다.' . PHP_EOL . PHP_EOL;
+        $msg .= '팝빌 파트너센터 : 1600-8536' . PHP_EOL;
+        $msg .= 'support@linkhub.co.kr' . PHP_EOL;
 
         // 수신정보 배열, 최대 1000건
         for ($i = 0; $i < 5; $i++) {
-            $receivers[] = array(
+            $Messages[] = array(
                 // 수신번호
                 'rcv' => '',
                 // 수신자명
                 'rcvnm' => '수신자명',
                 // 알림톡 내용, 최대 1000자
-                'message' => $content,
+                'message' => $msg,
                 // 대체문자 제목
                 // - 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
                 // - 모든 수신자에게 동일한 제목을 보낼 경우 배열의 모든 원소에 동일한 값을 입력하거나
@@ -574,18 +565,18 @@ class KakaoTalkController extends Controller
             // $btns[] = $btn2;
             //
             // // 개별 버튼정보 배열 수신자정보에 추가
-            // $receivers[$i]['btns'] = $btns;
+            // $Messages[$i]['btns'] = $btns;
         }
 
         // 버튼정보를 수정하지 않고 템플릿 신청시 기재한 버튼내용을 전송하는 경우, null처리.
         // 개별 버튼내용 전송하는 경우, null처리.
-        // $buttons = null;
+        // $Btns = null;
 
         // 동일 버튼정보 배열, 수신자별 동일 버튼내용 전송하는경우
         // 버튼링크URL에 #{템플릿변수}를 기재하여 승인받은 경우 URL 수정가능.
         // 버튼의 개수는 템플릿 신청 시 승인받은 버튼의 개수와 동일하게 생성, 다를 경우 전송실패 처리
         // 동일 버튼정보 배열 생성
-        $buttons[] = array(
+        $Btns[] = array(
             // 버튼 표시명
             'n' => '템플릿 안내',
             // 버튼 유형, WL-웹링크, AL-앱링크, MD-메시지 전달, BK-봇키워드
@@ -595,22 +586,40 @@ class KakaoTalkController extends Controller
             // 링크2, [앱링크] Android, [웹링크] PC URL
             'u2' => 'http://www.popbill.com',
             // 아웃 링크, out - 디바이스 기본 브라우저, (기본값 : 카카오톡 인앱 브라우저)
+            // 친구톡 사용 시 적용되지 않음
             'tg' => 'out' 
         );
+
+        // 예약전송일시, yyyyMMddHHmmss
+        $ReserveDT = null;
+
+        // 팝빌회원 아이디
+        $UserID = 'testkorea';
+
+        // 전송요청번호
+        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 할당하는 식별번호.
+        // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
+        $RequestNum = '';
+
+        // 대체문자 제목
+        // - 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
+        // - 수신정보 배열에 대체문자 제목이 입력되지 않은 경우 적용.
+        // - 모든 수신자에게 다른 제목을 보낼 경우 464번 라인에 있는 altsjt 를 이용.
+        $AltSubject = '대체문자 제목';
 
         try {
             $receiptNum = $this->PopbillKakao->SendATS(
                 $CorpNum,
                 $templateCode,
                 $Sender,
-                '',
-                '',
+                $Content,
+                $AltContent,
                 $AltSendType,
-                $receivers,
+                $Messages,
                 $ReserveDT,
                 $UserID,
                 $RequestNum,
-                $buttons,
+                $Btns,
                 $AltSubject
             );
         } catch (PopbillException $pe) {
@@ -633,9 +642,6 @@ class KakaoTalkController extends Controller
         // 팝빌회원 사업자번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
-        // 팝빌회원 아이디
-        $UserID = 'testkorea';
-
         // 팝빌에 등록된 카카오톡 검색용 아이디
         $PlusFriendID = '@팝빌';
 
@@ -643,14 +649,10 @@ class KakaoTalkController extends Controller
         // altSendType = 'C' / 'A' 일 경우, 대체문자를 전송할 발신번호
         // altSendType = '' 일 경우, null 또는 공백 처리
         // ※ 대체문자를 전송하는 경우에는 사전에 등록된 발신번호 입력 필수
-        $Sender = '';
+        $Sender = null;
 
         // 친구톡 내용, 최대 1000자
         $content = '친구톡 내용';
-
-        // 대체문자 제목
-        // - 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
-        $AltSubject = '대체문자 제목';
 
         // 대체문자 유형(altSendType)이 "A"일 경우, 대체문자로 전송할 내용 (최대 2000byte)
         // └ 팝빌이 메시지 길이에 따라 단문(90byte 이하) 또는 장문(90byte 초과)으로 전송처리
@@ -665,13 +667,8 @@ class KakaoTalkController extends Controller
         // - 미입력 시 기본값 false 처리
         $adsYN = False;
 
-        // 전송요청번호
-        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 할당하는 식별번호.
-        // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
-        $RequestNum = '';
-
         // 수신자 정보
-        $receivers[] = array(
+        $Messages[] = array(
             // 수신번호
             'rcv' => '',
             // 수신자명
@@ -679,7 +676,7 @@ class KakaoTalkController extends Controller
         );
 
         // 버튼배열, 최대 5개
-        $buttons[] = array(
+        $Btns[] = array(
             // 버튼 표시명
             'n' => '웹링크',
             // 버튼 유형, WL-웹링크, AL-앱링크, MD-메시지 전달, BK-봇키워드
@@ -693,8 +690,20 @@ class KakaoTalkController extends Controller
         // 예약전송일시, yyyyMMddHHmmss
         $ReserveDT = null;
 
+        // 팝빌회원 아이디
+        $UserID = 'testkorea';
+
+        // 전송요청번호
+        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 할당하는 식별번호.
+        // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
+        $RequestNum = '';
+
+        // 대체문자 제목
+        // - 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
+        $AltSubject = '대체문자 제목';
+
         try {
-            $receiptNum = $this->PopbillKakao->SendFTS($CorpNum, $PlusFriendID, $Sender, $content, $altContent, $AltSendType, $adsYN, $receivers, $buttons, $ReserveDT, $UserID, $RequestNum, $AltSubject);
+            $receiptNum = $this->PopbillKakao->SendFTS($CorpNum, $PlusFriendID, $Sender, $content, $altContent, $AltSendType, $adsYN, $Messages, $Btns, $ReserveDT, $UserID, $RequestNum, $AltSubject);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -716,9 +725,6 @@ class KakaoTalkController extends Controller
         // 팝빌회원 사업자번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
-        // 팝빌회원 아이디
-        $UserID = 'testkorea';
-
         // 팝빌에 등록된 카카오톡 검색용 아이디
         $PlusFriendID = '@팝빌';
 
@@ -726,14 +732,10 @@ class KakaoTalkController extends Controller
         // altSendType = 'C' / 'A' 일 경우, 대체문자를 전송할 발신번호
         // altSendType = '' 일 경우, null 또는 공백 처리
         // ※ 대체문자를 전송하는 경우에는 사전에 등록된 발신번호 입력 필수
-        $Sender = '';
+        $Sender = null;
 
         // 친구톡 내용, 최대 1000자
         $content = '친구톡 동일내용 대량전송';
-
-        // 대체문자 제목
-        // - 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
-        $AltSubject = '대체문자 제목';
 
         // 대체문자 내용
         $altContent = '대체문자 내용';
@@ -747,14 +749,9 @@ class KakaoTalkController extends Controller
         // - 미입력 시 기본값 false 처리
         $adsYN = False;
 
-        // 전송요청번호
-        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 할당하는 식별번호.
-        // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
-        $RequestNum = '';
-
         // 수신정보 배열, 최대 1000건
         for ($i = 0; $i < 10; $i++) {
-            $receivers[] = array(
+            $Messages[] = array(
                 // 수신번호
                 'rcv' => '',
                 // 수신자명
@@ -763,7 +760,7 @@ class KakaoTalkController extends Controller
         }
 
         // 버튼배열, 최대 5개
-        $buttons[] = array(
+        $Btns[] = array(
             // 버튼 표시명
             'n' => '웹링크',
             // 버튼 유형, WL-웹링크, AL-앱링크, MD-메시지 전달, BK-봇키워드
@@ -777,8 +774,20 @@ class KakaoTalkController extends Controller
         // 예약전송일시, yyyyMMddHHmmss
         $ReserveDT = null;
 
+        // 팝빌회원 아이디
+        $UserID = 'testkorea';
+
+        // 전송요청번호
+        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 할당하는 식별번호.
+        // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
+        $RequestNum = '';
+
+        // 대체문자 제목
+        // - 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
+        $AltSubject = '대체문자 제목';
+
         try {
-            $receiptNum = $this->PopbillKakao->SendFTS($CorpNum, $PlusFriendID, $Sender, $content, $altContent, $AltSendType, $adsYN, $receivers, $buttons, $ReserveDT, $UserID, $RequestNum, $AltSubject);
+            $receiptNum = $this->PopbillKakao->SendFTS($CorpNum, $PlusFriendID, $Sender, $content, $altContent, $AltSendType, $adsYN, $Messages, $Btns, $ReserveDT, $UserID, $RequestNum, $AltSubject);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -800,9 +809,6 @@ class KakaoTalkController extends Controller
         // 팝빌회원 사업자번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
-        // 팝빌회원 아이디
-        $UserID = 'testkorea';
-
         // 팝빌에 등록된 카카오톡 검색용 아이디
         $PlusFriendID = '@팝빌';
 
@@ -810,31 +816,26 @@ class KakaoTalkController extends Controller
         // altSendType = 'C' / 'A' 일 경우, 대체문자를 전송할 발신번호
         // altSendType = '' 일 경우, null 또는 공백 처리
         // ※ 대체문자를 전송하는 경우에는 사전에 등록된 발신번호 입력 필수
-        $Sender = '';
+        $Sender = null;
+
+         // 대량 전송의 경우 미사용
+        $Content = null;
+
+        // 대량 전송의 경우 미사용
+        $AltContent = null;
 
         // 대체문자 유형 (null , "C" , "A" 중 택 1)
         // null = 미전송, C = 친구톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
         $AltSendType = 'C';
-
-        // 대체문자 제목
-        // - 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
-        // - 수신정보 배열에 대체문자 제목이 입력되지 않은 경우 적용.
-        // - 모든 수신자에게 다른 제목을 보낼 경우 754번 라인에 있는 altsjt 를 이용.
-        $AltSubject = '대체문자 제목';
 
         // 광고성 메시지 여부 ( true , false 중 택 1)
         // └ true = 광고 , false = 일반
         // - 미입력 시 기본값 false 처리
         $adsYN = false;
 
-        // 전송요청번호
-        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 할당하는 식별번호.
-        // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
-        $RequestNum = '';
-
         // 수신정보 배열, 최대 1000건
         for ($i = 0; $i < 10; $i++) {
-            $receivers[] = array(
+            $Messages[] = array(
                 // 수신번호
                 'rcv' => '',
                 // 수신자명
@@ -886,16 +887,16 @@ class KakaoTalkController extends Controller
             // $btns[] = $btn2;
             //
             // // 개별 버튼정보 배열 수신자정보에 추가
-            // $receivers[$i]['btns'] = $btns;
+            // $Messages[$i]['btns'] = $btns;
         }
 
         // 버튼내용을 전송하지 않는 경우, null처리.
         // 개별 버튼내용 전송하는 경우, null처리.
-        // $buttons = null;
+        // $Btns = null;
 
         // 동일 버튼정보 배열, 수신자별 동일 버튼내용 전송하는경우
         // 동일 버튼정보 배열 생성, 최대 5개
-        $buttons[] = array(
+        $Btns[] = array(
             // 버튼 표시명
             'n' => '웹링크',
             // 버튼 유형, WL-웹링크, AL-앱링크, MD-메시지 전달, BK-봇키워드
@@ -909,8 +910,22 @@ class KakaoTalkController extends Controller
         // 예약전송일시, yyyyMMddHHmmss
         $ReserveDT = null;
 
+        // 팝빌회원 아이디
+        $UserID = 'testkorea';
+
+        // 전송요청번호
+        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 할당하는 식별번호.
+        // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
+        $RequestNum = '';
+
+        // 대체문자 제목
+        // - 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
+        // - 수신정보 배열에 대체문자 제목이 입력되지 않은 경우 적용.
+        // - 모든 수신자에게 다른 제목을 보낼 경우 754번 라인에 있는 altsjt 를 이용.
+        $AltSubject = '대체문자 제목';
+
         try {
-            $receiptNum = $this->PopbillKakao->SendFTS($CorpNum, $PlusFriendID, $Sender, '', '', $AltSendType, $adsYN, $receivers, $buttons, $ReserveDT, $UserID, $RequestNum);
+            $receiptNum = $this->PopbillKakao->SendFTS($CorpNum, $PlusFriendID, $Sender, $Content, $AltContent, $AltSendType, $adsYN, $Messages, $Btns, $ReserveDT, $UserID, $RequestNum, $AltSubject);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -933,9 +948,6 @@ class KakaoTalkController extends Controller
         // 팝빌회원 사업자번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
-        // 팝빌회원 아이디
-        $UserID = 'testkorea';
-
         // 팝빌에 등록된 카카오톡 검색용 아이디
         $PlusFriendID = '@팝빌';
 
@@ -943,18 +955,14 @@ class KakaoTalkController extends Controller
         // altSendType = 'C' / 'A' 일 경우, 대체문자를 전송할 발신번호
         // altSendType = '' 일 경우, null 또는 공백 처리
         // ※ 대체문자를 전송하는 경우에는 사전에 등록된 발신번호 입력 필수
-        $Sender = '07043042991';
+        $Sender = null;
 
         // 친구톡 내용, 최대 400자
         $content = '친구톡 내용';
 
-        // 대체문자 제목
-        // - 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
-        $AltSubject = '대체문자 제목';
-
         // 대체문자 유형(altSendType)이 "A"일 경우, 대체문자로 전송할 내용 (최대 2000byte)
         // └ 팝빌이 메시지 길이에 따라 단문(90byte 이하) 또는 장문(90byte 초과)으로 전송처리
-        $altContent = '대체문자 내용대체문자 내용대체문자 내용대체문자 내용대체문자 내용대체문자 내용대체문자 내용대체문자 내용대체문자 내용대체문자 내용대체문자 내용대체문자 내용';
+        $altContent = '대체문자 내용';
 
         // 대체문자 유형 (null , "C" , "A" 중 택 1)
         // null = 미전송, C = 친구톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
@@ -965,13 +973,8 @@ class KakaoTalkController extends Controller
         // - 미입력 시 기본값 false 처리
         $adsYN = True;
 
-        // 전송요청번호
-        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 할당하는 식별번호.
-        // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
-        $RequestNum = '';
-
         // 수신자 정보
-        $receivers[] = array(
+        $Messages[] = array(
             // 수신번호
             'rcv' => '',
             // 수신자명
@@ -979,7 +982,7 @@ class KakaoTalkController extends Controller
         );
 
         // 버튼배열, 최대 5개
-        $buttons[] = array(
+        $Btns[] = array(
             // 버튼 표시명
             'n' => '웹링크',
             // 버튼 유형, WL-웹링크, AL-앱링크, MD-메시지 전달, BK-봇키워드
@@ -995,12 +998,24 @@ class KakaoTalkController extends Controller
 
         // 첨부이미지 파일 경로
         // - 이미지 파일 규격: 전송 포맷 – JPG 파일 (.jpg, .jpeg), 용량 – 최대 500 Kbyte, 크기 – 가로 500px 이상, 가로 기준으로 세로 0.5~1.3배 비율 가능
-        $files = array('/image.jpg');
+        $filePaths = array('/image.jpg');
 
         // 이미지 링크 URL
         // └ 수신자가 친구톡 상단 이미지 클릭시 호출되는 URL
         // - 미입력시 첨부된 이미지를 링크 기능 없이 표시
         $ImageURL = 'http://popbill.com';
+
+        // 팝빌회원 아이디
+        $UserID = 'testkorea';
+
+        // 전송요청번호
+        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 할당하는 식별번호.
+        // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
+        $RequestNum = null;
+
+        // 대체문자 제목
+        // - 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
+        $AltSubject = '대체문자 제목';
 
         try {
             $receiptNum = $this->PopbillKakao->SendFMS(
@@ -1011,10 +1026,10 @@ class KakaoTalkController extends Controller
                 $altContent,
                 $AltSendType,
                 $adsYN,
-                $receivers,
-                $buttons,
+                $Messages,
+                $Btns,
                 $ReserveDT,
-                $files,
+                $filePaths,
                 $ImageURL,
                 $UserID,
                 $RequestNum,
@@ -1042,9 +1057,6 @@ class KakaoTalkController extends Controller
         // 팝빌회원 사업자번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
-        // 팝빌회원 아이디
-        $UserID = 'testkorea';
-
         // 팝빌에 등록된 카카오톡 검색용 아이디, ListPlusFriend API - plusFriendID 확인
         $PlusFriendID = '@팝빌';
 
@@ -1052,7 +1064,7 @@ class KakaoTalkController extends Controller
         // altSendType = 'C' / 'A' 일 경우, 대체문자를 전송할 발신번호
         // altSendType = '' 일 경우, null 또는 공백 처리
         // ※ 대체문자를 전송하는 경우에는 사전에 등록된 발신번호 입력 필수
-        $Sender = '';
+        $Sender = null;
 
         // 친구톡 내용, 최대 400자
         $content = '친구톡 내용';
@@ -1065,23 +1077,14 @@ class KakaoTalkController extends Controller
         // null = 미전송, C = 친구톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
         $AltSendType = 'A';
 
-        // 대체문자 제목
-        // 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
-        $AltSubject = '대체문자 제목';
-
         // 광고성 메시지 여부 ( true , false 중 택 1)
         // └ true = 광고 , false = 일반
         // - 미입력 시 기본값 false 처리
         $adsYN = True;
 
-        // 전송요청번호
-        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 할당하는 식별번호.
-        // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
-        $RequestNum = '';
-
         // 수신정보 배열, 최대 1000건
         for ($i = 0; $i < 10; $i++) {
-            $receivers[] = array(
+            $Messages[] = array(
                 // 수신번호
                 'rcv' => '',
                 // 수신자명
@@ -1090,7 +1093,7 @@ class KakaoTalkController extends Controller
         }
 
         // 버튼배열, 최대 5개
-        $buttons[] = array(
+        $Btns[] = array(
             // 버튼 표시명
             'n' => '웹링크',
             // 버튼 유형, WL-웹링크, AL-앱링크, MD-메시지 전달, BK-봇키워드
@@ -1106,12 +1109,24 @@ class KakaoTalkController extends Controller
 
         // 첨부이미지 파일 경로
         // - 이미지 파일 규격: 전송 포맷 – JPG 파일 (.jpg, .jpeg), 용량 – 최대 500 Kbyte, 크기 – 가로 500px 이상, 가로 기준으로 세로 0.5~1.3배 비율 가능
-        $files = array('/image.jpg');
+        $filePaths = array('/image.jpg');
 
         // 이미지 링크 URL
         // └ 수신자가 친구톡 상단 이미지 클릭시 호출되는 URL
         // - 미입력시 첨부된 이미지를 링크 기능 없이 표시
         $ImageURL = 'http://popbill.com';
+
+        // 팝빌회원 아이디
+        $UserID = 'testkorea';
+
+        // 전송요청번호
+        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 할당하는 식별번호.
+        // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
+        $RequestNum = '';
+
+        // 대체문자 제목
+        // 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
+        $AltSubject = '대체문자 제목';
 
         try {
             $receiptNum = $this->PopbillKakao->SendFMS(
@@ -1122,10 +1137,10 @@ class KakaoTalkController extends Controller
                 $altContent,
                 $AltSendType,
                 $adsYN,
-                $receivers,
-                $buttons,
+                $Messages,
+                $Btns,
                 $ReserveDT,
-                $files,
+                $filePaths,
                 $ImageURL,
                 $UserID,
                 $RequestNum,
@@ -1153,9 +1168,6 @@ class KakaoTalkController extends Controller
         // 팝빌회원 사업자번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
-        // 팝빌회원 아이디
-        $UserID = 'testkorea';
-
         // 팝빌에 등록된 카카오톡 검색용 아이디
         $PlusFriendID = '@팝빌';
 
@@ -1163,27 +1175,22 @@ class KakaoTalkController extends Controller
         // altSendType = 'C' / 'A' 일 경우, 대체문자를 전송할 발신번호
         // altSendType = '' 일 경우, null 또는 공백 처리
         // ※ 대체문자를 전송하는 경우에는 사전에 등록된 발신번호 입력 필수
-        $Sender = '';
+        $Sender = null;
+
+         // 대량 전송의 경우 미사용
+        $Content = null;
+
+        // 대량 전송의 경우 미사용
+        $AltContent = null;
 
         // 대체문자 유형 (null , "C" , "A" 중 택 1)
         // null = 미전송, C = 친구톡과 동일 내용 전송 , A = 대체문자 내용(altContent)에 입력한 내용 전송
         $AltSendType = 'A';
 
-        // 대체문자 제목
-        // - 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
-        // - 수신정보 배열에 대체문자 제목이 입력되지 않은 경우 적용.
-        // - 모든 수신자에게 다른 제목을 보낼 경우 1065번 라인에 있는 altsjt 를 이용.
-        $AltSubject = '대체문자 제목';
-
         // 광고성 메시지 여부 ( true , false 중 택 1)
         // └ true = 광고 , false = 일반
         // - 미입력 시 기본값 false 처리
         $adsYN = false;
-
-        // 전송요청번호
-        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 할당하는 식별번호.
-        // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
-        $RequestNum = '';
 
         // 수신정보 배열, 최대 1000건
         for ($i = 0; $i < 10; $i++) {
@@ -1244,11 +1251,11 @@ class KakaoTalkController extends Controller
 
         // 버튼내용을 전송하지 않는 경우, null처리.
         // 개별 버튼내용 전송하는 경우, null처리.
-        // $buttons = null;
+        // $Btns = null;
 
         // 동일 버튼정보 배열, 수신자별 동일 버튼내용 전송하는경우
         // 동일 버튼정보 배열 생성, 최대 5개
-        $buttons[] = array(
+        $Btns[] = array(
             // 버튼 표시명
             'n' => '웹링크',
             // 버튼 유형, WL-웹링크, AL-앱링크, MD-메시지 전달, BK-봇키워드
@@ -1271,17 +1278,31 @@ class KakaoTalkController extends Controller
         // - 미입력시 첨부된 이미지를 링크 기능 없이 표시
         $ImageURL = 'http://popbill.com';
 
+        // 팝빌회원 아이디
+        $UserID = 'testkorea';
+
+        // 전송요청번호
+        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 할당하는 식별번호.
+        // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
+        $RequestNum = '';
+
+        // 대체문자 제목
+        // - 메시지 길이(90byte)에 따라 장문(LMS)인 경우에만 적용.
+        // - 수신정보 배열에 대체문자 제목이 입력되지 않은 경우 적용.
+        // - 모든 수신자에게 다른 제목을 보낼 경우 1065번 라인에 있는 altsjt 를 이용.
+        $AltSubject = '대체문자 제목';
+
         try {
             $receiptNum = $this->PopbillKakao->SendFMS(
                 $CorpNum,
                 $PlusFriendID,
                 $Sender,
-                '',
-                '',
+                $Content,
+                $AltContent,
                 $AltSendType,
                 $adsYN,
                 $Messages,
-                $buttons,
+                $Btns,
                 $ReserveDT,
                 $FilePaths,
                 $ImageURL,
@@ -1493,7 +1514,7 @@ class KakaoTalkController extends Controller
         // 전송유형별 조회 (null , "0" , "1" 중 택 1)
         // └ null = 전체 , 0 = 즉시전송건 , 1 = 예약전송건
         // - 미입력 시 전체조회
-        $ReserveYN = '';
+        $ReserveYN = null;
 
         // 사용자권한별 조회 (true / false 중 택 1)
         // └ false = 접수한 카카오톡 전체 조회 (관리자권한)
@@ -1515,7 +1536,7 @@ class KakaoTalkController extends Controller
 
         // 조회하고자 하는 수신자명
         // - 미입력시 전체조회
-        $QString = '';
+        $QString = null;
 
         try {
             $result = $this->PopbillKakao->Search($CorpNum, $SDate, $EDate, $State, $Item, $ReserveYN, $SenderYN, $Page, $PerPage, $Order, $UserID, $QString);
@@ -1947,11 +1968,11 @@ class KakaoTalkController extends Controller
         // 팝빌회원 사업자번호, '-'제외 10자리
         $CorpNum = '1234567890';
 
-        // 팝빌회원 아이디
-        $UserID = 'testkorea';
-
         // 카카오톡 전송유형 ATS-알림톡, FTS-친구톡(텍스트), FMS-친구톡(이미지)
         $MessageType = ENumKakaoType::ATS;
+
+        // 팝빌회원 아이디
+        $UserID = 'testkorea';
 
         try {
             $result = $this->PopbillKakao->GetChargeInfo($CorpNum, $MessageType, $UserID);

@@ -161,9 +161,6 @@ class HTTaxinvoiceController extends Controller
         // 팝빌회원 사업자번호, '-'제외 10자리
         $CorpNum = '1234567890';
 
-        // 팝빌회원 아이디
-        $UserID = '';
-
         // 수집 요청(RequestJob) 호출시 반환받은 작업아이디
         $JobID = '';
 
@@ -184,7 +181,7 @@ class HTTaxinvoiceController extends Controller
             'Z'
         );
 
-        // 발행목적 배열 ("R" , "C", "N" 중 선택, 다중 선택 가능)
+        // 결제대금 수취여부 ("R" , "C", "N" 중 선택, 다중 선택 가능)
         // └ R = 영수, C = 청구, N = 없음
         // - 미입력 시 전체조회
         $PurposeType = array(
@@ -195,16 +192,16 @@ class HTTaxinvoiceController extends Controller
 
         // 종사업장번호 유무 (null , "0" , "1" 중 택 1)
         // - null = 전체조회 , 0 = 없음, 1 = 있음
-        $TaxRegIDYN = "";
+        $TaxRegIDYN = null;
 
         // 종사업장번호의 주체 ("S" , "B" , "T" 중 택 1)
         // - S = 공급자 , B = 공급받는자 , T = 수탁자
-        $TaxRegIDType = "";
+        $TaxRegIDType = null;
 
         // 종사업장번호
         // - 다수기재 시 콤마(",")로 구분. ex) "0001,0002"
         // - 미입력 시 전체조회
-        $TaxRegID = "";
+        $TaxRegID = null;
 
         // 페이지 번호
         $Page = 1;
@@ -215,10 +212,13 @@ class HTTaxinvoiceController extends Controller
         // 정렬방향, D-내림차순, A-오름차순
         $Order = "D";
 
+        // 팝빌회원 아이디
+        $UserID = 'testkorea';
+
         // 거래처 상호 / 사업자번호 (사업자) / 주민등록번호 (개인) / "9999999999999" (외국인) 중 검색하고자 하는 정보 입력
         // - 사업자번호 / 주민등록번호는 하이픈('-')을 제외한 숫자만 입력
         // - 미입력시 전체조회
-        $SearchString = "";
+        $SearchString = null;
 
         try {
             $result = $this->PopbillHTTaxinvoice->Search(
@@ -255,9 +255,6 @@ class HTTaxinvoiceController extends Controller
         // 팝빌회원 사업자번호, '-'제외 10자리
         $CorpNum = '1234567890';
 
-        // 팝빌회원 아이디
-        $UserID = '';
-
         // 수집 요청(RequestJob) 함수 호출시 반환받은 작업아이디
         $JobID = '';
 
@@ -278,7 +275,7 @@ class HTTaxinvoiceController extends Controller
             'Z'
         );
 
-        // 발행목적 배열 ("R" , "C", "N" 중 선택, 다중 선택 가능)
+        // 결제대금 수취여부 ("R" , "C", "N" 중 선택, 다중 선택 가능)
         // └ R = 영수, C = 청구, N = 없음
         // - 미입력 시 전체조회
         $PurposeType = array(
@@ -289,21 +286,24 @@ class HTTaxinvoiceController extends Controller
 
         // 종사업장번호 유무 (null , "0" , "1" 중 택 1)
         // - null = 전체조회 , 0 = 없음, 1 = 있음
-        $TaxRegIDYN = "";
+        $TaxRegIDYN = null;
 
         // 종사업장번호의 주체 ("S" , "B" , "T" 중 택 1)
         // - S = 공급자 , B = 공급받는자 , T = 수탁자
-        $TaxRegIDType = "";
+        $TaxRegIDType = null;
 
         // 종사업장번호
         // - 다수기재 시 콤마(",")로 구분. ex) "0001,0002"
         // - 미입력 시 전체조회
-        $TaxRegID = "";
+        $TaxRegID = null;
+
+        // 팝빌회원 아이디
+        $UserID = 'testkorea';
 
         // 거래처 상호 / 사업자번호 (사업자) / 주민등록번호 (개인) / "9999999999999" (외국인) 중 검색하고자 하는 정보 입력
         // - 사업자번호 / 주민등록번호는 하이픈('-')을 제외한 숫자만 입력
         // - 미입력시 전체조회
-        $SearchString = "";
+        $SearchString = null;
 
         try {
             $result = $this->PopbillHTTaxinvoice->Summary(

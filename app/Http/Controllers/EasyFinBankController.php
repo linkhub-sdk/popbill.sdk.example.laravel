@@ -97,7 +97,7 @@ class EasyFinBankController extends Controller
         // 조회전용 계정 아이디 (대구은행, 신협, 신한은행 필수)
         $BankAccountInfo->FastID = '';
 
-        // 조회전용 계정 비밀번호 (대구은행, 신협, 신한은행 필수
+        // 조회전용 계정 비밀번호 (대구은행, 신협, 신한은행 필수)
         $BankAccountInfo->FastPWD = '';
 
         // 정액제 이용할 개월수, 1~12 입력가능
@@ -483,7 +483,7 @@ class EasyFinBankController extends Controller
         // - 메모 = 거래내역 메모저장(SaveMemo API) 함수를 사용하여 저장한 값
         // - 비고 = EasyFinBankSearchDetail의 remark1, remark2, remark3 값
         // - 미입력시 전체조회
-        $SearchString = "";
+        $SearchString = null;
 
         // 페이지 번호
         $Page = 1;
@@ -539,7 +539,7 @@ class EasyFinBankController extends Controller
         // - 메모 = 거래내역 메모저장(SaveMemo API) 함수를 사용하여 저장한 값
         // - 비고 = EasyFinBankSearchDetail의 remark1, remark2, remark3 값
         // - 미입력시 전체조회
-        $SearchString = "";
+        $SearchString = null;
 
         // 팝빌회원 아이디
         $UserID = 'testkorea';

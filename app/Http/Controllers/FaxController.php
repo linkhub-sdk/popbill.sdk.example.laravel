@@ -136,19 +136,12 @@ class FaxController extends Controller
      */
     public function SendFAX()
     {
-
         // 팝빌회원 사업자번호
         $CorpNum = '1234567890';
-
-        // 팝빌 회원 아이디
-        $UserID = 'testkorea';
 
         // 팩스전송 발신번호
         // 팝빌에 등록되지 않은 번호를 입력하는 경우 '원발신번호'로 팩스 전송됨
         $Sender = '';
-
-        // 팩스전송 발신자명
-        $SenderName = '발신자명';
 
         // 팩스 수신정보 배열, 최대 1000건
         $Receivers[] = array(
@@ -163,6 +156,12 @@ class FaxController extends Controller
 
         // 예약전송일시(yyyyMMddHHmmss) ex) 20151212230000, null인경우 즉시전송
         $ReserveDT = null;
+
+        // 팝빌 회원 아이디
+        $UserID = 'testkorea';
+
+        // 팩스전송 발신자명
+        $SenderName = '발신자명';
 
         // 광고팩스 전송여부 , true / false 중 택 1
         // └ true = 광고 , false = 일반
@@ -204,18 +203,11 @@ class FaxController extends Controller
      */
     public function SendFAX_Multi()
     {
-
         // 팝빌회원 사업자번호
         $CorpNum = '1234567890';
 
-        // 팝빌 회원 아이디
-        $UserID = 'testkorea';
-
         // 팩스전송 발신번호
         $Sender = '';
-
-        // 팩스전송 발신자명
-        $SenderName = '발신자명';
 
         // 팩스 수신정보 배열, 최대 1000건
         $Receivers[] = array(
@@ -241,6 +233,12 @@ class FaxController extends Controller
 
         // 예약전송일시(yyyyMMddHHmmss) ex)20151212230000, null인경우 즉시전송
         $ReserveDT = null;
+
+        // 팝빌 회원 아이디
+        $UserID = 'testkorea';
+
+        // 팩스전송 발신자명
+        $SenderName = '발신자명';
 
         // 광고팩스 전송여부 , true / false 중 택 1
         // └ true = 광고 , false = 일반
@@ -283,18 +281,11 @@ class FaxController extends Controller
      */
     public function SendFAXBinary()
     {
-
         // 팝빌회원 사업자번호
         $CorpNum = '1234567890';
 
-        // 팝빌 회원 아이디
-        $UserID = 'testkorea';
-
         // 팩스전송 발신번호
         $Sender = '';
-
-        // 팩스전송 발신자명
-        $SenderName = '발신자명';
 
         // 팩스 수신정보 배열, 최대 1000건
         $Receivers[] = array(
@@ -321,6 +312,12 @@ class FaxController extends Controller
 
         // 예약전송일시(yyyyMMddHHmmss) ex) 20151212230000, null인경우 즉시전송
         $ReserveDT = null;
+
+        // 팝빌 회원 아이디
+        $UserID = 'testkorea';
+
+        // 팩스전송 발신자명
+        $SenderName = '발신자명';
 
         // 광고팩스 전송여부
         $adsYN = false;
@@ -364,14 +361,8 @@ class FaxController extends Controller
         // 팝빌회원 사업자번호
         $CorpNum = '1234567890';
 
-        // 팝빌 회원 아이디
-        $UserID = 'testkorea';
-
         // 팩스전송 발신번호
         $Sender = '';
-
-        // 팩스전송 발신자명
-        $SenderName = '발신자명';
 
         // 팩스 수신정보 배열, 최대 1000건
         $Receivers[] = array(
@@ -409,6 +400,12 @@ class FaxController extends Controller
 
         // 예약전송일시(yyyyMMddHHmmss) ex)20151212230000, null인경우 즉시전송
         $ReserveDT = null;
+
+        // 팝빌 회원 아이디
+        $UserID = 'testkorea';
+
+        // 팩스전송 발신자명
+        $SenderName = '발신자명';
 
         // 광고팩스 전송여부 , true / false 중 택 1
         // └ true = 광고 , false = 일반
@@ -458,14 +455,11 @@ class FaxController extends Controller
         // 팝빌회원 사업자번호
         $CorpNum = '1234567890';
 
-        // 팝빌 회원 아이디
-        $UserID = 'testkorea';
-
         // 팩스 접수번호
         $ReceiptNum = '022040516355100002';
 
         // 팩스전송 발신번호, 공백처리시 기존전송정보로 재전송
-        $Sender = '';
+        $SenderNum = '';
 
         // 팩스전송 발신자명, 공백처리시 기존전송정보로 재전송
         $SenderName = '발신자명';
@@ -486,6 +480,9 @@ class FaxController extends Controller
         // 예약전송일시(yyyyMMddHHmmss) ex) 20151212230000, null인경우 즉시전송
         $ReserveDT = null;
 
+        // 팝빌 회원 아이디
+        $UserID = 'testkorea';
+
         // 팩스 제목
         $title = '팩스 재전송 제목';
 
@@ -498,7 +495,7 @@ class FaxController extends Controller
             $receiptNum = $this->PopbillFax->ResendFAX(
                 $CorpNum,
                 $ReceiptNum,
-                $Sender,
+                $SenderNum,
                 $SenderName,
                 $Receivers,
                 $ReserveDT,
@@ -527,11 +524,13 @@ class FaxController extends Controller
         // 팝빌회원 사업자번호
         $CorpNum = '1234567890';
 
-        // 팝빌 회원 아이디
-        $UserID = 'testkorea';
+        // 재전송 팩스의 전송요청번호
+        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 할당하는 식별번호.
+        // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
+        $RequestNum = '';
 
         // 팩스전송 발신번호, 공백처리시 기존전송정보로 재전송
-        $Sender = '';
+        $SenderNum = '';
 
         // 팩스전송 발신자명, 공백처리시 기존전송정보로 재전송
         $SenderName = '발신자명';
@@ -549,25 +548,23 @@ class FaxController extends Controller
             );
         */
 
-        // 예약전송일시(yyyyMMddHHmmss) ex) 20151212230000, null인경우 즉시전송
-        $ReserveDT = null;
-
-        // 팩스 제목
-        $title = '팩스 재전송 제목';
-
         // 원본 팩스 전송시 할당한 전송요청번호(requestNum)
         $originalFAXrequestNum = '';
 
-        // 재전송 팩스의 전송요청번호
-        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 할당하는 식별번호.
-        // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
-        $RequestNum = '';
+        // 예약전송일시(yyyyMMddHHmmss) ex) 20151212230000, null인경우 즉시전송
+        $ReserveDT = null;
+
+        // 팝빌 회원 아이디
+        $UserID = 'testkorea';
+
+        // 팩스 제목
+        $title = '팩스 재전송 제목';
 
         try {
             $receiptNum = $this->PopbillFax->ResendFAXRN(
                 $CorpNum,
                 $RequestNum,
-                $Sender,
+                $SenderNum,
                 $SenderName,
                 $Receivers,
                 $originalFAXrequestNum,
@@ -596,11 +593,11 @@ class FaxController extends Controller
         // 팝빌회원 사업자번호
         $CorpNum = '1234567890';
 
-        // 팝빌 회원 아이디
-        $UserID = 'testkorea';
+        // 팩스 접수번호
+        $ReceiptNum = '022040516355100002';
 
         // 팩스전송 발신번호, 공백처리시 기존전송정보로 재전송
-        $Sender = '';
+        $SenderNum = '';
 
         // 팩스전송 발신자명, 공백처리시 기존전송정보로 재전송
         $SenderName = '발신자명';
@@ -629,11 +626,11 @@ class FaxController extends Controller
         // 예약전송일시(yyyyMMddHHmmss) ex)20151212230000, null인경우 즉시전송
         $ReserveDT = null;
 
+        // 팝빌 회원 아이디
+        $UserID = 'testkorea';
+
         // 팩스 제목
         $title = '팩스 재전송 제목';
-
-        // 팩스 접수번호
-        $ReceiptNum = '022040516355100002';
 
         // 재전송 팩스의 전송요청번호
         // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 할당하는 식별번호.
@@ -644,7 +641,7 @@ class FaxController extends Controller
             $receiptNum = $this->PopbillFax->ResendFAX(
                 $CorpNum,
                 $ReceiptNum,
-                $Sender,
+                $SenderNum,
                 $SenderName,
                 $Receivers,
                 $ReserveDT,
@@ -673,11 +670,13 @@ class FaxController extends Controller
         // 팝빌회원 사업자번호
         $CorpNum = '1234567890';
 
-        // 팝빌 회원 아이디
-        $UserID = 'testkorea';
+        // 재전송 팩스의 전송요청번호
+        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 할당하는 식별번호.
+        // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
+        $RequestNum = '';
 
         // 팩스전송 발신번호, 공백처리시 기존전송정보로 재전송
-        $Sender = '';
+        $SenderNum = '';
 
         // 팩스전송 발신자명, 공백처리시 기존전송정보로 재전송
         $SenderName = '발신자명';
@@ -703,25 +702,23 @@ class FaxController extends Controller
             'interOPRefKey' => '20230127-01'
         );
 
-        // 예약전송일시(yyyyMMddHHmmss) ex)20151212230000, null인경우 즉시전송
-        $ReserveDT = null;
-
-        // 팩스 제목
-        $title = '팩스 재전송 제목';
-
         // 원본 팩스 전송시 할당한 전송요청번호(requestNum)
         $originalFAXrequestNum = '';
 
-        // 재전송 팩스의 전송요청번호
-        // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 할당하는 식별번호.
-        // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
-        $RequestNum = '';
+        // 예약전송일시(yyyyMMddHHmmss) ex)20151212230000, null인경우 즉시전송
+        $ReserveDT = null;
+
+        // 팝빌 회원 아이디
+        $UserID = 'testkorea';
+
+        // 팩스 제목
+        $title = '팩스 재전송 제목';
 
         try {
             $receiptNum = $this->PopbillFax->ResendFAXRN(
                 $CorpNum,
                 $RequestNum,
-                $Sender,
+                $SenderNum,
                 $SenderName,
                 $Receivers,
                 $originalFAXrequestNum,
@@ -893,7 +890,7 @@ class FaxController extends Controller
 
         // 조회하고자 하는 발신자명 또는 수신자명
         // - 미입력시 전체조회
-        $QString = '';
+        $QString = null;
 
         try {
             $result = $this->PopbillFax->Search($CorpNum, $SDate, $EDate, $State, $ReserveYN, $SenderOnly, $Page, $PerPage, $Order, $UserID, $QString);

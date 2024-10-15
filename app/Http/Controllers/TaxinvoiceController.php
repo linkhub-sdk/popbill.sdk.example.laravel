@@ -72,11 +72,11 @@ class TaxinvoiceController extends Controller
         // 팝빌회원 사업자번호, '-' 제외 10자리
         $CorpNum = '1234567890';
 
-        // 세금계산서 문서번호, 1~24자리 (숫자, 영문, '-', '_') 조합으로 사업자 별로 중복되지 않도록 구성
-        $MgtKey = '20230102-PHP7-001';
-
         // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
         $MgtKeyType = TIENumMgtKeyType::SELL;
+
+        // 세금계산서 문서번호, 1~24자리 (숫자, 영문, '-', '_') 조합으로 사업자 별로 중복되지 않도록 구성
+        $MgtKey = '20230102-PHP7-001';
 
         try {
             $result = $this->PopbillTaxinvoice->CheckMgtKeyInUse($CorpNum, $MgtKeyType, $MgtKey);
@@ -105,34 +105,8 @@ class TaxinvoiceController extends Controller
         // 팝빌회원 사업자번호, '-' 제외 10자리
         $CorpNum = '1234567890';
 
-        // 팝빌회원 아이디
-        $UserID = 'testkorea';
-
         // 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
         $invoicerMgtKey = '20230102-PHP7-001';
-
-        // 지연발행 강제여부  (true / false 중 택 1)
-        // └ true = 가능 , false = 불가능
-        // - 미입력 시 기본값 false 처리
-        // - 발행마감일이 지난 세금계산서를 발행하는 경우, 가산세가 부과될 수 있습니다.
-        // - 가산세가 부과되더라도 발행을 해야하는 경우에는 forceIssue의 값을
-        //   true로 선언하여 발행(Issue API)를 호출하시면 됩니다.
-        $ForceIssue = false;
-
-        // 즉시발행 메모
-        $Memo = '즉시발행 메모';
-
-        // 안내메일 제목, 미기재시 기본제목으로 전송
-        $emailSubject = '';
-
-        // 거래명세서 동시작성여부 (true / false 중 택 1)
-        // └ true = 사용 , false = 미사용
-        // - 미입력 시 기본값 false 처리
-        $writeSpecification = false;
-
-        // {writeSpecification} = true인 경우, 거래명세서 문서번호 할당
-        // - 미입력시 기본값 세금계산서 문서번호와 동일하게 할당
-        $dealInvoiceMgtKey = null;
 
 
         /************************************************************
@@ -152,7 +126,7 @@ class TaxinvoiceController extends Controller
         // -'역과금'은 역발행 세금계산서 발행 시에만 이용가능
         $Taxinvoice->chargeDirection = '정과금';
 
-        // {영수, 청구, 없음} 중 기재
+        // 결제대금 수취여부, (영수, 청구, 없음) 중 기재
         $Taxinvoice->purposeType = '영수';
 
         // 과세형태, {과세, 영세, 면세} 중 기재
@@ -363,6 +337,32 @@ class TaxinvoiceController extends Controller
         $Taxinvoice->addContactList[1]->email = 'test2@test.com';                 // 이메일주소
         $Taxinvoice->addContactList[1]->contactName = '링크허브';   // 담당자명
 
+        // 팝빌회원 아이디
+        $UserID = 'testkorea';
+
+        // 거래명세서 동시작성여부 (true / false 중 택 1)
+        // └ true = 사용 , false = 미사용
+        // - 미입력 시 기본값 false 처리
+        $writeSpecification = false;
+
+        // 지연발행 강제여부  (true / false 중 택 1)
+        // └ true = 가능 , false = 불가능
+        // - 미입력 시 기본값 false 처리
+        // - 발행마감일이 지난 세금계산서를 발행하는 경우, 가산세가 부과될 수 있습니다.
+        // - 가산세가 부과되더라도 발행을 해야하는 경우에는 forceIssue의 값을
+        //   true로 선언하여 발행(Issue API)를 호출하시면 됩니다.
+        $ForceIssue = false;
+
+        // 즉시발행 메모
+        $Memo = '즉시발행 메모';
+
+        // 안내메일 제목, 미기재시 기본제목으로 전송
+        $emailSubject = '';
+
+        // {writeSpecification} = true인 경우, 거래명세서 문서번호 할당
+        // - 미입력시 기본값 세금계산서 문서번호와 동일하게 할당
+        $dealInvoiceMgtKey = null;
+
         try {
             $result = $this->PopbillTaxinvoice->RegistIssue(
                 $CorpNum,
@@ -401,12 +401,6 @@ class TaxinvoiceController extends Controller
         // 제출 아이디 ,최대 36자리 영문, 숫자, '-' 조합으로 구성
         $SubmitID = '20230102-PHP7-BULK';
 
-        // 지연발행 강제 여부
-        $ForceIssue = false;
-
-        // 팝빌 회원 아이디
-        $UserID = 'testkorea';
-
         // 세금계산서 객체정보 배열
         $TaxinvoiceList = array();
 
@@ -428,7 +422,7 @@ class TaxinvoiceController extends Controller
             // -'역과금'은 역발행 세금계산서 발행 시에만 이용가능
             $Taxinvoice->chargeDirection = '정과금';
 
-            // [영수, 청구, 없음] 중 기재
+            // 결제대금 수취여부, (영수, 청구, 없음) 중 기재
             $Taxinvoice->purposeType = '영수';
 
             // 과세형태, {과세, 영세, 면세} 중 기재
@@ -642,6 +636,12 @@ class TaxinvoiceController extends Controller
             $TaxinvoiceList[] = $Taxinvoice;
         }
 
+        // 지연발행 강제 여부
+        $ForceIssue = false;
+
+        // 팝빌 회원 아이디
+        $UserID = 'testkorea';
+
         try {
             $result = $this->PopbillTaxinvoice->BulkSubmit($CorpNum, $SubmitID, $TaxinvoiceList, $ForceIssue, $UserID);
             $code = $result->code;
@@ -703,9 +703,6 @@ class TaxinvoiceController extends Controller
         // - 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
         $invoicerMgtKey = '20230102-PHP7-002';
 
-        // 팝빌 회원 아이디
-        $UserID = 'testkorea';
-
         /************************************************************
          *                        세금계산서 정보
          ************************************************************/
@@ -724,7 +721,7 @@ class TaxinvoiceController extends Controller
         // -'역과금'은 역발행 세금계산서 발행 시에만 이용가능
         $Taxinvoice->chargeDirection = '정과금';
 
-        // [영수, 청구, 없음] 중 기재
+        // 결제대금 수취여부, (영수, 청구, 없음) 중 기재
         $Taxinvoice->purposeType = '영수';
 
         // 과세형태, {과세, 영세, 면세} 중 기재
@@ -940,6 +937,9 @@ class TaxinvoiceController extends Controller
         $Taxinvoice->addContactList[1]->email = '';                 // 이메일주소
         $Taxinvoice->addContactList[1]->contactName = '링크허브';   // 담당자명
 
+        // 팝빌 회원 아이디
+        $UserID = 'testkorea';
+
         // 거래명세서 동시작성여부 (true / false 중 택 1)
         // └ true = 사용 , false = 미사용
         // - 미입력 시 기본값 false 처리
@@ -973,9 +973,6 @@ class TaxinvoiceController extends Controller
         // 세금계산서 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
         $MgtKey = '20230102-PHP7-002';
 
-        // 팝빌 회원 아이디
-        $UserID = 'testkorea';
-
         /************************************************************
          *                        세금계산서 정보
          ************************************************************/
@@ -994,7 +991,7 @@ class TaxinvoiceController extends Controller
         // -'역과금'은 역발행 세금계산서 발행 시에만 이용가능
         $Taxinvoice->chargeDirection = '정과금';
 
-        // [영수, 청구, 없음] 중 기재
+        // 결제대금 수취여부, (영수, 청구, 없음) 중 기재
         $Taxinvoice->purposeType = '영수';
 
         // 과세형태, {과세, 영세, 면세} 중 기재
@@ -1210,6 +1207,9 @@ class TaxinvoiceController extends Controller
         $Taxinvoice->addContactList[1]->email = '';                 // 이메일주소
         $Taxinvoice->addContactList[1]->contactName = '링크허브';   // 담당자명
 
+        // 팝빌 회원 아이디
+        $UserID = 'testkorea';
+
         // 거래명세서 동시작성여부 (true / false 중 택 1)
         // └ true = 사용 , false = 미사용
         // - 미입력 시 기본값 false 처리
@@ -1328,9 +1328,6 @@ class TaxinvoiceController extends Controller
         // 팝빌회원 사업자번호, '-' 제외 10자리
         $CorpNum = '1234567890';
 
-        // 팝빌회원 아이디
-        $UserID = 'testkorea';
-
         // 공급받는자 문서번호
         // - 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
         $invoiceeMgtKey = '20230102-PHP7-003';
@@ -1353,7 +1350,7 @@ class TaxinvoiceController extends Controller
         // -'역과금'은 역발행 세금계산서 발행 시에만 이용가능
         $Taxinvoice->chargeDirection = '정과금';
 
-        // {영수, 청구, 없음} 중 기재
+        // 결제대금 수취여부, (영수, 청구, 없음) 중 기재
         $Taxinvoice->purposeType = '영수';
 
         // 과세형태, {과세, 영세, 면세} 중 기재
@@ -1549,6 +1546,9 @@ class TaxinvoiceController extends Controller
         // 메모
         $Memo = '즉시요청 메모';
 
+        // 팝빌회원 아이디
+        $UserID = 'testkorea';
+
         try {
             $result = $this->PopbillTaxinvoice->RegistRequest($CorpNum, $Taxinvoice, $Memo, $UserID);
             $code = $result->code;
@@ -1680,11 +1680,11 @@ class TaxinvoiceController extends Controller
         // 팝빌회원 사업자번호, '-' 제외 10자리
         $CorpNum = '1234567890';
 
-        // 문서번호
-        $MgtKey = '20230102-PHP7-001';
-
         // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
         $MgtKeyType = TIENumMgtKeyType::SELL;
+
+        // 문서번호
+        $MgtKey = '20230102-PHP7-001';
 
         // 팝빌회원 아이디
         $UserID = 'testkorea';
@@ -1859,9 +1859,6 @@ class TaxinvoiceController extends Controller
         // 팝빌회원 사업자번호, '-' 제외 10자리
         $CorpNum = '1234567890';
 
-        // 팝빌회원 아이디
-        $UserID = 'testkorea';
-
         // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
         $MgtKeyType = TIENumMgtKeyType::SELL;
 
@@ -1899,6 +1896,47 @@ class TaxinvoiceController extends Controller
             'Z'
         );
 
+        // 지연발행 여부 (null , true , false 중 택 1)
+        // - null = 전체조회 , true = 지연발행 , false = 정상발행
+        $LateOnly = null;
+
+        // 페이지 번호 기본값 1
+        $Page = 1;
+
+        // 페이지당 검색갯수, 기본값 500, 최대값 1000
+        $PerPage = 5;
+
+        // 정렬방향, D-내림차순, A-오름차순
+        $Order = 'D';
+
+        // 종사업장번호의 주체 ("S" , "B" , "T" 중 택 1)
+        // └ S = 공급자 , B = 공급받는자 , T = 수탁자
+        // - 미입력시 전체조회
+        $TaxRegIDType = "S";
+
+        // 종사업장번호 유무 (null , "0" , "1" 중 택 1)
+        // - null = 전체 , 0 = 없음, 1 = 있음
+        $TaxRegIDYN = null;
+
+        // 종사업장번호
+        // 다수기재시 콤마(",")로 구분하여 구성 ex ) "0001,0002"
+        // - 미입력시 전체조회
+        $TaxRegID = null;
+
+        // 거래처 상호 / 사업자번호 (사업자) / 주민등록번호 (개인) / "9999999999999" (외국인) 중 검색하고자 하는 정보 입력
+        // └ 사업자번호 / 주민등록번호는 하이픈('-')을 제외한 숫자만 입력
+        // - 미입력시 전체조회
+        $QString = null;
+
+        // 연동문서 여부 (null , "0" , "1" 중 택 1)
+        // └ null = 전체조회 , 0 = 일반문서 , 1 = 연동문서
+        // - 일반문서 : 팝빌 사이트를 통해 저장 또는 발행한 세금계산서
+        // - 연동문서 : 팝빌 API를 통해 저장 또는 발행한 세금계산서
+        $InterOPYN = null;
+
+        // 팝빌회원 아이디
+        $UserID = 'testkorea';
+
         // 발행형태 배열 ("N" , "R" , "T" 중 선택, 다중 선택 가능)
         // - N = 정발행 , R = 역발행 , T = 위수탁발행
         // - 미입력시 전체조회
@@ -1919,6 +1957,9 @@ class TaxinvoiceController extends Controller
             '3'
         );
 
+        // 문서번호 또는 국세청승인번호 조회
+        $MgtKey = null;
+
         // 등록유형 배열 ("P" , "H" 중 선택, 다중 선택 가능)
         // - P = 팝빌에서 등록 , H = 홈택스 또는 외부ASP 등록
         // - 미입력시 전체조회
@@ -1926,47 +1967,6 @@ class TaxinvoiceController extends Controller
             'P',
             'H'
         );
-
-        // 지연발행 여부 (null , true , false 중 택 1)
-        // - null = 전체조회 , true = 지연발행 , false = 정상발행
-        $LateOnly = null;
-
-        // 종사업장번호 유무 (null , "0" , "1" 중 택 1)
-        // - null = 전체 , 0 = 없음, 1 = 있음
-        $TaxRegIDYN = "";
-
-        // 종사업장번호의 주체 ("S" , "B" , "T" 중 택 1)
-        // └ S = 공급자 , B = 공급받는자 , T = 수탁자
-        // - 미입력시 전체조회
-        $TaxRegIDType = "S";
-
-        // 종사업장번호
-        // 다수기재시 콤마(",")로 구분하여 구성 ex ) "0001,0002"
-        // - 미입력시 전체조회
-        $TaxRegID = "";
-
-        // 페이지 번호 기본값 1
-        $Page = 1;
-
-        // 페이지당 검색갯수, 기본값 500, 최대값 1000
-        $PerPage = 5;
-
-        // 정렬방향, D-내림차순, A-오름차순
-        $Order = 'D';
-
-        // 거래처 상호 / 사업자번호 (사업자) / 주민등록번호 (개인) / "9999999999999" (외국인) 중 검색하고자 하는 정보 입력
-        // └ 사업자번호 / 주민등록번호는 하이픈('-')을 제외한 숫자만 입력
-        // - 미입력시 전체조회
-        $QString = '';
-
-        // 문서번호 또는 국세청승인번호 조회
-        $MgtKey = '';
-
-        // 연동문서 여부 (null , "0" , "1" 중 택 1)
-        // └ null = 전체조회 , 0 = 일반문서 , 1 = 연동문서
-        // - 일반문서 : 팝빌 사이트를 통해 저장 또는 발행한 세금계산서
-        // - 연동문서 : 팝빌 API를 통해 저장 또는 발행한 세금계산서
-        $InterOPYN = '';
 
         try {
             $result = $this->PopbillTaxinvoice->Search(
@@ -2707,29 +2707,29 @@ class TaxinvoiceController extends Controller
      *
      * 메일전송유형
      * [정발행]
-     * - TAX_ISSUE : 공급받는자에게 전자세금계산서가 발행 되었음을 알려주는 메일입니다.
-     * - TAX_ISSUE_INVOICER : 공급자에게 전자세금계산서가 발행 되었음을 알려주는 메일입니다.
-     * - TAX_CHECK : 공급자에게 전자세금계산서가 수신확인 되었음을 알려주는 메일입니다.
-     * - TAX_CANCEL_ISSUE : 공급받는자에게 전자세금계산서가 발행취소 되었음을 알려주는 메일입니다.
+     * - TAX_ISSUE_INVOICER : 공급자에게 전자세금계산서 발행 사실을 안내하는 메일
+     * - TAX_CHECK : 공급자에게 전자세금계산서 수신확인 사실을 안내하는 메일
+     * - TAX_CANCEL_ISSUE : 공급받는자에게 전자세금계산서 발행취소 사실을 안내하는 메일
      *
      * [역발행]
-     * - TAX_REQUEST : 공급자에게 세금계산서를 전자서명 하여 발행을 요청하는 메일입니다.
-     * - TAX_CANCEL_REQUEST : 공급받는자에게 세금계산서가 취소 되었음을 알려주는 메일입니다.
-     * - TAX_REFUSE : 공급받는자에게 세금계산서가 거부 되었음을 알려주는 메일입니다.
+     * - TAX_REQUEST : 공급자에게 전자세금계산서를 발행을 요청하는 메일
+     * - TAX_CANCEL_REQUEST : 공급받는자에게 전자세금계산서 취소 사실을 안내하는 메일
+     * - TAX_REFUSE : 공급받는자에게 전자세금계산서 거부 사실을 안내하는 메일
+     * - TAX_REVERSE_ISSUE : 공급받는자에게 전자세금계산서 발행 사실을 안내하는 메일
      *
      * [위수탁발행]
-     * - TAX_TRUST_ISSUE : 공급받는자에게 전자세금계산서가 발행 되었음을 알려주는 메일입니다.
-     * - TAX_TRUST_ISSUE_TRUSTEE : 수탁자에게 전자세금계산서가 발행 되었음을 알려주는 메일입니다.
-     * - TAX_TRUST_ISSUE_INVOICER : 공급자에게 전자세금계산서가 발행 되었음을 알려주는 메일입니다.
-     * - TAX_TRUST_CANCEL_ISSUE : 공급받는자에게 전자세금계산서가 발행취소 되었음을 알려주는 메일입니다.
-     * - TAX_TRUST_CANCEL_ISSUE_INVOICER : 공급자에게 전자세금계산서가 발행취소 되었음을 알려주는 메일입니다.
+     * - TAX_TRUST_ISSUE : 공급받는자에게 전자세금계산서 발행 사실을 안내하는 메일
+     * - TAX_TRUST_ISSUE_TRUSTEE : 수탁자에게 전자세금계산서 발행 사실을 안내하는 메일
+     * - TAX_TRUST_ISSUE_INVOICER : 공급자에게 전자세금계산서 발행 사실을 안내하는 메일
+     * - TAX_TRUST_CANCEL_ISSUE : 공급받는자에게 전자세금계산서 발행취소 사실을 안내하는 메일
+     * - TAX_TRUST_CANCEL_ISSUE_INVOICER : 공급자에게 전자세금계산서 발행취소 사실을 안내하는 메일
      *
      * [처리결과]
-     * - TAX_CLOSEDOWN : 거래처의 휴폐업 여부를 확인하여 안내하는 메일입니다.
-     * - TAX_NTSFAIL_INVOICER : 전자세금계산서 국세청 전송실패를 안내하는 메일입니다.
+     * - TAX_CLOSEDOWN : 거래처의 휴폐업 여부를 확인하여 안내하는 메일
+     * - TAX_NTSFAIL_INVOICER : 전자세금계산서 국세청 전송실패를 안내하는 메일
      *
      * [정기발송]
-     * - ETC_CERT_EXPIRATION : 팝빌에서 이용중인 공인인증서의 갱신을 안내하는 메일입니다.
+     * - ETC_CERT_EXPIRATION : 팝빌에 등록된 인증서의 만료예정을 안내하는 메일
      */
     public function UpdateEmailConfig()
     {
@@ -3727,7 +3727,7 @@ class TaxinvoiceController extends Controller
         // 발행형태, [정발행, 역발행, 위수탁] 중 기재
         $Taxinvoice->issueType = "정발행";
 
-        // [영수, 청구, 없음] 중 기재
+        // 결제대금 수취여부, (영수, 청구, 없음) 중 기재
         $Taxinvoice->purposeType = "영수";
 
         // 과세형태, [과세, 영세, 면세] 중 기재
@@ -4029,7 +4029,7 @@ class TaxinvoiceController extends Controller
         // 발행형태, [정발행, 역발행, 위수탁] 중 기재
         $Taxinvoice->issueType = "정발행";
 
-        // [영수, 청구, 없음] 중 기재
+        // 결제대금 수취여부, (영수, 청구, 없음) 중 기재
         $Taxinvoice->purposeType = "영수";
 
         // 과세형태, [과세, 영세, 면세] 중 기재
@@ -4322,7 +4322,7 @@ class TaxinvoiceController extends Controller
         // 발행형태, [정발행, 역발행, 위수탁] 중 기재
         $Taxinvoice->issueType = "정발행";
 
-        // [영수, 청구, 없음] 중 기재
+        // 결제대금 수취여부, (영수, 청구, 없음) 중 기재
         $Taxinvoice->purposeType = "영수";
 
         // 과세형태, [과세, 영세, 면세] 중 기재
@@ -4607,7 +4607,7 @@ class TaxinvoiceController extends Controller
         // 발행형태, [정발행, 역발행, 위수탁] 중 기재
         $Taxinvoice->issueType = "정발행";
 
-        // [영수, 청구, 없음] 중 기재
+        // 결제대금 수취여부, (영수, 청구, 없음) 중 기재
         $Taxinvoice->purposeType = "영수";
 
         // 과세형태, [과세, 영세, 면세] 중 기재
@@ -4893,7 +4893,7 @@ class TaxinvoiceController extends Controller
         // 발행형태, [정발행, 역발행, 위수탁] 중 기재
         $Taxinvoice->issueType = "정발행";
 
-        // [영수, 청구, 없음] 중 기재
+        // 결제대금 수취여부, (영수, 청구, 없음) 중 기재
         $Taxinvoice->purposeType = "영수";
 
         // 과세형태, [과세, 영세, 면세] 중 기재
@@ -5180,7 +5180,7 @@ class TaxinvoiceController extends Controller
         // 발행형태, [정발행, 역발행, 위수탁] 중 기재
         $Taxinvoice->issueType = "정발행";
 
-        // [영수, 청구, 없음] 중 기재
+        // 결제대금 수취여부, (영수, 청구, 없음) 중 기재
         $Taxinvoice->purposeType = "영수";
 
 
@@ -5473,7 +5473,7 @@ class TaxinvoiceController extends Controller
         // 발행형태, [정발행, 역발행, 위수탁] 중 기재
         $Taxinvoice->issueType = "정발행";
 
-        // [영수, 청구, 없음] 중 기재
+        // 결제대금 수취여부, (영수, 청구, 없음) 중 기재
         $Taxinvoice->purposeType = "영수";
 
 
@@ -5760,7 +5760,7 @@ class TaxinvoiceController extends Controller
         // 발행형태, [정발행, 역발행, 위수탁] 중 기재
         $Taxinvoice->issueType = "정발행";
 
-        // [영수, 청구, 없음] 중 기재
+        // 결제대금 수취여부, (영수, 청구, 없음) 중 기재
         $Taxinvoice->purposeType = "영수";
 
         // 과세형태, [과세, 영세, 면세] 중 기재

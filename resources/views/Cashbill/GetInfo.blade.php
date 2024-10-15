@@ -39,7 +39,6 @@
                 <li> ntsresultCode (국세청 처리결과 상태코드) : {{ $cbInfo->ntsresultCode }}</li>
                 <li> ntsresultMessage (국세청 처리결과 메시지) : {{ $cbInfo->ntsresultMessage }}</li>
                 <li> printYN (인쇄여부) : {{ $cbInfo->printYN }}</li>
-                <li> interOPYN (연동문서 여부) : {{ $cbInfo->interOPYN }}</li>
             </ul>
           </fieldset>
           @endforeach
