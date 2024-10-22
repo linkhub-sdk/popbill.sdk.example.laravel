@@ -144,11 +144,9 @@ class MessageController extends Controller
         $CorpNum = '1234567890';
 
         // 팝빌에 사전 등록된 발신번호
-        // 단건전송, 동보전송 경우 사용
         $Sender = '';
 
         // 메시지 내용
-        // 단건전송, 동보전송 경우 사용
         $Content = '';
 
         // 문자전송정보
@@ -167,10 +165,7 @@ class MessageController extends Controller
         $UserID = 'testkorea';
 
         // 발신자명
-        // 단건전송, 동보전송 경우 사용
         $senderName = '';
-
-        $SystemYN = false;
 
         // 전송요청번호
         // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 할당하는 식별번호.
@@ -178,7 +173,7 @@ class MessageController extends Controller
         $RequestNum = null;
 
         try {
-            $receiptNum = $this->PopbillMessaging->SendSMS($CorpNum, $Sender, $Content, $Messages, $ReserveDT, $adsYN, $UserID, $senderName, $SystemYN, $RequestNum);
+            $receiptNum = $this->PopbillMessaging->SendSMS($CorpNum, $Sender, $Content, $Messages, $ReserveDT, $adsYN, $UserID, $senderName, $RequestNum);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -231,15 +226,13 @@ class MessageController extends Controller
         // 대량전송 경우 사용하지 않음.
         $senderName = null;
 
-        $SystemYN = false;
-
         // 전송요청번호
         // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 할당하는 식별번호.
         // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         $RequestNum = null;
 
         try {
-            $receiptNum = $this->PopbillMessaging->SendSMS($CorpNum, $Sender, $Content, $Messages, $ReserveDT, $adsYN, $UserID, $senderName, $SystemYN, $RequestNum);
+            $receiptNum = $this->PopbillMessaging->SendSMS($CorpNum, $Sender, $Content, $Messages, $ReserveDT, $adsYN, $UserID, $senderName, $RequestNum);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -259,15 +252,12 @@ class MessageController extends Controller
         $CorpNum = '1234567890';
 
         // 팝빌에 사전 등록된 발신번호
-        // 단건전송, 동보전송 경우 사용
         $Sender = '';
 
         // 메시지 제목
-        // 단건전송, 동보전송 경우 사용
         $Subject = '';
 
         // 메시지 내용
-        // 단건전송, 동보전송 경우 사용
         $Content = '';
 
         // 믄지전송정보
@@ -286,10 +276,7 @@ class MessageController extends Controller
         $UserID = 'testkorea';
 
         // 발신자명
-        // 단건전송, 동보전송 경우 사용
         $senderName = '';
-
-        $SystemYN = false;
 
         // 전송요청번호
         // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 할당하는 식별번호.
@@ -297,7 +284,7 @@ class MessageController extends Controller
         $RequestNum = null;
 
         try {
-            $receiptNum = $this->PopbillMessaging->SendLMS($CorpNum, $Sender, $Subject, $Content, $Messages, $ReserveDT, $adsYN, $UserID, $senderName, $SystemYN, $RequestNum);
+            $receiptNum = $this->PopbillMessaging->SendLMS($CorpNum, $Sender, $Subject, $Content, $Messages, $ReserveDT, $adsYN, $UserID, $senderName, $RequestNum);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -355,15 +342,13 @@ class MessageController extends Controller
         // 대량전송 경우 사용하지 않음
         $senderName = null;
 
-        $SystemYN = false;
-
         // 전송요청번호
         // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 할당하는 식별번호.
         // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         $RequestNum = null;
 
         try {
-            $receiptNum = $this->PopbillMessaging->SendLMS($CorpNum, $Sender, $Subject, $Content, $Messages, $ReserveDT, $adsYN, $UserID, $senderName, $SystemYN, $RequestNum);
+            $receiptNum = $this->PopbillMessaging->SendLMS($CorpNum, $Sender, $Subject, $Content, $Messages, $ReserveDT, $adsYN, $UserID, $senderName, $RequestNum);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -384,15 +369,12 @@ class MessageController extends Controller
         $CorpNum = '1234567890';
 
         // 팝빌에 사전 등록된 발신번호
-        // 단건전송, 동보전송 경우 사용
         $Sender = '';
 
         // 메시지 제목
-        // 단건전송, 동보전송 경우 사용
         $Subject = '';
 
         // 메시지 내용
-        // 단건전송, 동보전송 경우 사용
         $Content = '';
 
         // 문자전송정보
@@ -414,10 +396,7 @@ class MessageController extends Controller
         $UserID = 'testkorea';
 
         // 발신자명
-        // 단건전송, 동보전송 경우 사용
         $senderName = '';
-
-        $SystemYN = false;
 
         // 전송요청번호
         // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 할당하는 식별번호.
@@ -425,7 +404,7 @@ class MessageController extends Controller
         $RequestNum = null;
 
         try {
-            $receiptNum = $this->PopbillMessaging->SendMMS($CorpNum, $Sender, $Subject, $Content, $Messages, $FilePaths, $ReserveDT, $adsYN, $UserID, $senderName, $SystemYN, $RequestNum);
+            $receiptNum = $this->PopbillMessaging->SendMMS($CorpNum, $Sender, $Subject, $Content, $Messages, $FilePaths, $ReserveDT, $adsYN, $UserID, $senderName, $RequestNum);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -488,15 +467,13 @@ class MessageController extends Controller
         // 대량전송 경우 사용하지 않음.
         $senderName = null;
 
-        $SystemYN = false;
-
         // 전송요청번호
         // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 할당하는 식별번호.
         // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         $RequestNum = null;
 
         try {
-            $receiptNum = $this->PopbillMessaging->SendMMS($CorpNum, $Sender, $Subject, $Content, $Messages, $FilePaths, $ReserveDT, $adsYN, $UserID, $senderName, $SystemYN, $RequestNum);
+            $receiptNum = $this->PopbillMessaging->SendMMS($CorpNum, $Sender, $Subject, $Content, $Messages, $FilePaths, $ReserveDT, $adsYN, $UserID, $senderName, $RequestNum);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -516,15 +493,12 @@ class MessageController extends Controller
         $CorpNum = '1234567890';
 
         // 팝빌에 사전 등록된 발신번호
-        // 단건전송, 동보전송 경우 사용
         $Sender = '';
 
         // 메시지 제목
-        // 단건전송, 동보전송 경우 사용
         $Subject = '';
 
         // 메시지 내용
-        // 단건전송, 동보전송 경우 사용
         $Content = '';
 
         $Messages[] = array(
@@ -542,10 +516,7 @@ class MessageController extends Controller
         $UserID = 'testkorea';
 
         // 발신자명
-        // 단건전송, 동보전송 경우 사용
         $senderName = '';
-
-        $SystemYN = false;
 
         // 전송요청번호
         // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 할당하는 식별번호.
@@ -553,7 +524,7 @@ class MessageController extends Controller
         $RequestNum = null;
 
         try {
-            $receiptNum = $this->PopbillMessaging->SendXMS($CorpNum, $Sender, $Subject, $Content, $Messages, $ReserveDT, $adsYN, $UserID, $senderName, $SystemYN, $RequestNum);
+            $receiptNum = $this->PopbillMessaging->SendXMS($CorpNum, $Sender, $Subject, $Content, $Messages, $ReserveDT, $adsYN, $UserID, $senderName, $RequestNum);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -586,7 +557,7 @@ class MessageController extends Controller
 
         // 문자전송정보, 최대 1000건
         $Messages = array();
-        for ($i = 0; $i < 100; $i++) {
+        for ($i = 0; $i < 10; $i++) {
             $Messages[] = array(
                 'snd' => '',    // 발신번호, 팝빌에 등록되지 않은 발신번호 기재시 오류처리
                 'sndnm' => '발신자명',     // 발신자명
@@ -611,15 +582,13 @@ class MessageController extends Controller
         // 단건전송, 동보전송 경우 사용
         $senderName = null;
 
-        $SystemYN = false;
-
         // 전송요청번호
         // 팝빌이 접수 단위를 식별할 수 있도록 파트너가 할당하는 식별번호.
         // 1~36자리로 구성. 영문, 숫자, 하이픈(-), 언더바(_)를 조합하여 팝빌 회원별로 중복되지 않도록 할당.
         $RequestNum = null;
 
         try {
-            $receiptNum = $this->PopbillMessaging->SendXMS($CorpNum, $Sender, $Subject, $Content, $Messages, $ReserveDT, $adsYN, $UserID, $senderName, $SystemYN, $RequestNum);
+            $receiptNum = $this->PopbillMessaging->SendXMS($CorpNum, $Sender, $Subject, $Content, $Messages, $ReserveDT, $adsYN, $UserID, $senderName, $RequestNum);
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
@@ -844,7 +813,7 @@ class MessageController extends Controller
         // 팝빌 회원 아이디
         $UserID = 'testkorea';
 
-        // 조회하고자 하는 발신자명 또는 수신자명
+        // 조회 검색어(발신자명/수신자명)
         // - 미입력시 전체조회
         $QString = null;
 

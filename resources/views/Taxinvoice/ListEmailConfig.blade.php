@@ -12,9 +12,7 @@
         <legend>{{\Request::fullUrl()}}</legend>
           <ul>
           @foreach ($Result as $index => $object)
-              @if ($object->emailType == "TAX_ISSUE")
-                <li>[정발행] TAX_ISSUE (공급받는자에게 전자세금계산서 발행 메일 전송 여부) : {{ $object->sendYN ? 'true' : 'false' }}</li>
-              @elseif ($object->emailType == "TAX_ISSUE_INVOICER")
+              @if ($object->emailType == "TAX_ISSUE_INVOICER")
                 <li>[정발행] TAX_ISSUE_INVOICER (공급자에게 전자세금계산서 발행 메일 전송 여부) : {{ $object->sendYN ? 'true' : 'false' }}</li>
               @elseif ($object->emailType == "TAX_CHECK")
                 <li>[정발행] TAX_CHECK (공급자에게 전자세금계산서 수신확인 메일 전송 여부) : {{ $object->sendYN ? 'true' : 'false' }}</li>
@@ -26,6 +24,8 @@
                 <li>[역발행] TAX_CANCEL_REQUEST (공급받는자에게 세금계산서 취소 메일 전송 여부) : {{ $object->sendYN ? 'true' : 'false' }}</li>
               @elseif ($object->emailType == "TAX_REFUSE")
                 <li>[역발행] TAX_REFUSE (공급받는자에게 세금계산서 거부 메일 전송 여부) : {{ $object->sendYN ? 'true' : 'false' }}</li>
+              @elseif ($object->emailType == "TAX_REVERSE_ISSUE")
+                <li>[역발행] TAX_REFUSE (공급받는자에게 세금계산서 발행 메일 전송 여부) : {{ $object->sendYN ? 'true' : 'false' }}</li>
               @elseif ($object->emailType == "TAX_TRUST_ISSUE")
                 <li>[위수탁발행] TAX_TRUST_ISSUE (공급받는자에게 전자세금계산서 발행 메일 전송 여부) : {{ $object->sendYN ? 'true' : 'false' }}</li>
               @elseif ($object->emailType == "TAX_TRUST_ISSUE_TRUSTEE")

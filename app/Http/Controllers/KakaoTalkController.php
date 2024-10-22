@@ -7,10 +7,7 @@
   * 연동 기술지원 이메일 : code@linkhubcorp.com
   *
   * <테스트 연동개발 준비사항>
-  *  1) 발신번호 사전등록을 합니다. (등록방법은 사이트/API 두가지 방식이 있습니다.)
-  *    - 1. 팝빌 사이트 로그인 > [문자/팩스] > [카카오톡] > [발신번호 사전등록] 메뉴에서 등록
-  *    - 2. getSenderNumberMgtURL API를 통해 반환된 URL을 이용하여 발신번호 등록
-  *  2) 비즈니스 채널 등록 및 알림톡 템플릿을 신청합니다.
+  *   비즈니스 채널 등록 및 알림톡 템플릿을 신청합니다.
   *    - 1. 비즈니스 채널 등록 (등록방법은 사이트/API 두가지 방식이 있습니다.)
   *       └ 팝빌 사이트 로그인 [문자/팩스] > [카카오톡] > [카카오톡 관리] > '카카오톡 채널 관리' 메뉴에서 등록
   *       └ GetPlusFriendMgtURL API 를 통해 반환된 URL을 이용하여 등록
@@ -328,7 +325,8 @@ class KakaoTalkController extends Controller
         //     // 링크2, [앱링크] Android, [웹링크] PC URL
         //     'u2' => 'http://www.popbill.com',
         //     // 아웃 링크, out - 디바이스 기본 브라우저, (기본값 : 카카오톡 인앱 브라우저)
-        //     //친구톡 사용 시 적용되지 않음
+        //     // 미입력시 기본값 적용
+        //     // 친구톡 사용 시 적용되지 않음
         //     'tg' => 'out' 
         // );
 
@@ -434,6 +432,7 @@ class KakaoTalkController extends Controller
         //     // 링크2, [앱링크] Android, [웹링크] PC URL
         //     'u2' => 'http://www.popbill.com'
         //     // 아웃 링크, out - 디바이스 기본 브라우저, (기본값 : 카카오톡 인앱 브라우저)
+        //     // 미입력시 기본값 적용
         //     //친구톡 사용 시 적용되지 않음
         //     'tg' => 'out' 
         // );
@@ -508,7 +507,7 @@ class KakaoTalkController extends Controller
         $msg .= 'support@linkhub.co.kr' . PHP_EOL;
 
         // 수신정보 배열, 최대 1000건
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 10; $i++) {
             $Messages[] = array(
                 // 수신번호
                 'rcv' => '',
@@ -586,6 +585,7 @@ class KakaoTalkController extends Controller
             // 링크2, [앱링크] Android, [웹링크] PC URL
             'u2' => 'http://www.popbill.com',
             // 아웃 링크, out - 디바이스 기본 브라우저, (기본값 : 카카오톡 인앱 브라우저)
+            // 미입력시 기본값 적용
             // 친구톡 사용 시 적용되지 않음
             'tg' => 'out' 
         );
@@ -1534,7 +1534,7 @@ class KakaoTalkController extends Controller
         // 팝빌 회원 아이디
         $UserID = 'testkorea';
 
-        // 조회하고자 하는 수신자명
+        // 조회 검색어(수신자명)
         // - 미입력시 전체조회
         $QString = null;
 

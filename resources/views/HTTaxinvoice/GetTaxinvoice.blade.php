@@ -19,7 +19,7 @@
           <li>taxTotal (세액 합계) : {{ $Taxinvoice->taxTotal }}</li>
           <li>supplyCostTotal (공급가액 합계) : {{ $Taxinvoice->supplyCostTotal }}</li>
           <li>totalAmount (합계금액) : {{ $Taxinvoice->totalAmount }}</li>
-          <li>purposeType (영수/청구) : {{ $Taxinvoice->purposeType }}</li>
+          <li>purposeType (결제대금 수취여부) : {{ $Taxinvoice->purposeType }}</li>
           <li>serialNum (일련번호) : {{ $Taxinvoice->serialNum }}</li>
           <li>cash (현금) : {{ $Taxinvoice->cash }}</li>
           <li>chkBill (수표) : {{ $Taxinvoice->chkBill }}</li>

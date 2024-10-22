@@ -836,7 +836,7 @@ class StatementController extends Controller
         // 정렬방향, D-내림차순, A-오름차순
         $Order = 'D';
 
-        // 통합검색어, 거래처 상호명 또는 거래처 사업자번호로 조회
+        // 조회 검색어(거래처 상호/사업자번호)
         // - 미입력시 전체조회
         $QString = null;
 

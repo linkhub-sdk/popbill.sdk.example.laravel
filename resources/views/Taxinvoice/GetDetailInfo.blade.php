@@ -43,7 +43,7 @@
             <li> invoiceeType (공급받는자 구분) : {{ $Taxinvoice->invoiceeType}}  </li>
             <li> invoiceeMgtKey (공급받는자 문서번호) : {{ $Taxinvoice->invoiceeMgtKey }} </li>
             <li> invoiceeCorpName (공급받는자 상호) : {{ $Taxinvoice->invoiceeCorpName }} </li>
-            <li> invoiceeCEOName (공급받는자 대표자명 : {{ $Taxinvoice->invoiceeCEOName }} </li>
+            <li> invoiceeCEOName (공급받는자 대표자명) : {{ $Taxinvoice->invoiceeCEOName }} </li>
             <li> invoiceeAddr (공급받는자 주소) : {{ $Taxinvoice->invoiceeAddr }} </li>
             <li> invoiceeBizType (공급받는자 업태) : {{ $Taxinvoice->invoiceeBizType }} </li>
             <li> invoiceeBizClass (공급받는자 종목) : {{ $Taxinvoice->invoiceeBizClass }} </li>
@@ -55,7 +55,7 @@
             <li> closeDownState (공급받는자 휴폐업상태) : {{ $Taxinvoice->closeDownState}} </li>
             <li> closeDownStateDate (공급받는자 휴폐업일자) : {{ $Taxinvoice->closeDownStateDate}} </li>
 
-            <li> purposeType (영수/청구) : {{ $Taxinvoice->purposeType }} </li>
+            <li> purposeType (결제대금 수취여부) : {{ $Taxinvoice->purposeType }} </li>
             <li> serialNum (일련번호) : {{ $Taxinvoice->serialNum}}  </li>
             <li> remark1 (비고1) : {{ $Taxinvoice->remark1}}  </li>
             <li> remark2 (비고2) : {{ $Taxinvoice->remark2 }} </li>

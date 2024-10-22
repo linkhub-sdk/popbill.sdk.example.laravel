@@ -6,9 +6,6 @@
   * 연동 기술지원 연락처 : 1600-9854
   * 연동 기술지원 이메일 : code@linkhubcorp.com
   *
-  * 1) 발신번호 사전등록을 합니다. (등록방법은 사이트/API 두가지 방식이 있습니다.)
-  *    - 1. 팝빌 사이트 로그인 > [문자/팩스] > [팩스] > [발신번호 사전등록] 메뉴에서 등록
-  *    - 2. getSenderNumberMgtURL API를 통해 반환된 URL을 이용하여 발신번호 등록
   */
 namespace App\Http\Controllers;
 
@@ -210,23 +207,16 @@ class FaxController extends Controller
         $Sender = '';
 
         // 팩스 수신정보 배열, 최대 1000건
-        $Receivers[] = array(
-            // 팩스 수신번호
-            'rcv' => '070111222',
-            // 팩스 수신자명
-            'rcvnm' => '팝빌담당자',
-            // 파트너 지정키, 보전송시 수신자 구별용 메모
-            'interOPRefKey' => '20230127-01'
-        );
-
-        $Receivers[] = array(
-            // 팩스 수신번호
-            'rcv' => '070333444',
-            // 팩스 수신자명
-            'rcvnm' => '수신담당자',
-            // 파트너 지정키, 보전송시 수신자 구별용 메모
-            'interOPRefKey' => '20230127-01'
-        );
+        for($i=0; $i<10; $i++){
+            $Receivers[] = array(
+                // 팩스 수신번호
+                'rcv' => '070333444',
+                // 팩스 수신자명
+                'rcvnm' => '수신담당자',
+                // 파트너 지정키, 보전송시 수신자 구별용 메모
+                'interOPRefKey' => '20230127-'.$i
+            );
+        }
 
         // 팩스전송파일, 해당파일에 읽기 권한이 설정되어 있어야 함. 최대 20개.
         $Files = array('/test.pdf');
@@ -365,23 +355,16 @@ class FaxController extends Controller
         $Sender = '';
 
         // 팩스 수신정보 배열, 최대 1000건
-        $Receivers[] = array(
-            // 팩스 수신번호
-            'rcv' => '070111222',
-            // 팩스 수신자명
-            'rcvnm' => '팝빌담당자',
-            // 파트너 지정키, 보전송시 수신자 구별용 메모
-            'interOPRefKey' => '20230127-01'
-        );
-
-        $Receivers[] = array(
-            // 팩스 수신번호
-            'rcv' => '070333444',
-            // 팩스 수신자명
-            'rcvnm' => '수신담당자',
-            // 파트너 지정키, 보전송시 수신자 구별용 메모
-            'interOPRefKey' => '20230127-01'
-        );
+        for($i=0; $i<10; $i++){
+            $Receivers[] = array(
+                // 팩스 수신번호
+                'rcv' => '070111222',
+                // 팩스 수신자명
+                'rcvnm' => '팝빌담당자',
+                // 파트너 지정키, 보전송시 수신자 구별용 메모
+                'interOPRefKey' => '20230127-'.$i
+            );
+        }
 
         // 파일정보 배열, 최대 20개.
         $FileDatas[] = array(
@@ -606,22 +589,16 @@ class FaxController extends Controller
         //$Receivers = NULL;
 
         // 팩스 수신정보가 기존전송정보와 다르게 동보전송하는 경우 아래의 코드 참조
-        $Receivers[] = array(
-            // 팩스 수신번호
-            'rcv' => '070111222',
-            // 팩스 수신자명
-            'rcvnm' => '팝빌담당자',
-            // 파트너 지정키, 보전송시 수신자 구별용 메모
-            'interOPRefKey' => '20230127-01'
-        );
-        $Receivers[] = array(
-            // 팩스 수신번호
-            'rcv' => '070333444',
-            // 팩스 수신자명
-            'rcvnm' => '수신담당자',
-            // 파트너 지정키, 보전송시 수신자 구별용 메모
-            'interOPRefKey' => '20230127-01'
-        );
+        for($i=0; $i<10; $i++){
+            $Receivers[] = array(
+                // 팩스 수신번호
+                'rcv' => '070111222',
+                // 팩스 수신자명
+                'rcvnm' => '팝빌담당자',
+                // 파트너 지정키, 보전송시 수신자 구별용 메모
+                'interOPRefKey' => '20230127-'.$i
+            );
+        }
 
         // 예약전송일시(yyyyMMddHHmmss) ex)20151212230000, null인경우 즉시전송
         $ReserveDT = null;
@@ -685,22 +662,16 @@ class FaxController extends Controller
         //$Receivers = NULL;
 
         // 팩스 수신정보가 기존전송정보와 다르게 동보전송하는 경우 아래의 코드 참조
-        $Receivers[] = array(
-            // 팩스 수신번호
-            'rcv' => '070111222',
-            // 팩스 수신자명
-            'rcvnm' => '팝빌담당자',
-            // 파트너 지정키, 보전송시 수신자 구별용 메모
-            'interOPRefKey' => '20230127-01'
-        );
-        $Receivers[] = array(
-            // 팩스 수신번호
-            'rcv' => '070333444',
-            // 팩스 수신자명
-            'rcvnm' => '수신담당자',
-            // 파트너 지정키, 보전송시 수신자 구별용 메모
-            'interOPRefKey' => '20230127-01'
-        );
+        for($i=0; $i<10; $i++){
+            $Receivers[] = array(
+                // 팩스 수신번호
+                'rcv' => '070111222',
+                // 팩스 수신자명
+                'rcvnm' => '팝빌담당자',
+                // 파트너 지정키, 보전송시 수신자 구별용 메모
+                'interOPRefKey' => '20230127-01'
+            );
+        }
 
         // 원본 팩스 전송시 할당한 전송요청번호(requestNum)
         $originalFAXrequestNum = '';
@@ -888,7 +859,7 @@ class FaxController extends Controller
         // 팝빌 회원 아이디
         $UserID = 'testkorea';
 
-        // 조회하고자 하는 발신자명 또는 수신자명
+        // 조회 검색어(발신자명/수신자명)
         // - 미입력시 전체조회
         $QString = null;
 
