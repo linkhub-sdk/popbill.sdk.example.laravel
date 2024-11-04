@@ -26,7 +26,7 @@
               <li> itemCode (문서종류코드) : {{ $stmtInfo->itemCode }}</li>
               <li> stateCode (상태코드) : {{ $stmtInfo->stateCode }}</li>
               <li> taxType (세금형태) : {{ $stmtInfo->taxType }}</li>
-              <li> purposeType (결제대금 수취여부) : {{ $stmtInfo->purposeType }}</li>
+              <li> purposeType (영수/청구) : {{ $stmtInfo->purposeType }}</li>
               <li> writeDate (작성일자) : {{ $stmtInfo->writeDate }}</li>
               <li> senderCorpName (발신자 상호) : {{ $stmtInfo->senderCorpName }}</li>
               <li> senderCorpNum (발신자 사업자번호) : {{ $stmtInfo->senderCorpNum }}</li>

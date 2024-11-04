@@ -17,7 +17,7 @@
                 <li>itemKey (팝빌번호) : {{ $tiInfo->itemKey }}</li>
                 <li>stateCode (상태코드) : {{ $tiInfo->stateCode }}</li>
                 <li>taxType (과세형태) : {{ $tiInfo->taxType }}</li>
-                <li>purposeType (결제대금 수취여부) : {{ $tiInfo->purposeType }}</li>
+                <li>purposeType (영수/청구) : {{ $tiInfo->purposeType }}</li>
                 <li>modifyCode (수정 사유코드) : {{ $tiInfo->modifyCode }}</li>
                 <li>issueType (발행형태) : {{ $tiInfo->issueType }}</li>
                 <li>lateIssueYN (지연발행 여부) : {{ $tiInfo->lateIssueYN ? 'true' : 'false' }}</li>

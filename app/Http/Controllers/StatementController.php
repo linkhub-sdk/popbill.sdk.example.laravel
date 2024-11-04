@@ -110,7 +110,7 @@ class StatementController extends Controller
         // 기재상 작성일자
         $Statement->writeDate = '20220405';
 
-        // 결제대금 수취여부, (영수, 청구, 없음) 중 기재
+        // 영수/청구, (영수, 청구, 없음) 중 기재
         $Statement->purposeType = '영수';
 
         //  과세형태, (과세, 영세, 면세) 중 기재
@@ -284,7 +284,7 @@ class StatementController extends Controller
         // 기재상 작성일자
         $Statement->writeDate = '20220405';
 
-        // 결제대금 수취여부, (영수, 청구, 없음) 중 기재
+        // 영수/청구, (영수, 청구, 없음) 중 기재
         $Statement->purposeType = '영수';
 
         //  과세형태, (과세, 영세, 면세) 중 기재
@@ -449,7 +449,7 @@ class StatementController extends Controller
         // 기재상 작성일자
         $Statement->writeDate = '20230102';
 
-        // 결제대금 수취여부 (영수, 청구, 없음) 중 기재
+        // 영수/청구 (영수, 청구, 없음) 중 기재
         $Statement->purposeType = '청구';
 
         //  과세형태, (과세, 영세, 면세) 중 기재
@@ -1408,7 +1408,7 @@ class StatementController extends Controller
         // 기재상 작성일자
         $Statement->writeDate = '20230102';
 
-        // 결제대금 수취여부 (영수, 청구, 없음) 중 기재
+        // 영수/청구 (영수, 청구, 없음) 중 기재
         $Statement->purposeType = '영수';
 
         //  과세형태, (과세, 영세, 면세) 중 기재

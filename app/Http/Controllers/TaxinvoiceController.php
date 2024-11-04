@@ -126,7 +126,7 @@ class TaxinvoiceController extends Controller
         // -'역과금'은 역발행 세금계산서 발행 시에만 이용가능
         $Taxinvoice->chargeDirection = '정과금';
 
-        // 결제대금 수취여부, (영수, 청구, 없음) 중 기재
+        // 영수/청구, (영수, 청구, 없음) 중 기재
         $Taxinvoice->purposeType = '영수';
 
         // 과세형태, {과세, 영세, 면세} 중 기재
@@ -422,7 +422,7 @@ class TaxinvoiceController extends Controller
             // -'역과금'은 역발행 세금계산서 발행 시에만 이용가능
             $Taxinvoice->chargeDirection = '정과금';
 
-            // 결제대금 수취여부, (영수, 청구, 없음) 중 기재
+            // 영수/청구, (영수, 청구, 없음) 중 기재
             $Taxinvoice->purposeType = '영수';
 
             // 과세형태, {과세, 영세, 면세} 중 기재
@@ -721,7 +721,7 @@ class TaxinvoiceController extends Controller
         // -'역과금'은 역발행 세금계산서 발행 시에만 이용가능
         $Taxinvoice->chargeDirection = '정과금';
 
-        // 결제대금 수취여부, (영수, 청구, 없음) 중 기재
+        // 영수/청구, (영수, 청구, 없음) 중 기재
         $Taxinvoice->purposeType = '영수';
 
         // 과세형태, {과세, 영세, 면세} 중 기재
@@ -991,7 +991,7 @@ class TaxinvoiceController extends Controller
         // -'역과금'은 역발행 세금계산서 발행 시에만 이용가능
         $Taxinvoice->chargeDirection = '정과금';
 
-        // 결제대금 수취여부, (영수, 청구, 없음) 중 기재
+        // 영수/청구, (영수, 청구, 없음) 중 기재
         $Taxinvoice->purposeType = '영수';
 
         // 과세형태, {과세, 영세, 면세} 중 기재
@@ -1350,7 +1350,7 @@ class TaxinvoiceController extends Controller
         // -'역과금'은 역발행 세금계산서 발행 시에만 이용가능
         $Taxinvoice->chargeDirection = '정과금';
 
-        // 결제대금 수취여부, (영수, 청구, 없음) 중 기재
+        // 영수/청구, (영수, 청구, 없음) 중 기재
         $Taxinvoice->purposeType = '영수';
 
         // 과세형태, {과세, 영세, 면세} 중 기재
@@ -3727,7 +3727,7 @@ class TaxinvoiceController extends Controller
         // 발행형태, [정발행, 역발행, 위수탁] 중 기재
         $Taxinvoice->issueType = "정발행";
 
-        // 결제대금 수취여부, (영수, 청구, 없음) 중 기재
+        // 영수/청구, (영수, 청구, 없음) 중 기재
         $Taxinvoice->purposeType = "영수";
 
         // 과세형태, [과세, 영세, 면세] 중 기재
@@ -4029,7 +4029,7 @@ class TaxinvoiceController extends Controller
         // 발행형태, [정발행, 역발행, 위수탁] 중 기재
         $Taxinvoice->issueType = "정발행";
 
-        // 결제대금 수취여부, (영수, 청구, 없음) 중 기재
+        // 영수/청구, (영수, 청구, 없음) 중 기재
         $Taxinvoice->purposeType = "영수";
 
         // 과세형태, [과세, 영세, 면세] 중 기재
@@ -4322,7 +4322,7 @@ class TaxinvoiceController extends Controller
         // 발행형태, [정발행, 역발행, 위수탁] 중 기재
         $Taxinvoice->issueType = "정발행";
 
-        // 결제대금 수취여부, (영수, 청구, 없음) 중 기재
+        // 영수/청구, (영수, 청구, 없음) 중 기재
         $Taxinvoice->purposeType = "영수";
 
         // 과세형태, [과세, 영세, 면세] 중 기재
@@ -4607,7 +4607,7 @@ class TaxinvoiceController extends Controller
         // 발행형태, [정발행, 역발행, 위수탁] 중 기재
         $Taxinvoice->issueType = "정발행";
 
-        // 결제대금 수취여부, (영수, 청구, 없음) 중 기재
+        // 영수/청구, (영수, 청구, 없음) 중 기재
         $Taxinvoice->purposeType = "영수";
 
         // 과세형태, [과세, 영세, 면세] 중 기재
@@ -4893,7 +4893,7 @@ class TaxinvoiceController extends Controller
         // 발행형태, [정발행, 역발행, 위수탁] 중 기재
         $Taxinvoice->issueType = "정발행";
 
-        // 결제대금 수취여부, (영수, 청구, 없음) 중 기재
+        // 영수/청구, (영수, 청구, 없음) 중 기재
         $Taxinvoice->purposeType = "영수";
 
         // 과세형태, [과세, 영세, 면세] 중 기재
@@ -5180,7 +5180,7 @@ class TaxinvoiceController extends Controller
         // 발행형태, [정발행, 역발행, 위수탁] 중 기재
         $Taxinvoice->issueType = "정발행";
 
-        // 결제대금 수취여부, (영수, 청구, 없음) 중 기재
+        // 영수/청구, (영수, 청구, 없음) 중 기재
         $Taxinvoice->purposeType = "영수";
 
 
@@ -5473,7 +5473,7 @@ class TaxinvoiceController extends Controller
         // 발행형태, [정발행, 역발행, 위수탁] 중 기재
         $Taxinvoice->issueType = "정발행";
 
-        // 결제대금 수취여부, (영수, 청구, 없음) 중 기재
+        // 영수/청구, (영수, 청구, 없음) 중 기재
         $Taxinvoice->purposeType = "영수";
 
 
@@ -5760,7 +5760,7 @@ class TaxinvoiceController extends Controller
         // 발행형태, [정발행, 역발행, 위수탁] 중 기재
         $Taxinvoice->issueType = "정발행";
 
-        // 결제대금 수취여부, (영수, 청구, 없음) 중 기재
+        // 영수/청구, (영수, 청구, 없음) 중 기재
         $Taxinvoice->purposeType = "영수";
 
         // 과세형태, [과세, 영세, 면세] 중 기재

@@ -55,7 +55,7 @@
             <li> closeDownState (공급받는자 휴폐업상태) : {{ $Taxinvoice->closeDownState}} </li>
             <li> closeDownStateDate (공급받는자 휴폐업일자) : {{ $Taxinvoice->closeDownStateDate}} </li>
 
-            <li> purposeType (결제대금 수취여부) : {{ $Taxinvoice->purposeType }} </li>
+            <li> purposeType (영수/청구) : {{ $Taxinvoice->purposeType }} </li>
             <li> serialNum (일련번호) : {{ $Taxinvoice->serialNum}}  </li>
             <li> remark1 (비고1) : {{ $Taxinvoice->remark1}}  </li>
             <li> remark2 (비고2) : {{ $Taxinvoice->remark2 }} </li>

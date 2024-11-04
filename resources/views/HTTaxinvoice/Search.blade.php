@@ -28,7 +28,7 @@
               <li>sendDate (전송일자) : {{ $tiInfo->sendDate }}</li>
               <li>invoiceType (구분) : {{ $tiInfo->invoiceType }}</li>
               <li>taxType (과세형태) : {{ $tiInfo->taxType }}</li>
-              <li>purposeType (결제대금 수취여부) : {{ $tiInfo->purposeType }}</li>
+              <li>purposeType (영수/청구) : {{ $tiInfo->purposeType }}</li>
               <li>supplyCostTotal (공급가액 합계) : {{ $tiInfo->supplyCostTotal }}</li>
               <li>taxTotal (세액 합계) : {{ $tiInfo->taxTotal }}</li>
               <li>totalAmount (합계금액) : {{ $tiInfo->totalAmount }}</li>
