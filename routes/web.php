@@ -39,7 +39,7 @@ Route::get('/Message/{APIName}','MessageController@RouteHandelerFunc');
 Route::get('/KakaoTalk', function () { return view('KakaoTalk/index'); });
 Route::get('/KakaoTalk/{APIName}','KakaoTalkController@RouteHandelerFunc');
 
-// 휴폐업조회 Route Mapping
+// 사업자등록상태조회(휴폐업조회) Route Mapping
 Route::get('/CloseDown', function () { return view('CloseDown/index'); });
 Route::get('/CloseDown/{APIName}','ClosedownController@RouteHandelerFunc');
 

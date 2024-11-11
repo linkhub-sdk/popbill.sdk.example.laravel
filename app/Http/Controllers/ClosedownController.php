@@ -1,6 +1,6 @@
 <?php
 /**
-  * 팝빌 휴폐업조회 API PHP SDK Laravel Example
+  * 팝빌 사업자등록상태조회 (휴폐업조회) API PHP SDK Laravel Example
   *
   * Laravel 연동 튜토리얼 안내 : https://developers.popbill.com/guide/closedown/php/getting-started/tutorial?fwn=laravel
   * 연동 기술지원 연락처 : 1600-9854
@@ -29,7 +29,7 @@ class ClosedownController extends Controller
         // 통신방식 설정
         define('LINKHUB_COMM_MODE', config('popbill.LINKHUB_COMM_MODE'));
 
-        // 휴폐업조회 서비스 클래스 초기화
+        // 사업자등록상태조회 (휴폐업조회) 서비스 클래스 초기화
         $this->PopbillClosedown = new PopbillClosedown(config('popbill.LinkID'), config('popbill.SecretKey'));
 
         // 연동환경 설정, true-테스트, false-운영(Production), (기본값:false)
@@ -53,7 +53,7 @@ class ClosedownController extends Controller
     }
 
     /**
-     * 사업자번호 1건에 대한 휴폐업정보를 확인합니다.
+     * 사업자번호 1건에 대한 사업자등록상태 (휴폐업) 를 확인합니다.
      * - https://developers.popbill.com/reference/closedown/php/api/check#CheckCorpNum
      */
     public function CheckCorpNum()
@@ -76,7 +76,7 @@ class ClosedownController extends Controller
     }
 
     /**
-     * 다수건의 사업자번호에 대한 휴폐업정보를 확인합니다. (최대 1,000건)
+     * 다수건의 사업자번호에 대한 사업자등록상태 (휴폐업) 를 확인합니다. (최대 1,000건)
      * - https://developers.popbill.com/reference/closedown/php/api/check#CheckCorpNums
      */
     public function CheckCorpNums()
@@ -417,7 +417,7 @@ class ClosedownController extends Controller
     }
 
     /**
-     * 휴폐업 조회시 과금되는 포인트 단가를 확인합니다.
+     * 사업자등록상태 (휴폐업) 조회시 과금되는 포인트 단가를 확인합니다.
      * - https://developers.popbill.com/reference/closedown/php/api/point#GetUnitCost
      */
     public function GetUnitCost()
@@ -433,7 +433,7 @@ class ClosedownController extends Controller
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
         }
-        return view('ReturnValue', ['filedName' => "휴폐업조회 단가", 'value' => $unitCost]);
+        return view('ReturnValue', ['filedName' => "사업자등록상태조회(휴폐업조회) 단가", 'value' => $unitCost]);
     }
 
     /**
@@ -482,7 +482,7 @@ class ClosedownController extends Controller
     }
 
     /**
-     * 휴폐업조회 API 서비스 과금정보를 확인합니다.
+     * 사업자등록상태조회(휴폐업조회) API 서비스 과금정보를 확인합니다.
      * - https://developers.popbill.com/reference/closedown/php/api/point#GetChargeInfo
      */
     public function GetChargeInfo()

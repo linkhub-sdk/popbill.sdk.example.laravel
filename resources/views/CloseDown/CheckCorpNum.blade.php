@@ -15,7 +15,7 @@
                 <p class="info">> taxType (사업 유형) : null-알수없음, 10-일반과세자, 20-면세과세자, 30-간이과세자, 31-간이과세자(세금계산서 발급사업자), 40-비영리법인, 국가기관</p>
                 @foreach ($Result as $indexKey => $corpInfo)
                 <fieldset class="fieldset2">
-                    <legend>휴폐업조회 확인 [{{ $indexKey+1 }} / {{ count($Result) }}]</legend>
+                    <legend>사업자등록상태조회 (휴폐업조회) 확인 [{{ $indexKey+1 }} / {{ count($Result) }}]</legend>
                     <ul>
                         <li>사업자번호 (corpNum) : {{ $corpInfo->corpNum }}</li>
                         <li>휴폐업상태 (state) : {{ $corpInfo->state }}</li>

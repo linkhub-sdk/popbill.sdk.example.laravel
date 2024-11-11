@@ -9,7 +9,7 @@
 
 <body>
     <div id="content">
-        <p class="heading1">팝빌 홈택스연동(현금영수증) API SDK PHP Laravel Example.</p>
+        <p class="heading1">팝빌 홈택스수집(현금영수증) API SDK PHP Laravel Example.</p>
         <br />
         <fieldset class="fieldset1">
             <legend>홈택스 현금영수증 매입/매출 내역 수집</legend>
@@ -27,10 +27,10 @@
             </ul>
         </fieldset>
         <fieldset class="fieldset1">
-            <legend>홈택스연동 인증 관리</legend>
+            <legend>홈택스수집 인증 관리</legend>
             <ul>
-                <li><a href="HTCashbill/GetCertificatePopUpURL">GetCertificatePopUpURL</a> (홈택스연동 인증 관리 팝업 URL)</li>
-                <li><a href="HTCashbill/GetCertificateExpireDate">GetCertificateExpireDate</a> (홈택스연동 공인인증서 만료일자 확인)</li>
+                <li><a href="HTCashbill/GetCertificatePopUpURL">GetCertificatePopUpURL</a> (홈택스수집 인증 관리 팝업 URL)</li>
+                <li><a href="HTCashbill/GetCertificateExpireDate">GetCertificateExpireDate</a> (홈택스수집 공인인증서 만료일자 확인)</li>
                 <li><a href="HTCashbill/CheckCertValidation">CheckCertValidation</a> (홈택스 공인인증서 로그인 테스트)</li>
                 <li><a href="HTCashbill/RegistDeptUser">RegistDeptUser</a> (부서사용자 계정등록)</li>
                 <li><a href="HTCashbill/CheckDeptUser">CheckDeptUser</a> (부서사용자 등록정보 확인)</li>
