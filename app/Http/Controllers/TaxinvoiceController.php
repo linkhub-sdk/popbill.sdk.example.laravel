@@ -2738,7 +2738,7 @@ class TaxinvoiceController extends Controller
         $CorpNum = '1234567890';
 
         // 메일 전송 유형
-        $emailType = 'TAX_ISSUE';
+        $emailType = 'TAX_ISSUE_INVOICER';
 
         // 전송 여부 (True = 전송, False = 미전송)
         $sendYN = True;
