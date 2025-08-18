@@ -5,12 +5,6 @@
   * Laravel 연동 튜토리얼 안내 : https://developers.popbill.com/guide/taxinvoice/php/getting-started/tutorial?fwn=laravel
   * 연동 기술지원 연락처 : 1600-9854
   * 연동 기술지원 이메일 : code@linkhubcorp.com
-  *
-  * <테스트 연동개발 준비사항>
-  * 1) 전자세금계산서 인증서 등록
-  *    - 전자세금계산서 발행을 위해 공인인증서를 등록합니다.
-  *    - 팝빌사이트 로그인 > [전자세금계산서] > [환경설정] > [공인인증서 관리]
-  *    - 공인인증서 등록 팝업 URL (GetTaxCertURL API)을 이용하여 등록
   */
 namespace App\Http\Controllers;
 
@@ -2149,35 +2143,7 @@ class TaxinvoiceController extends Controller
         return view('ReturnValue', ['filedName' => "세금계산서 인쇄 팝업 URL", 'value' => $url]);
     }
 
-    /**
-     * 세금계산서 1건을 구버전 양식으로 인쇄하기 위한 페이지의 팝업 URL을 반환하며, 페이지내에서 인쇄 설정값을 "공급자" / "공급받는자" / "공급자+공급받는자"용 중 하나로 지정할 수 있습니다..
-     * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-     * - https://developers.popbill.com/reference/taxinvoice/php/api/view#GetOldPrintURL
-     */
-    public function GetOldPrintURL()
-    {
-
-        // 팝빌회원 사업자 번호, "-"제외 10자리
-        $CorpNum = '1234567890';
-
-        // 발행유형, SELL:매출, BUY:매입, TRUSTEE:위수탁
-        $MgtKeyType = TIENumMgtKeyType::SELL;
-
-        // 문서번호
-        $MgtKey = '20230102-PHP7-001';
-
-        // 팝빌회원 아이디
-        $UserID = 'testkorea';
-
-        try {
-            $url = $this->PopbillTaxinvoice->GetOldPrintURL($CorpNum, $MgtKeyType, $MgtKey, $UserID);
-        } catch (PopbillException $pe) {
-            $code = $pe->getCode();
-            $message = $pe->getMessage();
-            return view('PResponse', ['code' => $code, 'message' => $message]);
-        }
-        return view('ReturnValue', ['filedName' => "세금계산서 (구)인쇄 팝업 URL", 'value' => $url]);
-    }
+    
 
     /**
      * "공급받는자" 용 세금계산서 1건을 인쇄하기 위한 페이지의 팝업 URL을 반환합니다.
@@ -2882,7 +2848,7 @@ class TaxinvoiceController extends Controller
     /**
      * 연동회원의 잔여포인트를 확인합니다.
      * - 과금방식이 파트너과금인 경우 파트너 잔여포인트(GetPartnerBalance API) 함수를 통해 확인하시기 바랍니다.
-     * - https://developers.popbill.com/reference/taxinvoice/php/api/point#GetBalance
+     * - https://developers.popbill.com/reference/taxinvoice/php/common-api/point#GetBalance
      */
     public function GetBalance()
     {
@@ -2903,7 +2869,7 @@ class TaxinvoiceController extends Controller
 
     /**
      * 연동회원의 포인트 사용내역을 확인합니다.
-     * - https://developers.popbill.com/reference/taxinvoice/php/api/point#GetUseHistory
+     * - https://developers.popbill.com/reference/taxinvoice/php/common-api/point#GetUseHistory
      */
     public function GetUseHistory()
     {
@@ -2941,7 +2907,7 @@ class TaxinvoiceController extends Controller
 
     /**
      * 연동회원의 포인트 결제내역을 확인합니다.
-     * - https://developers.popbill.com/reference/taxinvoice/php/api/point#GetPaymentHistory
+     * - https://developers.popbill.com/reference/taxinvoice/php/common-api/point#GetPaymentHistory
      */
     public function GetPaymentHistory()
     {
@@ -2976,7 +2942,7 @@ class TaxinvoiceController extends Controller
 
     /**
      * 환불 신청내역을 확인합니다.
-     * - https://developers.popbill.com/reference/taxinvoice/php/api/point#GetRefundHistory
+     * - https://developers.popbill.com/reference/taxinvoice/php/common-api/point#GetRefundHistory
      */
     public function GetRefundHistory()
     {
@@ -3005,7 +2971,7 @@ class TaxinvoiceController extends Controller
 
     /**
      * 환불을 신청합니다.
-     * - https://developers.popbill.com/reference/taxinvoice/php/api/point#Refund
+     * - https://developers.popbill.com/reference/taxinvoice/php/common-api/point#Refund
      */
     public function Refund()
     {
@@ -3053,7 +3019,7 @@ class TaxinvoiceController extends Controller
 
     /**
      * 연동회원 포인트 충전을 위해 무통장입금을 신청합니다.
-     * - https://developers.popbill.com/reference/taxinvoice/php/api/point#PaymentRequest
+     * - https://developers.popbill.com/reference/taxinvoice/php/common-api/point#PaymentRequest
      */
     public function PaymentRequest()
     {
@@ -3097,7 +3063,7 @@ class TaxinvoiceController extends Controller
 
     /**
      * 연동회원 포인트 무통장 입금신청내역 1건을 확인합니다.
-     * - https://developers.popbill.com/reference/taxinvoice/php/api/point#GetSettleResult
+     * - https://developers.popbill.com/reference/taxinvoice/php/common-api/point#GetSettleResult
      */
     public function GetSettleResult()
     {
@@ -3124,7 +3090,7 @@ class TaxinvoiceController extends Controller
     /**
      * 연동회원 포인트 충전을 위한 페이지의 팝업 URL을 반환합니다.
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-     * - https://developers.popbill.com/reference/taxinvoice/php/api/point#GetChargeURL
+     * - https://developers.popbill.com/reference/taxinvoice/php/common-api/point#GetChargeURL
      */
     public function GetChargeURL()
     {
@@ -3149,7 +3115,7 @@ class TaxinvoiceController extends Controller
     /**
      * 연동회원 포인트 결제내역 확인을 위한 페이지의 팝업 URL을 반환합니다.
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-     * - https://developers.popbill.com/reference/taxinvoice/php/api/point#GetPaymentURL
+     * - https://developers.popbill.com/reference/taxinvoice/php/common-api/point#GetPaymentURL
      */
     public function GetPaymentURL()
     {
@@ -3174,7 +3140,7 @@ class TaxinvoiceController extends Controller
     /**
      * 연동회원 포인트 사용내역 확인을 위한 페이지의 팝업 URL을 반환합니다.
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-     * - https://developers.popbill.com/reference/taxinvoice/php/api/point#GetUseHistoryURL
+     * - https://developers.popbill.com/reference/taxinvoice/php/common-api/point#GetUseHistoryURL
      */
     public function GetUseHistoryURL()
     {
@@ -3199,7 +3165,7 @@ class TaxinvoiceController extends Controller
     /**
      * 파트너의 잔여포인트를 확인합니다.
      * - 과금방식이 연동과금인 경우 연동회원 잔여포인트 확인(GetBalance API) 함수를 이용하시기 바랍니다.
-     * - https://developers.popbill.com/reference/taxinvoice/php/api/point#GetPartnerBalance
+     * - https://developers.popbill.com/reference/taxinvoice/php/common-api/point#GetPartnerBalance
      */
     public function GetPartnerBalance()
     {
@@ -3221,7 +3187,7 @@ class TaxinvoiceController extends Controller
     /**
      * 파트너 포인트 충전을 위한 페이지의 팝업 URL을 반환합니다.
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-     * - https://developers.popbill.com/reference/taxinvoice/php/api/point#GetPartnerURL
+     * - https://developers.popbill.com/reference/taxinvoice/php/common-api/point#GetPartnerURL
      */
     public function GetPartnerURL()
     {
@@ -3245,7 +3211,7 @@ class TaxinvoiceController extends Controller
 
     /**
      * 세금계산서 발행시 과금되는 포인트 단가를 확인합니다.
-     * - https://developers.popbill.com/reference/taxinvoice/php/api/point#GetUnitCost
+     * - https://developers.popbill.com/reference/taxinvoice/php/common-api/point#GetUnitCost
      */
     public function GetUnitCost()
     {
@@ -3265,7 +3231,7 @@ class TaxinvoiceController extends Controller
 
     /**
      * 팝빌 전자세금계산서 API 서비스 과금정보를 확인합니다.
-     * - https://developers.popbill.com/reference/taxinvoice/php/api/point#GetChargeInfo
+     * - https://developers.popbill.com/reference/taxinvoice/php/common-api/point#GetChargeInfo
      */
     public function GetChargeInfo()
     {
@@ -3288,7 +3254,7 @@ class TaxinvoiceController extends Controller
 
     /**
      * 사업자번호를 조회하여 연동회원 가입여부를 확인합니다.
-     * - https://developers.popbill.com/reference/taxinvoice/php/api/member#CheckIsMember
+     * - https://developers.popbill.com/reference/taxinvoice/php/common-api/member#CheckIsMember
      */
     public function CheckIsMember()
     {
@@ -3313,7 +3279,7 @@ class TaxinvoiceController extends Controller
 
     /**
      * 사용하고자 하는 아이디의 중복여부를 확인합니다.
-     * - https://developers.popbill.com/reference/taxinvoice/php/api/member#CheckID
+     * - https://developers.popbill.com/reference/taxinvoice/php/common-api/member#CheckID
      */
     public function CheckID()
     {
@@ -3335,7 +3301,7 @@ class TaxinvoiceController extends Controller
 
     /**
      * 사용자를 연동회원으로 가입처리합니다.
-     * - https://developers.popbill.com/reference/taxinvoice/php/api/member#JoinMember
+     * - https://developers.popbill.com/reference/taxinvoice/php/common-api/member#JoinMember
      */
     public function JoinMember()
     {
@@ -3392,7 +3358,7 @@ class TaxinvoiceController extends Controller
 
     /**
      * 연동회원의 회사정보를 확인합니다.
-     * - https://developers.popbill.com/reference/taxinvoice/php/api/member#GetCorpInfo
+     * - https://developers.popbill.com/reference/taxinvoice/php/common-api/member#GetCorpInfo
      */
     public function GetCorpInfo()
     {
@@ -3416,7 +3382,7 @@ class TaxinvoiceController extends Controller
 
     /**
      * 연동회원의 회사정보를 수정합니다.
-     * - https://developers.popbill.com/reference/taxinvoice/php/api/member#UpdateCorpInfo
+     * - https://developers.popbill.com/reference/taxinvoice/php/common-api/member#UpdateCorpInfo
      */
     public function UpdateCorpInfo()
     {
@@ -3459,7 +3425,7 @@ class TaxinvoiceController extends Controller
 
     /**
      * 연동회원 사업자번호에 담당자(팝빌 로그인 계정)를 추가합니다.
-     * - https://developers.popbill.com/reference/taxinvoice/php/api/member#RegistContact
+     * - https://developers.popbill.com/reference/taxinvoice/php/common-api/member#RegistContact
      */
     public function RegistContact()
     {
@@ -3505,7 +3471,7 @@ class TaxinvoiceController extends Controller
 
     /**
      * 연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 정보을 확인합니다.
-     * - https://developers.popbill.com/reference/taxinvoice/php/api/member#GetContactInfo
+     * - https://developers.popbill.com/reference/taxinvoice/php/common-api/member#GetContactInfo
      */
     public function GetContactInfo()
     {
@@ -3532,7 +3498,7 @@ class TaxinvoiceController extends Controller
 
     /**
      * 연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 목록을 확인합니다.
-     * - https://developers.popbill.com/reference/taxinvoice/php/api/member#ListContact
+     * - https://developers.popbill.com/reference/taxinvoice/php/common-api/member#ListContact
      */
     public function ListContact()
     {
@@ -3556,7 +3522,7 @@ class TaxinvoiceController extends Controller
 
     /**
      * 연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 정보를 수정합니다.
-     * - https://developers.popbill.com/reference/taxinvoice/php/api/member#UpdateContact
+     * - https://developers.popbill.com/reference/taxinvoice/php/common-api/member#UpdateContact
      */
     public function UpdateContact()
     {
@@ -3601,7 +3567,7 @@ class TaxinvoiceController extends Controller
      * 회원탈퇴 신청과 동시에 팝빌의 모든 서비스 이용이 불가하며, 관리자를 포함한 모든 담당자 계정도 일괄탈퇴 됩니다.
      * 회원탈퇴로 삭제된 데이터는 복원이 불가능합니다.
      * 관리자 계정만 사용 가능합니다.
-     * - https://developers.popbill.com/reference/taxinvoice/php/api/member#QuitMember
+     * - https://developers.popbill.com/reference/taxinvoice/php/common-api/member#QuitMember
      */
     public function QuitMember()
     {
@@ -3627,7 +3593,7 @@ class TaxinvoiceController extends Controller
 
     /**
      * 환불 가능한 포인트를 확인합니다. (보너스 포인트는 환불가능포인트에서 제외됩니다.)
-     * - https://developers.popbill.com/reference/taxinvoice/php/api/point#GetRefundableBalance
+     * - https://developers.popbill.com/reference/taxinvoice/php/common-api/point#GetRefundableBalance
      */
     public function GetRefundableBalance()
     {
@@ -3650,7 +3616,7 @@ class TaxinvoiceController extends Controller
 
     /**
      * 포인트 환불에 대한 상세정보 1건을 확인합니다.
-     * - https://developers.popbill.com/reference/taxinvoice/php/api/point#GetRefundInfo
+     * - https://developers.popbill.com/reference/taxinvoice/php/common-api/point#GetRefundInfo
      */
     public function GetRefundInfo()
     {

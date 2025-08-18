@@ -5,12 +5,6 @@
   * Laravel 연동 튜토리얼 안내 : https://developers.popbill.com/guide/httaxinvoice/php/getting-started/tutorial?fwn=laravel
   * 연동 기술지원 연락처 : 1600-9854
   * 연동 기술지원 이메일 : code@linkhubcorp.com
-  *
-  * <테스트 연동개발 준비사항>
-  * 1) 홈택스 로그인 인증정보를 등록합니다. (부서사용자등록 / 공동인증서 등록)
-  *    - 팝빌로그인 > [홈택스수집] > [환경설정] > [인증 관리] 메뉴
-  *    - 홈택스수집 인증 관리 팝업 URL(GetCertificatePopUpURL API) 반환된 URL을 이용하여
-  *      홈택스 인증 처리를 합니다.
   */
 namespace App\Http\Controllers;
 
@@ -600,7 +594,7 @@ class HTTaxinvoiceController extends Controller
     /**
      * 홈택스수집 정액제 서비스 신청 페이지의 팝업 URL을 반환합니다.
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-     * - https://developers.popbill.com/reference/httaxinvoice/php/api/point#GetFlatRatePopUpURL
+     * - https://developers.popbill.com/reference/httaxinvoice/php/common-api/point#GetFlatRatePopUpURL
      */
     public function GetFlatRatePopUpURL()
     {
@@ -623,7 +617,7 @@ class HTTaxinvoiceController extends Controller
 
     /**
      * 홈택스수집 정액제 서비스 상태를 확인합니다.
-     * - https://developers.popbill.com/reference/httaxinvoice/php/api/point#GetFlatRateState
+     * - https://developers.popbill.com/reference/httaxinvoice/php/common-api/point#GetFlatRateState
      */
     public function GetFlatRateState()
     {
@@ -647,7 +641,7 @@ class HTTaxinvoiceController extends Controller
     /**
      * 연동회원의 잔여포인트를 확인합니다.
      * - 과금방식이 파트너과금인 경우 파트너 잔여포인트 확인(GetPartnerBalance API) 함수를 통해 확인하시기 바랍니다.
-     * - https://developers.popbill.com/reference/httaxinvoice/php/api/point#GetBalance
+     * - https://developers.popbill.com/reference/httaxinvoice/php/common-api/point#GetBalance
      */
     public function GetBalance()
     {
@@ -667,7 +661,7 @@ class HTTaxinvoiceController extends Controller
 
     /**
      * 연동회원의 포인트 사용내역을 확인합니다.
-     * - https://developers.popbill.com/reference/httaxinvoice/php/api/point#GetUseHistory
+     * - https://developers.popbill.com/reference/httaxinvoice/php/common-api/point#GetUseHistory
      */
     public function GetUseHistory()
     {
@@ -705,7 +699,7 @@ class HTTaxinvoiceController extends Controller
 
     /**
      * 연동회원의 포인트 결제내역을 확인합니다.
-     * - https://developers.popbill.com/reference/httaxinvoice/php/api/point#GetPaymentHistory
+     * - https://developers.popbill.com/reference/httaxinvoice/php/common-api/point#GetPaymentHistory
      */
     public function GetPaymentHistory()
     {
@@ -740,7 +734,7 @@ class HTTaxinvoiceController extends Controller
 
     /**
      * 연동회원의 포인트 환불신청내역을 확인합니다.
-     * - https://developers.popbill.com/reference/httaxinvoice/php/api/point#GetRefundHistory
+     * - https://developers.popbill.com/reference/httaxinvoice/php/common-api/point#GetRefundHistory
      */
     public function GetRefundHistory()
     {
@@ -769,7 +763,7 @@ class HTTaxinvoiceController extends Controller
 
     /**
      * 연동회원 포인트를 환불 신청합니다.
-     * - https://developers.popbill.com/reference/httaxinvoice/php/api/point#Refund
+     * - https://developers.popbill.com/reference/httaxinvoice/php/common-api/point#Refund
      */
     public function Refund()
     {
@@ -817,7 +811,7 @@ class HTTaxinvoiceController extends Controller
 
     /**
      * 연동회원 포인트 충전을 위해 무통장입금을 신청합니다.
-     * - https://developers.popbill.com/reference/httaxinvoice/php/api/point#PaymentRequest
+     * - https://developers.popbill.com/reference/httaxinvoice/php/common-api/point#PaymentRequest
      */
     public function PaymentRequest()
     {
@@ -861,7 +855,7 @@ class HTTaxinvoiceController extends Controller
 
     /**
      * 연동회원 포인트 무통장 입금신청내역 1건을 확인합니다.
-     * - https://developers.popbill.com/reference/httaxinvoice/php/api/point#GetSettleResult
+     * - https://developers.popbill.com/reference/httaxinvoice/php/common-api/point#GetSettleResult
      */
     public function GetSettleResult()
     {
@@ -888,7 +882,7 @@ class HTTaxinvoiceController extends Controller
     /**
      * 연동회원 포인트 충전을 위한 페이지의 팝업 URL을 반환합니다.
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-     * - https://developers.popbill.com/reference/httaxinvoice/php/api/point#GetChargeURL
+     * - https://developers.popbill.com/reference/httaxinvoice/php/common-api/point#GetChargeURL
      */
     public function GetChargeURL()
     {
@@ -912,7 +906,7 @@ class HTTaxinvoiceController extends Controller
     /**
      * 연동회원 포인트 결제내역 확인을 위한 페이지의 팝업 URL을 반환합니다.
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-     * - https://developers.popbill.com/reference/httaxinvoice/php/api/point#GetPaymentURL
+     * - https://developers.popbill.com/reference/httaxinvoice/php/common-api/point#GetPaymentURL
      */
     public function GetPaymentURL()
     {
@@ -937,7 +931,7 @@ class HTTaxinvoiceController extends Controller
     /**
      * 연동회원 포인트 사용내역 확인을 위한 페이지의 팝업 URL을 반환합니다.
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-     * - https://developers.popbill.com/reference/httaxinvoice/php/api/point#GetUseHistoryURL
+     * - https://developers.popbill.com/reference/httaxinvoice/php/common-api/point#GetUseHistoryURL
      */
     public function GetUseHistoryURL()
     {
@@ -962,7 +956,7 @@ class HTTaxinvoiceController extends Controller
     /**
      * 파트너의 잔여포인트를 확인합니다.
      * - 과금방식이 연동과금인 경우 연동회원 잔여포인트 확인(GetBalance API) 함수를 이용하시기 바랍니다.
-     * - https://developers.popbill.com/reference/httaxinvoice/php/api/point#GetPartnerBalance
+     * - https://developers.popbill.com/reference/httaxinvoice/php/common-api/point#GetPartnerBalance
      */
     public function GetPartnerBalance()
     {
@@ -983,7 +977,7 @@ class HTTaxinvoiceController extends Controller
     /**
      * 파트너 포인트 충전을 위한 페이지의 팝업 URL을 반환합니다.
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-     * - https://developers.popbill.com/reference/httaxinvoice/php/api/point#GetPartnerURL
+     * - https://developers.popbill.com/reference/httaxinvoice/php/common-api/point#GetPartnerURL
      */
     public function GetPartnerURL()
     {
@@ -1006,7 +1000,7 @@ class HTTaxinvoiceController extends Controller
 
     /**
      * 팝빌 홈택스수집(세금) API 서비스 과금정보를 확인합니다.
-     * - https://developers.popbill.com/reference/httaxinvoice/php/api/point#GetChargeInfo
+     * - https://developers.popbill.com/reference/httaxinvoice/php/common-api/point#GetChargeInfo
      */
     public function GetChargeInfo()
     {
@@ -1029,7 +1023,7 @@ class HTTaxinvoiceController extends Controller
 
     /**
      * 사업자번호를 조회하여 연동회원 가입여부를 확인합니다.
-     * - https://developers.popbill.com/reference/httaxinvoice/php/api/member#CheckIsMember
+     * - https://developers.popbill.com/reference/httaxinvoice/php/common-api/member#CheckIsMember
      */
     public function CheckIsMember()
     {
@@ -1054,7 +1048,7 @@ class HTTaxinvoiceController extends Controller
 
     /**
      * 사용하고자 하는 아이디의 중복여부를 확인합니다.
-     * - https://developers.popbill.com/reference/httaxinvoice/php/api/member#CheckID
+     * - https://developers.popbill.com/reference/httaxinvoice/php/common-api/member#CheckID
      */
     public function CheckID()
     {
@@ -1076,7 +1070,7 @@ class HTTaxinvoiceController extends Controller
 
     /**
      * 사용자를 연동회원으로 가입처리합니다.
-     * - https://developers.popbill.com/reference/httaxinvoice/php/api/member#JoinMember
+     * - https://developers.popbill.com/reference/httaxinvoice/php/common-api/member#JoinMember
      */
     public function JoinMember()
     {
@@ -1134,7 +1128,7 @@ class HTTaxinvoiceController extends Controller
     /**
      * 팝빌 사이트에 로그인 상태로 접근할 수 있는 페이지의 팝업 URL을 반환합니다.
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
-     * - https://developers.popbill.com/reference/httaxinvoice/php/api/member#GetAccessURL
+     * - https://developers.popbill.com/reference/httaxinvoice/php/common-api/member#GetAccessURL
      */
     public function GetAccessURL()
     {
@@ -1157,7 +1151,7 @@ class HTTaxinvoiceController extends Controller
 
     /**
      * 연동회원의 회사정보를 확인합니다.
-     * - https://developers.popbill.com/reference/httaxinvoice/php/api/member#GetCorpInfo
+     * - https://developers.popbill.com/reference/httaxinvoice/php/common-api/member#GetCorpInfo
      */
     public function GetCorpInfo()
     {
@@ -1181,7 +1175,7 @@ class HTTaxinvoiceController extends Controller
 
     /**
      * 연동회원의 회사정보를 수정합니다
-     * - https://developers.popbill.com/reference/httaxinvoice/php/api/member#UpdateCorpInfo
+     * - https://developers.popbill.com/reference/httaxinvoice/php/common-api/member#UpdateCorpInfo
      */
     public function UpdateCorpInfo()
     {
@@ -1224,7 +1218,7 @@ class HTTaxinvoiceController extends Controller
 
     /**
      * 연동회원 사업자번호에 담당자(팝빌 로그인 계정)를 추가합니다.
-     * - https://developers.popbill.com/reference/httaxinvoice/php/api/member#RegistContact
+     * - https://developers.popbill.com/reference/httaxinvoice/php/common-api/member#RegistContact
      */
     public function RegistContact()
     {
@@ -1270,7 +1264,7 @@ class HTTaxinvoiceController extends Controller
 
     /**
      * 연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 정보을 확인합니다.
-     * - https://developers.popbill.com/reference/httaxinvoice/php/api/member#GetContactInfo
+     * - https://developers.popbill.com/reference/httaxinvoice/php/common-api/member#GetContactInfo
      */
     public function GetContactInfo()
     {
@@ -1297,7 +1291,7 @@ class HTTaxinvoiceController extends Controller
 
     /**
      * 연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 목록을 확인합니다.
-     * - https://developers.popbill.com/reference/httaxinvoice/php/api/member#ListContact
+     * - https://developers.popbill.com/reference/httaxinvoice/php/common-api/member#ListContact
      */
     public function ListContact()
     {
@@ -1321,7 +1315,7 @@ class HTTaxinvoiceController extends Controller
 
     /**
      * 연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 정보를 수정합니다.
-     * - https://developers.popbill.com/reference/httaxinvoice/php/api/member#UpdateContact
+     * - https://developers.popbill.com/reference/httaxinvoice/php/common-api/member#UpdateContact
      */
     public function UpdateContact()
     {
@@ -1367,7 +1361,7 @@ class HTTaxinvoiceController extends Controller
      * 회원탈퇴 신청과 동시에 팝빌의 모든 서비스 이용이 불가하며, 관리자를 포함한 모든 담당자 계정도 일괄탈퇴 됩니다.
      * 회원탈퇴로 삭제된 데이터는 복원이 불가능합니다.
      * 관리자 계정만 사용 가능합니다.
-     * - https://developers.popbill.com/reference/httaxinvoice/php/api/member#QuitMember
+     * - https://developers.popbill.com/reference/httaxinvoice/php/common-api/member#QuitMember
      */
     public function QuitMember()
     {
@@ -1393,7 +1387,7 @@ class HTTaxinvoiceController extends Controller
 
     /**
      * 환불 가능한 포인트를 확인합니다. (보너스 포인트는 환불가능포인트에서 제외됩니다.)
-     * - https://developers.popbill.com/reference/httaxinvoice/php/api/point#GetRefundableBalance
+     * - https://developers.popbill.com/reference/httaxinvoice/php/common-api/point#GetRefundableBalance
      */
     public function GetRefundableBalance()
     {
@@ -1416,7 +1410,7 @@ class HTTaxinvoiceController extends Controller
 
     /**
      * 포인트 환불에 대한 상세정보 1건을 확인합니다.
-     * - https://developers.popbill.com/reference/httaxinvoice/php/api/point#GetRefundInfo
+     * - https://developers.popbill.com/reference/httaxinvoice/php/common-api/point#GetRefundInfo
      */
     public function GetRefundInfo()
     {
