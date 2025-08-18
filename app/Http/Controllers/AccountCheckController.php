@@ -817,6 +817,34 @@ class AccountCheckController extends Controller
     }
 
     /**
+     * 연동회원 사업자번호에 담당자(팝빌 로그인 계정)를 삭제합니다.
+     * - https://developers.popbill.com/reference/accountcheck/php/common-api/member#DeleteContact
+     */
+    public function DeleteContact()
+    {
+
+        // 팝빌회원 사업자번호, '-' 제외 10자리
+        $CorpNum = '1234567890';
+
+        // 삭제할 담당자 아이디
+        $TargetUserID = 'testkorea20250818_01';
+
+        // 팝빌 회원 관리자 아이디
+        $UserID = 'testkorea';
+
+        try {
+            $result = $this->PopbillAccountCheck->DeleteContact($CorpNum, $TargetUserID, $UserID);
+            $code = $result->code;
+            $message = $result->message;
+        } catch (PopbillException $pe) {
+            $code = $pe->getCode();
+            $message = $pe->getMessage();
+        }
+
+        return view('PResponse', ['code' => $code, 'message' => $message]);
+    }
+
+    /**
      * 팝빌 사이트에 로그인 상태로 접근할 수 있는 페이지의 팝업 URL을 반환합니다.
      * - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
      * - https://developers.popbill.com/reference/accountcheck/php/common-api/member#GetAccessURL

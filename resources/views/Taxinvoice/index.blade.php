@@ -132,6 +132,7 @@
             <li><a href="Taxinvoice/GetContactInfo">GetContactInfo</a> (담당자 정보 확인)</li>
             <li><a href="Taxinvoice/ListContact">ListContact</a> (담당자 목록 확인)</li>
             <li><a href="Taxinvoice/UpdateContact">UpdateContact</a> (담당자 정보 수정)</li>
+            <li><a href="Taxinvoice/DeleteContact">DeleteContact</a> (담당자 삭제)</li>
             <li><a href="Taxinvoice/QuitMember">QuitMember</a> (회원 탈퇴)</li>
         </ul>
     </fieldset>

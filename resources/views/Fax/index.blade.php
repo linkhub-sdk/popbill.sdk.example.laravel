@@ -74,6 +74,7 @@
             <li><a href="Fax/GetContactInfo">GetContactInfo</a> (담당자 정보 확인)</li>
             <li><a href="Fax/ListContact">ListContact</a> (담당자 목록 확인)</li>
             <li><a href="Fax/UpdateContact">UpdateContact</a> (담당자 정보 수정)</li>
+            <li><a href="Fax/DeleteContact">DeleteContact</a> (담당자 삭제)</li>
             <li><a href="Fax/GetCorpInfo">GetCorpInfo</a> (회사정보 확인)</li>
             <li><a href="Fax/UpdateCorpInfo">UpdateCorpInfo</a> (회사정보 수정)</li>
             <li><a href="Fax/QuitMember">QuitMember</a> (회원 탈퇴)</li>

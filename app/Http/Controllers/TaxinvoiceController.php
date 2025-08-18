@@ -2143,7 +2143,7 @@ class TaxinvoiceController extends Controller
         return view('ReturnValue', ['filedName' => "세금계산서 인쇄 팝업 URL", 'value' => $url]);
     }
 
-    
+
 
     /**
      * "공급받는자" 용 세금계산서 1건을 인쇄하기 위한 페이지의 팝업 URL을 반환합니다.
@@ -3437,7 +3437,7 @@ class TaxinvoiceController extends Controller
         $ContactInfo = new ContactInfo();
 
         // 담당자 아이디
-        $ContactInfo->id = 'testkorea001';
+        $ContactInfo->id = 'testkorea20250818_01';
 
         // 담당자 비밀번호, 8자 이상 20자 이하(영문, 숫자, 특수문자 조합)
         $ContactInfo->Password = 'asdf123!@#';
@@ -3446,10 +3446,10 @@ class TaxinvoiceController extends Controller
         $ContactInfo->personName = '담당자_수정';
 
         // 연락처
-        $ContactInfo->tel = '';
+        $ContactInfo->tel = '01011112222';
 
         // 이메일주소
-        $ContactInfo->email = '';
+        $ContactInfo->email = 'test@test.com';
 
         // 담당자 권한, 1 : 개인권한, 2 : 읽기권한, 3: 회사권한
         $ContactInfo->searchRole = 3;
@@ -3459,6 +3459,34 @@ class TaxinvoiceController extends Controller
 
         try {
             $result = $this->PopbillTaxinvoice->RegistContact($CorpNum, $ContactInfo, $UserID);
+            $code = $result->code;
+            $message = $result->message;
+        } catch (PopbillException $pe) {
+            $code = $pe->getCode();
+            $message = $pe->getMessage();
+        }
+
+        return view('PResponse', ['code' => $code, 'message' => $message]);
+    }
+
+    /**
+     * 연동회원 사업자번호에 담당자(팝빌 로그인 계정)를 삭제합니다.
+     * - https://developers.popbill.com/reference/taxinvoice/php/common-api/member#DeleteContact
+     */
+    public function DeleteContact()
+    {
+
+        // 팝빌회원 사업자번호, '-' 제외 10자리
+        $CorpNum = '1234567890';
+
+        // 삭제할 담당자 아이디
+        $TargetUserID = 'testkorea20250818_01';
+
+        // 팝빌 회원 관리자 아이디
+        $UserID = 'testkorea';
+
+        try {
+            $result = $this->PopbillTaxinvoice->DeleteContact($CorpNum, $TargetUserID, $UserID);
             $code = $result->code;
             $message = $result->message;
         } catch (PopbillException $pe) {

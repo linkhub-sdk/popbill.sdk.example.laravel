@@ -57,7 +57,7 @@
                 <li><a href="HTCashbill/GetPartnerBalance">GetPartnerBalance</a> (파트너 잔여포인트 확인)</li>
                 <li><a href="HTCashbill/GetPartnerURL">GetPartnerURL</a> (파트너 포인트충전 팝업 URL)</li>
                 <li><a href="HTCashbill/GetRefundResult">GetRefundResult</a> (환불 신청 상태 확인)</li>
-<li><a href="HTCashbill/GetRefundableBalance">GetRefundableBalance</a> (환불 가능 포인트 확인)</li>
+                <li><a href="HTCashbill/GetRefundableBalance">GetRefundableBalance</a> (환불 가능 포인트 확인)</li>
             </ul>
         </fieldset>
         <fieldset class="fieldset1">
@@ -73,6 +73,7 @@
                 <li><a href="HTCashbill/GetContactInfo">GetContactInfo</a> (담당자 정보 확인)</li>
                 <li><a href="HTCashbill/ListContact">ListContact</a> (담당자 목록 확인)</li>
                 <li><a href="HTCashbill/UpdateContact">UpdateContact</a> (담당자 정보 수정)</li>
+                <li><a href="HTCashbill/DeleteContact">DeleteContact</a> (담당자 삭제)</li>
                 <li><a href="HTCashbill/QuitMember">QuitMember</a> (회원 탈퇴)</li>
             </ul>
         </fieldset>
