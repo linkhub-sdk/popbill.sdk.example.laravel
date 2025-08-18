@@ -1594,10 +1594,10 @@ class KakaoTalkController extends Controller
         $CorpNum = "1234567890";
 
         // 시작일자, 날짜형식(yyyyMMdd)
-        $SDate = "20230101";
+        $SDate = "20250801";
 
         // 종료일자, 날짜형식(yyyyMMdd)
-        $EDate = "20230131";
+        $EDate = "20250831";
 
         // 페이지번호
         $Page = 1;
@@ -1632,10 +1632,10 @@ class KakaoTalkController extends Controller
         $CorpNum = "1234567890";
 
         // 시작일자, 날짜형식(yyyyMMdd)
-        $SDate = "20230101";
+        $SDate = "20250801";
 
         // 종료일자, 날짜형식(yyyyMMdd)
-        $EDate = "20230131";
+        $EDate = "20250831";
 
         // 페이지번호
         $Page = 1;

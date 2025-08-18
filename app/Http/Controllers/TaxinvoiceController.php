@@ -70,7 +70,7 @@ class TaxinvoiceController extends Controller
         $MgtKeyType = TIENumMgtKeyType::SELL;
 
         // 세금계산서 문서번호, 1~24자리 (숫자, 영문, '-', '_') 조합으로 사업자 별로 중복되지 않도록 구성
-        $MgtKey = '20230102-PHP7-001';
+        $MgtKey = '20250818-PHP7-001';
 
         try {
             $result = $this->PopbillTaxinvoice->CheckMgtKeyInUse($CorpNum, $MgtKeyType, $MgtKey);
@@ -100,7 +100,7 @@ class TaxinvoiceController extends Controller
         $CorpNum = '1234567890';
 
         // 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
-        $invoicerMgtKey = '20230102-PHP7-001';
+        $invoicerMgtKey = '20250818-PHP7-001';
 
 
         /************************************************************
@@ -110,7 +110,7 @@ class TaxinvoiceController extends Controller
         $Taxinvoice = new Taxinvoice();
 
         // 작성일자, 형식(yyyyMMdd) 예)20150101
-        $Taxinvoice->writeDate = '20230102';
+        $Taxinvoice->writeDate = '20250818';
 
         // 발행유형, {정발행, 역발행, 위수탁} 중 기재
         $Taxinvoice->issueType = '정발행';
@@ -293,7 +293,7 @@ class TaxinvoiceController extends Controller
 
         $Taxinvoice->detailList[] = new TaxinvoiceDetail();
         $Taxinvoice->detailList[0]->serialNum = 1;               // [상세항목 배열이 있는 경우 필수] 일련번호 1~99까지 순차기재,
-        $Taxinvoice->detailList[0]->purchaseDT = '20230102';     // 거래일자
+        $Taxinvoice->detailList[0]->purchaseDT = '20250818';     // 거래일자
         $Taxinvoice->detailList[0]->itemName = '품목명1번';      // 품명
         $Taxinvoice->detailList[0]->spec = '';                   // 규격
         $Taxinvoice->detailList[0]->qty = '';                    // 수량
@@ -304,7 +304,7 @@ class TaxinvoiceController extends Controller
 
         $Taxinvoice->detailList[] = new TaxinvoiceDetail();
         $Taxinvoice->detailList[1]->serialNum = 2;               // [상세항목 배열이 있는 경우 필수] 일련번호 1~99까지 순차기재,
-        $Taxinvoice->detailList[1]->purchaseDT = '20230102';     // 거래일자
+        $Taxinvoice->detailList[1]->purchaseDT = '20250818';     // 거래일자
         $Taxinvoice->detailList[1]->itemName = '품목명1번';      // 품명
         $Taxinvoice->detailList[1]->spec = '';                   // 규격
         $Taxinvoice->detailList[1]->qty = '';                    // 수량
@@ -393,7 +393,7 @@ class TaxinvoiceController extends Controller
         $CorpNum = '1234567890';
 
         // 제출 아이디 ,최대 36자리 영문, 숫자, '-' 조합으로 구성
-        $SubmitID = '20230102-PHP7-BULK';
+        $SubmitID = '20250818-PHP7-BULK';
 
         // 세금계산서 객체정보 배열
         $TaxinvoiceList = array();
@@ -406,7 +406,7 @@ class TaxinvoiceController extends Controller
             $Taxinvoice = new Taxinvoice();
 
             // 작성일자, 형식(yyyyMMdd) 예)20150101
-            $Taxinvoice->writeDate = '20230102';
+            $Taxinvoice->writeDate = '20250818';
 
             // 발행유형, {정발행, 역발행, 위수탁} 중 기재
             $Taxinvoice->issueType = '정발행';
@@ -588,7 +588,7 @@ class TaxinvoiceController extends Controller
 
             $Taxinvoice->detailList[] = new TaxinvoiceDetail();
             $Taxinvoice->detailList[0]->serialNum = 1;               // [상세항목 배열이 있는 경우 필수] 일련번호 1~99까지 순차기재,
-            $Taxinvoice->detailList[0]->purchaseDT = '20230102';     // 거래일자
+            $Taxinvoice->detailList[0]->purchaseDT = '20250818';     // 거래일자
             $Taxinvoice->detailList[0]->itemName = '품목명1번';      // 품명
             $Taxinvoice->detailList[0]->spec = '';                   // 규격
             $Taxinvoice->detailList[0]->qty = '';                    // 수량
@@ -599,7 +599,7 @@ class TaxinvoiceController extends Controller
 
             $Taxinvoice->detailList[] = new TaxinvoiceDetail();
             $Taxinvoice->detailList[1]->serialNum = 2;               // [상세항목 배열이 있는 경우 필수] 일련번호 1~99까지 순차기재,
-            $Taxinvoice->detailList[1]->purchaseDT = '20230102';     // 거래일자
+            $Taxinvoice->detailList[1]->purchaseDT = '20250818';     // 거래일자
             $Taxinvoice->detailList[1]->itemName = '품목명1번';      // 품명
             $Taxinvoice->detailList[1]->spec = '';                   // 규격
             $Taxinvoice->detailList[1]->qty = '';                    // 수량
@@ -661,7 +661,7 @@ class TaxinvoiceController extends Controller
         $CorpNum = '1234567890';
 
         // 초대량 발행 접수시 기재한 제출 아이디
-        $SubmitID = '20230102-PHP7-BULK';
+        $SubmitID = '20250818-PHP7-BULK';
 
         // 팝빌 회원 아이디
         $UserID = 'testkorea';
@@ -695,7 +695,7 @@ class TaxinvoiceController extends Controller
 
         // 세금계산서 문서번호
         // - 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
-        $invoicerMgtKey = '20230102-PHP7-002';
+        $invoicerMgtKey = '20250818-PHP7-002';
 
         /************************************************************
          *                        세금계산서 정보
@@ -705,7 +705,7 @@ class TaxinvoiceController extends Controller
         $Taxinvoice = new Taxinvoice();
 
         // 작성일자, 형식(yyyyMMdd) 예)20150101
-        $Taxinvoice->writeDate = '20230102';
+        $Taxinvoice->writeDate = '20250818';
 
         // 발행유형, {정발행, 역발행, 위수탁} 중 기재
         $Taxinvoice->issueType = '정발행';
@@ -893,7 +893,7 @@ class TaxinvoiceController extends Controller
 
         $Taxinvoice->detailList[] = new TaxinvoiceDetail();
         $Taxinvoice->detailList[0]->serialNum = 1;               // [상세항목 배열이 있는 경우 필수] 일련번호 1~99까지 순차기재,
-        $Taxinvoice->detailList[0]->purchaseDT = '20230102';     // 거래일자
+        $Taxinvoice->detailList[0]->purchaseDT = '20250818';     // 거래일자
         $Taxinvoice->detailList[0]->itemName = '품목명1번';      // 품명
         $Taxinvoice->detailList[0]->spec = '';                   // 규격
         $Taxinvoice->detailList[0]->qty = '';                    // 수량
@@ -904,7 +904,7 @@ class TaxinvoiceController extends Controller
 
         $Taxinvoice->detailList[] = new TaxinvoiceDetail();
         $Taxinvoice->detailList[1]->serialNum = 2;               // [상세항목 배열이 있는 경우 필수] 일련번호 1~99까지 순차기재,
-        $Taxinvoice->detailList[1]->purchaseDT = '20230102';     // 거래일자
+        $Taxinvoice->detailList[1]->purchaseDT = '20250818';     // 거래일자
         $Taxinvoice->detailList[1]->itemName = '품목명1번';      // 품명
         $Taxinvoice->detailList[1]->spec = '';                   // 규격
         $Taxinvoice->detailList[1]->qty = '';                    // 수량
@@ -965,7 +965,7 @@ class TaxinvoiceController extends Controller
         $MgtKeyType = TIENumMgtKeyType::SELL;
 
         // 세금계산서 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
-        $MgtKey = '20230102-PHP7-002';
+        $MgtKey = '20250818-PHP7-002';
 
         /************************************************************
          *                        세금계산서 정보
@@ -975,7 +975,7 @@ class TaxinvoiceController extends Controller
         $Taxinvoice = new Taxinvoice();
 
         // 작성일자, 형식(yyyyMMdd) 예)20150101
-        $Taxinvoice->writeDate = '20230102';
+        $Taxinvoice->writeDate = '20250818';
 
         // 발행유형, {정발행, 역발행, 위수탁} 중 기재
         $Taxinvoice->issueType = '정발행';
@@ -1163,7 +1163,7 @@ class TaxinvoiceController extends Controller
 
         $Taxinvoice->detailList[] = new TaxinvoiceDetail();
         $Taxinvoice->detailList[0]->serialNum = 1;               // [상세항목 배열이 있는 경우 필수] 일련번호 1~99까지 순차기재,
-        $Taxinvoice->detailList[0]->purchaseDT = '20230102';     // 거래일자
+        $Taxinvoice->detailList[0]->purchaseDT = '20250818';     // 거래일자
         $Taxinvoice->detailList[0]->itemName = '품목명1번';      // 품명
         $Taxinvoice->detailList[0]->spec = '';                   // 규격
         $Taxinvoice->detailList[0]->qty = '';                    // 수량
@@ -1174,7 +1174,7 @@ class TaxinvoiceController extends Controller
 
         $Taxinvoice->detailList[] = new TaxinvoiceDetail();
         $Taxinvoice->detailList[1]->serialNum = 2;               // [상세항목 배열이 있는 경우 필수] 일련번호 1~99까지 순차기재,
-        $Taxinvoice->detailList[1]->purchaseDT = '20230102';     // 거래일자
+        $Taxinvoice->detailList[1]->purchaseDT = '20250818';     // 거래일자
         $Taxinvoice->detailList[1]->itemName = '품목명1번';      // 품명
         $Taxinvoice->detailList[1]->spec = '';                   // 규격
         $Taxinvoice->detailList[1]->qty = '';                    // 수량
@@ -1240,7 +1240,7 @@ class TaxinvoiceController extends Controller
         $MgtKeyType = TIENumMgtKeyType::SELL;
 
         // 문서번호
-        $MgtKey = '20230102-PHP7-002';
+        $MgtKey = '20250818-PHP7-002';
 
         // 메모
         $Memo = '발행 메모입니다';
@@ -1288,7 +1288,7 @@ class TaxinvoiceController extends Controller
         $MgtKeyType = TIENumMgtKeyType::SELL;
 
         // 문서번호
-        $MgtKey = '20230102-PHP7-002';
+        $MgtKey = '20250818-PHP7-002';
 
         // 메모
         $Memo = '발행 취소메모입니다';
@@ -1324,7 +1324,7 @@ class TaxinvoiceController extends Controller
 
         // 공급받는자 문서번호
         // - 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
-        $invoiceeMgtKey = '20230102-PHP7-003';
+        $invoiceeMgtKey = '20250818-PHP7-003';
 
         /************************************************************
          *                        세금계산서 정보
@@ -1334,7 +1334,7 @@ class TaxinvoiceController extends Controller
         $Taxinvoice = new Taxinvoice();
 
         // 작성일자, 형식(yyyyMMdd) 예)20150101
-        $Taxinvoice->writeDate = '20230102';
+        $Taxinvoice->writeDate = '20250818';
 
         // 발행유형, {정발행, 역발행, 위수탁} 중 기재
         $Taxinvoice->issueType = '역발행';
@@ -1517,7 +1517,7 @@ class TaxinvoiceController extends Controller
 
         $Taxinvoice->detailList[] = new TaxinvoiceDetail();
         $Taxinvoice->detailList[0]->serialNum = 1;               // [상세항목 배열이 있는 경우 필수] 일련번호 1~99까지 순차기재,
-        $Taxinvoice->detailList[0]->purchaseDT = '20230102';     // 거래일자
+        $Taxinvoice->detailList[0]->purchaseDT = '20250818';     // 거래일자
         $Taxinvoice->detailList[0]->itemName = '품목명1번';      // 품명
         $Taxinvoice->detailList[0]->spec = '';                   // 규격
         $Taxinvoice->detailList[0]->qty = '';                    // 수량
@@ -1528,7 +1528,7 @@ class TaxinvoiceController extends Controller
 
         $Taxinvoice->detailList[] = new TaxinvoiceDetail();
         $Taxinvoice->detailList[1]->serialNum = 2;               // [상세항목 배열이 있는 경우 필수] 일련번호 1~99까지 순차기재,
-        $Taxinvoice->detailList[1]->purchaseDT = '20230102';     // 거래일자
+        $Taxinvoice->detailList[1]->purchaseDT = '20250818';     // 거래일자
         $Taxinvoice->detailList[1]->itemName = '품목명1번';      // 품명
         $Taxinvoice->detailList[1]->spec = '';                   // 규격
         $Taxinvoice->detailList[1]->qty = '';                    // 수량
@@ -1573,7 +1573,7 @@ class TaxinvoiceController extends Controller
         $MgtKeyType = TIENumMgtKeyType::BUY;
 
         // 문서번호
-        $MgtKey = '20230102-PHP7-004';
+        $MgtKey = '20250818-PHP7-004';
 
         // 메모
         $Memo = '역발행 요청 메모입니다';
@@ -1609,7 +1609,7 @@ class TaxinvoiceController extends Controller
         $MgtKeyType = TIENumMgtKeyType::BUY;
 
         // 문서번호
-        $MgtKey = '20230102-PHP7-004';
+        $MgtKey = '20250818-PHP7-004';
 
         // 메모
         $Memo = '역발행 요청 취소메모입니다';
@@ -1643,7 +1643,7 @@ class TaxinvoiceController extends Controller
         $MgtKeyType = TIENumMgtKeyType::SELL;
 
         // 문서번호
-        $MgtKey = '20230102-PHP7-005';
+        $MgtKey = '20250818-PHP7-005';
 
         // 메모
         $Memo = '역)발행 요청 거부메모입니다';
@@ -1678,7 +1678,7 @@ class TaxinvoiceController extends Controller
         $MgtKeyType = TIENumMgtKeyType::SELL;
 
         // 문서번호
-        $MgtKey = '20230102-PHP7-001';
+        $MgtKey = '20250818-PHP7-001';
 
         // 팝빌회원 아이디
         $UserID = 'testkorea';
@@ -1710,7 +1710,7 @@ class TaxinvoiceController extends Controller
         $MgtKeyType = TIENumMgtKeyType::SELL;
 
         // 문서번호
-        $MgtKey = '20230102-PHP7-002';
+        $MgtKey = '20250818-PHP7-002';
 
         // 팝빌회원 아이디
         $UserID = 'testkorea';
@@ -1743,7 +1743,7 @@ class TaxinvoiceController extends Controller
         $MgtKeyType = TIENumMgtKeyType::SELL;
 
         // 조회할 세금계산서 문서번호
-        $MgtKey = '20230102-PHP7-002';
+        $MgtKey = '20250818-PHP7-002';
 
         try {
             $result = $this->PopbillTaxinvoice->GetInfo($CorpNum, $MgtKeyType, $MgtKey);
@@ -1773,8 +1773,8 @@ class TaxinvoiceController extends Controller
 
         // 세금계산서 문서번호 배열, 최대 1000건
         $MgtKeyList = array();
-        array_push($MgtKeyList, "20230102-PHP7-001");
-        array_push($MgtKeyList, '20230102-PHP7-002');
+        array_push($MgtKeyList, "20250818-PHP7-001");
+        array_push($MgtKeyList, '20250818-PHP7-002');
 
         try {
             $result = $this->PopbillTaxinvoice->GetInfos($CorpNum, $MgtKeyType, $MgtKeyList);
@@ -1800,7 +1800,7 @@ class TaxinvoiceController extends Controller
         $MgtKeyType = TIENumMgtKeyType::SELL;
 
         // 세금계산서 문서번호
-        $MgtKey = '20230102-PHP7-002';
+        $MgtKey = '20250818-PHP7-002';
 
         try {
             $result = $this->PopbillTaxinvoice->GetDetailInfo($CorpNum, $MgtKeyType, $MgtKey);
@@ -1827,7 +1827,7 @@ class TaxinvoiceController extends Controller
         $MgtKeyType = TIENumMgtKeyType::SELL;
 
         // 문서번호
-        $MgtKey = '20230102-PHP7-002';
+        $MgtKey = '20250818-PHP7-002';
 
         // 팝빌회원 아이디
         $userID = 'testkorea';
@@ -1861,10 +1861,10 @@ class TaxinvoiceController extends Controller
         $DType = 'W';
 
         // 시작일자
-        $SDate = '20230101';
+        $SDate = '20250801';
 
         // 종료일자
-        $EDate = '20230131';
+        $EDate = '20250831';
 
         // 세금계산서 상태코드 배열 (2,3번째 자리에 와일드카드(*) 사용 가능)
         // - 미입력시 전체조회
@@ -2010,7 +2010,7 @@ class TaxinvoiceController extends Controller
         $MgtKeyType = TIENumMgtKeyType::SELL;
 
         // 세금계산서 문서번호
-        $MgtKey = '20230102-PHP7-002';
+        $MgtKey = '20250818-PHP7-002';
 
         try {
             $result = $this->PopbillTaxinvoice->GetLogs($CorpNum, $MgtKeyType, $MgtKey);
@@ -2066,7 +2066,7 @@ class TaxinvoiceController extends Controller
         $MgtKeyType = TIENumMgtKeyType::SELL;
 
         // 문서번호
-        $MgtKey = '20230102-PHP7-001';
+        $MgtKey = '20250818-PHP7-001';
 
         // 팝빌회원 아이디
         $UserID = 'testkorea';
@@ -2097,7 +2097,7 @@ class TaxinvoiceController extends Controller
         $MgtKeyType = TIENumMgtKeyType::SELL;
 
         // 문서번호
-        $MgtKey = '20230102-PHP7-001';
+        $MgtKey = '20250818-PHP7-001';
 
         // 팝빌회원 아이디
         $UserID = 'testkorea';
@@ -2128,7 +2128,7 @@ class TaxinvoiceController extends Controller
         $MgtKeyType = TIENumMgtKeyType::SELL;
 
         // 문서번호
-        $MgtKey = '20230102-PHP7-001';
+        $MgtKey = '20250818-PHP7-001';
 
         // 팝빌회원 아이디
         $UserID = 'testkorea';
@@ -2160,7 +2160,7 @@ class TaxinvoiceController extends Controller
         $MgtKeyType = TIENumMgtKeyType::SELL;
 
         // 문서번호
-        $MgtKey = '20230102-PHP7-001';
+        $MgtKey = '20250818-PHP7-001';
 
         // 팝빌회원 아이디
         $UserID = 'testkorea';
@@ -2191,8 +2191,8 @@ class TaxinvoiceController extends Controller
 
         // 문서번호 배열 최대 100건
         $MgtKeyList = array(
-            '20230102-PHP7-001',
-            '20230102-PHP7-002'
+            '20250818-PHP7-001',
+            '20250818-PHP7-002'
         );
 
         // 팝빌회원 아이디
@@ -2223,7 +2223,7 @@ class TaxinvoiceController extends Controller
         $MgtKeyType = TIENumMgtKeyType::SELL;
 
         // 문서번호
-        $MgtKey = '20230102-PHP7-001';
+        $MgtKey = '20250818-PHP7-001';
 
         // 팝빌회원 아이디
         $UserID = 'testkorea';
@@ -2253,7 +2253,7 @@ class TaxinvoiceController extends Controller
         $MgtKeyType = TIENumMgtKeyType::SELL;
 
         // 문서번호
-        $MgtKey = '20230102-PHP7-001';
+        $MgtKey = '20250818-PHP7-001';
 
         // 팝빌회원 아이디
         $UserID = 'testkorea';
@@ -2331,7 +2331,7 @@ class TaxinvoiceController extends Controller
         $MgtKeyType = TIENumMgtKeyType::SELL;
 
         // 세금계산서 문서번호
-        $MgtKey = '20230102-PHP7-002';
+        $MgtKey = '20250818-PHP7-002';
 
         // 첨부파일 경로, 해당 파일에 읽기 권한이 설정되어 있어야 합니다.
         $FilePath = '/image.jpg';
@@ -2369,7 +2369,7 @@ class TaxinvoiceController extends Controller
         $MgtKeyType = TIENumMgtKeyType::SELL;
 
         // 문서번호
-        $MgtKey = '20230102-PHP7-002';
+        $MgtKey = '20250818-PHP7-002';
 
         // 팝빌이 첨부파일 관리를 위해 할당하는 식별번호
         // 첨부파일 목록 확인(getFiles API) 함수의 리턴 값 중 attachedFile 필드값 기재.
@@ -2404,7 +2404,7 @@ class TaxinvoiceController extends Controller
         $MgtKeyType = TIENumMgtKeyType::SELL;
 
         // 문서번호
-        $MgtKey = '20230102-PHP7-002';
+        $MgtKey = '20250818-PHP7-002';
 
         try {
             $result = $this->PopbillTaxinvoice->GetFiles($CorpNum, $MgtKeyType, $MgtKey);
@@ -2431,7 +2431,7 @@ class TaxinvoiceController extends Controller
         $MgtKeyType = TIENumMgtKeyType::SELL;
 
         // 문서번호
-        $MgtKey = '20230102-PHP7-002';
+        $MgtKey = '20250818-PHP7-002';
 
         // 수신이메일주소
         // 팝빌 테스트 환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
@@ -2469,7 +2469,7 @@ class TaxinvoiceController extends Controller
         $MgtKeyType = TIENumMgtKeyType::SELL;
 
         // 세금계산서 문서번호
-        $MgtKey = '20230102-PHP7-001';
+        $MgtKey = '20250818-PHP7-001';
 
         // 발신번호
         $Sender = '';
@@ -2510,7 +2510,7 @@ class TaxinvoiceController extends Controller
         $MgtKeyType = TIENumMgtKeyType::SELL;
 
         // 세금계산서 문서번호
-        $MgtKey = '20230102-PHP7-001';
+        $MgtKey = '20250818-PHP7-001';
 
         // 발신번호
         $Sender = '';
@@ -2547,13 +2547,13 @@ class TaxinvoiceController extends Controller
         $MgtKeyType = TIENumMgtKeyType::SELL;
 
         // 세금계산서 문서번호
-        $MgtKey = '20230102-PHP7-001';
+        $MgtKey = '20250818-PHP7-001';
 
         // 첨부할 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
         $subItemCode = 121;
 
         // 첨부할 명세서 문서번호
-        $subMgtKey = '20230102-PHP7-001';
+        $subMgtKey = '20250818-PHP7-001';
 
         // 팝빌 회원 아이디
         $UserID = 'testkorea';
@@ -2584,13 +2584,13 @@ class TaxinvoiceController extends Controller
         $MgtKeyType = TIENumMgtKeyType::SELL;
 
         // 세금계산서 문서번호
-        $MgtKey = '20230102-PHP7-001';
+        $MgtKey = '20250818-PHP7-001';
 
         // 첨부해제할 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
         $subItemCode = 121;
 
         // 첨부해제할 명세서 문서번호
-        $subMgtKey = '20230102-PHP7-001';
+        $subMgtKey = '20250818-PHP7-001';
 
         // 팝빌 회원 아이디
         $UserID = 'testkorea';
@@ -2626,7 +2626,7 @@ class TaxinvoiceController extends Controller
 
         // 할당할 문서번호, 숫자, 영문 '-', '_' 조합으로 1~24자리까지
         // 사업자번호별 중복없는 고유번호 할당
-        $MgtKey = '20230102-PHP7-006';
+        $MgtKey = '20250818-PHP7-006';
 
         // 팝빌 회원 아이디
         $UserID = 'testkorea';
@@ -2878,10 +2878,10 @@ class TaxinvoiceController extends Controller
         $CorpNum = "1234567890";
 
         // 시작일자, 날짜형식(yyyyMMdd)
-        $SDate = "20230101";
+        $SDate = "20250801";
 
         // 종료일자, 날짜형식(yyyyMMdd)
-        $EDate = "20230131";
+        $EDate = "20250831";
 
         // 페이지번호
         $Page = 1;
@@ -2916,10 +2916,10 @@ class TaxinvoiceController extends Controller
         $CorpNum = "1234567890";
 
         // 시작일자, 날짜형식(yyyyMMdd)
-        $SDate = "20230101";
+        $SDate = "20250801";
 
         // 종료일자, 날짜형식(yyyyMMdd)
-        $EDate = "20230131";
+        $EDate = "20250831";
 
         // 페이지번호
         $Page = 1;
@@ -3702,7 +3702,7 @@ class TaxinvoiceController extends Controller
 
         // 작성일자, 날짜형식(yyyyMMdd)
         // 당초 세금계산서 작성 일자 기재
-        $Taxinvoice->writeDate = "20230102";
+        $Taxinvoice->writeDate = "20250818";
 
         // 공급가액 합계
         $Taxinvoice->supplyCostTotal = "-100000";
@@ -3741,7 +3741,7 @@ class TaxinvoiceController extends Controller
         $Taxinvoice->invoicerCorpName = "공급자 상호";
 
         // 공급자 문서번호, 1~24자리 (숫자, 영문, '-', '_') 조합으로 사업자 별로 중복되지 않도록 구성
-        $Taxinvoice->invoicerMgtKey = "20230102-modify-BOOT001";
+        $Taxinvoice->invoicerMgtKey = "20250818-modify-BOOT001";
 
         // 공급자 대표자 성명
         $Taxinvoice->invoicerCEOName = "공급자 대표자 성명";
@@ -3880,7 +3880,7 @@ class TaxinvoiceController extends Controller
 
         $Taxinvoice->detailList[] = new TaxinvoiceDetail();
         $Taxinvoice->detailList[0]->serialNum = 1; // 일련번호, 1부터 순차기재
-        $Taxinvoice->detailList[0]->purchaseDT = "20230102"; // 거래일자
+        $Taxinvoice->detailList[0]->purchaseDT = "20250818"; // 거래일자
         $Taxinvoice->detailList[0]->itemName = "품목명"; // 품목명
         $Taxinvoice->detailList[0]->spec = "규격"; // 규격
         $Taxinvoice->detailList[0]->qty = "1"; // 수량
@@ -3891,7 +3891,7 @@ class TaxinvoiceController extends Controller
 
         $Taxinvoice->detailList[] = new TaxinvoiceDetail();
         $Taxinvoice->detailList[1]->serialNum = 2; // 일련번호, 1부터 순차기재
-        $Taxinvoice->detailList[1]->purchaseDT = "20230102"; // 거래일자
+        $Taxinvoice->detailList[1]->purchaseDT = "20250818"; // 거래일자
         $Taxinvoice->detailList[1]->itemName = "품목명2"; // 품목명
         $Taxinvoice->detailList[1]->spec = "규격"; // 규격
         $Taxinvoice->detailList[1]->qty = "1"; // 수량
@@ -4001,7 +4001,7 @@ class TaxinvoiceController extends Controller
 
         // 작성일자, 날짜형식(yyyyMMdd)
         // 당초 전자세금계산서 작성일자 또는 변경을 원하는 작성일자
-        $Taxinvoice->writeDate = "20230102";
+        $Taxinvoice->writeDate = "20250818";
 
         // 공급가액 합계
         $Taxinvoice->supplyCostTotal = "200000";
@@ -4043,7 +4043,7 @@ class TaxinvoiceController extends Controller
         $Taxinvoice->invoicerCorpName = "공급자 상호";
 
         // 공급자 문서번호, 1~24자리 (숫자, 영문, '-', '_') 조합으로 사업자 별로 중복되지 않도록 구성
-        $Taxinvoice->invoicerMgtKey = "20230102-BOOT001";
+        $Taxinvoice->invoicerMgtKey = "20250818-BOOT001";
 
         // 공급자 대표자 성명
         $Taxinvoice->invoicerCEOName = "공급자 대표자 성명";
@@ -4181,7 +4181,7 @@ class TaxinvoiceController extends Controller
 
         $Taxinvoice->detailList[] = new TaxinvoiceDetail();
         $Taxinvoice->detailList[0]->serialNum = 1; // 일련번호, 1부터 순차기재
-        $Taxinvoice->detailList[0]->purchaseDT = "20230102"; // 거래일자
+        $Taxinvoice->detailList[0]->purchaseDT = "20250818"; // 거래일자
         $Taxinvoice->detailList[0]->itemName = "품목명"; // 품목명
         $Taxinvoice->detailList[0]->spec = "규격"; // 규격
         $Taxinvoice->detailList[0]->qty = "1"; // 수량
@@ -4192,7 +4192,7 @@ class TaxinvoiceController extends Controller
 
         $Taxinvoice->detailList[] = new TaxinvoiceDetail();
         $Taxinvoice->detailList[1]->serialNum = 2; // 일련번호, 1부터 순차기재
-        $Taxinvoice->detailList[1]->purchaseDT = "20230102"; // 거래일자
+        $Taxinvoice->detailList[1]->purchaseDT = "20250818"; // 거래일자
         $Taxinvoice->detailList[1]->itemName = "품목명2"; // 품목명
         $Taxinvoice->detailList[1]->spec = "규격"; // 규격
         $Taxinvoice->detailList[1]->qty = "1"; // 수량
@@ -4294,7 +4294,7 @@ class TaxinvoiceController extends Controller
 
         // 작성일자, 날짜형식(yyyyMMdd)
         // 공급가액 변동이 발생한 날
-        $Taxinvoice->writeDate = "20230207";
+        $Taxinvoice->writeDate = "20250818";
 
         // 공급가액 합계
         $Taxinvoice->supplyCostTotal = "-20000";
@@ -4307,7 +4307,7 @@ class TaxinvoiceController extends Controller
 
         // 비고
         // 공급가액 변동으로 인한 수정 세금계산서 작성 시, = 당초 세금계산서 작성일자 기재 필수
-        $Taxinvoice->remark1 = "20230207";
+        $Taxinvoice->remark1 = "20250818";
         // 과금방향, [정과금, 역과금] 중 선택기재
         // └ 정과금 = 공급자 과금 , 역과금 = 공급받는자 과금
         // -"역과금"은 역발행 세금계산서 발행 시에만 이용가능
@@ -4336,7 +4336,7 @@ class TaxinvoiceController extends Controller
         $Taxinvoice->invoicerCorpName = "공급자 상호";
 
         // 공급자 문서번호, 1~24자리 (숫자, 영문, '-', '_') 조합으로 사업자 별로 중복되지 않도록 구성
-        $Taxinvoice->invoicerMgtKey = "20230102-BOOT001";
+        $Taxinvoice->invoicerMgtKey = "20250818-BOOT001";
 
         // 공급자 대표자 성명
         $Taxinvoice->invoicerCEOName = "공급자 대표자 성명";
@@ -4468,7 +4468,7 @@ class TaxinvoiceController extends Controller
 
         $Taxinvoice->detailList[] = new TaxinvoiceDetail();
         $Taxinvoice->detailList[0]->serialNum = 1; // 일련번호, 1부터 순차기재
-        $Taxinvoice->detailList[0]->purchaseDT = "20230102"; // 거래일자
+        $Taxinvoice->detailList[0]->purchaseDT = "20250818"; // 거래일자
         $Taxinvoice->detailList[0]->itemName = "품목명"; // 품목명
         $Taxinvoice->detailList[0]->spec = "규격"; // 규격
         $Taxinvoice->detailList[0]->qty = "1"; // 수량
@@ -4479,7 +4479,7 @@ class TaxinvoiceController extends Controller
 
         $Taxinvoice->detailList[] = new TaxinvoiceDetail();
         $Taxinvoice->detailList[1]->serialNum = 2; // 일련번호, 1부터 순차기재
-        $Taxinvoice->detailList[1]->purchaseDT = "20230102"; // 거래일자
+        $Taxinvoice->detailList[1]->purchaseDT = "20250818"; // 거래일자
         $Taxinvoice->detailList[1]->itemName = "품목명2"; // 품목명
         $Taxinvoice->detailList[1]->spec = "규격"; // 규격
         $Taxinvoice->detailList[1]->qty = "1"; // 수량
@@ -4576,7 +4576,7 @@ class TaxinvoiceController extends Controller
 
         // 작성일자, 날짜형식(yyyyMMdd)
         // 환입이 발생한 날 기재
-        $Taxinvoice->writeDate = "20230212";
+        $Taxinvoice->writeDate = "20250818";
 
         // 공급가액 합계
         $Taxinvoice->supplyCostTotal = "-10000";
@@ -4621,7 +4621,7 @@ class TaxinvoiceController extends Controller
         $Taxinvoice->invoicerCorpName = "공급자 상호";
 
         // 공급자 문서번호, 1~24자리 (숫자, 영문, '-', '_') 조합으로 사업자 별로 중복되지 않도록 구성
-        $Taxinvoice->invoicerMgtKey = "20230102-BOOT001";
+        $Taxinvoice->invoicerMgtKey = "20250818-BOOT001";
 
         // 공급자 대표자 성명
         $Taxinvoice->invoicerCEOName = "공급자 대표자 성명";
@@ -4755,7 +4755,7 @@ class TaxinvoiceController extends Controller
 
         $Taxinvoice->detailList[] = new TaxinvoiceDetail();
         $Taxinvoice->detailList[0]->serialNum = 1; // 일련번호, 1부터 순차기재
-        $Taxinvoice->detailList[0]->purchaseDT = "20230102"; // 거래일자
+        $Taxinvoice->detailList[0]->purchaseDT = "20250818"; // 거래일자
         $Taxinvoice->detailList[0]->itemName = "품목명"; // 품목명
         $Taxinvoice->detailList[0]->spec = "규격"; // 규격
         $Taxinvoice->detailList[0]->qty = "1"; // 수량
@@ -4766,7 +4766,7 @@ class TaxinvoiceController extends Controller
 
         $Taxinvoice->detailList[] = new TaxinvoiceDetail();
         $Taxinvoice->detailList[1]->serialNum = 2; // 일련번호, 1부터 순차기재
-        $Taxinvoice->detailList[1]->purchaseDT = "20230102"; // 거래일자
+        $Taxinvoice->detailList[1]->purchaseDT = "20250818"; // 거래일자
         $Taxinvoice->detailList[1]->itemName = "품목명2"; // 품목명
         $Taxinvoice->detailList[1]->spec = "규격"; // 규격
         $Taxinvoice->detailList[1]->qty = "1"; // 수량
@@ -4862,7 +4862,7 @@ class TaxinvoiceController extends Controller
         $Taxinvoice->orgNTSConfirmNum = "20230706-original-TI00001";
 
         // 작성일자, 날짜형식(yyyyMMdd)
-        $Taxinvoice->writeDate = "20230215";
+        $Taxinvoice->writeDate = "20250818";
 
         // 공급가액 합계
         $Taxinvoice->supplyCostTotal = "-30000";
@@ -4907,7 +4907,7 @@ class TaxinvoiceController extends Controller
         $Taxinvoice->invoicerCorpName = "공급자 상호";
 
         // 공급자 문서번호, 1~24자리 (숫자, 영문, '-', '_') 조합으로 사업자 별로 중복되지 않도록 구성
-        $Taxinvoice->invoicerMgtKey = "20230102-BOOT001";
+        $Taxinvoice->invoicerMgtKey = "20250818-BOOT001";
 
         // 공급자 대표자 성명
         $Taxinvoice->invoicerCEOName = "공급자 대표자 성명";
@@ -5039,7 +5039,7 @@ class TaxinvoiceController extends Controller
 
         $Taxinvoice->detailList[] = new TaxinvoiceDetail();
         $Taxinvoice->detailList[0]->serialNum = 1; // 일련번호, 1부터 순차기재
-        $Taxinvoice->detailList[0]->purchaseDT = "20230102"; // 거래일자
+        $Taxinvoice->detailList[0]->purchaseDT = "20250818"; // 거래일자
         $Taxinvoice->detailList[0]->itemName = "품목명"; // 품목명
         $Taxinvoice->detailList[0]->spec = "규격"; // 규격
         $Taxinvoice->detailList[0]->qty = "1"; // 수량
@@ -5050,7 +5050,7 @@ class TaxinvoiceController extends Controller
 
         $Taxinvoice->detailList[] = new TaxinvoiceDetail();
         $Taxinvoice->detailList[1]->serialNum = 2; // 일련번호, 1부터 순차기재
-        $Taxinvoice->detailList[1]->purchaseDT = "20230102"; // 거래일자
+        $Taxinvoice->detailList[1]->purchaseDT = "20250818"; // 거래일자
         $Taxinvoice->detailList[1]->itemName = "품목명2"; // 품목명
         $Taxinvoice->detailList[1]->spec = "규격"; // 규격
         $Taxinvoice->detailList[1]->qty = "1"; // 수량
@@ -5148,7 +5148,7 @@ class TaxinvoiceController extends Controller
 
         // 작성일자, 날짜형식(yyyyMMdd)
         // 당초 세금계산서의 작성일자 기재
-        $Taxinvoice->writeDate = "20230313";
+        $Taxinvoice->writeDate = "20250818";
 
         // 과세형태, [과세, 영세, 면세] 중 기재
         // 부 세금계산서의 경우 과세
@@ -5192,7 +5192,7 @@ class TaxinvoiceController extends Controller
         $Taxinvoice->invoicerCorpName = "공급자 상호";
 
         // 공급자 문서번호, 1~24자리 (숫자, 영문, '-', '_') 조합으로 사업자 별로 중복되지 않도록 구성
-        $Taxinvoice->invoicerMgtKey = "20230102-BOOT001";
+        $Taxinvoice->invoicerMgtKey = "20250818-BOOT001";
 
         // 공급자 대표자 성명
         $Taxinvoice->invoicerCEOName = "공급자 대표자 성명";
@@ -5328,7 +5328,7 @@ class TaxinvoiceController extends Controller
 
         $Taxinvoice->detailList[] = new TaxinvoiceDetail();
         $Taxinvoice->detailList[0]->serialNum = 1; // 일련번호, 1부터 순차기재
-        $Taxinvoice->detailList[0]->purchaseDT = "20230102"; // 거래일자
+        $Taxinvoice->detailList[0]->purchaseDT = "20250818"; // 거래일자
         $Taxinvoice->detailList[0]->itemName = "품목명"; // 품목명
         $Taxinvoice->detailList[0]->spec = "규격"; // 규격
         $Taxinvoice->detailList[0]->qty = "1"; // 수량
@@ -5339,7 +5339,7 @@ class TaxinvoiceController extends Controller
 
         $Taxinvoice->detailList[] = new TaxinvoiceDetail();
         $Taxinvoice->detailList[1]->serialNum = 2; // 일련번호, 1부터 순차기재
-        $Taxinvoice->detailList[1]->purchaseDT = "20230102"; // 거래일자
+        $Taxinvoice->detailList[1]->purchaseDT = "20250818"; // 거래일자
         $Taxinvoice->detailList[1]->itemName = "품목명2"; // 품목명
         $Taxinvoice->detailList[1]->spec = "규격"; // 규격
         $Taxinvoice->detailList[1]->qty = "1"; // 수량
@@ -5437,7 +5437,7 @@ class TaxinvoiceController extends Controller
 
         // 작성일자, 날짜형식(yyyyMMdd)
         //  당초 세금계산서의 작성 일자
-        $Taxinvoice->writeDate = "20230313";
+        $Taxinvoice->writeDate = "20250818";
 
         // 공급가액 합계
         $Taxinvoice->supplyCostTotal = "1000000";
@@ -5485,7 +5485,7 @@ class TaxinvoiceController extends Controller
         $Taxinvoice->invoicerCorpName = "공급자 상호";
 
         // 공급자 문서번호, 1~24자리 (숫자, 영문, '-', '_') 조합으로 사업자 별로 중복되지 않도록 구성
-        $Taxinvoice->invoicerMgtKey = "20230102-BOOT001";
+        $Taxinvoice->invoicerMgtKey = "20250818-BOOT001";
 
         // 공급자 대표자 성명
         $Taxinvoice->invoicerCEOName = "공급자 대표자 성명";
@@ -5620,7 +5620,7 @@ class TaxinvoiceController extends Controller
 
         $Taxinvoice->detailList[] = new TaxinvoiceDetail();
         $Taxinvoice->detailList[0]->serialNum = 1; // 일련번호, 1부터 순차기재
-        $Taxinvoice->detailList[0]->purchaseDT = "20230102"; // 거래일자
+        $Taxinvoice->detailList[0]->purchaseDT = "20250818"; // 거래일자
         $Taxinvoice->detailList[0]->itemName = "품목명"; // 품목명
         $Taxinvoice->detailList[0]->spec = "규격"; // 규격
         $Taxinvoice->detailList[0]->qty = "1"; // 수량
@@ -5631,7 +5631,7 @@ class TaxinvoiceController extends Controller
 
         $Taxinvoice->detailList[] = new TaxinvoiceDetail();
         $Taxinvoice->detailList[1]->serialNum = 2; // 일련번호, 1부터 순차기재
-        $Taxinvoice->detailList[1]->purchaseDT = "20230102"; // 거래일자
+        $Taxinvoice->detailList[1]->purchaseDT = "20250818"; // 거래일자
         $Taxinvoice->detailList[1]->itemName = "품목명2"; // 품목명
         $Taxinvoice->detailList[1]->spec = "규격"; // 규격
         $Taxinvoice->detailList[1]->qty = "1"; // 수량
@@ -5728,7 +5728,7 @@ class TaxinvoiceController extends Controller
 
         // 작성일자, 날짜형식(yyyyMMdd)
         // 착오에 의한 이중발급 사유로 수정세금계산서 작성 시, 당초 전자세금계산서 작성일자 기재
-        $Taxinvoice->writeDate = "20230701";
+        $Taxinvoice->writeDate = "20250818";
 
         // 공급가액 합계
         // 당초 세금계산서와 동일한 내용의 수정분 부(-) 기재
@@ -5774,7 +5774,7 @@ class TaxinvoiceController extends Controller
         $Taxinvoice->invoicerCorpName = "공급자 상호";
 
         // 공급자 문서번호, 1~24자리 (숫자, 영문, '-', '_') 조합으로 사업자 별로 중복되지 않도록 구성
-        $Taxinvoice->invoicerMgtKey = "20230102-BOOT001";
+        $Taxinvoice->invoicerMgtKey = "20250818-BOOT001";
 
         // 공급자 대표자 성명
         $Taxinvoice->invoicerCEOName = "공급자 대표자 성명";
@@ -5910,7 +5910,7 @@ class TaxinvoiceController extends Controller
 
         $Taxinvoice->detailList[] = new TaxinvoiceDetail();
         $Taxinvoice->detailList[0]->serialNum = 1; // 일련번호, 1부터 순차기재
-        $Taxinvoice->detailList[0]->purchaseDT = "20230102"; // 거래일자
+        $Taxinvoice->detailList[0]->purchaseDT = "20250818"; // 거래일자
         $Taxinvoice->detailList[0]->itemName = "품목명"; // 품목명
         $Taxinvoice->detailList[0]->spec = "규격"; // 규격
         $Taxinvoice->detailList[0]->qty = "1"; // 수량
@@ -5921,7 +5921,7 @@ class TaxinvoiceController extends Controller
 
         $Taxinvoice->detailList[] = new TaxinvoiceDetail();
         $Taxinvoice->detailList[1]->serialNum = 2; // 일련번호, 1부터 순차기재
-        $Taxinvoice->detailList[1]->purchaseDT = "20230102"; // 거래일자
+        $Taxinvoice->detailList[1]->purchaseDT = "20250818"; // 거래일자
         $Taxinvoice->detailList[1]->itemName = "품목명2"; // 품목명
         $Taxinvoice->detailList[1]->spec = "규격"; // 규격
         $Taxinvoice->detailList[1]->qty = "1"; // 수량

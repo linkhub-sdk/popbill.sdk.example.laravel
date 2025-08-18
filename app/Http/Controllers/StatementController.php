@@ -107,7 +107,7 @@ class StatementController extends Controller
          ************************************************************/
 
         // 기재상 작성일자
-        $Statement->writeDate = '20220405';
+        $Statement->writeDate = '20250818';
 
         // 영수/청구, (영수, 청구, 없음) 중 기재
         $Statement->purposeType = '영수';
@@ -188,7 +188,7 @@ class StatementController extends Controller
         $Statement->detailList = array();
         $Statement->detailList[0] = new StatementDetail();
         $Statement->detailList[0]->serialNum = '1';     //품목 일련번호 1부터 순차 기재
-        $Statement->detailList[0]->purchaseDT = '20230102';   //거래일자 yyyyMMdd
+        $Statement->detailList[0]->purchaseDT = '20250818';   //거래일자 yyyyMMdd
         $Statement->detailList[0]->itemName = '품명';
         $Statement->detailList[0]->spec = '규격';
         $Statement->detailList[0]->unit = '단위';
@@ -205,7 +205,7 @@ class StatementController extends Controller
 
         $Statement->detailList[1] = new StatementDetail();
         $Statement->detailList[1]->serialNum = '2';     //품목 일련번호 순차기재
-        $Statement->detailList[1]->purchaseDT = '20230102';   //거래일자 yyyyMMdd
+        $Statement->detailList[1]->purchaseDT = '20250818';   //거래일자 yyyyMMdd
         $Statement->detailList[1]->itemName = '품명';
         $Statement->detailList[1]->spec = '규격';
         $Statement->detailList[1]->unit = '단위';
@@ -281,7 +281,7 @@ class StatementController extends Controller
          ************************************************************/
 
         // 기재상 작성일자
-        $Statement->writeDate = '20220405';
+        $Statement->writeDate = '20250818';
 
         // 영수/청구, (영수, 청구, 없음) 중 기재
         $Statement->purposeType = '영수';
@@ -362,7 +362,7 @@ class StatementController extends Controller
         $Statement->detailList = array();
         $Statement->detailList[0] = new StatementDetail();
         $Statement->detailList[0]->serialNum = '1';     //품목 일련번호 1부터 순차 기재
-        $Statement->detailList[0]->purchaseDT = '20230102';   //거래일자 yyyyMMdd
+        $Statement->detailList[0]->purchaseDT = '20250818';   //거래일자 yyyyMMdd
         $Statement->detailList[0]->itemName = '품명';
         $Statement->detailList[0]->spec = '규격';
         $Statement->detailList[0]->unit = '단위';
@@ -379,7 +379,7 @@ class StatementController extends Controller
 
         $Statement->detailList[1] = new StatementDetail();
         $Statement->detailList[1]->serialNum = '2';     //품목 일련번호 순차기재
-        $Statement->detailList[1]->purchaseDT = '20230102';   //거래일자 yyyyMMdd
+        $Statement->detailList[1]->purchaseDT = '20250818';   //거래일자 yyyyMMdd
         $Statement->detailList[1]->itemName = '품명';
         $Statement->detailList[1]->spec = '규격';
         $Statement->detailList[1]->unit = '단위';
@@ -446,7 +446,7 @@ class StatementController extends Controller
          ************************************************************/
 
         // 기재상 작성일자
-        $Statement->writeDate = '20230102';
+        $Statement->writeDate = '20250818';
 
         // 영수/청구 (영수, 청구, 없음) 중 기재
         $Statement->purposeType = '청구';
@@ -527,7 +527,7 @@ class StatementController extends Controller
         $Statement->detailList = array();
         $Statement->detailList[0] = new StatementDetail();
         $Statement->detailList[0]->serialNum = '1';     //품목 일련번호 1부터 순차 기재
-        $Statement->detailList[0]->purchaseDT = '20230102';   //거래일자 yyyyMMdd
+        $Statement->detailList[0]->purchaseDT = '20250818';   //거래일자 yyyyMMdd
         $Statement->detailList[0]->itemName = '품명';
         $Statement->detailList[0]->spec = '규격';
         $Statement->detailList[0]->unit = '단위';
@@ -544,7 +544,7 @@ class StatementController extends Controller
 
         $Statement->detailList[1] = new StatementDetail();
         $Statement->detailList[1]->serialNum = '2';     //품목 일련번호 순차기재
-        $Statement->detailList[1]->purchaseDT = '20230102';   //거래일자 yyyyMMdd
+        $Statement->detailList[1]->purchaseDT = '20250818';   //거래일자 yyyyMMdd
         $Statement->detailList[1]->itemName = '품명';
         $Statement->detailList[1]->spec = '규격';
         $Statement->detailList[1]->unit = '단위';
@@ -803,10 +803,10 @@ class StatementController extends Controller
         $DType = 'W';
 
         // 시작일자
-        $SDate = '20230101';
+        $SDate = '20250801';
 
         // 종료일자
-        $EDate = '20230131';
+        $EDate = '20250831';
 
         // 전자명세서 상태코드 배열 (2,3번째 자리에 와일드카드(*) 사용 가능)
         // - 미입력시 전체조회
@@ -1405,7 +1405,7 @@ class StatementController extends Controller
          *                       전자명세서 정보
          ************************************************************/
         // 기재상 작성일자
-        $Statement->writeDate = '20230102';
+        $Statement->writeDate = '20250818';
 
         // 영수/청구 (영수, 청구, 없음) 중 기재
         $Statement->purposeType = '영수';
@@ -1486,7 +1486,7 @@ class StatementController extends Controller
         $Statement->detailList = array();
         $Statement->detailList[0] = new StatementDetail();
         $Statement->detailList[0]->serialNum = '1';     //품목 일련번호 1부터 순차 기재
-        $Statement->detailList[0]->purchaseDT = '20230102';   //거래일자 yyyyMMdd
+        $Statement->detailList[0]->purchaseDT = '20250818';   //거래일자 yyyyMMdd
         $Statement->detailList[0]->itemName = '품명';
         $Statement->detailList[0]->spec = '규격';
         $Statement->detailList[0]->unit = '단위';
@@ -1503,7 +1503,7 @@ class StatementController extends Controller
 
         $Statement->detailList[1] = new StatementDetail();
         $Statement->detailList[1]->serialNum = '2';     //품목 일련번호 순차기재
-        $Statement->detailList[1]->purchaseDT = '20230102';   //거래일자 yyyyMMdd
+        $Statement->detailList[1]->purchaseDT = '20250818';   //거래일자 yyyyMMdd
         $Statement->detailList[1]->itemName = '품명';
         $Statement->detailList[1]->spec = '규격';
         $Statement->detailList[1]->unit = '단위';
@@ -1718,10 +1718,10 @@ class StatementController extends Controller
         $CorpNum = "1234567890";
 
         // 시작일자, 날짜형식(yyyyMMdd)
-        $SDate = "20230101";
+        $SDate = "20250801";
 
         // 종료일자, 날짜형식(yyyyMMdd)
-        $EDate = "20230131";
+        $EDate = "20250831";
 
         // 페이지번호
         $Page = 1;
@@ -1756,10 +1756,10 @@ class StatementController extends Controller
         $CorpNum = "1234567890";
 
         // 시작일자, 날짜형식(yyyyMMdd)
-        $SDate = "20230101";
+        $SDate = "20250801";
 
         // 종료일자, 날짜형식(yyyyMMdd)
-        $EDate = "20230131";
+        $EDate = "20250831";
 
         // 페이지번호
         $Page = 1;

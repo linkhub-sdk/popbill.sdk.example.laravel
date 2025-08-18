@@ -109,7 +109,7 @@ class CashbillController extends Controller
 
         // 거래일시, 날짜(yyyyMMddHHmmss)
         // 당일, 전일만 가능
-        $Cashbill->tradeDT = '20221103000000';
+        $Cashbill->tradeDT = '';
 
         // 문서형태, 승인거래 기재
         $Cashbill->tradeType = '승인거래';
@@ -231,7 +231,7 @@ class CashbillController extends Controller
 
             // 거래일시, 날짜(yyyyMMddHHmmss)
             // 당일, 전일만 가능
-            $Cashbill->tradeDT = '20221103000000';
+            $Cashbill->tradeDT = '';
 
             // 문서형태, {승인거래, 취소거래} 중 기재
             $Cashbill->tradeType = '승인거래';
@@ -496,7 +496,7 @@ class CashbillController extends Controller
 
         // 거래일시, 날짜(yyyyMMddHHmmss)
         // 당일, 전일만 가능
-        $tradeDT = '20221103000000';
+        $tradeDT = '';
 
         try {
             $result = $this->PopbillCashbill->RevokeRegistIssue(
@@ -1129,10 +1129,10 @@ class CashbillController extends Controller
         $CorpNum = "1234567890";
 
         // 시작일자, 날짜형식(yyyyMMdd)
-        $SDate = "20230101";
+        $SDate = "20250801";
 
         // 종료일자, 날짜형식(yyyyMMdd)
-        $EDate = "20230131";
+        $EDate = "20250831";
 
         // 페이지번호
         $Page = 1;
@@ -1167,10 +1167,10 @@ class CashbillController extends Controller
         $CorpNum = "1234567890";
 
         // 시작일자, 날짜형식(yyyyMMdd)
-        $SDate = "20230101";
+        $SDate = "20250801";
 
         // 종료일자, 날짜형식(yyyyMMdd)
-        $EDate = "20230131";
+        $EDate = "20250831";
 
         // 페이지번호
         $Page = 1;
