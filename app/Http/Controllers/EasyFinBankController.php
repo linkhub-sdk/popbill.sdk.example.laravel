@@ -73,13 +73,13 @@ class EasyFinBankController extends Controller
         // 계좌번호 하이픈('-') 제외
         $BankAccountInfo->AccountNumber = '';
 
-        // 계좌비밀번호
+        // 계좌 비밀번호
         $BankAccountInfo->AccountPWD = '';
 
-        // 계좌유형, "법인" 또는 "개인" 입력
+        // 계좌 유형, "법인" 또는 "개인" 입력
         $BankAccountInfo->AccountType = '';
 
-        // 예금주 식별정보 ('-' 제외)
+        // 실명번호 ('-' 제외)
         // 계좌유형이 "법인"인 경우 : 사업자번호(10자리)
         // 계좌유형이 "개인"인 경우 : 예금주 생년월일 (6자리-YYMMDD)
         $BankAccountInfo->IdentityNumber = '';
@@ -138,7 +138,7 @@ class EasyFinBankController extends Controller
         // 계좌정보 클래스 생성
         $UpdateInfo = new UpdateEasyFinBankAccountForm();
 
-        // 계좌비밀번호
+        // 계좌 비밀번호
         $UpdateInfo->AccountPWD = '';
 
         // 계좌 별칭
@@ -365,10 +365,10 @@ class EasyFinBankController extends Controller
         $AccountNumber = '';
 
         // 시작일자, 형식(yyyyMMdd)
-        $SDate = '20230101';
+        $SDate = '20250801';
 
         // 종료일자, 형식(yyyyMMdd)
-        $EDate = '20230131';
+        $EDate = '20250831';
 
         // 팝빌회원 아이디
         $UserID = 'testkorea';
@@ -1076,19 +1076,19 @@ class EasyFinBankController extends Controller
         // 종목
         $JoinForm->BizClass = '종목';
 
-        // 담당자명
+        // 담당자 성명
         $JoinForm->ContactName = '담당자성명';
 
-        // 담당자 이메일
+        // 담당자 메일
         $JoinForm->ContactEmail = '';
 
-        // 담당자 연락처
+        // 담당자 휴대폰
         $JoinForm->ContactTEL = '';
 
-        // 아이디, 6자 이상 20자미만
+        // 아이디
         $JoinForm->ID = 'userid_phpdd';
 
-        // 비밀번호, 8자 이상 20자 이하(영문, 숫자, 특수문자 조합)
+        // 비밀번호
         $JoinForm->Password = 'asdf1234!@';
 
         try {

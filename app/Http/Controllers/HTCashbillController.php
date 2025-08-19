@@ -907,19 +907,19 @@ class HTCashbillController extends Controller
         // 종목
         $JoinForm->BizClass = '종목';
 
-        // 담당자명
+        // 담당자 성명
         $JoinForm->ContactName = '담당자성명';
 
-        // 담당자 이메일
+        // 담당자 메일
         $JoinForm->ContactEmail = '';
 
-        // 담당자 연락처
+        // 담당자 휴대폰
         $JoinForm->ContactTEL = '';
 
-        // 아이디, 6자 이상 20자미만
+        // 아이디
         $JoinForm->ID = 'userid_phpdd';
 
-        // 비밀번호, 8자 이상 20자 이하(영문, 숫자, 특수문자 조합)
+        // 비밀번호
         $JoinForm->Password = 'asdf1234!@';
 
         try {

@@ -14,8 +14,8 @@
             <li>code (응답코드) : {{ $Result->code }} </li>
             <li>message (응답메시지) : {{ $Result->message }} </li>
             <li>total (총 검색결과 건수) : {{ $Result->total }} </li>
+            <li>perPage (페이지 당 목록 건수) : {{ $Result->perPage }} </li>
             <li>pageNum (페이지 번호) : {{ $Result->pageNum }} </li>
-            <li>perPage (페이지당 목록개수) : {{ $Result->perPage }} </li>
             <li>pageCount (페이지 개수) : {{ $Result->pageCount }} </li>
             <li>lastScrapDT (최종 조회일시) : {{ $Result->lastScrapDT }} </li>
             <li>balance (현재 잔액) : {{ $Result->balance }} </li>
@@ -26,7 +26,7 @@
             <ul>
               <li>tid (거래내역 아이디) : {{ $tradeInfo->tid }}</li>
               <li>trdate (거래일자) : {{ $tradeInfo->trdate }}</li>
-              <li>trserial (거래일자별 일련번호) : {{ $tradeInfo->trserial }}</li>
+              <li>trserial (거래일련번호) : {{ $tradeInfo->trserial }}</li>
               <li>trdt (거래일시) : {{ $tradeInfo->trdt }}</li>
               <li>accIn (입금액) : {{ $tradeInfo->accIn }}</li>
               <li>accOut (출금액) : {{ $tradeInfo->accOut }}</li>
@@ -34,6 +34,7 @@
               <li>remark1 (비고1) : {{ $tradeInfo->remark1 }}</li>
               <li>remark2 (비고2) : {{ $tradeInfo->remark2 }}</li>
               <li>remark3 (비고3) : {{ $tradeInfo->remark3 }}</li>
+              <li>remark4 (비고4) : {{ $tradeInfo->remark4 }}</li>
               <li>regDT (등록일시) : {{ $tradeInfo->regDT }}</li>
               <li>memo (메모) : {{ $tradeInfo->memo }}</li>
             </ul>
