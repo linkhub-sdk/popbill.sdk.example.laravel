@@ -14,12 +14,17 @@
           <fieldset class="fieldset2">
             <legend>알림톡 템플릿 정보 [{{$index+1}}]</legend>
             <ul>
-                <li> plusFriendID (카카오톡 검색용 아이디) : {{ $object->plusFriendID }} </li>
+
                 <li> templateCode (템플릿 코드) : {{ $object->templateCode }} </li>
                 <li> templateName (템플릿 제목) : {{ $object->templateName }} </li>
                 <li> template (템플릿 내용) : {{ $object->template }} </li>
-                <li> ads (광고메시지 내용) : {{ $object->ads }} </li>
-                <li> appendix (부가메시지 내용) : {{ $object->appendix }} </li>
+                <li> plusFriendID (검색용 아이디) : {{ $object->plusFriendID }} </li>
+                <li> ads (광고 메시지) : {{ $object->ads }} </li>
+                <li> appendix (부가 메시지) : {{ $object->appendix }} </li>
+                <li> secureYN (보안템플릿 여부) : {{ $object->secureYN }} </li>
+                <li> state (템플릿 상태) : {{ $object->state }} </li>
+                <li> stateDT (템플릿 상태 일시) : {{ $object->stateDT }} </li>
+
                     @if (empty($object->btns) == false)
                     @foreach ($object->btns as $indexKey => $btnInfo)
                     <fieldset class="fieldset2">

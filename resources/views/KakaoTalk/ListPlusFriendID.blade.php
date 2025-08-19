@@ -14,7 +14,7 @@
                 <fieldset class="fieldset2">
                     <legend>카카오톡채널 계정정보 [{{$index+1}}]</legend>
                     <ul>
-                        <li> plusFriendID (카카오톡 검색용 아이디) : {{ $object->plusFriendID }} </li>
+                        <li> plusFriendID (검색용 아이디) : {{ $object->plusFriendID }} </li>
                         <li> plusFriendName (채널명) : {{ $object->plusFriendName }} </li>
                         <li> regDT (등록일시) : {{ $object->regDT }} </li>
                         <li> state (채널 상태) : {{ $object->state }} </li>
