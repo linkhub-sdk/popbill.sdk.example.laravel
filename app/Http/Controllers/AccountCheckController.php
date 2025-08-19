@@ -59,14 +59,14 @@ class AccountCheckController extends Controller
         // 팝빌회원 사업자번호
         $MemberCorpNum = "1234567890";
 
-        // 팝빌회원 아이디
-        $UserID = "testkorea";
-
         // 조회할 기관코드
         $bankCode = "";
 
         // 조회할 기관의 계좌번호 (하이픈 '-' 제외 7자리 이상 14자리 이하)
         $accountNumber = "";
+
+        // 팝빌회원 아이디
+        $UserID = "testkorea";
 
         try {
             $result = $this->PopbillAccountCheck->checkAccountInfo($MemberCorpNum, $bankCode, $accountNumber, $UserID);
@@ -87,23 +87,23 @@ class AccountCheckController extends Controller
         // 팝빌회원 사업자번호
         $MemberCorpNum = "1234567890";
 
-        //팝빌회원 아이디
-        $UserID = "testkorea";
-
         // 조회할 기관코드
         $bankCode = "";
 
-        //  조회할 기관의 계좌번호 (하이픈 '-' 제외 7자리 이상 14자리 이하)
+        // 조회할 기관의 계좌번호 (하이픈 '-' 제외 7자리 이상 14자리 이하)
         $accountNumber = "";
 
-        //등록번호 유형, P-개인, B-사업자
+        // 실명번호 유형, P-개인, B-사업자
         $identityNumType = "";
 
-        // 등록번호
-        // └ 등록번호 유형 값이 "B"인 경우 사업자번호(10 자리) 입력
-        // └ 등록번호 유형 값이 "P"인 경우 생년월일(6 자리) 입력 (형식 : YYMMDD)
+        // 실명번호
+        // └ 실명번호 유형이 "B"인 경우 사업자번호(10 자리) 입력
+        // └ 실명번호 유형이 "P"인 경우 생년월일(6 자리) 입력 (형식 : YYMMDD)
         // 하이픈 '-' 제외하고 입력
         $identityNum = "";
+
+        // 팝빌회원 아이디
+        $UserID = "testkorea";
 
         try {
             $result = $this->PopbillAccountCheck->checkDepositorInfo($MemberCorpNum, $bankCode, $accountNumber, $identityNumType, $identityNum, $UserID);
@@ -588,19 +588,19 @@ class AccountCheckController extends Controller
         // 종목
         $JoinForm->BizClass = '종목';
 
-        // 담당자명
+        // 담당자 성명
         $JoinForm->ContactName = '담당자성명';
 
-        // 담당자 이메일
+        // 담당자 메일
         $JoinForm->ContactEmail = '';
 
-        // 담당자 연락처
+        // 담당자 휴대폰
         $JoinForm->ContactTEL = '';
 
-        // 아이디, 6자 이상 20자미만
+        // 아이디
         $JoinForm->ID = 'userid_phpdd';
 
-        // 비밀번호, 8자 이상 20자 이하(영문, 숫자, 특수문자 조합)
+        // 비밀번호
         $JoinForm->Password = 'asdf1234!@';
 
         try {
@@ -692,22 +692,22 @@ class AccountCheckController extends Controller
         // 담당자 정보 객체 생성
         $ContactInfo = new ContactInfo();
 
-        // 담당자 아이디
+        // 아이디
         $ContactInfo->id = 'testkorea001';
 
-        // 담당자 비밀번호, 8자 이상 20자 이하(영문, 숫자, 특수문자 조합)
+        // 비밀번호
         $ContactInfo->Password = 'asdf123!@#';
 
-        // 담당자명
+        // 담당자 성명
         $ContactInfo->personName = '담당자_수정';
 
-        // 연락처
+        // 담당자 휴대폰
         $ContactInfo->tel = '';
 
-        // 이메일주소
+        // 담당자 메일
         $ContactInfo->email = '';
 
-        // 담당자 권한, 1 : 개인권한, 2 : 읽기권한, 3: 회사권한
+        // 권한, 1 : 개인권한, 2 : 읽기권한, 3: 회사권한
         $ContactInfo->searchRole = 3;
 
         // 팝빌회원 아이디
@@ -764,8 +764,11 @@ class AccountCheckController extends Controller
         $UserID = 'testkorea';
 
         try {
+
             $ContactList = $this->PopbillAccountCheck->ListContact($CorpNum, $UserID);
+
         } catch (PopbillException $pe) {
+
             $code = $pe->getCode();
             $message = $pe->getMessage();
             return view('PResponse', ['code' => $code, 'message' => $message]);
@@ -782,9 +785,6 @@ class AccountCheckController extends Controller
     {
         // 팝빌회원 사업자번호, '-' 제외 10자리
         $CorpNum = '1234567890';
-
-        // 팝빌회원 아이디
-        $UserID = 'testkorea';
 
         // 담당자 정보 객체 생성
         $ContactInfo = new ContactInfo();
@@ -803,6 +803,9 @@ class AccountCheckController extends Controller
 
         // 담당자 권한, 1 : 개인권한, 2 : 읽기권한, 3: 회사권한
         $ContactInfo->searchRole = 3;
+
+        // 팝빌회원 아이디
+        $UserID = 'testkorea';
 
         try {
             $result = $this->PopbillAccountCheck->UpdateContact($CorpNum, $ContactInfo, $UserID);

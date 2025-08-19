@@ -17,12 +17,12 @@
                         <ul>
                             <li>id (아이디) : {{ $ContactInfo->id }}</li>
                             <li>personName (담당자 성명) : {{ $ContactInfo->personName }}</li>
-                            <li>email (담당자 이메일) : {{ $ContactInfo->email }}</li>
-                            <li>tel (담당자 연락처) : {{ $ContactInfo->tel }}</li>
+                            <li>tel (담당자 휴대폰) : {{ $ContactInfo->tel }}</li>
+                            <li>email (담당자 메일) : {{ $ContactInfo->email }}</li>
                             <li>regDT (등록일시) : {{ $ContactInfo->regDT }}</li>
-                            <li>searchRole (담당자 권한) : {{ $ContactInfo->searchRole }}</li>
-                            <li>mgrYN (관리자 여부) : {{ $ContactInfo->mgrYN }}</li>
-                            <li>state (상태) : {{ $ContactInfo->state }}</li>
+                            <li>searchRole (권한) : {{ $ContactInfo->searchRole }}</li>
+                            <li>mgrYN (역할) : {{ $ContactInfo->mgrYN }}</li>
+                            <li>state (계정상태) : {{ $ContactInfo->state }}</li>
                         </ul>
                     </fieldset>
                     @endforeach
