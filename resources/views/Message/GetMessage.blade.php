@@ -14,10 +14,7 @@
         <fieldset class="fieldset2">
           <legend>문자전송 결과정보 확인 [ {{ $indexKey+1 }} / {{count($Result)}} ]</legend>
           <ul>
-              <li> state (전송상태 코드) : {{ $msgInfo->state }} </li>
-              <li> result (전송결과 코드) : {{ $msgInfo->result }} </li>
-              <li> subject (제목) : {{ $msgInfo->subject }} </li>
-              <li> type (메시지 유형) : {{ $msgInfo->type }} </li>
+              <li> subject (메시지 제목) : {{ $msgInfo->subject }} </li>
               <li> content (메시지 내용) : {{ $msgInfo->content }} </li>
               <li> sendNum (발신번호) : {{ $msgInfo->sendNum }} </li>
               <li> senderName (발신자명) : {{ $msgInfo->senderName }} </li>
@@ -27,9 +24,13 @@
               <li> sendDT (전송일시) : {{ $msgInfo->sendDT }} </li>
               <li> resultDT (전송결과 수신일시) : {{ $msgInfo->resultDT }} </li>
               <li> reserveDT (예약일시) : {{ $msgInfo->reserveDT }} </li>
+              <li> state (상태코드) : {{ $msgInfo->state }} </li>
+              <li> result (결과코드) : {{ $msgInfo->result }} </li>
+              <li> type (메시지 타입) : {{ $msgInfo->type }} </li>
               <li> tranNet (전송처리 이동통신사명) : {{ $msgInfo->tranNet }} </li>
               <li> receiptNum (접수번호) : {{ $msgInfo->receiptNum }} </li>
               <li> requestNum (요청번호) : {{ $msgInfo->requestNum }} </li>
+              <li> interOPRefKey (파트너 지정키) : {{ $msgInfo->interOPRefKey }} </li>
           </ul>
         </fieldset>
         @endforeach
