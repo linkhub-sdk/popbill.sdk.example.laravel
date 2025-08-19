@@ -557,19 +557,19 @@ class BizInfoCheckController extends Controller
         // 종목
         $JoinForm->BizClass = '종목';
 
-        // 담당자명
+        // 담당자 성명
         $JoinForm->ContactName = '담당자성명';
 
-        // 담당자 이메일
+        // 담당자 메일
         $JoinForm->ContactEmail = '';
 
-        // 담당자 연락처
+        // 담당자 휴대폰
         $JoinForm->ContactTEL = '';
 
-        // 아이디, 6자 이상 20자미만
+        // 아이디
         $JoinForm->ID = 'userid_phpdd';
 
-        // 비밀번호, 8자 이상 20자 이하(영문, 숫자, 특수문자 조합)
+        // 비밀번호
         $JoinForm->Password = 'asdf1234!@';
 
         try {
@@ -664,22 +664,22 @@ class BizInfoCheckController extends Controller
         // 담당자 정보 객체 생성
         $ContactInfo = new ContactInfo();
 
-        // 담당자 아이디
+        // 아이디
         $ContactInfo->id = 'testkorea001';
 
-        // 담당자 비밀번호, 8자 이상 20자 이하(영문, 숫자, 특수문자 조합)
+        // 비밀번호
         $ContactInfo->Password = 'asdf123!@#';
 
-        // 담당자명
+        // 담당자 성명
         $ContactInfo->personName = '담당자_수정';
 
-        // 연락처
+        // 담당자 휴대폰
         $ContactInfo->tel = '';
 
-        // 이메일주소
+        // 담당자 메일
         $ContactInfo->email = '';
 
-        // 담당자 권한, 1 : 개인권한, 2 : 읽기권한, 3: 회사권한
+        // 권한, 1 : 개인권한, 2 : 읽기권한, 3: 회사권한
         $ContactInfo->searchRole = 3;
 
         try {
@@ -788,19 +788,19 @@ class BizInfoCheckController extends Controller
         // 담당자 정보 객체 생성
         $ContactInfo = new ContactInfo();
 
-        // 담당자명
+        // 담당자 성명
         $ContactInfo->personName = '담당자_수정';
 
-        // 담당자 아이디
+        // 아이디
         $ContactInfo->id = 'testkorea';
 
-        // 담당자 연락처
+        // 담당자 휴대폰
         $ContactInfo->tel = '';
 
-        // 이메일 주소
+        // 담당자 메일
         $ContactInfo->email = '';
 
-        // 담당자 권한, 1 : 개인권한, 2 : 읽기권한, 3: 회사권한
+        // 권한, 1 : 개인권한, 2 : 읽기권한, 3: 회사권한
         $ContactInfo->searchRole = 3;
 
         try {
