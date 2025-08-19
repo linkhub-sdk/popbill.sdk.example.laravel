@@ -11,7 +11,8 @@
       <fieldset class="fieldset1">
         <legend>{{\Request::fullUrl()}}</legend>
         <ul>
-          <li>ntsconfirmNum (국세청승인번호) : {{ $Taxinvoice->ntsconfirmNum }}</li>
+
+
           <li>writeDate (작성일자) : {{ $Taxinvoice->writeDate }}</li>
           <li>issueDT (발행일시) : {{ $Taxinvoice->issueDT }}</li>
           <li>invoiceType (전자세금계산서 종류) : {{ $Taxinvoice->invoiceType }}</li>
@@ -28,8 +29,8 @@
           <li>remark1 (비고1) : {{ $Taxinvoice->remark1 }}</li>
           <li>remark2 (비고2) : {{ $Taxinvoice->remark2 }}</li>
           <li>remark3 (비고3) : {{ $Taxinvoice->remark3 }}</li>
-          <li>modifyCode (수정 사유코드) : {{ $Taxinvoice->modifyCode }}</li>
-          <li>orgNTSConfirmNum (당초 전자세금계산서 국세청 승인번호) : {{ $Taxinvoice->orgNTSConfirmNum }}</li>
+          <li>ntsconfirmNum (국세청승인번호) : {{ $Taxinvoice->ntsconfirmNum }}</li>
+
           <li>invoicerCorpNum (공급자 사업자번호) : {{ $Taxinvoice->invoicerCorpNum }}</li>
           <li>invoicerTaxRegID (공급자 종사업장번호) : {{ $Taxinvoice->invoicerTaxRegID }}</li>
           <li>invoicerCorpName (공급자 상호) : {{ $Taxinvoice->invoicerCorpName }}</li>
@@ -61,6 +62,9 @@
           <li>trusteeContactName (수탁자 담당자 성명) : {{ $Taxinvoice->trusteeContactName }}</li>
           <li>trusteeTEL (수탁자 담당자 연락처) : {{ $Taxinvoice->trusteeTEL }}</li>
           <li>trusteeEmail (수탁자 담당자 이메일) : {{ $Taxinvoice->trusteeEmail }}</li>
+
+          <li>modifyCode (수정 사유코드) : {{ $Taxinvoice->modifyCode }}</li>
+          <li>orgNTSConfirmNum (당초 전자세금계산서 국세청 승인번호) : {{ $Taxinvoice->orgNTSConfirmNum }}</li>
 
             @if (count($Taxinvoice->detailList) > 0)
               @foreach ($Taxinvoice->detailList as $indexKey => $TaxinvoiceDetail)

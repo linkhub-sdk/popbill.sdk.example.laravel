@@ -26,26 +26,37 @@
               <li>writeDate (작성일자) : {{ $tiInfo->writeDate }}</li>
               <li>issueDate (발행일자) : {{ $tiInfo->issueDate }}</li>
               <li>sendDate (전송일자) : {{ $tiInfo->sendDate }}</li>
-              <li>invoiceType (구분) : {{ $tiInfo->invoiceType }}</li>
               <li>taxType (과세형태) : {{ $tiInfo->taxType }}</li>
               <li>purposeType (영수/청구) : {{ $tiInfo->purposeType }}</li>
               <li>supplyCostTotal (공급가액 합계) : {{ $tiInfo->supplyCostTotal }}</li>
               <li>taxTotal (세액 합계) : {{ $tiInfo->taxTotal }}</li>
               <li>totalAmount (합계금액) : {{ $tiInfo->totalAmount }}</li>
               <li>remark1 (비고) : {{ $tiInfo->remark1 }}</li>
+              <li>invoiceType (전자세금계산서 유형) : {{ $tiInfo->invoiceType }}</li>
+              <li>modifyYN (수정 전자세금계산서 여부) : {{ $tiInfo->modifyYN  ? 'true' : 'false' }}</li>
+              <li>orgNTSConfirmNum (당초 전자세금계산서 국세청승인번호) : {{ $tiInfo->orgNTSConfirmNum }}</li>
+
+              <li>purchaseDate (품목1의 거래일자) : {{ $tiInfo->purchaseDate }}</li>
+              <li>itemName (품목1의 품명) : {{ $tiInfo->itemName }}</li>
+              <li>spec (품목1의 규격) : {{ $tiInfo->spec }}</li>
+              <li>qty (품목1의 수량) : {{ $tiInfo->qty }}</li>
+              <li>unitCost (품목1의 단가) : {{ $tiInfo->unitCost }}</li>
+              <li>supplyCost (품목1의 공급가액) : {{ $tiInfo->supplyCost }}</li>
+              <li>tax (품목1의 세액) : {{ $tiInfo->tax }}</li>
+              <li>remark (품목1의 비고) : {{ $tiInfo->remark }}</li>
 
               <li>invoicerCorpNum (공급자 사업자번호) : {{ $tiInfo->invoicerCorpNum }}</li>
               <li>invoicerTaxRegID (공급자 종사업장번호) : {{ $tiInfo->invoicerTaxRegID }}</li>
               <li>invoicerCorpName (공급자 상호) : {{ $tiInfo->invoicerCorpName }}</li>
-              <li>invoicerCEOName (공급자 대표자성명) : {{ $tiInfo->invoicerCEOName }}</li>
-              <li>invoicerEmail (공급자 담당자 이메일) : {{ $tiInfo->invoicerEmail }}</li>
+              <li>invoicerCEOName (공급자 대표자 성명) : {{ $tiInfo->invoicerCEOName }}</li>
+              <li>invoicerEmail (공급자 담당자 메일) : {{ $tiInfo->invoicerEmail }}</li>
 
               <li>invoiceeCorpNum (공급받는자 사업자번호) : {{ $tiInfo->invoiceeCorpNum }}</li>
               <li>invoiceeType (공급받는자 구분) : {{ $tiInfo->invoiceeType }}</li>
               <li>invoiceeTaxRegID (공급받는자 종사업장번호) : {{ $tiInfo->invoiceeTaxRegID }}</li>
               <li>invoiceeCorpName (공급받는자 상호) : {{ $tiInfo->invoiceeCorpName }}</li>
               <li>invoiceeCEOName (공급받는자 대표자 성명) : {{ $tiInfo->invoiceeCEOName }}</li>
-              <li>invoiceeEmail1 (공급받는자 담당자 이메일) : {{ $tiInfo->invoiceeEmail1 }}</li>
+              <li>invoiceeEmail1 (공급받는자 담당자 메일) : {{ $tiInfo->invoiceeEmail1 }}</li>
               <li>invoiceeEmail2 (공급받는자 ASP 연계사업자 이메일) : {{ $tiInfo->invoiceeEmail2 }}</li>
 
               <li>trusteeCorpNum (수탁자 사업자번호) : {{ $tiInfo->trusteeCorpNum }}</li>
@@ -54,17 +65,9 @@
               <li>trusteeCEOName (수탁자 대표자 성명) : {{ $tiInfo->trusteeCEOName }}</li>
               <li>trusteeEmail (수탁자 담당자 이메일) : {{ $tiInfo->trusteeEmail }}</li>
 
-              <li>purchaseDate (거래일자) : {{ $tiInfo->purchaseDate }}</li>
-              <li>itemName (품명) : {{ $tiInfo->itemName }}</li>
-              <li>spec (규격) : {{ $tiInfo->spec }}</li>
-              <li>qty (수량) : {{ $tiInfo->qty }}</li>
-              <li>unitCost (단가) : {{ $tiInfo->unitCost }}</li>
-              <li>supplyCost (공급가액) : {{ $tiInfo->supplyCost }}</li>
-              <li>tax (세액) : {{ $tiInfo->tax }}</li>
-              <li>remark (비고) : {{ $tiInfo->remark }}</li>
 
-              <li>modifyYN (수정 전자세금계산서 여부) : {{ $tiInfo->modifyYN  ? 'true' : 'false' }}</li>
-              <li>orgNTSConfirmNum (당초 전자세금계산서 국세청승인번호) : {{ $tiInfo->orgNTSConfirmNum }}</li>
+
+
             </ul>
           </fieldset>
           @endforeach
