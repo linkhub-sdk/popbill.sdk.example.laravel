@@ -11,9 +11,9 @@
       <fieldset class="fieldset1">
         <legend>{{\Request::fullUrl()}}</legend>
         <ul>
-          <li>mgtKey (현금영수증 문서번호) : {{ $CashbillInfo->mgtKey }} </li>
-          <li>orgConfirmNum (당초 승인 현금영수증 국세청승인번호) : {{ $CashbillInfo->orgConfirmNum }} </li>
-          <li>orgTradeDate (당초 승인 현금영수증 거래일자) : {{ $CashbillInfo->orgTradeDate }} </li>
+          <li>mgtKey (문서번호) : {{ $CashbillInfo->mgtKey }} </li>
+          <li>orgConfirmNum (당초 국세청승인번호) : {{ $CashbillInfo->orgConfirmNum }} </li>
+          <li>orgTradeDate (당초 거래일자) : {{ $CashbillInfo->orgTradeDate }} </li>
           <li>tradeDate (거래일자) : {{ $CashbillInfo->tradeDate }} </li>
           <li>tradeDT (거래일시) : {{ $CashbillInfo->tradeDT }} </li>
           <li>tradeType (문서형태) : {{ $CashbillInfo->tradeType }} </li>
@@ -31,12 +31,12 @@
           <li>franchiseAddr (가맹점 주소) : {{ $CashbillInfo->franchiseAddr }} </li>
           <li>franchiseTEL (가맹점 전화번호) : {{ $CashbillInfo->franchiseTEL }} </li>
           <li>identityNum (식별번호) : {{ $CashbillInfo->identityNum }} </li>
-          <li>customerName (주문자명) : {{ $CashbillInfo->customerName }} </li>
+          <li>customerName (구매자(고객) 성명) : {{ $CashbillInfo->customerName }} </li>
           <li>itemName (주문상품명) : {{ $CashbillInfo->itemName }} </li>
           <li>orderNumber (주문번호) : {{ $CashbillInfo->orderNumber }} </li>
-          <li>email (주문자 이메일) : {{ $CashbillInfo->email }} </li>
-          <li>hp (주문자 휴대폰) : {{ $CashbillInfo->hp }} </li>
-          <li>smssendYN (발행 안내문자 전송여부) : {{ $CashbillInfo->smssendYN }} </li>
+          <li>email (구매자(고객) 메일) : {{ $CashbillInfo->email }} </li>
+          <li>hp (구매자(고객) 휴대폰) : {{ $CashbillInfo->hp }} </li>
+          <li>smssendYN (구매자 알림문자 전송 여부) : {{ $CashbillInfo->smssendYN }} </li>
           <li>cancelType (취소사유) : {{ $CashbillInfo->cancelType }} </li>
         </ul>
       </fieldset>

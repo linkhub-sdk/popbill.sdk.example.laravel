@@ -89,23 +89,11 @@ class CashbillController extends Controller
         // 팝빌회원 사업자번호, '-' 제외 10자리
         $CorpNum = '1234567890';
 
-        // 메모
-        $Memo = '현금영수증 즉시발행 메모';
-
-        // 팝빌회원 아이디
-        $UserID = 'testkorea';
-
-        // 안내메일 제목, 공백처리시 기본양식으로 전송
-        $emailSubject = '';
-
-        // 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
-        $MgtKey = '20230102-PHP7-001';
-
         // 현금영수증 객체 생성
         $Cashbill = new Cashbill();
 
         // 현금영수증 문서번호, 1~24자리 (숫자, 영문, '-', '_') 조합으로 사업자 별로 중복되지 않도록 구성
-        $Cashbill->mgtKey = $MgtKey;
+        $Cashbill->mgtKey = '20230102-PHP7-001';
 
         // 거래일시, 날짜(yyyyMMddHHmmss)
         // 당일, 전일만 가능
@@ -160,7 +148,7 @@ class CashbillController extends Controller
         // └ 주민등록번호 13자리, 휴대폰번호 10~11자리, 카드번호 13~19자리, 사업자번호 10자리 입력 가능
         $Cashbill->identityNum = '0101112222';
 
-        // 주문자명
+        // 구매자(고객) 성명
         $Cashbill->customerName = '고객명';
 
         // 주문상품명
@@ -169,17 +157,26 @@ class CashbillController extends Controller
         // 주문번호
         $Cashbill->orderNumber = '주문번호';
 
-        // 주문자 이메일
+        // 구매자(고객) 메일
         // 팝빌 테스트 환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
         // 실제 거래처의 메일주소가 기재되지 않도록 주의
         $Cashbill->email = '';
 
-        // 주문자 휴대폰
+        // 구매자(고객) 휴대폰
         // - {smssendYN} 의 값이 true 인 경우 아래 휴대폰번호로 안내 문자 전송
         $Cashbill->hp = '';
 
-        // 발행시 알림문자 전송여부
+        // 구매자 알림문자 전송 여부
         $Cashbill->smssendYN = false;
+
+        // 메모
+        $Memo = '현금영수증 즉시발행 메모';
+
+        // 팝빌회원 아이디
+        $UserID = 'testkorea';
+
+        // 안내메일 제목, 공백처리시 기본양식으로 전송
+        $emailSubject = '';
 
         try {
             $result = $this->PopbillCashbill->RegistIssue($CorpNum, $Cashbill, $Memo, $UserID, $emailSubject);
@@ -215,6 +212,7 @@ class CashbillController extends Controller
         $cashbillList = array();
 
         for ($i = 0; $i < 2; $i++) {
+
             // 현금영수증 객체 생성
             $Cashbill = new Cashbill();
 
@@ -282,7 +280,7 @@ class CashbillController extends Controller
             // └ 주민등록번호 13자리, 휴대폰번호 10~11자리, 카드번호 13~19자리, 사업자번호 10자리 입력 가능
             $Cashbill->identityNum = '0101112222';
 
-            // 주문자명
+            // 구매자(고객) 성명
             $Cashbill->customerName = '주식회사주문자명담당자';
 
             // 주문상품명
@@ -291,16 +289,16 @@ class CashbillController extends Controller
             // 주문번호
             $Cashbill->orderNumber = '주문번호';
 
-            // 주문자 이메일
+            // 구매자(고객) 메일
             // 팝빌 테스트 환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
             // 실제 거래처의 메일주소가 기재되지 않도록 주의
             $Cashbill->email = '';
 
-            // 주문자 휴대폰
+            // 구매자(고객) 휴대폰
             // - {smssendYN} 의 값이 true 인 경우 아래 휴대폰번호로 안내 문자 전송
             $Cashbill->hp = '';
 
-            // 발행시 알림문자 전송여부
+            // 구매자 알림문자 전송 여부
             $Cashbill->smssendYN = false;
 
             $cashbillList[] = $Cashbill;
@@ -623,10 +621,10 @@ class CashbillController extends Controller
         $DType = 'R';
 
         // 시작일자
-        $SDate = '20230101';
+        $SDate = '20250801';
 
         // 종료일자
-        $EDate = '20230131';
+        $EDate = '20250831';
 
         // 상태코드 배열 (2,3번째 자리에 와일드카드(*) 사용 가능)
         // - 미입력시 전체조회
@@ -1582,19 +1580,19 @@ class CashbillController extends Controller
         // 종목
         $JoinForm->BizClass = '종목';
 
-        // 담당자명
+        // 담당자 성명
         $JoinForm->ContactName = '담당자성명';
 
-        // 담당자 이메일
+        // 담당자 메일
         $JoinForm->ContactEmail = '';
 
-        // 담당자 연락처
+        // 담당자 휴대폰
         $JoinForm->ContactTEL = '';
 
-        // 아이디, 6자 이상 20자미만
+        // 아이디
         $JoinForm->ID = 'userid_phpdd';
 
-        // 비밀번호, 8자 이상 20자 이하(영문, 숫자, 특수문자 조합)
+        // 비밀번호
         $JoinForm->Password = 'asdf1234!@';
 
         try {
@@ -1689,24 +1687,22 @@ class CashbillController extends Controller
         // 담당자 정보 객체 생성
         $ContactInfo = new ContactInfo();
 
-        // 담당자 아이디
+        // 아이디
         $ContactInfo->id = 'testkorea001';
 
-        // 담당자 비밀번호, 8자 이상 20자 이하(영문, 숫자, 특수문자 조합)
+        // 비밀번호
         $ContactInfo->Password = 'asdf123!@#';
 
-        // 담당자명
+        // 담당자 성명
         $ContactInfo->personName = '담당자_수정';
 
-        // 연락처
+        // 담당자 휴대폰
         $ContactInfo->tel = '';
 
-        // 이메일주소
-        // 팝빌 테스트 환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
-        // 실제 거래처의 메일주소가 기재되지 않도록 주의
+        // 담당자 메일
         $ContactInfo->email = '';
 
-        // 담당자 권한, 1 : 개인권한, 2 : 읽기권한, 3: 회사권한
+        // 권한, 1 : 개인권한, 2 : 읽기권한, 3: 회사권한
         $ContactInfo->searchRole = 3;
 
         // 팝빌회원 아이디
@@ -1812,28 +1808,28 @@ class CashbillController extends Controller
         // 팝빌회원 사업자번호, '-' 제외 10자리
         $CorpNum = '1234567890';
 
-        // 팝빌회원 아이디
-        $UserID = 'testkorea';
-
         // 담당자 정보 객체 생성
         $ContactInfo = new ContactInfo();
 
-        // 담당자명
+        // 담당자 성명
         $ContactInfo->personName = '담당자_수정';
 
-        // 담당자 아이디
+        // 아이디
         $ContactInfo->id = 'testkorea';
 
-        // 담당자 연락처
+        // 담당자 휴대폰
         $ContactInfo->tel = '';
 
-        // 이메일 주소
+        // 담당자 메일
         // 팝빌 테스트 환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
         // 실제 거래처의 메일주소가 기재되지 않도록 주의
         $ContactInfo->email = '';
 
-        // 담당자 권한, 1 : 개인권한, 2 : 읽기권한, 3: 회사권한
+        // 권한, 1 : 개인권한, 2 : 읽기권한, 3: 회사권한
         $ContactInfo->searchRole = 3;
+
+        // 팝빌회원 아이디
+        $UserID = 'testkorea';
 
         try {
             $result = $this->PopbillCashbill->UpdateContact($CorpNum, $ContactInfo, $UserID);

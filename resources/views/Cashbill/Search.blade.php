@@ -14,8 +14,8 @@
             <li>code (응답코드) : {{ $Result->code }} </li>
             <li>message (응답메시지) : {{ $Result->message }} </li>
             <li>total (총 검색결과 건수) : {{ $Result->total }} </li>
+            <li>perPage (페이지당 목록 건수) : {{ $Result->perPage }} </li>
             <li>pageNum (페이지 번호) : {{ $Result->pageNum }} </li>
-            <li>perPage (페이지당 목록개수) : {{ $Result->perPage }} </li>
             <li>pageCount (페이지 개수) : {{ $Result->pageCount }} </li>
           </ul>
           @foreach ($Result->list as $indexKey => $cbInfo)
@@ -33,25 +33,24 @@
               <li> totalAmount (거래금액) : {{ $cbInfo->totalAmount }}</li>
               <li> supplyCost (공급가액) :  {{ $cbInfo->supplyCost }}</li>
               <li> tax (부가세) :  {{ $cbInfo->tax }}</li>
-              <li> serviceFee (봉사료) :  {{ $cbInfo->serviceFee }}</li>  
+              <li> serviceFee (봉사료) :  {{ $cbInfo->serviceFee }}</li>
               <li> issueDT (발행일시) : {{ $cbInfo->issueDT }}</li>
               <li> regDT (등록일시) : {{ $cbInfo->regDT }}</li>
-              <li> stateMemo (상태메모) : {{ $cbInfo->stateMemo }}</li>
               <li> stateCode (상태코드) : {{ $cbInfo->stateCode }}</li>
-              <li> stateDT (상태변경일시) : {{ $cbInfo->stateDT }}</li>
+              <li> stateDT (상태 변경일시) : {{ $cbInfo->stateDT }}</li>
               <li> identityNum (식별번호) : {{ $cbInfo->identityNum }}</li>
               <li> itemName (주문상품명) : {{ $cbInfo->itemName }}</li>
               <li> orderNumber (주문번호) :  {{ $cbInfo->orderNumber }}</li>
               <li> email (구매자(고객) 이메일) :  {{ $cbInfo->email }}</li>
               <li> hp (구매자(고객) 휴대폰) :  {{ $cbInfo->hp }}</li>
-              <li> customerName (주문자명) : {{ $cbInfo->customerName }}</li>
+              <li> customerName (구매자(고객) 성명) : {{ $cbInfo->customerName }}</li>
               <li> confirmNum (국세청승인번호) : {{ $cbInfo->confirmNum }}</li>
-              <li> orgConfirmNum (당초 승인 현금영수증 국세청승인번호) : {{ $cbInfo->orgConfirmNum }}</li>
-              <li> orgTradeDate (당초 승인 현금영수증 거래일자) : {{ $cbInfo->orgTradeDate }}</li>
+              <li> orgConfirmNum (당초 국세청승인번호) : {{ $cbInfo->orgConfirmNum }}</li>
+              <li> orgTradeDate (당초 거래일자) : {{ $cbInfo->orgTradeDate }}</li>
               <li> ntssendDT (국세청 전송일시) : {{ $cbInfo->ntssendDT }}</li>
               <li> ntsresultDT (국세청 처리결과 수신일시) : {{ $cbInfo->ntsresultDT }}</li>
-              <li> ntsresultCode (국세청 처리결과 상태코드) : {{ $cbInfo->ntsresultCode }}</li>
-              <li> ntsresultMessage (국세청 처리결과 메시지) : {{ $cbInfo->ntsresultMessage }}</li>
+              <li> ntsresultCode (국세청 결과코드) : {{ $cbInfo->ntsresultCode }}</li>
+              <li> ntsresultMessage (국세청 결과메시지) : {{ $cbInfo->ntsresultMessage }}</li>
               <li> printYN (인쇄여부) : {{ $cbInfo->printYN }}</li>
               <li> interOPYN (연동문서 여부) :  {{ $cbInfo->interOPYN ? 'true' : 'false' }}</li>
             </ul>
