@@ -14,8 +14,8 @@
         <fieldset class="fieldset2">
           <legend>팩스전송 결과정보 확인 [ {{ $indexKey+1 }} / {{count($Result)}} ]</legend>
           <ul>
-            <li> state (전송상태 코드) : {{ $faxInfo->state }} </li>
-            <li> result (전송결과 코드) : {{ $faxInfo->result }} </li>
+            <li> state (상태코드) : {{ $faxInfo->state }} </li>
+            <li> result (결과코드) : {{ $faxInfo->result }} </li>
             <li> sendNum (발신번호) : {{ $faxInfo->sendNum }} </li>
             <li> senderName (발신자명) : {{ $faxInfo->senderName }} </li>
             <li> receiveNum (수신번호) : {{ $faxInfo->receiveNum }} </li>
@@ -26,11 +26,12 @@
             <li> successPageCnt (성공 페이지수) : {{ $faxInfo->successPageCnt }} </li>
             <li> failPageCnt (실패 페이지수) : {{ $faxInfo->failPageCnt }} </li>
             <li> cancelPageCnt (취소 페이지수) : {{ $faxInfo->cancelPageCnt }} </li>
-            <li> receiptDT (접수일시) : {{ $faxInfo->receiptDT }} </li>
+
             <li> reserveDT (예약일시) : {{ $faxInfo->reserveDT }} </li>
+            <li> receiptDT (접수일시) : {{ $faxInfo->receiptDT }} </li>
             <li> sendDT (전송일시) : {{ $faxInfo->sendDT }} </li>
             <li> resultDT (전송결과 수신일시) : {{ $faxInfo->resultDT }} </li>
-            <li> fileNames (전송파일명 리스트) : {{ print_r($faxInfo->fileNames) }} </li>
+            <li> fileNames (전송 파일명 리스트) : {{ print_r($faxInfo->fileNames) }} </li>
             <li> receiptNum (접수번호) : {{ $faxInfo->receiptNum }} </li>
             <li> requestNum (요청번호) : {{ $faxInfo->requestNum }} </li>
             <li> interOPRefKey (파트너 지정키) : {{ $faxInfo->interOPRefKey }} </li>

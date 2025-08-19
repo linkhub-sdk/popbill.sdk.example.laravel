@@ -14,16 +14,16 @@
             <li>code (응답코드) : {{ $Result->code }} </li>
             <li>message (응답메시지) : {{ $Result->message }} </li>
             <li>total (총 검색결과 건수) : {{ $Result->total }} </li>
+            <li>perPage (페이지당 목록 건수) : {{ $Result->perPage }} </li>
             <li>pageNum (페이지 번호) : {{ $Result->pageNum }} </li>
-            <li>perPage (페이지당 목록개수) : {{ $Result->perPage }} </li>
             <li>pageCount (페이지 개수) : {{ $Result->pageCount }} </li>
           </ul>
           @foreach ($Result->list as $indexKey => $faxInfo)
           <fieldset class="fieldset2">
             <legend>팩스 전송결과 정보 [{{ $indexKey+1 }}]</legend>
             <ul>
-              <li> state (전송상태 코드) : {{ $faxInfo->state }} </li>
-              <li> result (전송결과 코드) : {{ $faxInfo->result }} </li>
+              <li> state (상태코드) : {{ $faxInfo->state }} </li>
+              <li> result (결과코드) : {{ $faxInfo->result }} </li>
               <li> sendNum (발신번호) : {{ $faxInfo->sendNum }} </li>
               <li> senderName (발신자명) : {{ $faxInfo->senderName }} </li>
               <li> receiveNum (수신번호) : {{ $faxInfo->receiveNum }} </li>
@@ -34,8 +34,9 @@
               <li> successPageCnt (성공 페이지수) : {{ $faxInfo->successPageCnt }} </li>
               <li> failPageCnt (실패 페이지수) : {{ $faxInfo->failPageCnt }} </li>
               <li> cancelPageCnt (취소 페이지수) : {{ $faxInfo->cancelPageCnt }} </li>
-              <li> receiptDT (접수일시) : {{ $faxInfo->receiptDT }} </li>
+
               <li> reserveDT (예약일시) : {{ $faxInfo->reserveDT }} </li>
+              <li> receiptDT (접수일시) : {{ $faxInfo->receiptDT }} </li>
               <li> sendDT (전송일시) : {{ $faxInfo->sendDT }} </li>
               <li> resultDT (전송결과 수신일시) : {{ $faxInfo->resultDT }} </li>
               <li> fileNames (전송파일명 리스트) : {{ print_r($faxInfo->fileNames) }} </li>
