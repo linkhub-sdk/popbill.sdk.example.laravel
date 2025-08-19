@@ -10,19 +10,18 @@
       <br/>
       <fieldset class="fieldset1">
         <legend>{{\Request::fullUrl()}}</legend>
+        <fieldset class="fieldset2">
           @foreach ($Result as $index => $object)
-          <fieldset class="fieldset2">
+
             <ul>
               @if ($object->emailType == "CSH_ISSUE")
                 <li>CSH_ISSUE (고객에게 현금영수증이 발행 되었음을 알려주는 메일 전송 여부) :
                   {{ $object->sendYN ? 'true' : 'false' }}</li>
-              @elseif ($object->emailType == "CSH_CANCEL")
-                <li>CSH_CANCEL (고객에게 현금영수증이 발행취소 되었음을 알려주는 메일 전송 여부) :
-                  {{ $object->sendYN ? 'true' : 'false' }}</li>
               @endif
             </ul>
-          </fieldset>
+
           @endforeach
+          </fieldset>
         </ul>
       </fieldset>
      </div>

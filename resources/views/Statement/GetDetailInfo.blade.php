@@ -11,12 +11,21 @@
       <fieldset class="fieldset1">
         <legend>{{\Request::fullUrl()}}</legend>
         <ul>
-          <li> itemCode (명세서코드) : {{ $Statement->itemCode }} </li>
+          <li> itemCode (전자명세서 문서 유형) : {{ $Statement->itemCode }} </li>
           <li> mgtKey (문서번호) : {{ $Statement->mgtKey }} </li>
-          <li> invoiceNum (팝빌부여 문서고유번호) : {{ $Statement->invoiceNum }} </li>
+          <li> invoiceNum (팝빌 승인번호) : {{ $Statement->invoiceNum }} </li>
           <li> formCode (맞춤양식 코드) : {{ $Statement->formCode }} </li>
           <li> writeDate (작성일자) : {{ $Statement->writeDate }} </li>
-          <li> taxType (세금형태) : {{ $Statement->taxType  }} </li>
+          <li> taxType (과세형태) : {{ $Statement->taxType  }} </li>
+
+          <li> purposeType (영수/청구) : {{ $Statement->purposeType }} </li>
+          <li> serialNum (일련번호) : {{ $Statement->serialNum }} </li>
+          <li> supplyCostTotal (공급가액 합계) : {{ $Statement->supplyCostTotal }} </li>
+          <li> taxTotal (세액 합계) : {{ $Statement->taxTotal }} </li>
+          <li> totalAmount (합계금액) : {{ $Statement->totalAmount }} </li>
+          <li> remark1 (비고1) : {{ $Statement->remark1 }} </li>
+          <li> remark2 (비고2) : {{ $Statement->remark2 }} </li>
+          <li> remark3 (비고3) : {{ $Statement->remark3 }} </li>
           <li> senderCorpNum (발신자 사업자번호) : {{ $Statement->senderCorpNum }} </li>
           <li> senderTaxRegID (발신자 종사업장번호) : {{ $Statement->senderTaxRegID }} </li>
           <li> senderCorpName (발신자 상호) : {{ $Statement->senderCEOName }} </li>
@@ -39,18 +48,22 @@
           <li> receiverTEL (수신자 연락처) : {{ $Statement->receiverTEL }} </li>
           <li> receiverHP (수신자 휴대폰번호) : {{ $Statement->receiverHP }} </li>
           <li> receiverEmail (수신자 메일주소) : {{ $Statement->receiverEmail }} </li>
-          <li> totalAmount (합계금액) : {{ $Statement->totalAmount }} </li>
-          <li> supplyCostTotal (공급가액 합계) : {{ $Statement->supplyCostTotal }} </li>
-          <li> taxTotal (세액 합계) : {{ $Statement->taxTotal }} </li>
-          <li> purposeType (영수/청구) : {{ $Statement->purposeType }} </li>
-          <li> serialNum (기재상 일련번호) : {{ $Statement->serialNum }} </li>
-          <li> remark1 (비고1) : {{ $Statement->remark1 }} </li>
-          <li> remark2 (비고2) : {{ $Statement->remark2 }} </li>
-          <li> remark3 (비고3) : {{ $Statement->remark3 }} </li>
+
+
           <li> businessLicenseYN (사업자등록증 첨부여부) : {{ $Statement->businessLicenseYN ? 'true' : 'false' }} </li>
           <li> bankBookYN (통장사본 첨부여부) : {{ $Statement->bankBookYN ? 'true' : 'false' }} </li>
           <li> smssendYN (알림문자 전송여부) : {{ $Statement->smssendYN ? 'true' : 'false'  }} </li>
-          <li> autoacceptYN (발행시 자동승인 여부) : {{ $Statement->autoacceptYN ? 'true' : 'false' }} </li>
+
+          @if ($Statement->propertyBag != null)
+            <fieldset class="fieldset2">
+              <legend>propertyBag [추가속성 정보]</legend>
+              <ul>
+                @foreach ($Statement->propertyBag as $key => $value)
+                  <li> {{ $key }} : {{ $value }} </li>
+                @endforeach
+              </ul>
+            </fieldset>
+          @endif
 
           @if (count($Statement->detailList) > 0)
             @foreach ($Statement->detailList as $indexKey => $StatementDetail)
@@ -76,16 +89,7 @@
             @endforeach
           @endif
 
-          @if ($Statement->propertyBag != null)
-            <fieldset class="fieldset2">
-              <legend>propertyBag [추가속성 정보]</legend>
-              <ul>
-                @foreach ($Statement->propertyBag as $key => $value)
-                  <li> {{ $key }} : {{ $value }} </li>
-                @endforeach
-              </ul>
-            </fieldset>
-          @endif
+
         </ul>
       </fieldset>
      </div>

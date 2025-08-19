@@ -64,7 +64,7 @@ class StatementController extends Controller
         // 팝빌회원 사업자번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
-        // 명세서 종류코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
+        // 전자명세서 문서 유형 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
         $itemCode = '121';
 
         // 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
@@ -92,40 +92,54 @@ class StatementController extends Controller
         // 팝빌회원 사업자번호, '-' 제외 10자리
         $CorpNum = '1234567890';
 
-        // 전자명세서 문서번호
-        // 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
-        $MgtKey = '20230102-PHP7-001';
-
-        // 명세서 종류코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
-        $itemCode = '121';
-
         // 전자명세서 객체 생성
         $Statement = new Statement();
 
         /************************************************************
-         *                       전자명세서 정보
-         ************************************************************/
+        *                       전자명세서 정보
+        ************************************************************/
 
-        // 기재상 작성일자
-        $Statement->writeDate = '20250818';
+        // 전자명세서 문서 유형 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
+        $Statement->itemCode = '121';
 
-        // 영수/청구, (영수, 청구, 없음) 중 기재
-        $Statement->purposeType = '영수';
-
-        //  과세형태, (과세, 영세, 면세) 중 기재
-        $Statement->taxType = '과세';
+        // 전자명세서 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
+        $Statement->mgtKey = '20250819-PHP7-001';
 
         // 맞춤양식코드, 미기재시 기본양식으로 처리
         $Statement->formCode = '';
 
-        // 명세서 종류 코드
-        $Statement->itemCode = $itemCode;
+        // 작성일자
+        $Statement->writeDate = '20250818';
 
-        // 전자명세서 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
-        $Statement->mgtKey = $MgtKey;
+        // 과세형태, (과세, 영세, 면세) 중 기재
+        $Statement->taxType = '과세';
+
+        // 영수/청구, (영수, 청구, 없음) 중 기재
+        $Statement->purposeType = '영수';
+
+        // 기재상 일련번호 항목
+        $Statement->serialNum = '123';
+
+        // 세액 합계
+        $Statement->taxTotal = '20000';
+
+        // 공급가액 합계
+        $Statement->supplyCostTotal = '200000';
+
+        // 합계금액 (공급가액 합계+세액합계)
+        $Statement->totalAmount = '220000';
+
+        // 비고1
+        $Statement->remark1 = '비고1';
+
+        // 비고2
+        $Statement->remark2 = '비고2';
+
+        // 비고3
+        $Statement->remark3 = '비고3';
 
         /************************************************************
-         *                         공급자 정보
+         *                         발신자 정보
          ************************************************************/
         $Statement->senderCorpNum = $CorpNum;
         $Statement->senderTaxRegID = '';
@@ -140,7 +154,7 @@ class StatementController extends Controller
         $Statement->senderEmail = '';
 
         /************************************************************
-         *                         공급받는자 정보
+         *                         수신자 정보
          ************************************************************/
         $Statement->receiverCorpNum = '8888888888';
         $Statement->receiverTaxRegID = '';      // 공급받는자 종사업장 식별번호, 필요시 기재. 형식은 숫자 4자리
@@ -157,17 +171,6 @@ class StatementController extends Controller
         // 실제 거래처의 메일주소가 기재되지 않도록 주의
         $Statement->receiverEmail = '';
 
-        /************************************************************
-         *                       전자명세서 기재정보
-         ************************************************************/
-        $Statement->supplyCostTotal = '200000';    // 공급가액 합계
-        $Statement->taxTotal = '20000';       // 세액 합계
-        $Statement->totalAmount = '220000';      // 합계금액 (공급가액 합계+세액합계)
-        $Statement->serialNum = '123';       // 기재상 일련번호 항목
-        $Statement->remark1 = '비고1';
-        $Statement->remark2 = '비고2';
-        $Statement->remark3 = '비고3';
-
         // 사업자등록증 이미지 첨부여부 (true / false 중 택 1)
         // └ true = 첨부 , false = 미첨부(기본값)
         // - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
@@ -181,6 +184,16 @@ class StatementController extends Controller
         // 문자 자동전송 여부 (true / false 중 택 1)
         // └ true = 전송 , false = 미전송(기본값)
         $Statement->smssendYN = False;
+
+        /************************************************************
+         * 전자명세서 추가속성
+         * [https://developers.popbill.com/guide/statement/php/introduction/statement-form#propertybag-table]
+         ************************************************************/
+        $Statement->propertyBag = array(
+            'Balance' => '50000',           // 전잔액
+            'Deposit' => '100000',          // 입금액
+            'CBalance' => '150000'          // 현잔액
+        );
 
         /************************************************************
          *                       상세항목(품목) 정보
@@ -220,17 +233,6 @@ class StatementController extends Controller
         $Statement->detailList[1]->spare4 = 'spare4';
         $Statement->detailList[1]->spare5 = 'spare5';
 
-        /************************************************************
-         * 전자명세서 추가속성
-         * - 추가속성에 관한 자세한 사항은 "[전자명세서 API 연동매뉴얼] >
-         *   기본양식 추가속성 테이블"을 참조하시기 바랍니다.
-         * [https://developers.popbill.com/guide/statement/php/introduction/statement-form#propertybag-table]
-         ************************************************************/
-        $Statement->propertyBag = array(
-            'Balance' => '50000',           // 전잔액
-            'Deposit' => '100000',          // 입금액
-            'CBalance' => '150000'          // 현잔액
-        );
 
         // 메모
         $Memo = '즉시발행 메모';
@@ -256,50 +258,70 @@ class StatementController extends Controller
         return view('PResponse', ['code' => $code, 'message' => $message, 'invoiceNum' => $invoiceNum]);
     }
 
+
+
     /**
-     * 작성된 전자명세서 데이터를 팝빌에 저장합니다.
-     * - "임시저장" 상태의 전자명세서는 발행(Issue API) 함수를 호출하여 "발행완료"처리한 경우에만 수신자에게 발행 안내 메일이 발송됩니다.
-     * - https://developers.popbill.com/reference/statement/php/api/issue#Register
+     * "임시저장" 상태의 전자명세서를 수정합니다.건의 전자명세서를 [수정]합니다.
+     * - https://developers.popbill.com/reference/statement/php/api/issue#Update
      */
-    public function Register()
+    public function Update()
     {
 
         // 팝빌회원 사업자번호, '-' 제외 10자리
         $CorpNum = '1234567890';
 
-        // 문서번호, 발행자별 고유번호 할당, 1~24자리 영문,숫자 조합으로 중복없이 구성
-        $MgtKey = '20230102-PHP7-003';
-
-        // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
+        // 전자명세서 문서 유형 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
         $itemCode = '121';
 
-        // 전자명세서 객체 생성
-        $Statement = new Statement();
+        // 전자명세서 문서번호
+        // 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
+        $MgtKey = '20230102-PHP7-005';
 
         /************************************************************
-         *                       전자명세서 정보
-         ************************************************************/
+        *                       전자명세서 정보
+        ************************************************************/
 
-        // 기재상 작성일자
-        $Statement->writeDate = '20250818';
-
-        // 영수/청구, (영수, 청구, 없음) 중 기재
-        $Statement->purposeType = '영수';
-
-        //  과세형태, (과세, 영세, 면세) 중 기재
-        $Statement->taxType = '과세';
-
-        // 맞춤양식코드, 미기재시 기본양식으로 처리
-        $Statement->formCode = '';
-
-        // 명세서 종류 코드
+        // 전자명세서 문서 유형 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
         $Statement->itemCode = $itemCode;
 
         // 전자명세서 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
         $Statement->mgtKey = $MgtKey;
 
+        // 맞춤양식코드, 미기재시 기본양식으로 처리
+        $Statement->formCode = '';
+
+        // 작성일자
+        $Statement->writeDate = '20250818';
+
+        // 과세형태, (과세, 영세, 면세) 중 기재
+        $Statement->taxType = '과세';
+
+        // 영수/청구, (영수, 청구, 없음) 중 기재
+        $Statement->purposeType = '영수';
+
+        // 기재상 일련번호 항목
+        $Statement->serialNum = '123';
+
+        // 세액 합계
+        $Statement->taxTotal = '20000';
+
+        // 공급가액 합계
+        $Statement->supplyCostTotal = '200000';
+
+        // 합계금액 (공급가액 합계+세액합계)
+        $Statement->totalAmount = '220000';
+
+        // 비고1
+        $Statement->remark1 = '비고1';
+
+        // 비고2
+        $Statement->remark2 = '비고2';
+
+        // 비고3
+        $Statement->remark3 = '비고3';
+
         /************************************************************
-         *                         공급자 정보
+         *                         발신자 정보
          ************************************************************/
         $Statement->senderCorpNum = $CorpNum;
         $Statement->senderTaxRegID = '';
@@ -314,11 +336,11 @@ class StatementController extends Controller
         $Statement->senderEmail = '';
 
         /************************************************************
-         *                         공급받는자 정보
+         *                         수신자 정보
          ************************************************************/
         $Statement->receiverCorpNum = '8888888888';
         $Statement->receiverTaxRegID = '';      // 공급받는자 종사업장 식별번호, 필요시 기재. 형식은 숫자 4자리
-        $Statement->receiverCorpName = '공급받는자 대표자 성명';
+        $Statement->receiverCorpName = '공급받는자 상호';
         $Statement->receiverCEOName = '공급받는자 대표자 성명';
         $Statement->receiverAddr = '공급받는자 주소';
         $Statement->receiverBizClass = '공급받는자 업종';
@@ -330,17 +352,6 @@ class StatementController extends Controller
         // 팝빌 테스트 환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
         // 실제 거래처의 메일주소가 기재되지 않도록 주의
         $Statement->receiverEmail = '';
-
-        /************************************************************
-         *                       전자명세서 기재정보
-         ************************************************************/
-        $Statement->supplyCostTotal = '200000';    // 공급가액 합계
-        $Statement->taxTotal = '20000';       // 세액 합계
-        $Statement->totalAmount = '220000';      // 합계금액 (공급가액 합계+세액합계)
-        $Statement->serialNum = '123';       // 기재상 일련번호 항목
-        $Statement->remark1 = '비고1';
-        $Statement->remark2 = '비고2';
-        $Statement->remark3 = '비고3';
 
         // 사업자등록증 이미지 첨부여부 (true / false 중 택 1)
         // └ true = 첨부 , false = 미첨부(기본값)
@@ -357,6 +368,16 @@ class StatementController extends Controller
         $Statement->smssendYN = False;
 
         /************************************************************
+         * 전자명세서 추가속성
+         * [https://developers.popbill.com/guide/statement/php/introduction/statement-form#propertybag-table]
+         ************************************************************/
+        $Statement->propertyBag = array(
+            'Balance' => '50000',           // 전잔액
+            'Deposit' => '100000',          // 입금액
+            'CBalance' => '150000'          // 현잔액
+        );
+
+        /************************************************************
          *                       상세항목(품목) 정보
          ************************************************************/
         $Statement->detailList = array();
@@ -366,13 +387,13 @@ class StatementController extends Controller
         $Statement->detailList[0]->itemName = '품명';
         $Statement->detailList[0]->spec = '규격';
         $Statement->detailList[0]->unit = '단위';
-        $Statement->detailList[0]->qty = '1';      //수량
-        $Statement->detailList[0]->unitCost = '100000';
-        $Statement->detailList[0]->supplyCost = '100000';
-        $Statement->detailList[0]->tax = '10000';
-        $Statement->detailList[0]->remark = '비고';
-        $Statement->detailList[0]->spare1 = 'spare1';
-        $Statement->detailList[0]->spare2 = 'spare2';
+        $Statement->detailList[0]->qty = '1000';      //수량
+        $Statement->detailList[0]->unitCost = '1000000';
+        $Statement->detailList[0]->supplyCost = '10000000';
+        $Statement->detailList[0]->tax = '1000000';
+        $Statement->detailList[0]->remark = '11,000,000';
+        $Statement->detailList[0]->spare1 = '1000000';
+        $Statement->detailList[0]->spare2 = '1000000';
         $Statement->detailList[0]->spare3 = 'spare3';
         $Statement->detailList[0]->spare4 = 'spare4';
         $Statement->detailList[0]->spare5 = 'spare5';
@@ -393,183 +414,6 @@ class StatementController extends Controller
         $Statement->detailList[1]->spare3 = 'spare3';
         $Statement->detailList[1]->spare4 = 'spare4';
         $Statement->detailList[1]->spare5 = 'spare5';
-
-        /************************************************************
-         * 전자명세서 추가속성
-         * - 추가속성에 관한 자세한 사항은 "[전자명세서 API 연동매뉴얼] >
-         *   기본양식 추가속성 테이블"을 참조하시기 바랍니다.
-         * [https://developers.popbill.com/guide/statement/php/introduction/statement-form#propertybag-table]
-         ************************************************************/
-        $Statement->propertyBag = array(
-            'Balance' => '50000',
-            'Deposit' => '100000',
-            'CBalance' => '150000'
-        );
-
-        // 팝빌 회원 아이디
-        $UserID = 'testkorea';
-
-        try {
-            $result = $this->PopbillStatement->Register($CorpNum, $Statement, $UserID);
-            $code = $result->code;
-            $message = $result->message;
-        } catch (PopbillException $pe) {
-            $code = $pe->getCode();
-            $message = $pe->getMessage();
-        }
-
-        return view('PResponse', ['code' => $code, 'message' => $message]);
-    }
-
-    /**
-     * "임시저장" 상태의 전자명세서를 수정합니다.건의 전자명세서를 [수정]합니다.
-     * - https://developers.popbill.com/reference/statement/php/api/issue#Update
-     */
-    public function Update()
-    {
-
-        // 팝빌회원 사업자번호, '-' 제외 10자리
-        $CorpNum = '1234567890';
-
-        // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
-        $itemCode = '121';
-
-        // 전자명세서 문서번호
-        // 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
-        $MgtKey = '20230102-PHP7-005';
-
-        // 전자명세서 객체 생성
-        $Statement = new Statement();
-
-        /************************************************************
-         *                       전자명세서 정보
-         ************************************************************/
-
-        // 기재상 작성일자
-        $Statement->writeDate = '20250818';
-
-        // 영수/청구 (영수, 청구, 없음) 중 기재
-        $Statement->purposeType = '청구';
-
-        //  과세형태, (과세, 영세, 면세) 중 기재
-        $Statement->taxType = '과세';
-
-        // 맞춤양식코드, 미기재시 기본양식으로 처리
-        $Statement->formCode = '';
-
-        // 명세서 종류 코드
-        $Statement->itemCode = $itemCode;
-
-        // 전자명세서 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
-        $Statement->mgtKey = $MgtKey;
-
-        /************************************************************
-         *                         공급자 정보
-         ************************************************************/
-        $Statement->senderCorpNum = $CorpNum;
-        $Statement->senderTaxRegID = '';
-        $Statement->senderCorpName = '공급자 상호_수정';
-        $Statement->senderCEOName = '공급자 대표자 성명';
-        $Statement->senderAddr = ' 공급자 주소';
-        $Statement->senderBizClass = '공급자 업종';
-        $Statement->senderBizType = '공급자 업태';
-        $Statement->senderContactName = '공급자 담당자명';
-        $Statement->senderTEL = '';
-        $Statement->senderHP = '';
-        $Statement->senderEmail = '';
-
-        /************************************************************
-         *                         공급받는자 정보
-         ************************************************************/
-        $Statement->receiverCorpNum = '8888888888';
-        $Statement->receiverTaxRegID = '';      // 공급받는자 종사업장 식별번호, 필요시 기재. 형식은 숫자 4자리
-        $Statement->receiverCorpName = '공급받는자 대표자 성명';
-        $Statement->receiverCEOName = '공급받는자 대표자 성명';
-        $Statement->receiverAddr = '공급받는자 주소';
-        $Statement->receiverBizClass = '공급받는자 업종';
-        $Statement->receiverBizType = '공급받는자 업태';
-        $Statement->receiverContactName = '공급받는자 담당자명';
-        $Statement->receiverTEL = '';
-        $Statement->receiverHP = '';
-
-        // 팝빌 테스트 환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
-        // 실제 거래처의 메일주소가 기재되지 않도록 주의
-        $Statement->receiverEmail = '';
-
-        /************************************************************
-         *                       전자명세서 기재정보
-         ************************************************************/
-        $Statement->supplyCostTotal = '200000';    // 공급가액 합계
-        $Statement->taxTotal = '20000';       // 세액 합계
-        $Statement->totalAmount = '220000';      // 합계금액 (공급가액 합계+세액합계)
-        $Statement->serialNum = '123';       // 기재상 일련번호 항목
-        $Statement->remark1 = '비고1';
-        $Statement->remark2 = '비고2';
-        $Statement->remark3 = '비고3';
-
-        // 사업자등록증 이미지 첨부여부 (true / false 중 택 1)
-        // └ true = 첨부 , false = 미첨부(기본값)
-        // - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
-        $Statement->businessLicenseYN = False;
-
-        // 통장사본 이미지 첨부여부 (true / false 중 택 1)
-        // └ true = 첨부 , false = 미첨부(기본값)
-        // - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
-        $Statement->bankBookYN = False;
-
-        // 문자 자동전송 여부 (true / false 중 택 1)
-        // └ true = 전송 , false = 미전송(기본값)
-        $Statement->smssendYN = False;
-
-        /************************************************************
-         *                       상세항목(품목) 정보
-         ************************************************************/
-        $Statement->detailList = array();
-        $Statement->detailList[0] = new StatementDetail();
-        $Statement->detailList[0]->serialNum = '1';     //품목 일련번호 1부터 순차 기재
-        $Statement->detailList[0]->purchaseDT = '20250818';   //거래일자 yyyyMMdd
-        $Statement->detailList[0]->itemName = '품명';
-        $Statement->detailList[0]->spec = '규격';
-        $Statement->detailList[0]->unit = '단위';
-        $Statement->detailList[0]->qty = '1';      //수량
-        $Statement->detailList[0]->unitCost = '100000';
-        $Statement->detailList[0]->supplyCost = '100000';
-        $Statement->detailList[0]->tax = '10000';
-        $Statement->detailList[0]->remark = '비고';
-        $Statement->detailList[0]->spare1 = 'spare1';
-        $Statement->detailList[0]->spare2 = 'spare2';
-        $Statement->detailList[0]->spare3 = 'spare3';
-        $Statement->detailList[0]->spare4 = 'spare4';
-        $Statement->detailList[0]->spare5 = 'spare5';
-
-        $Statement->detailList[1] = new StatementDetail();
-        $Statement->detailList[1]->serialNum = '2';     //품목 일련번호 순차기재
-        $Statement->detailList[1]->purchaseDT = '20250818';   //거래일자 yyyyMMdd
-        $Statement->detailList[1]->itemName = '품명';
-        $Statement->detailList[1]->spec = '규격';
-        $Statement->detailList[1]->unit = '단위';
-        $Statement->detailList[1]->qty = '1';
-        $Statement->detailList[1]->unitCost = '100000';
-        $Statement->detailList[1]->supplyCost = '100000';
-        $Statement->detailList[1]->tax = '10000';
-        $Statement->detailList[1]->remark = '비고';
-        $Statement->detailList[1]->spare1 = 'spare1';
-        $Statement->detailList[1]->spare2 = 'spare2';
-        $Statement->detailList[1]->spare3 = 'spare3';
-        $Statement->detailList[1]->spare4 = 'spare4';
-        $Statement->detailList[1]->spare5 = 'spare5';
-
-        /************************************************************
-         * 전자명세서 추가속성
-         * - 추가속성에 관한 자세한 사항은 "[전자명세서 API 연동매뉴얼] >
-         *   기본양식 추가속성 테이블"을 참조하시기 바랍니다.
-         * [https://developers.popbill.com/guide/statement/php/introduction/statement-form#propertybag-table]
-         ************************************************************/
-        $Statement->propertyBag = array(
-            'Balance' => '50000',
-            'Deposit' => '100000',
-            'CBalance' => '150000'
-        );
 
          // 팝빌 회원 아이디
         $UserID = 'testkorea';
@@ -599,7 +443,7 @@ class StatementController extends Controller
         // 팝빌회원 사업자번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
-        // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
+        // 전자명세서 문서 유형 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
         $itemCode = '121';
 
         // 전자명세서 문서번호
@@ -638,7 +482,7 @@ class StatementController extends Controller
         // 팝빌회원 사업자번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
-        // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
+        // 전자명세서 문서 유형 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
         $itemCode = '121';
 
         // 문서번호
@@ -674,7 +518,7 @@ class StatementController extends Controller
         // 팝빌회원 사업자번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
-        // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
+        // 전자명세서 문서 유형 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
         $itemCode = '121';
 
         // 문서번호
@@ -705,7 +549,7 @@ class StatementController extends Controller
         // 팝빌회원 사업자번호, '-' 제외 10자리
         $CorpNum = '1234567890';
 
-        // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
+        // 전자명세서 문서 유형 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
         $itemCode = '121';
 
         // 문서번호
@@ -735,7 +579,7 @@ class StatementController extends Controller
         // 팝빌회원 사업자번호, '-'제외 10자리
         $CorpNum = '1234567890';
 
-        // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
+        // 전자명세서 문서 유형 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
         $itemCode = '121';
 
         // 조회할 전자명세서 문서번호 배열, 최대 1000건
@@ -768,7 +612,7 @@ class StatementController extends Controller
         // 팝빌회원 사업자번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
-        // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
+        // 전자명세서 문서 유형 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
         $itemCode = '121';
 
         // 문서번호
@@ -816,7 +660,7 @@ class StatementController extends Controller
             '3**'
         );
 
-        // 명세서 코드배열 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
+        // 전자명세서 문서 유형배열 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
         $ItemCode = array(
             121,
             122,
@@ -871,7 +715,7 @@ class StatementController extends Controller
         // 팝빌회원 사업자번호
         $CorpNum = '1234567890';
 
-        // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
+        // 전자명세서 문서 유형 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
         $itemCode = '121';
 
         // 문서번호
@@ -928,7 +772,7 @@ class StatementController extends Controller
         // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
-        // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
+        // 전자명세서 문서 유형 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
         $itemCode = '121';
 
         // 전자명세서 문서번호
@@ -958,7 +802,7 @@ class StatementController extends Controller
         // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
-        // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
+        // 전자명세서 문서 유형 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
         $itemCode = '121';
 
         // 전자명세서 문서번호
@@ -989,7 +833,7 @@ class StatementController extends Controller
         // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
-        // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
+        // 전자명세서 문서 유형 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
         $itemCode = '121';
 
         // 전자명세서 문서번호
@@ -1020,7 +864,7 @@ class StatementController extends Controller
         // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
-        // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
+        // 전자명세서 문서 유형 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
         $itemCode = '121';
 
         // 문서번호
@@ -1051,7 +895,7 @@ class StatementController extends Controller
         // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
-        // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
+        // 전자명세서 문서 유형 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
         $itemCode = '121';
 
         // 문서번호 배열, 최대 100건
@@ -1084,7 +928,7 @@ class StatementController extends Controller
         // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
-        // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
+        // 전자명세서 문서 유형 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
         $itemCode = '121';
 
         // 전자명세서 문서번호
@@ -1162,7 +1006,7 @@ class StatementController extends Controller
         // 팝빌회원 사업자번호, "-" 제외 10자리
         $CorpNum = '1234567890';
 
-        // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
+        // 전자명세서 문서 유형 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
         $itemCode = '121';
 
         // 문서번호
@@ -1200,7 +1044,7 @@ class StatementController extends Controller
         // 팝빌회원 사업자번호, '-' 제외 10자리
         $CorpNum = '1234567890';
 
-        // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
+        // 전자명세서 문서 유형 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
         $itemCode = '121';
 
         // 문서번호
@@ -1236,7 +1080,7 @@ class StatementController extends Controller
         // 팝빌회원 사업자번호, '-'제외 10자리
         $CorpNum = '1234567890';
 
-        // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
+        // 전자명세서 문서 유형 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
         $itemCode = '121';
 
         // 문서번호
@@ -1266,7 +1110,7 @@ class StatementController extends Controller
         // 팝빌회원 사업자번호, '-' 제외 10자리
         $CorpNum = '1234567890';
 
-        // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
+        // 전자명세서 문서 유형 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
         $itemCode = '121';
 
         // 문서번호
@@ -1302,7 +1146,7 @@ class StatementController extends Controller
         // 팝빌회원 사업자번호, '-' 제외 10자리
         $CorpNum = '1234567890';
 
-        // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
+        // 전자명세서 문서 유형 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
         $itemCode = '121';
 
         // 문서번호
@@ -1351,7 +1195,7 @@ class StatementController extends Controller
         // 팝빌회원 사업자번호, '-' 제외 10자리
         $CorpNum = '1234567890';
 
-        // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
+        // 전자명세서 문서 유형 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
         $itemCode = '121';
 
         // 문서번호
@@ -1392,38 +1236,50 @@ class StatementController extends Controller
         // 팝빌회원 사업자번호, '-' 제외 10자리
         $CorpNum = '1234567890';
 
-        // 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
-        $MgtKey = '20230102-PHP7-003';
-
-        // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
-        $itemCode = '121';
-
         // 전자명세서 객체 생성
         $Statement = new Statement();
 
-        /************************************************************
-         *                       전자명세서 정보
-         ************************************************************/
-        // 기재상 작성일자
-        $Statement->writeDate = '20250818';
+        // 전자명세서 문서 유형 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
+        $Statement->itemCode = '121';
 
-        // 영수/청구 (영수, 청구, 없음) 중 기재
-        $Statement->purposeType = '영수';
-
-        //  과세형태, (과세, 영세, 면세) 중 기재
-        $Statement->taxType = '과세';
+        // 전자명세서 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
+        $Statement->mgtKey = '20250819-PHP7-001';
 
         // 맞춤양식코드, 미기재시 기본양식으로 처리
         $Statement->formCode = '';
 
-        // 명세서 종류 코드
-        $Statement->itemCode = $itemCode;
+        // 작성일자
+        $Statement->writeDate = '20250818';
 
-        // 전자명세서 문서번호
-        $Statement->mgtKey = $MgtKey;
+        // 과세형태, (과세, 영세, 면세) 중 기재
+        $Statement->taxType = '과세';
+
+        // 영수/청구, (영수, 청구, 없음) 중 기재
+        $Statement->purposeType = '영수';
+
+        // 기재상 일련번호 항목
+        $Statement->serialNum = '123';
+
+        // 세액 합계
+        $Statement->taxTotal = '20000';
+
+        // 공급가액 합계
+        $Statement->supplyCostTotal = '200000';
+
+        // 합계금액 (공급가액 합계+세액합계)
+        $Statement->totalAmount = '220000';
+
+        // 비고1
+        $Statement->remark1 = '비고1';
+
+        // 비고2
+        $Statement->remark2 = '비고2';
+
+        // 비고3
+        $Statement->remark3 = '비고3';
 
         /************************************************************
-         *                         공급자 정보
+         *                         발신자 정보
          ************************************************************/
         $Statement->senderCorpNum = $CorpNum;
         $Statement->senderTaxRegID = '';
@@ -1438,11 +1294,11 @@ class StatementController extends Controller
         $Statement->senderEmail = '';
 
         /************************************************************
-         *                         공급받는자 정보
+         *                         수신자 정보
          ************************************************************/
         $Statement->receiverCorpNum = '8888888888';
         $Statement->receiverTaxRegID = '';      // 공급받는자 종사업장 식별번호, 필요시 기재. 형식은 숫자 4자리
-        $Statement->receiverCorpName = '공급받는자 대표자 성명';
+        $Statement->receiverCorpName = '공급받는자 상호';
         $Statement->receiverCEOName = '공급받는자 대표자 성명';
         $Statement->receiverAddr = '공급받는자 주소';
         $Statement->receiverBizClass = '공급받는자 업종';
@@ -1454,17 +1310,6 @@ class StatementController extends Controller
         // 팝빌 테스트 환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
         // 실제 거래처의 메일주소가 기재되지 않도록 주의
         $Statement->receiverEmail = '';
-
-        /************************************************************
-         *                       전자명세서 기재정보
-         ************************************************************/
-        $Statement->supplyCostTotal = '200000';    // 공급가액 합계
-        $Statement->taxTotal = '20000';       // 세액 합계
-        $Statement->totalAmount = '220000';      // 합계금액 (공급가액 합계+세액합계)
-        $Statement->serialNum = '123';       // 기재상 일련번호 항목
-        $Statement->remark1 = '비고1';
-        $Statement->remark2 = '비고2';
-        $Statement->remark3 = '비고3';
 
         // 사업자등록증 이미지 첨부여부 (true / false 중 택 1)
         // └ true = 첨부 , false = 미첨부(기본값)
@@ -1481,6 +1326,16 @@ class StatementController extends Controller
         $Statement->smssendYN = False;
 
         /************************************************************
+         * 전자명세서 추가속성
+         * [https://developers.popbill.com/guide/statement/php/introduction/statement-form#propertybag-table]
+         ************************************************************/
+        $Statement->propertyBag = array(
+            'Balance' => '50000',           // 전잔액
+            'Deposit' => '100000',          // 입금액
+            'CBalance' => '150000'          // 현잔액
+        );
+
+        /************************************************************
          *                       상세항목(품목) 정보
          ************************************************************/
         $Statement->detailList = array();
@@ -1490,13 +1345,13 @@ class StatementController extends Controller
         $Statement->detailList[0]->itemName = '품명';
         $Statement->detailList[0]->spec = '규격';
         $Statement->detailList[0]->unit = '단위';
-        $Statement->detailList[0]->qty = '1';      //수량
-        $Statement->detailList[0]->unitCost = '100000';
-        $Statement->detailList[0]->supplyCost = '100000';
-        $Statement->detailList[0]->tax = '10000';
-        $Statement->detailList[0]->remark = '비고';
-        $Statement->detailList[0]->spare1 = 'spare1';
-        $Statement->detailList[0]->spare2 = 'spare2';
+        $Statement->detailList[0]->qty = '1000';      //수량
+        $Statement->detailList[0]->unitCost = '1000000';
+        $Statement->detailList[0]->supplyCost = '10000000';
+        $Statement->detailList[0]->tax = '1000000';
+        $Statement->detailList[0]->remark = '11,000,000';
+        $Statement->detailList[0]->spare1 = '1000000';
+        $Statement->detailList[0]->spare2 = '1000000';
         $Statement->detailList[0]->spare3 = 'spare3';
         $Statement->detailList[0]->spare4 = 'spare4';
         $Statement->detailList[0]->spare5 = 'spare5';
@@ -1518,36 +1373,194 @@ class StatementController extends Controller
         $Statement->detailList[1]->spare4 = 'spare4';
         $Statement->detailList[1]->spare5 = 'spare5';
 
+        // 메모
+        $Memo = '즉시발행 메모';
+
+        // 팝빌 회원 아이디
+        $UserID = 'testkorea';
+
+        // 발행 안내 메일 제목
+        // - 미입력 시 팝빌에서 지정한 이메일 제목으로 전송
+        $emailSubject = null;
+
+        try {
+            $result = $this->PopbillStatement->RegistIssue($CorpNum, $Statement, $Memo, $UserID, $emailSubject);
+            $code = $result->code;
+            $message = $result->message;
+            $invoiceNum = $result->invoiceNum;
+        } catch (PopbillException $pe) {
+            $code = $pe->getCode();
+            $message = $pe->getMessage();
+            $invoiceNum = null;
+        }
+
+        return view('PResponse', ['code' => $code, 'message' => $message, 'invoiceNum' => $invoiceNum]);
+    }
+
+    /**
+     * 작성된 전자명세서 데이터를 팝빌에 저장합니다.
+     * - "임시저장" 상태의 전자명세서는 발행(Issue API) 함수를 호출하여 "발행완료"처리한 경우에만 수신자에게 발행 안내 메일이 발송됩니다.
+     * - https://developers.popbill.com/reference/statement/php/api/issue#Register
+     */
+    public function Register()
+    {
+
+        // 팝빌회원 사업자번호, '-' 제외 10자리
+        $CorpNum = '1234567890';
+
+        // 전자명세서 객체 생성
+        $Statement = new Statement();
+
+        // 전자명세서 문서 유형 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
+        $Statement->itemCode = '121';
+
+        // 전자명세서 문서번호, 최대 24자리, 영문, 숫자 '-', '_'를 조합하여 사업자별로 중복되지 않도록 구성
+        $Statement->mgtKey = '20250819-PHP7-001';
+
+        // 맞춤양식코드, 미기재시 기본양식으로 처리
+        $Statement->formCode = '';
+
+        // 작성일자
+        $Statement->writeDate = '20250818';
+
+        // 과세형태, (과세, 영세, 면세) 중 기재
+        $Statement->taxType = '과세';
+
+        // 영수/청구, (영수, 청구, 없음) 중 기재
+        $Statement->purposeType = '영수';
+
+        // 기재상 일련번호 항목
+        $Statement->serialNum = '123';
+
+        // 세액 합계
+        $Statement->taxTotal = '20000';
+
+        // 공급가액 합계
+        $Statement->supplyCostTotal = '200000';
+
+        // 합계금액 (공급가액 합계+세액합계)
+        $Statement->totalAmount = '220000';
+
+        // 비고1
+        $Statement->remark1 = '비고1';
+
+        // 비고2
+        $Statement->remark2 = '비고2';
+
+        // 비고3
+        $Statement->remark3 = '비고3';
+
+        /************************************************************
+         *                         발신자 정보
+         ************************************************************/
+        $Statement->senderCorpNum = $CorpNum;
+        $Statement->senderTaxRegID = '';
+        $Statement->senderCorpName = '공급자 상호';
+        $Statement->senderCEOName = '공급자 대표자 성명';
+        $Statement->senderAddr = ' 공급자 주소';
+        $Statement->senderBizClass = '공급자 업종';
+        $Statement->senderBizType = '공급자 업태';
+        $Statement->senderContactName = '공급자 담당자명';
+        $Statement->senderTEL = '';
+        $Statement->senderHP = '';
+        $Statement->senderEmail = '';
+
+        /************************************************************
+         *                         수신자 정보
+         ************************************************************/
+        $Statement->receiverCorpNum = '8888888888';
+        $Statement->receiverTaxRegID = '';      // 공급받는자 종사업장 식별번호, 필요시 기재. 형식은 숫자 4자리
+        $Statement->receiverCorpName = '공급받는자 상호';
+        $Statement->receiverCEOName = '공급받는자 대표자 성명';
+        $Statement->receiverAddr = '공급받는자 주소';
+        $Statement->receiverBizClass = '공급받는자 업종';
+        $Statement->receiverBizType = '공급받는자 업태';
+        $Statement->receiverContactName = '공급받는자 담당자명';
+        $Statement->receiverTEL = '';
+        $Statement->receiverHP = '';
+
+        // 팝빌 테스트 환경에서 테스트하는 경우에도 안내 메일이 전송되므로,
+        // 실제 거래처의 메일주소가 기재되지 않도록 주의
+        $Statement->receiverEmail = '';
+
+        // 사업자등록증 이미지 첨부여부 (true / false 중 택 1)
+        // └ true = 첨부 , false = 미첨부(기본값)
+        // - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
+        $Statement->businessLicenseYN = False;
+
+        // 통장사본 이미지 첨부여부 (true / false 중 택 1)
+        // └ true = 첨부 , false = 미첨부(기본값)
+        // - 팝빌 사이트 또는 인감 및 첨부문서 등록 팝업 URL (GetSealURL API) 함수를 이용하여 등록
+        $Statement->bankBookYN = False;
+
+        // 문자 자동전송 여부 (true / false 중 택 1)
+        // └ true = 전송 , false = 미전송(기본값)
+        $Statement->smssendYN = False;
+
         /************************************************************
          * 전자명세서 추가속성
-         * - 추가속성에 관한 자세한 사항은 "[전자명세서 API 연동매뉴얼] >
-         *   기본양식 추가속성 테이블"을 참조하시기 바랍니다.
          * [https://developers.popbill.com/guide/statement/php/introduction/statement-form#propertybag-table]
          ************************************************************/
         $Statement->propertyBag = array(
-            'Balance' => '50000',
-            'Deposit' => '100000',
-            'CBalance' => '150000'
+            'Balance' => '50000',           // 전잔액
+            'Deposit' => '100000',          // 입금액
+            'CBalance' => '150000'          // 현잔액
         );
 
-        // 팩스전송 발신번호
-        $sendNum = '';
+        /************************************************************
+         *                       상세항목(품목) 정보
+         ************************************************************/
+        $Statement->detailList = array();
+        $Statement->detailList[0] = new StatementDetail();
+        $Statement->detailList[0]->serialNum = '1';     //품목 일련번호 1부터 순차 기재
+        $Statement->detailList[0]->purchaseDT = '20250818';   //거래일자 yyyyMMdd
+        $Statement->detailList[0]->itemName = '품명';
+        $Statement->detailList[0]->spec = '규격';
+        $Statement->detailList[0]->unit = '단위';
+        $Statement->detailList[0]->qty = '1000';      //수량
+        $Statement->detailList[0]->unitCost = '1000000';
+        $Statement->detailList[0]->supplyCost = '10000000';
+        $Statement->detailList[0]->tax = '1000000';
+        $Statement->detailList[0]->remark = '11,000,000';
+        $Statement->detailList[0]->spare1 = '1000000';
+        $Statement->detailList[0]->spare2 = '1000000';
+        $Statement->detailList[0]->spare3 = 'spare3';
+        $Statement->detailList[0]->spare4 = 'spare4';
+        $Statement->detailList[0]->spare5 = 'spare5';
 
-        // 팩스수신번호
-        $receiveNum = '';
+        $Statement->detailList[1] = new StatementDetail();
+        $Statement->detailList[1]->serialNum = '2';     //품목 일련번호 순차기재
+        $Statement->detailList[1]->purchaseDT = '20250818';   //거래일자 yyyyMMdd
+        $Statement->detailList[1]->itemName = '품명';
+        $Statement->detailList[1]->spec = '규격';
+        $Statement->detailList[1]->unit = '단위';
+        $Statement->detailList[1]->qty = '1';
+        $Statement->detailList[1]->unitCost = '100000';
+        $Statement->detailList[1]->supplyCost = '100000';
+        $Statement->detailList[1]->tax = '10000';
+        $Statement->detailList[1]->remark = '비고';
+        $Statement->detailList[1]->spare1 = 'spare1';
+        $Statement->detailList[1]->spare2 = 'spare2';
+        $Statement->detailList[1]->spare3 = 'spare3';
+        $Statement->detailList[1]->spare4 = 'spare4';
+        $Statement->detailList[1]->spare5 = 'spare5';
+
 
         // 팝빌 회원 아이디
         $UserID = 'testkorea';
 
         try {
-            $receiptNum = $this->PopbillStatement->FAXSend($CorpNum, $Statement, $sendNum, $receiveNum, $UserID);
+            $result = $this->PopbillStatement->Register($CorpNum, $Statement, $UserID);
+            $code = $result->code;
+            $message = $result->message;
+            $invoiceNum = $result->invoiceNum;
         } catch (PopbillException $pe) {
             $code = $pe->getCode();
             $message = $pe->getMessage();
-            return view('PResponse', ['code' => $code, 'message' => $message]);
+            $invoiceNum = null;
         }
 
-        return view('ReturnValue', ['filedName' => "선팩스전송 접수번호(receiptNum)", 'value' => $receiptNum]);
+        return view('PResponse', ['code' => $code, 'message' => $message, 'invoiceNum' => $invoiceNum]);
     }
 
     /**
@@ -1560,7 +1573,7 @@ class StatementController extends Controller
         // 팝빌회원 사업자번호, '-' 제외 10자리
         $CorpNum = '1234567890';
 
-        // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
+        // 전자명세서 문서 유형 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
         $itemCode = '121';
 
         // 문서번호
@@ -1597,7 +1610,7 @@ class StatementController extends Controller
         // 팝빌회원 사업자번호, '-' 제외 10자리
         $CorpNum = '1234567890';
 
-        // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
+        // 전자명세서 문서 유형 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
         $itemCode = '121';
 
         // 문서번호
@@ -1651,13 +1664,6 @@ class StatementController extends Controller
     /**
      * 전자명세서 관련 메일 항목에 대한 발송설정을 수정합니다.
      * - https://developers.popbill.com/reference/statement/php/api/etc#UpdateEmailConfig
-     *
-     * 메일전송유형
-     * - SMT_ISSUE : 공급받는자에게 전자명세서가 발행 되었음을 알려주는 메일입니다.
-     * - SMT_ACCEPT : 공급자에게 전자명세서가 승인 되었음을 알려주는 메일입니다.
-     * - SMT_DENY : 공급자에게 전자명세서가 거부 되었음을 알려주는 메일입니다.
-     * - SMT_CANCEL : 공급받는자에게 전자명세서가 취소 되었음을 알려주는 메일입니다.
-     * - SMT_CANCEL_ISSUE : 공급받는자에게 전자명세서가 발행취소 되었음을 알려주는 메일입니다.
      */
     public function UpdateEmailConfig()
     {
@@ -2059,7 +2065,7 @@ class StatementController extends Controller
         // 팝빌회원 사업자 번호, "-"제외 10자리
         $CorpNum = '1234567890';
 
-        // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
+        // 전자명세서 문서 유형 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
         $itemCode = '121';
         try {
             $unitCost = $this->PopbillStatement->GetUnitCost($CorpNum, $itemCode);
@@ -2081,7 +2087,7 @@ class StatementController extends Controller
         // 팝빌회원 사업자번호, '-'제외 10자리
         $CorpNum = '1234567890';
 
-        // 명세서 코드 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
+        // 전자명세서 문서 유형 - 121(거래명세서), 122(청구서), 123(견적서) 124(발주서), 125(입금표), 126(영수증)
         $itemCode = '121';
 
         // 팝빌회원 아이디
