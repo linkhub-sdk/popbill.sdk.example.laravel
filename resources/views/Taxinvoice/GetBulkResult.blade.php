@@ -17,7 +17,7 @@
                     <li>submitCount (세금계산서 접수 건수) : {{ $Result->submitCount }}</li>
                     <li>successCount (세금계산서 발행 성공 건수) : {{ $Result->successCount }}</li>
                     <li>failCount (세금계산서 발행 실패 건수) : {{ $Result->failCount }}</li>
-                    <li>txState (접수상태코드) : {{ $Result->txState }}</li>
+                    <li>txState (접수상태) : {{ $Result->txState }}</li>
                     <li>txResultCode (접수 결과코드) : {{ $Result->txResultCode }}</li>
                     <li>txStartDT (발행처리 시작일시) : {{ $Result->txStartDT }}</li>
                     <li>txEndDT (발행처리 완료일시) : {{ $Result->txEndDT }}</li>

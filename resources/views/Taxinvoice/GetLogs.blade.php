@@ -18,8 +18,8 @@
               <li>docLogType (로그타입) : {{ $info->docLogType }}</li>
               <li>log (이력정보) : {{ $info->log  }}</li>
               <li>procType (처리형태) : {{ $info->procType  }}</li>
-              <li>procContactName (처리담당자) : {{ $info->procContactName  }}</li>
               <li>procCorpName (처리회사명) : {{ $info->procCorpName  }}</li>
+              <li>procContactName (처리담당자) : {{ $info->procContactName  }}</li>
               <li>procMemo (처리메모) : {{ $info->procMemo  }}</li>
               <li>regDT (등록일시) : {{ $info->regDT  }}</li>
               <li>ip (아이피) : {{ $info->ip }}</li>

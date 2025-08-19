@@ -15,10 +15,10 @@
       <fieldset class="fieldset2">
       <legend> 첨부파일 정보 [ {{ $indexKey+1 }} / {{ count($Result) }} ]</legend>
       <ul>
-        <li> serialNum (순번) : {{ $FileInfo->serialNum }}</li>
+        <li> serialNum (첨부파일 일련번호) : {{ $FileInfo->serialNum }}</li>
+        <li> attachedFile (파일 식별번호) : {{ $FileInfo->attachedFile }}</li>
         <li> displayName (파일명) : {{ $FileInfo->displayName }}</li>
-        <li> attachedFile (파일아이디) : {{ $FileInfo->attachedFile }}</li>
-        <li> regDT (등록일시) : {{ $FileInfo->regDT }}</li>
+        <li> regDT (첨부일시) : {{ $FileInfo->regDT }}</li>
       </ul>
       </fieldset>
       @endforeach
